@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/ease_action"
+        android:icon="@drawable/ease_mm_title_remove"
+        android:orderInCategory="100"
+        android:title=""
+        app:showAsAction="always" />
+
+</menu>

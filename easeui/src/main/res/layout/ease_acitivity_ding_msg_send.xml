@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.hyphenate.easeui.widget.EaseToolbar
+        android:id="@+id/toolbar"
+        style="@style/EaseToolbar"
+        android:text="@string/title_group_notification" />
+
+    <EditText
+        android:id="@+id/et_sendmessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dip"
+        android:background="#DDD"
+        android:gravity="start"
+        android:imeOptions="actionSend"
+        android:lines="5"
+        android:paddingLeft="1dp"
+        android:paddingTop="3dp"
+        android:paddingRight="1dp"
+        android:paddingBottom="3dp"
+        android:textSize="18sp" />
+
+</LinearLayout>

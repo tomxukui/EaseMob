@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee"
+    android:orientation="vertical">
+
+    <com.hyphenate.easeui.widget.EaseToolbar
+        android:id="@+id/toolbar"
+        style="@style/EaseToolbar"
+        android:text="接入中..." />
+
+    <com.hyphenate.easeui.widget.EasePaperLayer
+        android:id="@+id/layer_paper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/frame_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.hyphenate.easeui.widget.EasePaperLayer>
+
+</LinearLayout>
