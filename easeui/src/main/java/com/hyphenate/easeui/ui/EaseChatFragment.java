@@ -61,7 +61,7 @@ public class EaseChatFragment extends EaseBaseFragment {
 
     protected static final String TAG = "EaseChatFragment";
 
-    private static final String EXTRA_CHAT_ABLE = "EXTRA_CHAT_ABLE";//是否具备聊天功能
+    private static final String EXTRA_CHAT_ENABLED = "EXTRA_CHAT_ENABLED";//是否具备聊天功能
     private static final String EXTRA_FINISH_CHAT_ENABLED = "EXTRA_FINISH_CHAT_ENABLED";//是否显示结束聊天的按钮
 
     protected static final int REQUEST_CODE_MAP = 1;
@@ -91,7 +91,7 @@ public class EaseChatFragment extends EaseBaseFragment {
     private boolean mTurnOnTyping;//"正在输入"功能的开关，打开后本设备发送消息将持续发送cmd类型消息通知对方"正在输入"
     private boolean mIsRoaming;//是否漫游
     private String mForwardMsgId;//发送这条消息
-    private boolean mChatable;//是否可以聊天
+    private boolean mChatEnabled;//是否可以聊天
     private boolean mFinishChatEnabled;//是否显示结束聊天的按钮
 
     private ExecutorService mFetchQueue;
@@ -187,7 +187,7 @@ public class EaseChatFragment extends EaseBaseFragment {
             mShowUserNick = bundle.getBoolean(EaseConstant.EXTRA_SHOW_NICKNAME, true);
             mIsRoaming = bundle.getBoolean(EaseConstant.EXTRA_IS_ROAMING, false);
             mForwardMsgId = bundle.getString(EaseConstant.EXTRA_FORWARD_MSG_ID);
-            mChatable = bundle.getBoolean(EXTRA_CHAT_ABLE, true);
+            mChatEnabled = bundle.getBoolean(EXTRA_CHAT_ENABLED, true);
             mFinishChatEnabled = bundle.getBoolean(EXTRA_FINISH_CHAT_ENABLED, true);
         }
 
@@ -293,7 +293,7 @@ public class EaseChatFragment extends EaseBaseFragment {
 
         });
 
-        input_menu.setVisibility(mChatable ? View.VISIBLE : View.GONE);
+        input_menu.setVisibility(mChatEnabled ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -396,7 +396,7 @@ public class EaseChatFragment extends EaseBaseFragment {
                 emptyHistory();
                 return true;
             });
-            menuItem.setVisible(mChatable);
+            menuItem.setVisible(mChatEnabled);
 
         } else {
             menuItem.setIcon(R.drawable.ease_to_group_details_normal);
@@ -951,12 +951,12 @@ public class EaseChatFragment extends EaseBaseFragment {
 
     private void setChatableView() {
         if (input_menu != null) {
-            input_menu.setVisibility(mChatable ? View.VISIBLE : View.GONE);
+            input_menu.setVisibility(mChatEnabled ? View.VISIBLE : View.GONE);
         }
 
         if (mChatType == EaseConstant.CHATTYPE_SINGLE) {//单聊
             if (menuItem != null) {
-                menuItem.setVisible(mChatable);
+                menuItem.setVisible(mChatEnabled);
             }
         }
     }
@@ -1154,7 +1154,7 @@ public class EaseChatFragment extends EaseBaseFragment {
         }
 
         public Builder setChatable(boolean chatable) {
-            mBundle.putBoolean(EXTRA_CHAT_ABLE, chatable);
+            mBundle.putBoolean(EXTRA_CHAT_ENABLED, chatable);
             return this;
         }
 
@@ -1211,7 +1211,7 @@ public class EaseChatFragment extends EaseBaseFragment {
                         toolbar.setTitle(mToUsername);
 
                     } else if (ACTION_CLOSE_CONVERSATION.equals(body.action()) && msg.getFrom().equals(mToUsername)) {
-                        mChatable = false;
+                        mChatEnabled = false;
 
                         setChatableView();
                     }
