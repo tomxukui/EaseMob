@@ -61,7 +61,8 @@ public class EaseChatFragment extends EaseBaseFragment {
 
     protected static final String TAG = "EaseChatFragment";
 
-    private static final String EXTRA_CHAT_ABLE = "EXTRA_CHAT_ABLE";
+    private static final String EXTRA_CHAT_ABLE = "EXTRA_CHAT_ABLE";//是否具备聊天功能
+    private static final String EXTRA_FINISH_CHAT_ENABLED = "EXTRA_FINISH_CHAT_ENABLED";//是否显示结束聊天的按钮
 
     protected static final int REQUEST_CODE_MAP = 1;
     protected static final int REQUEST_CODE_CAMERA = 2;
@@ -91,6 +92,7 @@ public class EaseChatFragment extends EaseBaseFragment {
     private boolean mIsRoaming;//是否漫游
     private String mForwardMsgId;//发送这条消息
     private boolean mChatable;//是否可以聊天
+    private boolean mFinishChatEnabled;//是否显示结束聊天的按钮
 
     private ExecutorService mFetchQueue;
     private EMConversation mConversation;
@@ -186,6 +188,7 @@ public class EaseChatFragment extends EaseBaseFragment {
             mIsRoaming = bundle.getBoolean(EaseConstant.EXTRA_IS_ROAMING, false);
             mForwardMsgId = bundle.getString(EaseConstant.EXTRA_FORWARD_MSG_ID);
             mChatable = bundle.getBoolean(EXTRA_CHAT_ABLE, true);
+            mFinishChatEnabled = bundle.getBoolean(EXTRA_FINISH_CHAT_ENABLED, true);
         }
 
         if (mIsRoaming) {
@@ -249,7 +252,16 @@ public class EaseChatFragment extends EaseBaseFragment {
 
         input_menu.addExtendMenuItem(R.drawable.ease_chat_takepic_selector, "拍照", v -> requestPermission(data -> selectPicFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE));
         input_menu.addExtendMenuItem(R.drawable.ease_chat_image_selector, "相册", v -> requestPermission(data -> selectPicFromLocal(), Permission.Group.CAMERA, Permission.Group.STORAGE));
-//        input_menu.addExtendMenuItem(R.drawable.ease_chat_location_selector, "定位", v -> requestPermission(data -> startActivityForResult(EaseBaiduMapActivity.buildIntent(getContext()), REQUEST_CODE_MAP), Permission.Group.LOCATION));
+        if (mFinishChatEnabled) {
+            input_menu.addExtendMenuItem(R.mipmap.ease_ic_finish_chat, "结束", v -> {
+                //透传发送结束聊天的消息
+                EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
+                EMCmdMessageBody body = new EMCmdMessageBody(ACTION_CLOSE_CONVERSATION);
+                message.addBody(body);
+                message.setTo(mToUsername);
+                EMClient.getInstance().chatManager().sendMessage(message);
+            });
+        }
         input_menu.setChatInputMenuListener(new ChatInputMenuListener() {
 
             @Override
