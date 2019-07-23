@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -33,9 +34,9 @@ public class EaseChatInputMenu extends LinearLayout {
     private FrameLayout frame_extend;
     private LayoutInflater mInflater;
 
-    private Handler handler = new Handler();
     private Context mContext;
-    private ChatInputMenuListener listener;
+    private Handler mHandler = new Handler(Looper.getMainLooper());
+    private ChatInputMenuListener mChatInputMenuListener;
 
     public EaseChatInputMenu(Context context) {
         this(context, null);
@@ -71,15 +72,16 @@ public class EaseChatInputMenu extends LinearLayout {
 
             @Override
             public void onTyping(CharSequence s, int start, int before, int count) {
-                if (listener != null) {
-                    listener.onTyping(s, start, before, count);
+                if (mChatInputMenuListener != null) {
+                    mChatInputMenuListener.onTyping(s, start, before, count);
                 }
             }
 
             @Override
             public void onSendBtnClicked(String content) {
-                if (listener != null)
-                    listener.onSendMessage(content);
+                if (mChatInputMenuListener != null) {
+                    mChatInputMenuListener.onSendMessage(content);
+                }
             }
 
             @Override
@@ -104,9 +106,10 @@ public class EaseChatInputMenu extends LinearLayout {
 
             @Override
             public boolean onPressToSpeakBtnTouch(View v, MotionEvent event) {
-                if (listener != null) {
-                    return listener.onPressToSpeakBtnTouch(v, event);
+                if (mChatInputMenuListener != null) {
+                    return mChatInputMenuListener.onPressToSpeakBtnTouch(v, event);
                 }
+
                 return false;
             }
 
@@ -125,8 +128,8 @@ public class EaseChatInputMenu extends LinearLayout {
                     }
 
                 } else {
-                    if (listener != null) {
-                        listener.onBigExpressionClicked(emojicon);
+                    if (mChatInputMenuListener != null) {
+                        mChatInputMenuListener.onBigExpressionClicked(emojicon);
                     }
                 }
             }
@@ -162,7 +165,7 @@ public class EaseChatInputMenu extends LinearLayout {
         if (frame_extend.getVisibility() == View.GONE) {
             hideKeyboard();
 
-            handler.postDelayed(() -> {
+            mHandler.postDelayed(() -> {
                 frame_extend.setVisibility(View.VISIBLE);
                 menu_extend.setVisibility(View.VISIBLE);
                 menu_emoji.setVisibility(View.GONE);
@@ -186,7 +189,7 @@ public class EaseChatInputMenu extends LinearLayout {
         if (frame_extend.getVisibility() == View.GONE) {
             hideKeyboard();
 
-            handler.postDelayed(() -> {
+            mHandler.postDelayed(() -> {
                 frame_extend.setVisibility(View.VISIBLE);
                 menu_extend.setVisibility(View.GONE);
                 menu_emoji.setVisibility(View.VISIBLE);
@@ -238,7 +241,7 @@ public class EaseChatInputMenu extends LinearLayout {
     }
 
     public void setChatInputMenuListener(ChatInputMenuListener listener) {
-        this.listener = listener;
+        mChatInputMenuListener = listener;
     }
 
     public interface ChatInputMenuListener {
