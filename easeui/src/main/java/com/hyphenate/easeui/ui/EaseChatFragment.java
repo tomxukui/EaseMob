@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMMessageListener;
@@ -81,10 +82,10 @@ public class EaseChatFragment extends EaseBaseFragment {
     private static final int TYPING_SHOW_TIME = 5000;//显示正在输入的时长
 
     private EaseToolbar toolbar;
+    private TextView tv_offline;
     private EaseChatMessageList list_message;
     private EaseChatInputMenu input_menu;
     private EaseVoiceRecorderView voice_recorder;
-    private View layout_alert_kicked_off;
     private MenuItem menuItem;
 
     private int mChatType;//聊天类型
@@ -221,9 +222,9 @@ public class EaseChatFragment extends EaseBaseFragment {
     protected void initView(View view, Bundle savedInstanceState) {
         super.initView(view, savedInstanceState);
         toolbar = view.findViewById(R.id.toolbar);
+        tv_offline = view.findViewById(R.id.tv_offline);
         voice_recorder = view.findViewById(R.id.voice_recorder);
         list_message = view.findViewById(R.id.list_message);
-        layout_alert_kicked_off = view.findViewById(R.id.layout_alert_kicked_off);
         input_menu = view.findViewById(R.id.input_menu);
     }
 
@@ -258,12 +259,13 @@ public class EaseChatFragment extends EaseBaseFragment {
             onMessageListInit();
         }
 
+        //离线提示
+        tv_offline.setOnClickListener(v -> onChatRoomViewCreation());
+
         //设置消息列表
         list_message.setShowUserNick(mShowUserNick);
         list_message.getSwipeRefreshLayout().setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light, R.color.holo_orange_light, R.color.holo_red_light);
         list_message.getSwipeRefreshLayout().setOnRefreshListener(() -> mHandler.sendEmptyMessageDelayed(MSG_LOAD_MORE_MESSAGES, 600));
-
-        layout_alert_kicked_off.setOnClickListener(v -> onChatRoomViewCreation());
 
         //设置功能菜单
         input_menu.setVisibility(mChatEnabled ? View.VISIBLE : View.GONE);
@@ -676,8 +678,7 @@ public class EaseChatFragment extends EaseBaseFragment {
 
                     onConversationInit();
                     onMessageListInit();
-
-                    layout_alert_kicked_off.setVisibility(View.GONE);
+                    tv_offline.setVisibility(View.GONE);
                 });
             }
 
@@ -1047,7 +1048,7 @@ public class EaseChatFragment extends EaseBaseFragment {
                         }
                     } else { // BE_KICKED_FOR_OFFLINE
                         EaseToastUtil.show("User be kicked for offline");
-                        layout_alert_kicked_off.setVisibility(View.VISIBLE);
+                        tv_offline.setVisibility(View.VISIBLE);
                     }
                 }
             });

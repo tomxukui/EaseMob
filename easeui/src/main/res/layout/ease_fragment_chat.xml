@@ -10,22 +10,18 @@
         android:id="@+id/toolbar"
         style="@style/EaseToolbar" />
 
-    <LinearLayout
-        android:id="@+id/layout_alert_kicked_off"
+    <!--离线提示-->
+    <TextView
+        android:id="@+id/tv_offline"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/ease_alert_click_bg"
-        android:gravity="center_vertical"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:text="@string/alert_kicked_for_offline"
-            android:textColor="#000" />
-
-    </LinearLayout>
+        android:gravity="center"
+        android:minHeight="50dp"
+        android:padding="10dp"
+        android:text="@string/alert_kicked_for_offline"
+        android:textColor="#000"
+        android:visibility="gone" />
 
     <FrameLayout
         android:layout_width="match_parent"
