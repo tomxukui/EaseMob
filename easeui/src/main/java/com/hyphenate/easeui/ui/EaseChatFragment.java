@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,7 +37,6 @@ import com.hyphenate.easeui.domain.EaseEmojicon;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.model.EaseCompat;
-import com.hyphenate.easeui.model.EaseDingMessageHelper;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseContactUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
@@ -59,24 +59,26 @@ import java.util.concurrent.Executors;
 
 public class EaseChatFragment extends EaseBaseFragment {
 
-    protected static final String TAG = "EaseChatFragment";
-
     private static final String EXTRA_CHAT_ENABLED = "EXTRA_CHAT_ENABLED";//是否具备聊天功能
-    private static final String EXTRA_FINISH_CHAT_ENABLED = "EXTRA_FINISH_CHAT_ENABLED";//是否显示结束聊天的按钮
+    private static final String EXTRA_FINISH_CONVERSATION_ENABLED = "EXTRA_FINISH_CONVERSATION_ENABLED";//是否具备结束问诊功能
+    private static final String EXTRA_LOCATION = "EXTRA_LOCATION";//是否具备定位功能
 
-    protected static final int REQUEST_CODE_MAP = 1;
-    protected static final int REQUEST_CODE_CAMERA = 2;
-    protected static final int REQUEST_CODE_LOCAL = 3;
-    protected static final int REQUEST_CODE_DING_MSG = 4;
+    private static final int REQUEST_LOCATION = 1;
+    private static final int REQUEST_CAMERA = 2;
+    private static final int REQUEST_ALBUM = 3;
 
-    protected static final int MSG_TYPING_BEGIN = 0;
-    protected static final int MSG_TYPING_END = 1;
+    //handle消息类型
+    private static final int MSG_TYPING_BEGIN = 0;
+    private static final int MSG_TYPING_END = 1;
+    private static final int MSG_FINISH_CONVERSATION = 2;
+    private static final int MSG_LOAD_MORE_MESSAGES = 3;
 
-    protected static final String ACTION_TYPING_BEGIN = "TypingBegin";
-    protected static final String ACTION_TYPING_END = "TypingEnd";
-    protected static final String ACTION_CLOSE_CONVERSATION = "cmd_close_conversation";
+    //透传类型
+    private static final String ACTION_TYPING_BEGIN = "TypingBegin";
+    private static final String ACTION_TYPING_END = "TypingEnd";
+    private static final String ACTION_CLOSE_CONVERSATION = "cmd_close_conversation";
 
-    protected static final int TYPING_SHOW_TIME = 5000;
+    private static final int TYPING_SHOW_TIME = 5000;//显示正在输入的时长
 
     private EaseToolbar toolbar;
     private EaseChatMessageList list_message;
@@ -92,7 +94,8 @@ public class EaseChatFragment extends EaseBaseFragment {
     private boolean mIsRoaming;//是否漫游
     private String mForwardMsgId;//发送这条消息
     private boolean mChatEnabled;//是否可以聊天
-    private boolean mFinishChatEnabled;//是否显示结束聊天的按钮
+    private boolean mFinishConversationEnabled;//是否可以结束问诊
+    private boolean mLocatinEnable;//是否可以定位
 
     private ExecutorService mFetchQueue;
     private EMConversation mConversation;
@@ -105,7 +108,7 @@ public class EaseChatFragment extends EaseBaseFragment {
 
             switch (msg.what) {
 
-                case MSG_TYPING_BEGIN: {// Notify typing start
+                case MSG_TYPING_BEGIN: {//正在输入...
                     if (!mTurnOnTyping) {
                         return;
                     }
@@ -118,10 +121,8 @@ public class EaseChatFragment extends EaseBaseFragment {
                         removeMessages(MSG_TYPING_END);
 
                     } else {
-                        // Send TYPING-BEGIN cmd msg
                         EMMessage beginMsg = EMMessage.createSendMessage(EMMessage.Type.CMD);
                         EMCmdMessageBody body = new EMCmdMessageBody(ACTION_TYPING_BEGIN);
-                        // Only deliver this cmd msg to online users
                         body.deliverOnlineOnly(true);
                         beginMsg.addBody(body);
                         beginMsg.setTo(mToUsername);
@@ -132,7 +133,7 @@ public class EaseChatFragment extends EaseBaseFragment {
                 }
                 break;
 
-                case MSG_TYPING_END: {
+                case MSG_TYPING_END: {//输入结束...
                     if (!mTurnOnTyping) {
                         return;
                     }
@@ -151,6 +152,26 @@ public class EaseChatFragment extends EaseBaseFragment {
                 }
                 break;
 
+                case MSG_FINISH_CONVERSATION: {//结束聊天
+                    //透传发送结束聊天的消息
+                    EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
+                    EMCmdMessageBody body = new EMCmdMessageBody(ACTION_CLOSE_CONVERSATION);
+                    message.addBody(body);
+                    message.setTo(mToUsername);
+                    EMClient.getInstance().chatManager().sendMessage(message);
+                }
+                break;
+
+                case MSG_LOAD_MORE_MESSAGES: {//加载更多消息
+                    if (mIsRoaming) {
+                        loadMoreRoamingMessages();
+
+                    } else {
+                        loadMoreLocalMessage();
+                    }
+                }
+                break;
+
                 default:
                     break;
 
@@ -159,7 +180,6 @@ public class EaseChatFragment extends EaseBaseFragment {
 
     };
 
-    protected Handler handler = new Handler();
     protected File cameraFile;
 
     protected boolean isloading;
@@ -188,7 +208,8 @@ public class EaseChatFragment extends EaseBaseFragment {
             mIsRoaming = bundle.getBoolean(EaseConstant.EXTRA_IS_ROAMING, false);
             mForwardMsgId = bundle.getString(EaseConstant.EXTRA_FORWARD_MSG_ID);
             mChatEnabled = bundle.getBoolean(EXTRA_CHAT_ENABLED, true);
-            mFinishChatEnabled = bundle.getBoolean(EXTRA_FINISH_CHAT_ENABLED, true);
+            mFinishConversationEnabled = bundle.getBoolean(EXTRA_FINISH_CONVERSATION_ENABLED, true);
+            mLocatinEnable = bundle.getBoolean(EXTRA_LOCATION, true);
         }
 
         if (mIsRoaming) {
@@ -237,30 +258,26 @@ public class EaseChatFragment extends EaseBaseFragment {
             onMessageListInit();
         }
 
+        //设置消息列表
         list_message.setShowUserNick(mShowUserNick);
         list_message.getSwipeRefreshLayout().setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light, R.color.holo_orange_light, R.color.holo_red_light);
-        list_message.getSwipeRefreshLayout().setOnRefreshListener(() -> handler.postDelayed(() -> {
-            if (!mIsRoaming) {
-                loadMoreLocalMessage();
-
-            } else {
-                loadMoreRoamingMessages();
-            }
-        }, 600));
+        list_message.getSwipeRefreshLayout().setOnRefreshListener(() -> mHandler.sendEmptyMessageDelayed(MSG_LOAD_MORE_MESSAGES, 600));
 
         layout_alert_kicked_off.setOnClickListener(v -> onChatRoomViewCreation());
 
-        input_menu.addExtendMenuItem(R.drawable.ease_chat_takepic_selector, "拍照", v -> requestPermission(data -> selectPicFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE));
-        input_menu.addExtendMenuItem(R.drawable.ease_chat_image_selector, "相册", v -> requestPermission(data -> selectPicFromLocal(), Permission.Group.CAMERA, Permission.Group.STORAGE));
-        if (mFinishChatEnabled) {
-            input_menu.addExtendMenuItem(R.mipmap.ease_ic_finish_chat, "结束", v -> {
-                //透传发送结束聊天的消息
-                EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
-                EMCmdMessageBody body = new EMCmdMessageBody(ACTION_CLOSE_CONVERSATION);
-                message.addBody(body);
-                message.setTo(mToUsername);
-                EMClient.getInstance().chatManager().sendMessage(message);
+        //设置功能菜单
+        input_menu.setVisibility(mChatEnabled ? View.VISIBLE : View.GONE);
+        input_menu.addExtendMenuItem(R.mipmap.ease_ic_camera, "拍照", v -> requestPermission(data -> pickPhotoFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE));
+        input_menu.addExtendMenuItem(R.mipmap.ease_ic_album, "相册", v -> requestPermission(data -> pickPhotoFromAlbum(), Permission.Group.CAMERA, Permission.Group.STORAGE));
+        if (mLocatinEnable) {
+            input_menu.addExtendMenuItem(R.mipmap.ease_ic_location, "定位", v -> {
+                Intent intent = new Intent(getContext(), EaseBaiduMapActivity.class);
+
+                startActivityForResult(intent, REQUEST_LOCATION);
             });
+        }
+        if (mFinishConversationEnabled) {
+            input_menu.addExtendMenuItem(R.mipmap.ease_ic_finish, "结束", v -> mHandler.sendEmptyMessage(MSG_FINISH_CONVERSATION));
         }
         input_menu.setChatInputMenuListener(new ChatInputMenuListener() {
 
@@ -292,8 +309,6 @@ public class EaseChatFragment extends EaseBaseFragment {
             }
 
         });
-
-        input_menu.setVisibility(mChatEnabled ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -321,7 +336,6 @@ public class EaseChatFragment extends EaseBaseFragment {
     @Override
     public void onPause() {
         super.onPause();
-        handler.removeCallbacksAndMessages(null);
         mHandler.sendEmptyMessage(MSG_TYPING_END);
     }
 
@@ -390,7 +404,7 @@ public class EaseChatFragment extends EaseBaseFragment {
 
         //设置右边按钮
         if (mChatType == EaseConstant.CHATTYPE_SINGLE) {//单聊
-            menuItem.setIcon(R.drawable.ease_mm_title_remove);
+            menuItem.setIcon(R.mipmap.ease_ic_clear);
             menuItem.setTitle("清空");
             menuItem.setOnMenuItemClickListener(item -> {
                 emptyHistory();
@@ -399,7 +413,7 @@ public class EaseChatFragment extends EaseBaseFragment {
             menuItem.setVisible(mChatEnabled);
 
         } else {
-            menuItem.setIcon(R.drawable.ease_to_group_details_normal);
+            menuItem.setIcon(R.mipmap.ease_ic_group);
             menuItem.setTitle("成员列表");
             menuItem.setOnMenuItemClickListener(item -> {
                 toGroupDetails();
@@ -576,7 +590,7 @@ public class EaseChatFragment extends EaseBaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
 
-            case REQUEST_CODE_CAMERA: {
+            case REQUEST_CAMERA: {
                 if (resultCode == Activity.RESULT_OK) {
                     if (cameraFile != null && cameraFile.exists()) {
                         sendImageMessage(cameraFile.getAbsolutePath());
@@ -585,37 +599,33 @@ public class EaseChatFragment extends EaseBaseFragment {
             }
             break;
 
-            case REQUEST_CODE_LOCAL: {
+            case REQUEST_ALBUM: {
                 if (resultCode == Activity.RESULT_OK) {
                     if (data != null) {
-                        Uri selectedImage = data.getData();
-                        if (selectedImage != null) {
-                            sendPicByUri(selectedImage);
+                        Uri uri = data.getData();
+
+                        if (uri != null) {
+                            sendPicByUri(uri);
                         }
                     }
                 }
             }
             break;
 
-            case REQUEST_CODE_MAP: {
+            case REQUEST_LOCATION: {
                 if (resultCode == Activity.RESULT_OK) {
-                    double latitude = data.getDoubleExtra("latitude", 0);
-                    double longitude = data.getDoubleExtra("longitude", 0);
-                    String locationAddress = data.getStringExtra("address");
-                    if (locationAddress != null && !locationAddress.equals("")) {
-                        sendLocationMessage(latitude, longitude, locationAddress);
-                    } else {
-                        EaseToastUtil.show(R.string.unable_to_get_loaction);
-                    }
-                }
-            }
-            break;
+                    if (data != null) {
+                        double latitude = data.getDoubleExtra("latitude", 0);
+                        double longitude = data.getDoubleExtra("longitude", 0);
+                        String address = data.getStringExtra("address");
 
-            case REQUEST_CODE_DING_MSG: {
-                if (resultCode == Activity.RESULT_OK) {
-                    String msgContent = data.getStringExtra("msg");
-                    EMMessage dingMsg = EaseDingMessageHelper.get().createDingMessage(mToUsername, msgContent);
-                    sendMessage(dingMsg);
+                        if (!TextUtils.isEmpty(address)) {
+                            sendLocationMessage(latitude, longitude, address);
+
+                        } else {
+                            EaseToastUtil.show(R.string.unable_to_get_loaction);
+                        }
+                    }
                 }
             }
             break;
@@ -883,9 +893,9 @@ public class EaseChatFragment extends EaseBaseFragment {
     }
 
     /**
-     * capture new image
+     * 拍照获取照片
      */
-    protected void selectPicFromCamera() {
+    private void pickPhotoFromCamera() {
         if (!EaseCommonUtils.isSdcardExist()) {
             EaseToastUtil.show(R.string.sd_card_does_not_exist);
             return;
@@ -893,13 +903,16 @@ public class EaseChatFragment extends EaseBaseFragment {
 
         cameraFile = new File(PathUtil.getInstance().getImagePath(), EMClient.getInstance().getCurrentUser() + System.currentTimeMillis() + ".jpg");
         cameraFile.getParentFile().mkdirs();
-        startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, EaseCompat.getUriForFile(getContext(), cameraFile)), REQUEST_CODE_CAMERA);
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, EaseCompat.getUriForFile(getContext(), cameraFile));
+        startActivityForResult(intent, REQUEST_CAMERA);
     }
 
     /**
-     * select local image
+     * 从相册中选择照片
      */
-    protected void selectPicFromLocal() {
+    private void pickPhotoFromAlbum() {
         Intent intent;
         if (Build.VERSION.SDK_INT < 19) {
             intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -908,7 +921,7 @@ public class EaseChatFragment extends EaseBaseFragment {
         } else {
             intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         }
-        startActivityForResult(intent, REQUEST_CODE_LOCAL);
+        startActivityForResult(intent, REQUEST_ALBUM);
     }
 
     /**

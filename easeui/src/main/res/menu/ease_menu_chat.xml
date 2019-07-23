@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/ease_action"
-        android:icon="@drawable/ease_mm_title_remove"
+        android:icon="@mipmap/ease_ic_clear"
         android:orderInCategory="100"
         android:title=""
         app:showAsAction="always" />
