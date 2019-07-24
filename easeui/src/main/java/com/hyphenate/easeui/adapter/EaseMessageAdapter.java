@@ -19,6 +19,7 @@ import com.hyphenate.easeui.widget.EaseChatMessageList.MessageListItemClickListe
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.easeui.widget.presenter.EaseChatBigExpressionPresenter;
 import com.hyphenate.easeui.widget.presenter.EaseChatFilePresenter;
+import com.hyphenate.easeui.widget.presenter.EaseChatFinishConversationPresenter;
 import com.hyphenate.easeui.widget.presenter.EaseChatImagePresenter;
 import com.hyphenate.easeui.widget.presenter.EaseChatLocationPresenter;
 import com.hyphenate.easeui.widget.presenter.EaseChatRowPresenter;
@@ -48,6 +49,7 @@ public class EaseMessageAdapter extends BaseAdapter {
     private static final int MESSAGE_TYPE_RECV_FILE = 11;
     private static final int MESSAGE_TYPE_SENT_EXPRESSION = 12;
     private static final int MESSAGE_TYPE_RECV_EXPRESSION = 13;
+    private static final int MESSAGE_TYPE_FINISH_CONVERSATION = 14;
 
     private EMConversation conversation;
     EMMessage[] messages = null;
@@ -70,9 +72,8 @@ public class EaseMessageAdapter extends BaseAdapter {
     }
 
     Handler handler = new Handler() {
+
         private void refreshList() {
-            // you should not call getAllMessages() in UI thread
-            // otherwise there is problem when refreshing UI and there is new message arrive
             java.util.List<EMMessage> var = conversation.getAllMessages();
             messages = var.toArray(new EMMessage[var.size()]);
             conversation.markAllMessagesAsRead();
@@ -82,18 +83,25 @@ public class EaseMessageAdapter extends BaseAdapter {
         @Override
         public void handleMessage(android.os.Message message) {
             switch (message.what) {
-                case HANDLER_MESSAGE_REFRESH_LIST:
+
+                case HANDLER_MESSAGE_REFRESH_LIST: {
                     refreshList();
-                    break;
-                case HANDLER_MESSAGE_SELECT_LAST:
+                }
+                break;
+
+                case HANDLER_MESSAGE_SELECT_LAST: {
                     if (messages != null && messages.length > 0) {
                         listView.setSelection(messages.length - 1);
                     }
-                    break;
-                case HANDLER_MESSAGE_SEEK_TO:
+                }
+                break;
+
+                case HANDLER_MESSAGE_SEEK_TO: {
                     int position = message.arg1;
                     listView.setSelection(position);
-                    break;
+                }
+                break;
+
                 default:
                     break;
             }
@@ -104,6 +112,7 @@ public class EaseMessageAdapter extends BaseAdapter {
         if (handler.hasMessages(HANDLER_MESSAGE_REFRESH_LIST)) {
             return;
         }
+
         android.os.Message msg = handler.obtainMessage(HANDLER_MESSAGE_REFRESH_LIST);
         handler.sendMessage(msg);
     }
@@ -113,6 +122,7 @@ public class EaseMessageAdapter extends BaseAdapter {
      */
     public void refreshSelectLast() {
         final int TIME_DELAY_REFRESH_SELECT_LAST = 100;
+
         handler.removeMessages(HANDLER_MESSAGE_REFRESH_LIST);
         handler.removeMessages(HANDLER_MESSAGE_SELECT_LAST);
         handler.sendEmptyMessageDelayed(HANDLER_MESSAGE_REFRESH_LIST, TIME_DELAY_REFRESH_SELECT_LAST);
@@ -145,38 +155,45 @@ public class EaseMessageAdapter extends BaseAdapter {
     }
 
     /**
-     * get number of message type, here 14 = (EMMessage.Type) * 2
+     * get number of message type, here 15 = (EMMessage.Type) * 2
      */
     public int getViewTypeCount() {
-        if (customRowProvider != null && customRowProvider.getCustomChatRowTypeCount() > 0) {
-            return customRowProvider.getCustomChatRowTypeCount() + 14;
-        }
-        return 14;
-    }
+        int count = 15;
 
+        if (customRowProvider != null && customRowProvider.getCustomChatRowTypeCount() > 0) {
+            count += customRowProvider.getCustomChatRowTypeCount();
+        }
+
+        return count;
+    }
 
     /**
      * get type of item
      */
     public int getItemViewType(int position) {
         EMMessage message = getItem(position);
+
         if (message == null) {
             return -1;
         }
 
         if (customRowProvider != null && customRowProvider.getCustomChatRowType(message) > 0) {
-            return customRowProvider.getCustomChatRowType(message) + 13;
+            return customRowProvider.getCustomChatRowType(message) + 14;
         }
 
         if (message.getType() == EMMessage.Type.TXT) {
-            if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)) {
+            if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, false)) {//结束问诊消息
+                return MESSAGE_TYPE_FINISH_CONVERSATION;
+
+            } else if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)) {//表情消息
                 return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_EXPRESSION : MESSAGE_TYPE_SENT_EXPRESSION;
+
+            } else {//其他文本消息
+                return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TXT : MESSAGE_TYPE_SENT_TXT;
             }
-            return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TXT : MESSAGE_TYPE_SENT_TXT;
         }
         if (message.getType() == EMMessage.Type.IMAGE) {
             return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_IMAGE : MESSAGE_TYPE_SENT_IMAGE;
-
         }
         if (message.getType() == EMMessage.Type.LOCATION) {
             return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_LOCATION : MESSAGE_TYPE_SENT_LOCATION;
@@ -202,28 +219,45 @@ public class EaseMessageAdapter extends BaseAdapter {
         EaseChatRowPresenter presenter = null;
 
         switch (message.getType()) {
-            case TXT:
-                if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)) {
+
+            case TXT: {
+                if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, false)) {//结束问诊消息
+                    presenter = new EaseChatFinishConversationPresenter();
+
+                } else if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)) {
                     presenter = new EaseChatBigExpressionPresenter();
+
                 } else {
                     presenter = new EaseChatTextPresenter();
                 }
-                break;
-            case LOCATION:
+            }
+            break;
+
+            case LOCATION: {
                 presenter = new EaseChatLocationPresenter();
-                break;
-            case FILE:
+            }
+            break;
+
+            case FILE: {
                 presenter = new EaseChatFilePresenter();
-                break;
-            case IMAGE:
+            }
+            break;
+
+            case IMAGE: {
                 presenter = new EaseChatImagePresenter();
-                break;
-            case VOICE:
+            }
+            break;
+
+            case VOICE: {
                 presenter = new EaseChatVoicePresenter();
-                break;
-            case VIDEO:
+            }
+            break;
+
+            case VIDEO: {
                 presenter = new EaseChatVideoPresenter();
-                break;
+            }
+            break;
+
             default:
                 break;
         }
@@ -253,7 +287,6 @@ public class EaseMessageAdapter extends BaseAdapter {
     public void setItemStyle(EaseMessageListItemStyle itemStyle) {
         this.itemStyle = itemStyle;
     }
-
 
     public void setItemClickListener(MessageListItemClickListener listener) {
         itemClickListener = listener;

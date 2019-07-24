@@ -49,7 +49,6 @@ public class EaseChatRowText extends EaseChatRow {
                 break;
 
             case SUCCESS:
-
                 onMessageSuccess();
                 break;
 

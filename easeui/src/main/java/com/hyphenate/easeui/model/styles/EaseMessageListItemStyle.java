@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
  */
 
 public class EaseMessageListItemStyle {
+
     private boolean showUserNick;
     private boolean showAvatar;
     private Drawable myBubbleBg;

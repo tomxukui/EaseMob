@@ -172,8 +172,8 @@ public class EaseChatFragment extends EaseBaseFragment {
                     EMClient.getInstance().chatManager().sendMessage(message);
 
                     //发送一条文本消息
-                    EMMessage textMessage = EMMessage.createTxtSendMessage("cmd_close_conversation", mToUsername);
-                    textMessage.setAttribute("special", "1");
+                    EMMessage textMessage = EMMessage.createTxtSendMessage("本次问诊已结束", mToUsername);
+                    textMessage.setAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, true);
                     EaseChatFragment.this.sendMessage(textMessage);
                 }
                 break;

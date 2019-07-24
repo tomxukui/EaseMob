@@ -8,6 +8,8 @@ public class EaseConstant {
     public static final String MESSAGE_ATTR_IS_BIG_EXPRESSION = "em_is_big_expression";
     public static final String MESSAGE_ATTR_EXPRESSION_ID = "em_expression_id";
 
+    public static final String MESSAGE_ATTR_FINISH_CONVERSATION = "MESSAGE_ATTR_FINISH_CONVERSATION";
+
     public static final String MESSAGE_ATTR_AT_MSG = "em_at_list";
     public static final String MESSAGE_ATTR_VALUE_AT_MSG_ALL = "ALL";
 
