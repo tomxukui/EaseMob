@@ -190,7 +190,7 @@ public class EaseChatFragment extends EaseBaseFragment {
     protected ChatRoomListener chatRoomListener;
     protected EMMessage contextMenuMessage;
 
-    private boolean isMessageListInited;
+    private boolean mIsMessagesInited;//消息列表是否已初始化
 
     @Override
     protected int getLayoutResID() {
@@ -326,7 +326,7 @@ public class EaseChatFragment extends EaseBaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (isMessageListInited) {
+        if (mIsMessagesInited) {
             list_message.refresh();
         }
 
@@ -472,7 +472,7 @@ public class EaseChatFragment extends EaseBaseFragment {
             return false;
         });
 
-        isMessageListInited = true;
+        mIsMessagesInited = true;
     }
 
     protected void setListItemClickListener() {
@@ -692,9 +692,7 @@ public class EaseChatFragment extends EaseBaseFragment {
     }
 
     /**
-     * input @
-     *
-     * @param username
+     * 输入@
      */
     protected void inputAtUsername(String username, boolean autoAddAtSymbol) {
         if (EMClient.getInstance().getCurrentUser().equals(username) || mChatType != EaseConstant.CHATTYPE_GROUP) {
@@ -711,18 +709,19 @@ public class EaseChatFragment extends EaseBaseFragment {
     }
 
     /**
-     * input @
-     *
-     * @param username
+     * 输入@
      */
     protected void inputAtUsername(String username) {
         inputAtUsername(username, true);
     }
 
-    //send message
+    /**
+     * 发送文字消息
+     */
     protected void sendTextMessage(String content) {
         if (EaseAtMessageHelper.get().containsAtUsername(content)) {
             sendAtMessage(content);
+
         } else {
             EMMessage message = EMMessage.createTxtSendMessage(content, mToUsername);
             sendMessage(message);
@@ -730,60 +729,84 @@ public class EaseChatFragment extends EaseBaseFragment {
     }
 
     /**
-     * send @ message, only support group chat message
-     *
-     * @param content
+     * 发送@文字消息, 仅支持群聊
      */
     @SuppressWarnings("ConstantConditions")
-    private void sendAtMessage(String content) {
+    protected void sendAtMessage(String content) {
         if (mChatType != EaseConstant.CHATTYPE_GROUP) {
             return;
         }
+
         EMMessage message = EMMessage.createTxtSendMessage(content, mToUsername);
         EMGroup group = EMClient.getInstance().groupManager().getGroup(mToUsername);
         if (EMClient.getInstance().getCurrentUser().equals(group.getOwner()) && EaseAtMessageHelper.get().containsAtAll(content)) {
             message.setAttribute(EaseConstant.MESSAGE_ATTR_AT_MSG, EaseConstant.MESSAGE_ATTR_VALUE_AT_MSG_ALL);
+
         } else {
-            message.setAttribute(EaseConstant.MESSAGE_ATTR_AT_MSG,
-                    EaseAtMessageHelper.get().atListToJsonArray(EaseAtMessageHelper.get().getAtMessageUsernames(content)));
+            List<String> atMessageUsernames = EaseAtMessageHelper.get().getAtMessageUsernames(content);
+
+            message.setAttribute(EaseConstant.MESSAGE_ATTR_AT_MSG, EaseAtMessageHelper.get().atListToJsonArray(atMessageUsernames));
         }
+
         sendMessage(message);
     }
 
+    /**
+     * 发送大表情消息
+     */
     protected void sendBigExpressionMessage(String name, String identityCode) {
         EMMessage message = EaseCommonUtils.createExpressionMessage(mToUsername, name, identityCode);
         sendMessage(message);
     }
 
+    /**
+     * 发送语音消息
+     */
     protected void sendVoiceMessage(String filePath, int length) {
         EMMessage message = EMMessage.createVoiceSendMessage(filePath, length, mToUsername);
         sendMessage(message);
     }
 
+    /**
+     * 发送图片消息
+     */
     protected void sendImageMessage(String imagePath) {
         EMMessage message = EMMessage.createImageSendMessage(imagePath, false, mToUsername);
         sendMessage(message);
     }
 
+    /**
+     * 发送定位消息
+     * */
     protected void sendLocationMessage(double latitude, double longitude, String locationAddress) {
         EMMessage message = EMMessage.createLocationSendMessage(latitude, longitude, locationAddress, mToUsername);
         sendMessage(message);
     }
 
+    /**
+     * 发送视频消息
+     */
     protected void sendVideoMessage(String videoPath, String thumbPath, int videoLength) {
         EMMessage message = EMMessage.createVideoSendMessage(videoPath, thumbPath, videoLength, mToUsername);
         sendMessage(message);
     }
 
+    /**
+     * 发送文件消息
+     */
     protected void sendFileMessage(String filePath) {
         EMMessage message = EMMessage.createFileSendMessage(filePath, mToUsername);
         sendMessage(message);
     }
 
+    /**
+     * 发送消息
+     */
     protected void sendMessage(EMMessage message) {
         if (message == null) {
             return;
         }
+
         if (chatFragmentHelper != null) {
             chatFragmentHelper.onSetMessageAttributes(message);
         }
@@ -814,7 +837,7 @@ public class EaseChatFragment extends EaseBaseFragment {
         EMClient.getInstance().chatManager().sendMessage(message);
 
         //refresh ui
-        if (isMessageListInited) {
+        if (mIsMessagesInited) {
             list_message.refreshSelectLast();
         }
     }
@@ -823,24 +846,25 @@ public class EaseChatFragment extends EaseBaseFragment {
 
         @Override
         public void onSuccess() {
-            if (isMessageListInited) {
+            if (mIsMessagesInited) {
                 list_message.refresh();
             }
         }
 
         @Override
         public void onError(int code, String error) {
-            if (isMessageListInited) {
+            if (mIsMessagesInited) {
                 list_message.refresh();
             }
         }
 
         @Override
         public void onProgress(int progress, String status) {
-            if (isMessageListInited) {
+            if (mIsMessagesInited) {
                 list_message.refresh();
             }
         }
+
     };
 
     /**
@@ -1235,28 +1259,28 @@ public class EaseChatFragment extends EaseBaseFragment {
 
         @Override
         public void onMessageRead(List<EMMessage> list) {
-            if (isMessageListInited) {
+            if (mIsMessagesInited) {
                 getActivity().runOnUiThread(() -> list_message.refresh());
             }
         }
 
         @Override
         public void onMessageDelivered(List<EMMessage> list) {
-            if (isMessageListInited) {
+            if (mIsMessagesInited) {
                 getActivity().runOnUiThread(() -> list_message.refresh());
             }
         }
 
         @Override
         public void onMessageRecalled(List<EMMessage> list) {
-            if (isMessageListInited) {
+            if (mIsMessagesInited) {
                 getActivity().runOnUiThread(() -> list_message.refresh());
             }
         }
 
         @Override
         public void onMessageChanged(EMMessage emMessage, Object o) {
-            if (isMessageListInited) {
+            if (mIsMessagesInited) {
                 getActivity().runOnUiThread(() -> list_message.refresh());
             }
         }
