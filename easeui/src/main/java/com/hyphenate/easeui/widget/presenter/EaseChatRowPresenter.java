@@ -1,7 +1,6 @@
 package com.hyphenate.easeui.widget.presenter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.widget.BaseAdapter;
 
 import com.hyphenate.chat.EMMessage;
@@ -12,6 +11,7 @@ import com.hyphenate.easeui.widget.EaseChatMessageList;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 
 public abstract class EaseChatRowPresenter implements EaseChatRow.EaseChatRowActionCallback {
+
     private EaseChatRow chatRow;
 
     private Context context;
