@@ -170,6 +170,11 @@ public class EaseChatFragment extends EaseBaseFragment {
                     message.addBody(body);
                     message.setTo(mToUsername);
                     EMClient.getInstance().chatManager().sendMessage(message);
+
+                    //发送一条文本消息
+                    EMMessage textMessage = EMMessage.createTxtSendMessage("cmd_close_conversation", mToUsername);
+                    textMessage.setAttribute("special", "1");
+                    EaseChatFragment.this.sendMessage(textMessage);
                 }
                 break;
 
