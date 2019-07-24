@@ -89,6 +89,7 @@ public class EaseConversationListFragment extends EaseBaseFragment {
                 startActivity(new EaseChatActivity.Builder(getContext())
                         .setChatType(chatType)
                         .setToUser(conversation.conversationId())
+                        .setFinishConversationEnabled(true)
                         .create());
             }
         });

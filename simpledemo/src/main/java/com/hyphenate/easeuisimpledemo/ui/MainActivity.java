@@ -22,7 +22,6 @@ import com.hyphenate.easeuisimpledemo.R;
 
 public class MainActivity extends EaseBaseActivity {
 
-    private TextView unreadLabel;
     private Button[] mTabs;
     private EaseConversationListFragment conversationListFragment;
     private EaseContactListFragment contactListFragment;
@@ -41,12 +40,6 @@ public class MainActivity extends EaseBaseActivity {
     protected void initData() {
         super.initData();
         EaseContactUtil.getInstance().saveContactList(createUsers());
-    }
-
-    @Override
-    protected void initView() {
-        super.initView();
-        unreadLabel = findViewById(R.id.unread_msg_number);
     }
 
     @Override
