@@ -171,7 +171,7 @@ public class EaseChatFragment extends EaseBaseFragment {
                     message.setTo(mToUsername);
                     EMClient.getInstance().chatManager().sendMessage(message);
 
-                    //新增一条文本消息
+                    //新增一条文本消息到本地数据库
                     if (mConversation != null) {
                         EMMessage textMessage = EMMessage.createTxtSendMessage("本次问诊已结束", mToUsername);
                         textMessage.setAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, true);
