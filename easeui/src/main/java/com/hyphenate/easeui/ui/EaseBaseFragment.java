@@ -1,5 +1,6 @@
 package com.hyphenate.easeui.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -79,6 +80,14 @@ public abstract class EaseBaseFragment extends Fragment implements EaseIBase {
     @Override
     public void hideSoftKeyboard() {
         EaseSoftInputUtil.hide(getActivity());
+    }
+
+    protected void finish() {
+        Activity activity = getActivity();
+
+        if (activity != null && !activity.isFinishing()) {
+            activity.finish();
+        }
     }
 
     @Override

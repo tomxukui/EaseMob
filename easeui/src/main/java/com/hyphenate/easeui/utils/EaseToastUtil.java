@@ -1,5 +1,6 @@
 package com.hyphenate.easeui.utils;
 
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.hyphenate.easeui.EaseUI;
@@ -19,11 +20,11 @@ public class EaseToastUtil {
     }
 
     public static void show(String msg) {
-        Toast.makeText(EaseUI.getInstance().getContext(), msg, Toast.LENGTH_SHORT).show();
+        show(msg, Gravity.CENTER);
     }
 
     public static void show(int resId) {
-        Toast.makeText(EaseUI.getInstance().getContext(), resId, Toast.LENGTH_SHORT).show();
+        show(resId, Gravity.CENTER);
     }
 
 }

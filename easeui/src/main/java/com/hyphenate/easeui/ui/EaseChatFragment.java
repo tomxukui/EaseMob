@@ -73,7 +73,6 @@ public class EaseChatFragment extends EaseBaseFragment {
     private static final int MSG_TYPING_BEGIN = 0;
     private static final int MSG_TYPING_END = 1;
     private static final int MSG_FINISH_CONVERSATION = 2;
-    private static final int MSG_LOAD_MORE_MESSAGES = 3;
 
     //透传类型
     private static final String ACTION_TYPING_BEGIN = "TypingBegin";
@@ -161,16 +160,6 @@ public class EaseChatFragment extends EaseBaseFragment {
                     message.addBody(body);
                     message.setTo(mToUsername);
                     EMClient.getInstance().chatManager().sendMessage(message);
-                }
-                break;
-
-                case MSG_LOAD_MORE_MESSAGES: {//加载更多消息
-                    if (mIsRoaming) {
-                        loadMoreRoamingMessages();
-
-                    } else {
-                        loadMoreLocalMessage();
-                    }
                 }
                 break;
 
@@ -266,7 +255,7 @@ public class EaseChatFragment extends EaseBaseFragment {
         //设置消息列表
         list_message.setShowUserNick(mShowUserNick);
         list_message.getSwipeRefreshLayout().setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light, R.color.holo_orange_light, R.color.holo_red_light);
-        list_message.getSwipeRefreshLayout().setOnRefreshListener(() -> mHandler.sendEmptyMessageDelayed(MSG_LOAD_MORE_MESSAGES, 600));
+        list_message.getSwipeRefreshLayout().setOnRefreshListener(() -> mHandler.postDelayed(() -> loadMoreMessages(), 600));
 
         //设置功能菜单
         input_menu.setVisibility(mChatEnabled ? View.VISIBLE : View.GONE);
@@ -532,7 +521,22 @@ public class EaseChatFragment extends EaseBaseFragment {
         });
     }
 
-    private void loadMoreLocalMessage() {
+    /**
+     * 加载更多消息列表
+     */
+    private void loadMoreMessages() {
+        if (mIsRoaming) {
+            loadMoreRoamingMessages();
+
+        } else {
+            loadMoreLocalMessages();
+        }
+    }
+
+    /**
+     * 加载本地更多消息列表
+     */
+    private void loadMoreLocalMessages() {
         if (list_message.getListView().getFirstVisiblePosition() == 0 && !isloading && haveMoreData) {
             List<EMMessage> messages;
 
@@ -564,6 +568,9 @@ public class EaseChatFragment extends EaseBaseFragment {
         list_message.getSwipeRefreshLayout().setRefreshing(false);
     }
 
+    /**
+     * 加载更多漫游消息列表
+     */
     private void loadMoreRoamingMessages() {
         if (!haveMoreData) {
             EaseToastUtil.show(R.string.no_more_messages);
@@ -581,10 +588,7 @@ public class EaseChatFragment extends EaseBaseFragment {
                     e.printStackTrace();
 
                 } finally {
-                    Activity activity = getActivity();
-                    if (activity != null) {
-                        activity.runOnUiThread(() -> loadMoreLocalMessage());
-                    }
+                    mHandler.post(() -> loadMoreLocalMessages());
                 }
             });
         }
@@ -643,7 +647,7 @@ public class EaseChatFragment extends EaseBaseFragment {
 
     public void onBackPressed() {
         if (input_menu.onBackPressed()) {
-            getActivity().finish();
+            finish();
 
             if (mChatType == EaseConstant.CHATTYPE_GROUP) {
                 EaseAtMessageHelper.get().removeAtMeGroup(mToUsername);
@@ -688,7 +692,8 @@ public class EaseChatFragment extends EaseBaseFragment {
             @Override
             public void onError(final int error, String errorMsg) {
                 mHandler.post(() -> pd.dismiss());
-                getActivity().finish();
+
+                finish();
             }
 
         });
@@ -949,6 +954,7 @@ public class EaseChatFragment extends EaseBaseFragment {
         } else {
             intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         }
+
         startActivityForResult(intent, REQUEST_ALBUM);
     }
 
@@ -1055,10 +1061,8 @@ public class EaseChatFragment extends EaseBaseFragment {
             mHandler.post(() -> {
                 if (roomId.equals(mToUsername)) {
                     EaseToastUtil.show(R.string.the_current_chat_room_destroyed);
-                    Activity activity = getActivity();
-                    if (activity != null && !activity.isFinishing()) {
-                        activity.finish();
-                    }
+
+                    finish();
                 }
             });
         }
@@ -1069,12 +1073,12 @@ public class EaseChatFragment extends EaseBaseFragment {
                 if (roomId.equals(mToUsername)) {
                     if (reason == EMAChatRoomManagerListener.BE_KICKED) {
                         EaseToastUtil.show(R.string.quiting_the_chat_room);
-                        Activity activity = getActivity();
-                        if (activity != null && !activity.isFinishing()) {
-                            activity.finish();
-                        }
+
+                        finish();
+
                     } else { // BE_KICKED_FOR_OFFLINE
                         EaseToastUtil.show("User be kicked for offline");
+
                         tv_offline.setVisibility(View.VISIBLE);
                     }
                 }
@@ -1291,19 +1295,17 @@ public class EaseChatFragment extends EaseBaseFragment {
     };
 
     /**
-     * listen the group event
+     * 群回调
      */
     private final class GroupListener extends EaseGroupListener {
 
         @Override
         public void onUserRemoved(final String groupId, String groupName) {
             mHandler.post(() -> {
-                if (mToUsername.equals(groupId)) {
+                if (TextUtils.equals(mToUsername, groupId)) {
                     EaseToastUtil.show(R.string.you_are_group);
-                    Activity activity = getActivity();
-                    if (activity != null && !activity.isFinishing()) {
-                        activity.finish();
-                    }
+
+                    finish();
                 }
             });
         }
@@ -1311,12 +1313,10 @@ public class EaseChatFragment extends EaseBaseFragment {
         @Override
         public void onGroupDestroyed(final String groupId, String groupName) {
             mHandler.post(() -> {
-                if (mToUsername.equals(groupId)) {
+                if (TextUtils.equals(mToUsername, groupId)) {
                     EaseToastUtil.show(R.string.the_current_group_destroyed);
-                    Activity activity = getActivity();
-                    if (activity != null && !activity.isFinishing()) {
-                        activity.finish();
-                    }
+
+                    finish();
                 }
             });
         }
