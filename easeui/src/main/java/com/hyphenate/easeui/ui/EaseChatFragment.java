@@ -182,6 +182,10 @@ public class EaseChatFragment extends EaseBaseFragment {
                     if (mIsMessagesInited) {
                         list_message.refreshSelectLast();
                     }
+
+                    //关闭聊天功能
+                    mChatEnabled = false;
+                    setChatableView();
                 }
                 break;
 
@@ -1191,10 +1195,10 @@ public class EaseChatFragment extends EaseBaseFragment {
 
         @Override
         public void onCmdMessageReceived(List<EMMessage> messages) {
-            for (final EMMessage msg : messages) {
-                final EMCmdMessageBody body = (EMCmdMessageBody) msg.getBody();
+            mHandler.post(() -> {
+                for (EMMessage msg : messages) {
+                    EMCmdMessageBody body = (EMCmdMessageBody) msg.getBody();
 
-                mHandler.post(() -> {
                     if (ACTION_TYPING_BEGIN.equals(body.action()) && msg.getFrom().equals(mToUsername)) {
                         toolbar.setTitle(getString(R.string.alert_during_typing));
 
@@ -1206,8 +1210,8 @@ public class EaseChatFragment extends EaseBaseFragment {
 
                         setChatableView();
                     }
-                });
-            }
+                }
+            });
         }
 
         @Override
