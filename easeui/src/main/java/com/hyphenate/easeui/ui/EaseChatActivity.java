@@ -9,7 +9,9 @@ import com.hyphenate.easeui.EaseConstant;
 
 public class EaseChatActivity extends EaseBaseChainActivity {
 
-    private static final String EXTRA_CHAT_ABLE = "EXTRA_CHAT_ABLE";
+    private static final String EXTRA_CHAT_ENABLED = "EXTRA_CHAT_ENABLED";//是否具备聊天功能
+    private static final String EXTRA_FINISH_CONVERSATION_ENABLED = "EXTRA_FINISH_CONVERSATION_ENABLED";//是否具备结束问诊功能
+    private static final String EXTRA_LOCATION_ENABLED = "EXTRA_LOCATION_ENABLED";//是否具备定位功能
 
     private int mChatType;
     private String mToUsername;
@@ -17,7 +19,9 @@ public class EaseChatActivity extends EaseBaseChainActivity {
     private boolean mTurnOnTyping;//"正在输入"功能的开关，打开后本设备发送消息将持续发送cmd类型消息通知对方"正在输入"
     private boolean mIsRoaming;//是否漫游
     private String mForwardMsgId;//是否滑动到指定消息
-    private boolean mChatable;//是否可以聊天
+    private boolean mChatEnabled;//是否可以聊天
+    private boolean mFinishConversationEnabled;//是否可以结束问诊
+    private boolean mLocatinEnable;//是否可以定位
 
     @Override
     protected void initData() {
@@ -28,7 +32,9 @@ public class EaseChatActivity extends EaseBaseChainActivity {
         mShowUserNick = getIntent().getBooleanExtra(EaseConstant.EXTRA_SHOW_NICKNAME, true);
         mIsRoaming = getIntent().getBooleanExtra(EaseConstant.EXTRA_IS_ROAMING, false);
         mForwardMsgId = getIntent().getStringExtra(EaseConstant.EXTRA_FORWARD_MSG_ID);
-        mChatable = getIntent().getBooleanExtra(EXTRA_CHAT_ABLE, true);
+        mChatEnabled = getIntent().getBooleanExtra(EXTRA_CHAT_ENABLED, true);
+        mFinishConversationEnabled = getIntent().getBooleanExtra(EXTRA_FINISH_CONVERSATION_ENABLED, false);
+        mLocatinEnable = getIntent().getBooleanExtra(EXTRA_LOCATION_ENABLED, false);
     }
 
     @Override
@@ -40,7 +46,9 @@ public class EaseChatActivity extends EaseBaseChainActivity {
                 .setShowUserNick(mShowUserNick)
                 .setIsRoaming(mIsRoaming)
                 .setForwardMsgId(mForwardMsgId)
-                .setChatable(mChatable)
+                .setChatEnabled(mChatEnabled)
+                .setFinishConversationEnabled(mFinishConversationEnabled)
+                .setLocatinEnable(mLocatinEnable)
                 .create();
     }
 
@@ -93,8 +101,18 @@ public class EaseChatActivity extends EaseBaseChainActivity {
             return this;
         }
 
-        public Builder setChatable(boolean chatable) {
-            mIntent.putExtra(EXTRA_CHAT_ABLE, chatable);
+        public Builder setChatEnabled(boolean chatable) {
+            mIntent.putExtra(EXTRA_CHAT_ENABLED, chatable);
+            return this;
+        }
+
+        public Builder setFinishConversationEnabled(boolean enabled) {
+            mIntent.putExtra(EXTRA_FINISH_CONVERSATION_ENABLED, enabled);
+            return this;
+        }
+
+        public Builder setLocatinEnable(boolean enabled) {
+            mIntent.putExtra(EXTRA_LOCATION_ENABLED, enabled);
             return this;
         }
 

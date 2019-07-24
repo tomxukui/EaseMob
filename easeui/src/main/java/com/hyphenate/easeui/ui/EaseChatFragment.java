@@ -63,7 +63,7 @@ public class EaseChatFragment extends EaseBaseFragment {
 
     private static final String EXTRA_CHAT_ENABLED = "EXTRA_CHAT_ENABLED";//是否具备聊天功能
     private static final String EXTRA_FINISH_CONVERSATION_ENABLED = "EXTRA_FINISH_CONVERSATION_ENABLED";//是否具备结束问诊功能
-    private static final String EXTRA_LOCATION = "EXTRA_LOCATION";//是否具备定位功能
+    private static final String EXTRA_LOCATION_ENABLED = "EXTRA_LOCATION_ENABLED";//是否具备定位功能
 
     private static final int REQUEST_LOCATION = 1;
     private static final int REQUEST_CAMERA = 2;
@@ -198,8 +198,8 @@ public class EaseChatFragment extends EaseBaseFragment {
             mIsRoaming = bundle.getBoolean(EaseConstant.EXTRA_IS_ROAMING, false);
             mForwardMsgId = bundle.getString(EaseConstant.EXTRA_FORWARD_MSG_ID);
             mChatEnabled = bundle.getBoolean(EXTRA_CHAT_ENABLED, true);
-            mFinishConversationEnabled = bundle.getBoolean(EXTRA_FINISH_CONVERSATION_ENABLED, true);
-            mLocatinEnable = bundle.getBoolean(EXTRA_LOCATION, true);
+            mFinishConversationEnabled = bundle.getBoolean(EXTRA_FINISH_CONVERSATION_ENABLED, false);
+            mLocatinEnable = bundle.getBoolean(EXTRA_LOCATION_ENABLED, false);
         }
 
         if (mIsRoaming) {
@@ -1295,8 +1295,18 @@ public class EaseChatFragment extends EaseBaseFragment {
             return this;
         }
 
-        public Builder setChatable(boolean chatable) {
+        public Builder setChatEnabled(boolean chatable) {
             mBundle.putBoolean(EXTRA_CHAT_ENABLED, chatable);
+            return this;
+        }
+
+        public Builder setFinishConversationEnabled(boolean enabled) {
+            mBundle.putBoolean(EXTRA_FINISH_CONVERSATION_ENABLED, enabled);
+            return this;
+        }
+
+        public Builder setLocatinEnable(boolean enabled) {
+            mBundle.putBoolean(EXTRA_LOCATION_ENABLED, enabled);
             return this;
         }
 
