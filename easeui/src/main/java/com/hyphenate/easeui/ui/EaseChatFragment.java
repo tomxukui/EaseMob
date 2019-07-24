@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -101,7 +102,7 @@ public class EaseChatFragment extends EaseBaseFragment {
     private ExecutorService mFetchQueue;
     private EMConversation mConversation;
 
-    private Handler mHandler = new Handler() {
+    private Handler mHandler = new Handler(Looper.getMainLooper()) {
 
         @Override
         public void handleMessage(Message msg) {
@@ -534,16 +535,18 @@ public class EaseChatFragment extends EaseBaseFragment {
     private void loadMoreLocalMessage() {
         if (list_message.getListView().getFirstVisiblePosition() == 0 && !isloading && haveMoreData) {
             List<EMMessage> messages;
+
             try {
                 messages = mConversation.loadMoreMsgFromDB(mConversation.getAllMessages().size() == 0 ? "" : mConversation.getAllMessages().get(0).getMsgId(), pagesize);
 
-            } catch (Exception e1) {
+            } catch (Exception e) {
                 list_message.getSwipeRefreshLayout().setRefreshing(false);
                 return;
             }
 
             if (messages.size() > 0) {
                 list_message.refreshSeekTo(messages.size() - 1);
+
                 if (messages.size() != pagesize) {
                     haveMoreData = false;
                 }
@@ -660,7 +663,7 @@ public class EaseChatFragment extends EaseBaseFragment {
 
             @Override
             public void onSuccess(final EMChatRoom value) {
-                getActivity().runOnUiThread(() -> {
+                mHandler.post(() -> {
                     if (getActivity().isFinishing() || !mToUsername.equals(value.getId())) {
                         return;
                     }
@@ -684,7 +687,7 @@ public class EaseChatFragment extends EaseBaseFragment {
 
             @Override
             public void onError(final int error, String errorMsg) {
-                getActivity().runOnUiThread(() -> pd.dismiss());
+                mHandler.post(() -> pd.dismiss());
                 getActivity().finish();
             }
 
@@ -777,7 +780,7 @@ public class EaseChatFragment extends EaseBaseFragment {
 
     /**
      * 发送定位消息
-     * */
+     */
     protected void sendLocationMessage(double latitude, double longitude, String locationAddress) {
         EMMessage message = EMMessage.createLocationSendMessage(latitude, longitude, locationAddress, mToUsername);
         sendMessage(message);
@@ -1049,7 +1052,7 @@ public class EaseChatFragment extends EaseBaseFragment {
 
         @Override
         public void onChatRoomDestroyed(final String roomId, final String roomName) {
-            getActivity().runOnUiThread(() -> {
+            mHandler.post(() -> {
                 if (roomId.equals(mToUsername)) {
                     EaseToastUtil.show(R.string.the_current_chat_room_destroyed);
                     Activity activity = getActivity();
@@ -1062,7 +1065,7 @@ public class EaseChatFragment extends EaseBaseFragment {
 
         @Override
         public void onRemovedFromChatRoom(final int reason, final String roomId, final String roomName, final String participant) {
-            getActivity().runOnUiThread(() -> {
+            mHandler.post(() -> {
                 if (roomId.equals(mToUsername)) {
                     if (reason == EMAChatRoomManagerListener.BE_KICKED) {
                         EaseToastUtil.show(R.string.quiting_the_chat_room);
@@ -1082,14 +1085,14 @@ public class EaseChatFragment extends EaseBaseFragment {
         @Override
         public void onMemberJoined(final String roomId, final String participant) {
             if (roomId.equals(mToUsername)) {
-                getActivity().runOnUiThread(() -> EaseToastUtil.show("member join:" + participant));
+                mHandler.post(() -> EaseToastUtil.show("member join:" + participant));
             }
         }
 
         @Override
         public void onMemberExited(final String roomId, final String roomName, final String participant) {
             if (roomId.equals(mToUsername)) {
-                getActivity().runOnUiThread(() -> EaseToastUtil.show("member exit:" + participant));
+                mHandler.post(() -> EaseToastUtil.show("member exit:" + participant));
             }
         }
 
@@ -1208,7 +1211,7 @@ public class EaseChatFragment extends EaseBaseFragment {
 
         @Override
         public void onMessageReceived(List<EMMessage> messages) {
-            getActivity().runOnUiThread(() -> {
+            mHandler.post(() -> {
                 if (messages.size() > 0) {
                     EMMessage message = messages.get(messages.size() - 1);
 
@@ -1241,7 +1244,7 @@ public class EaseChatFragment extends EaseBaseFragment {
             for (final EMMessage msg : messages) {
                 final EMCmdMessageBody body = (EMCmdMessageBody) msg.getBody();
 
-                getActivity().runOnUiThread(() -> {
+                mHandler.post(() -> {
                     if (ACTION_TYPING_BEGIN.equals(body.action()) && msg.getFrom().equals(mToUsername)) {
                         toolbar.setTitle(getString(R.string.alert_during_typing));
 
@@ -1260,28 +1263,28 @@ public class EaseChatFragment extends EaseBaseFragment {
         @Override
         public void onMessageRead(List<EMMessage> list) {
             if (mIsMessagesInited) {
-                getActivity().runOnUiThread(() -> list_message.refresh());
+                mHandler.post(() -> list_message.refresh());
             }
         }
 
         @Override
         public void onMessageDelivered(List<EMMessage> list) {
             if (mIsMessagesInited) {
-                getActivity().runOnUiThread(() -> list_message.refresh());
+                mHandler.post(() -> list_message.refresh());
             }
         }
 
         @Override
         public void onMessageRecalled(List<EMMessage> list) {
             if (mIsMessagesInited) {
-                getActivity().runOnUiThread(() -> list_message.refresh());
+                mHandler.post(() -> list_message.refresh());
             }
         }
 
         @Override
         public void onMessageChanged(EMMessage emMessage, Object o) {
             if (mIsMessagesInited) {
-                getActivity().runOnUiThread(() -> list_message.refresh());
+                mHandler.post(() -> list_message.refresh());
             }
         }
 
@@ -1294,7 +1297,7 @@ public class EaseChatFragment extends EaseBaseFragment {
 
         @Override
         public void onUserRemoved(final String groupId, String groupName) {
-            getActivity().runOnUiThread(() -> {
+            mHandler.post(() -> {
                 if (mToUsername.equals(groupId)) {
                     EaseToastUtil.show(R.string.you_are_group);
                     Activity activity = getActivity();
@@ -1307,7 +1310,7 @@ public class EaseChatFragment extends EaseBaseFragment {
 
         @Override
         public void onGroupDestroyed(final String groupId, String groupName) {
-            getActivity().runOnUiThread(() -> {
+            mHandler.post(() -> {
                 if (mToUsername.equals(groupId)) {
                     EaseToastUtil.show(R.string.the_current_group_destroyed);
                     Activity activity = getActivity();
