@@ -171,10 +171,17 @@ public class EaseChatFragment extends EaseBaseFragment {
                     message.setTo(mToUsername);
                     EMClient.getInstance().chatManager().sendMessage(message);
 
-                    //发送一条文本消息
-                    EMMessage textMessage = EMMessage.createTxtSendMessage("本次问诊已结束", mToUsername);
-                    textMessage.setAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, true);
-                    EaseChatFragment.this.sendMessage(textMessage);
+                    //新增一条文本消息
+                    if (mConversation != null) {
+                        EMMessage textMessage = EMMessage.createTxtSendMessage("本次问诊已结束", mToUsername);
+                        textMessage.setAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, true);
+                        mConversation.insertMessage(textMessage);
+                    }
+
+                    //刷新消息列表
+                    if (mIsMessagesInited) {
+                        list_message.refreshSelectLast();
+                    }
                 }
                 break;
 
