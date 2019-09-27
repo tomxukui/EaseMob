@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.0.2"
     }
 
     buildTypes {
@@ -27,11 +27,11 @@ android {
 }
 
 dependencies {
-    implementation files('libs/org.apache.http.legacy.jar')
+    implementation fileTree(include: ['*.jar', '*.aar'], excludes: ['hyphenatechat_3.6.0.jar', 'BaiduLBS_Android.jar'], dir: 'libs')
     api files('libs/hyphenatechat_3.6.0.jar')
-    compileOnly rootProject.ext.dependencies["appcompat-v7"]
-
     compileOnly files('libs/BaiduLBS_Android.jar')
+
+    compileOnly rootProject.ext.dependencies["appcompat-v7"]
     compileOnly 'com.github.bumptech.glide:glide:4.6.1'
     compileOnly 'com.yanzhenjie:permission:2.0.0-rc12'
 }
