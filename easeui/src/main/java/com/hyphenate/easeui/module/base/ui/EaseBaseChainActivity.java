@@ -8,18 +8,19 @@ import android.view.View;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.domain.EaseAccount;
 import com.hyphenate.easeui.module.base.widget.EasePaperLayer;
 import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 
 public abstract class EaseBaseChainActivity extends EaseBaseActivity {
 
-    public static final String EXTRA_ACCOUNT = "EXTRA_ACCOUNT";
+    public static final String EXTRA_USERNAME = "EXTRA_USERNAME";
+    public static final String EXTRA_PWD = "EXTRA_PWD";
 
     private EaseToolbar toolbar;
     private EasePaperLayer layer_paper;
 
-    private EaseAccount mAccount;
+    private String mUsername;
+    private String mPwd;
 
     @Override
     protected int getLayoutResID() {
@@ -29,7 +30,8 @@ public abstract class EaseBaseChainActivity extends EaseBaseActivity {
     @Override
     protected void initData() {
         super.initData();
-        mAccount = getIntent().getParcelableExtra(EXTRA_ACCOUNT);
+        mUsername = getIntent().getStringExtra(EXTRA_USERNAME);
+        mPwd = getIntent().getStringExtra(EXTRA_PWD);
     }
 
     @Override
@@ -59,7 +61,7 @@ public abstract class EaseBaseChainActivity extends EaseBaseActivity {
 
     private void login() {
         if (EMClient.getInstance().isConnected()) {//账号已登录
-            if (TextUtils.equals(mAccount.getUsername(), EMClient.getInstance().getCurrentUser())) {//同账号
+            if (TextUtils.equals(mUsername, EMClient.getInstance().getCurrentUser())) {//同账号
                 layer_paper.finishSuccess();
                 toolbar.setVisibility(View.GONE);
 
@@ -94,7 +96,7 @@ public abstract class EaseBaseChainActivity extends EaseBaseActivity {
      * 登录环信
      */
     private void assertlogin() {
-        EMClient.getInstance().login(mAccount.getUsername(), mAccount.getPwd(), new EMCallBack() {
+        EMClient.getInstance().login(mUsername, mPwd, new EMCallBack() {
 
             @Override
             public void onSuccess() {

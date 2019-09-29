@@ -146,7 +146,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         super.initData(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mToUsername = bundle.getString(EaseConstant.EXTRA_TO_USERNAME);
+            mToUsername = bundle.getString(EXTRA_TO_USERNAME);
             mChatEnabled = bundle.getBoolean(EXTRA_CHAT_ENABLED, true);
             mFinishChatEnabled = bundle.getBoolean(EXTRA_FINISH_CHAT_ENABLED, false);
         }
