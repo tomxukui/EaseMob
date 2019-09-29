@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="请输入环信账号的用户名"
-            android:text="e3bb93c9396848508cfa2cc1bff27b3d" />
+            android:text="tom" />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/et_realname"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="请输入环信账号的密码"
-            android:text="XldfBS379c" />
+            android:text="123456" />
 
         <Button
             android:id="@+id/btn_login"
