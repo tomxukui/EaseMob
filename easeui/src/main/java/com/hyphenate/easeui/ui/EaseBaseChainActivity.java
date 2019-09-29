@@ -2,6 +2,7 @@ package com.hyphenate.easeui.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.hyphenate.EMCallBack;
@@ -77,26 +78,36 @@ public abstract class EaseBaseChainActivity extends EaseBaseActivity {
     }
 
     private void login() {
-        if (EMClient.getInstance().isConnected()) {
-            EMClient.getInstance().logout(true, new EMCallBack() {
+        if (EMClient.getInstance().isConnected()) {//账号已登录
+            String currentUsername = EMClient.getInstance().getCurrentUser();
 
-                @Override
-                public void onSuccess() {
-                    assertlogin();
-                }
+            if (TextUtils.equals(mMyUsername, currentUsername)) {//同账号
+                layer_paper.finishSuccess();
+                toolbar.setVisibility(View.GONE);
 
-                @Override
-                public void onError(int i, String message) {
-                    getHandler().post(() -> layer_paper.finishFailure(message));
-                }
+                loadMainFragment();
 
-                @Override
-                public void onProgress(int i, String s) {
-                }
+            } else {//不同账号
+                EMClient.getInstance().logout(true, new EMCallBack() {
 
-            });
+                    @Override
+                    public void onSuccess() {
+                        runOnUiThread(() -> assertlogin());
+                    }
 
-        } else {
+                    @Override
+                    public void onError(int i, String message) {
+                        runOnUiThread(() -> layer_paper.finishFailure(message));
+                    }
+
+                    @Override
+                    public void onProgress(int i, String s) {
+                    }
+
+                });
+            }
+
+        } else {//账号未登录
             assertlogin();
         }
     }
@@ -109,7 +120,7 @@ public abstract class EaseBaseChainActivity extends EaseBaseActivity {
 
             @Override
             public void onSuccess() {
-                getHandler().post(() -> {
+                runOnUiThread(() -> {
                     layer_paper.finishSuccess();
                     toolbar.setVisibility(View.GONE);
 
@@ -123,7 +134,7 @@ public abstract class EaseBaseChainActivity extends EaseBaseActivity {
 
             @Override
             public void onError(int code, final String message) {
-                getHandler().post(() -> layer_paper.finishFailure(message));
+                runOnUiThread(() -> layer_paper.finishFailure(message));
             }
 
         });

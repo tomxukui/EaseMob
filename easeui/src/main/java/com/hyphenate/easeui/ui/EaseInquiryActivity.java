@@ -29,9 +29,11 @@ public class EaseInquiryActivity extends EaseBaseChainActivity {
         return EaseInquiryFragment.newInstance(mToUsername, mChatEnabled, mFinishChatEnabled);
     }
 
-    public static Intent buildIntent(Context context, String username, boolean chatEnabled, boolean finishChatEnabled) {
+    public static Intent buildIntent(Context context, String username, String pwd, String toUsername, boolean chatEnabled, boolean finishChatEnabled) {
         Intent intent = new Intent(context, EaseInquiryActivity.class);
-        intent.putExtra(EXTRA_TO_USERNAME, username);
+        intent.putExtra(EXTRA_MY_USERNAME, username);
+        intent.putExtra(EXTRA_MY_USERNAME, pwd);
+        intent.putExtra(EXTRA_TO_USERNAME, toUsername);
         intent.putExtra(EXTRA_CHAT_ENABLED, chatEnabled);
         intent.putExtra(EXTRA_FINISH_CHAT_ENABLED, finishChatEnabled);
         return intent;

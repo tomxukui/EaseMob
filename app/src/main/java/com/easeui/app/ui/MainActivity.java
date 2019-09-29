@@ -1,5 +1,6 @@
 package com.easeui.app.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
@@ -11,6 +12,7 @@ import com.easeui.app.R;
 import com.easeui.app.dialog.LoadingDialog;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.ui.EaseInquiryActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private AppCompatEditText et_pwd;
     private Button btn_login;
     private Button btn_logout;
+    private AppCompatEditText et_toUsername;
+    private Button btn_chat;
 
     private LoadingDialog mLoadingDialog;
 
@@ -36,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         et_pwd = findViewById(R.id.et_pwd);
         btn_login = findViewById(R.id.btn_login);
         btn_logout = findViewById(R.id.btn_logout);
+        et_toUsername = findViewById(R.id.et_toUsername);
+        btn_chat = findViewById(R.id.btn_chat);
     }
 
     private void setView() {
@@ -63,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 if (TextUtils.equals(username, currentUsername)) {//同账号
                     toast("账号已登录");
 
-                } else {
+                } else {//不同账号
                     showLoadingDialog("切换账号中...");
 
                     EMClient.getInstance().logout(true, new EMCallBack() {
@@ -177,6 +183,33 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 toast("账号未登录");
             }
+        });
+
+        btn_chat.setOnClickListener(v -> {
+            String username = et_username.getText().toString().trim();
+            String realname = et_realname.getText().toString().trim();
+            String pwd = et_pwd.getText().toString().trim();
+            String toUsername = et_toUsername.getText().toString().trim();
+
+            if (TextUtils.isEmpty(username)) {
+                toast(et_username.getHint().toString());
+                return;
+            }
+            if (TextUtils.isEmpty(realname)) {
+                toast(et_realname.getHint().toString());
+                return;
+            }
+            if (TextUtils.isEmpty(pwd)) {
+                toast(et_pwd.getHint().toString());
+                return;
+            }
+            if (TextUtils.isEmpty(toUsername)) {
+                toast(et_toUsername.getHint().toString());
+                return;
+            }
+
+            Intent intent = EaseInquiryActivity.buildIntent(MainActivity.this, username, pwd, toUsername, true, true);
+            startActivity(intent);
         });
     }
 

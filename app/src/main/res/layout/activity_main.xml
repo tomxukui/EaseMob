@@ -46,6 +46,21 @@
             android:layout_marginTop="10dp"
             android:text="退出" />
 
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/et_toUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="请输入对方的环信账号用户名"
+            android:text="jack" />
+
+        <Button
+            android:id="@+id/btn_chat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="开启聊天" />
+
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
