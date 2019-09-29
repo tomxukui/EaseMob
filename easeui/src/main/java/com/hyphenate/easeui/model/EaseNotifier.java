@@ -30,7 +30,7 @@ import android.support.v4.app.NotificationCompat;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.EaseUI.EaseSettingsProvider;
-import com.hyphenate.easeui.ui.EaseBaseActivity;
+import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EasyUtils;
 

@@ -9,11 +9,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
-import com.hyphenate.easeui.ui.EaseBaseActivity;
+import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
 import com.hyphenate.easeui.ui.EaseChatActivity;
 import com.hyphenate.easeui.ui.EaseContactListFragment;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;

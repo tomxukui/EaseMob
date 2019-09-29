@@ -26,8 +26,9 @@ import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.CoordinateConverter;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
 import com.hyphenate.easeui.utils.EaseToastUtil;
-import com.hyphenate.easeui.widget.EaseToolbar;
+import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 
 public class EaseBaiduMapActivity extends EaseBaseActivity {
 

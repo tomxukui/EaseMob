@@ -12,6 +12,12 @@ public class EaseUser extends EMContact {
         this.username = username;
     }
 
+    public EaseUser(String username, String nick, String avatar) {
+        this.username = username;
+        this.nick = nick;
+        this.avatar = avatar;
+    }
+
     public String getInitialLetter() {
         if (initialLetter == null) {
             EaseCommonUtils.setUserInitialLetter(this);
@@ -41,6 +47,7 @@ public class EaseUser extends EMContact {
         if (o == null || !(o instanceof EaseUser)) {
             return false;
         }
+
         return getUsername().equals(((EaseUser) o).getUsername());
     }
 

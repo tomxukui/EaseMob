@@ -6,7 +6,7 @@
     android:background="@color/common_bg"
     android:orientation="vertical">
 
-    <com.hyphenate.easeui.widget.EaseToolbar
+    <com.hyphenate.easeui.module.base.widget.EaseToolbar
         android:id="@+id/toolbar"
         style="@style/EaseToolbar"
         android:text="@string/session" />

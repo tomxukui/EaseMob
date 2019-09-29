@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.ui;
+package com.hyphenate.easeui.module.inquiry.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -29,6 +29,7 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.domain.EaseEmojicon;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseCompat;
+import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseContactUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
@@ -37,7 +38,7 @@ import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.easeui.widget.EaseChatInputMenu;
 import com.hyphenate.easeui.widget.EaseChatInputMenu.ChatInputMenuListener;
 import com.hyphenate.easeui.widget.EaseChatMessageList;
-import com.hyphenate.easeui.widget.EaseToolbar;
+import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 import com.hyphenate.easeui.widget.EaseVoiceRecorderView;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.util.PathUtil;

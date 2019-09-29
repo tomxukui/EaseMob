@@ -15,6 +15,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMVideoMessageBody;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.model.EaseCompat;
+import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 
 import java.io.File;

@@ -12,7 +12,8 @@ import android.widget.TextView;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.model.EaseDingMessageHelper;
-import com.hyphenate.easeui.widget.EaseToolbar;
+import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
+import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 
 import java.util.ArrayList;
 import java.util.List;

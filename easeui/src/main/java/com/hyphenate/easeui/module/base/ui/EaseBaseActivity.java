@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.ui;
+package com.hyphenate.easeui.module.base.ui;
 
 import android.content.Intent;
 import android.os.Bundle;

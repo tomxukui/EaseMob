@@ -14,11 +14,12 @@ import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseContactUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 import com.hyphenate.easeui.widget.EaseContactList;
-import com.hyphenate.easeui.widget.EaseToolbar;
+import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 import com.hyphenate.exceptions.HyphenateException;
 
 import java.util.ArrayList;

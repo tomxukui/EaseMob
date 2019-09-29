@@ -8,6 +8,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.model.EaseImageCache;
+import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
 import com.hyphenate.easeui.utils.EaseLoadLocalBigImgTask;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 import com.hyphenate.easeui.widget.photoview.EasePhotoView;

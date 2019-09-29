@@ -2,7 +2,6 @@ package com.hyphenate.easeui.ui;
 
 import android.os.Bundle;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMError;
@@ -11,6 +10,7 @@ import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.model.EaseCompat;
+import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 
 import java.io.File;

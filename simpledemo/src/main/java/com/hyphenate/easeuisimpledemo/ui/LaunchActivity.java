@@ -3,7 +3,7 @@ package com.hyphenate.easeuisimpledemo.ui;
 import android.content.Intent;
 
 import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.ui.EaseBaseActivity;
+import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
 import com.hyphenate.easeui.ui.EaseChatActivity;
 import com.hyphenate.easeuisimpledemo.R;
 

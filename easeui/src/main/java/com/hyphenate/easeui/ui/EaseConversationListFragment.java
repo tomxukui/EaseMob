@@ -17,9 +17,10 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
 import com.hyphenate.easeui.utils.EaseContactUtil;
 import com.hyphenate.easeui.widget.EaseConversationList;
-import com.hyphenate.easeui.widget.EaseToolbar;
+import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.easeui.ui.EaseBaseActivity;
+import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 import com.hyphenate.easeuisimpledemo.R;
 

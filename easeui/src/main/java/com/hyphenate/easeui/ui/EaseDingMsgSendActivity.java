@@ -6,7 +6,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.widget.EaseToolbar;
+import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
+import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 
 public class EaseDingMsgSendActivity extends EaseBaseActivity {
 

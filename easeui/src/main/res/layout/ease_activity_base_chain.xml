@@ -5,12 +5,12 @@
     android:background="#eee"
     android:orientation="vertical">
 
-    <com.hyphenate.easeui.widget.EaseToolbar
+    <com.hyphenate.easeui.module.base.widget.EaseToolbar
         android:id="@+id/toolbar"
         style="@style/EaseToolbar"
         android:text="接入中..." />
 
-    <com.hyphenate.easeui.widget.EasePaperLayer
+    <com.hyphenate.easeui.module.base.widget.EasePaperLayer
         android:id="@+id/layer_paper"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,6 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </com.hyphenate.easeui.widget.EasePaperLayer>
+    </com.hyphenate.easeui.module.base.widget.EasePaperLayer>
 
 </LinearLayout>

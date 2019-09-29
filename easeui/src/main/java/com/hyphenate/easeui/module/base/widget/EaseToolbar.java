@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget;
+package com.hyphenate.easeui.module.base.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;

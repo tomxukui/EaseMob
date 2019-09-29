@@ -6,7 +6,7 @@
     android:background="#f2f0eb"
     android:orientation="vertical">
 
-    <com.hyphenate.easeui.widget.EaseToolbar
+    <com.hyphenate.easeui.module.base.widget.EaseToolbar
         android:id="@+id/toolbar"
         style="@style/EaseToolbar" />
 

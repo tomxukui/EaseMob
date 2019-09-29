@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.hyphenate.easeui.widget.EaseToolbar
+    <com.hyphenate.easeui.module.base.widget.EaseToolbar
         android:id="@+id/toolbar"
         style="@style/EaseToolbar"
         android:text="@string/title_group_notification" />

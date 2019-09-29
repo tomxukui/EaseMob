@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.ui;
+package com.hyphenate.easeui.module.base.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,22 +8,18 @@ import android.view.View;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
+import com.hyphenate.easeui.domain.EaseAccount;
 import com.hyphenate.easeui.module.base.widget.EasePaperLayer;
 import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 
 public abstract class EaseBaseChainActivity extends EaseBaseActivity {
 
-    public static final String EXTRA_MY_USERNAME = "EXTRA_MY_USERNAME";
-    public static final String EXTRA_MY_USERPWD = "EXTRA_MY_USERPWD";
-    public static final String EXTRA_NEED_LOGOUT = "EXTRA_NEED_LOGOUT";
+    public static final String EXTRA_ACCOUNT = "EXTRA_ACCOUNT";
 
     private EaseToolbar toolbar;
     private EasePaperLayer layer_paper;
 
-    private String mMyUsername;
-    private String mMyUserPwd;
-    private boolean mNeedLogout;//是否在页面关闭的时候自动退出
+    private EaseAccount mAccount;
 
     @Override
     protected int getLayoutResID() {
@@ -33,9 +29,7 @@ public abstract class EaseBaseChainActivity extends EaseBaseActivity {
     @Override
     protected void initData() {
         super.initData();
-        mMyUsername = getIntent().getStringExtra(EXTRA_MY_USERNAME);
-        mMyUserPwd = getIntent().getStringExtra(EXTRA_MY_USERPWD);
-        mNeedLogout = getIntent().getBooleanExtra(EXTRA_NEED_LOGOUT, false);
+        mAccount = (EaseAccount) getIntent().getSerializableExtra(EXTRA_ACCOUNT);
     }
 
     @Override
@@ -60,29 +54,12 @@ public abstract class EaseBaseChainActivity extends EaseBaseActivity {
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        if (mMyUsername != null && mMyUserPwd != null) {
-            layer_paper.autoRefresh();
-
-        } else {
-            toolbar.setVisibility(View.GONE);
-
-            loadMainFragment();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mNeedLogout) {
-            assertLogout();
-        }
+        layer_paper.autoRefresh();
     }
 
     private void login() {
         if (EMClient.getInstance().isConnected()) {//账号已登录
-            String currentUsername = EMClient.getInstance().getCurrentUser();
-
-            if (TextUtils.equals(mMyUsername, currentUsername)) {//同账号
+            if (TextUtils.equals(mAccount.getUsername(), EMClient.getInstance().getCurrentUser())) {//同账号
                 layer_paper.finishSuccess();
                 toolbar.setVisibility(View.GONE);
 
@@ -117,7 +94,7 @@ public abstract class EaseBaseChainActivity extends EaseBaseActivity {
      * 登录环信
      */
     private void assertlogin() {
-        EMClient.getInstance().login(mMyUsername, mMyUserPwd, new EMCallBack() {
+        EMClient.getInstance().login(mAccount.getUsername(), mAccount.getPwd(), new EMCallBack() {
 
             @Override
             public void onSuccess() {
@@ -139,15 +116,6 @@ public abstract class EaseBaseChainActivity extends EaseBaseActivity {
             }
 
         });
-    }
-
-    /**
-     * 退出环信
-     */
-    private void assertLogout() {
-        if (EMClient.getInstance().isConnected()) {
-            EMClient.getInstance().logout(true, null);
-        }
     }
 
     protected abstract Fragment getMainFragment();

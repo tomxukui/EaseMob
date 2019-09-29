@@ -2,9 +2,9 @@ package com.hyphenate.easeuisimpledemo.ui;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.easeui.ui.EaseBaseFragment;
+import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
 import com.hyphenate.easeui.utils.EaseToastUtil;
-import com.hyphenate.easeui.widget.EaseToolbar;
+import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 import com.hyphenate.easeuisimpledemo.R;
 
 import android.content.Intent;

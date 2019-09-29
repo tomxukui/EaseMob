@@ -12,16 +12,19 @@ import com.easeui.app.R;
 import com.easeui.app.dialog.LoadingDialog;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.easeui.ui.EaseInquiryActivity;
+import com.hyphenate.easeui.domain.EaseAccount;
+import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppCompatEditText et_username;
-    private AppCompatEditText et_realname;
+    private AppCompatEditText et_nickname;
     private AppCompatEditText et_pwd;
     private Button btn_login;
     private Button btn_logout;
     private AppCompatEditText et_toUsername;
+    private AppCompatEditText et_toNickname;
     private Button btn_chat;
 
     private LoadingDialog mLoadingDialog;
@@ -36,26 +39,27 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         et_username = findViewById(R.id.et_username);
-        et_realname = findViewById(R.id.et_realname);
+        et_nickname = findViewById(R.id.et_nickname);
         et_pwd = findViewById(R.id.et_pwd);
         btn_login = findViewById(R.id.btn_login);
         btn_logout = findViewById(R.id.btn_logout);
         et_toUsername = findViewById(R.id.et_toUsername);
+        et_toNickname = findViewById(R.id.et_toNickname);
         btn_chat = findViewById(R.id.btn_chat);
     }
 
     private void setView() {
         btn_login.setOnClickListener(v -> {
             String username = et_username.getText().toString().trim();
-            String realname = et_realname.getText().toString().trim();
+            String nickname = et_nickname.getText().toString().trim();
             String pwd = et_pwd.getText().toString().trim();
 
             if (TextUtils.isEmpty(username)) {
                 toast(et_username.getHint().toString());
                 return;
             }
-            if (TextUtils.isEmpty(realname)) {
-                toast(et_realname.getHint().toString());
+            if (TextUtils.isEmpty(nickname)) {
+                toast(et_nickname.getHint().toString());
                 return;
             }
             if (TextUtils.isEmpty(pwd)) {
@@ -187,16 +191,17 @@ public class MainActivity extends AppCompatActivity {
 
         btn_chat.setOnClickListener(v -> {
             String username = et_username.getText().toString().trim();
-            String realname = et_realname.getText().toString().trim();
+            String nickname = et_nickname.getText().toString().trim();
             String pwd = et_pwd.getText().toString().trim();
             String toUsername = et_toUsername.getText().toString().trim();
+            String toNickname = et_toNickname.getText().toString().trim();
 
             if (TextUtils.isEmpty(username)) {
                 toast(et_username.getHint().toString());
                 return;
             }
-            if (TextUtils.isEmpty(realname)) {
-                toast(et_realname.getHint().toString());
+            if (TextUtils.isEmpty(nickname)) {
+                toast(et_nickname.getHint().toString());
                 return;
             }
             if (TextUtils.isEmpty(pwd)) {
@@ -207,8 +212,15 @@ public class MainActivity extends AppCompatActivity {
                 toast(et_toUsername.getHint().toString());
                 return;
             }
+            if (TextUtils.isEmpty(toNickname)) {
+                toast(et_toNickname.getHint().toString());
+                return;
+            }
 
-            Intent intent = EaseInquiryActivity.buildIntent(MainActivity.this, username, pwd, toUsername, true, true);
+            EaseAccount account = new EaseAccount(username, pwd, nickname, null);
+            EaseUser toUser = new EaseUser(toUsername, toNickname, null);
+
+            Intent intent = EaseInquiryActivity.buildIntent(MainActivity.this, account, toUser, true, true);
             startActivity(intent);
         });
     }
