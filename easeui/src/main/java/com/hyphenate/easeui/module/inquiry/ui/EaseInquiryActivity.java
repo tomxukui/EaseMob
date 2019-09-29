@@ -22,7 +22,7 @@ public class EaseInquiryActivity extends EaseBaseChainActivity {
     @Override
     protected void initData() {
         super.initData();
-        mToUser = (EaseUser) getIntent().getSerializableExtra(EXTRA_TO_USER);
+        mToUser = getIntent().getParcelableExtra(EXTRA_TO_USER);
         mChatEnabled = getIntent().getBooleanExtra(EXTRA_CHAT_ENABLED, true);
         mFinishChatEnabled = getIntent().getBooleanExtra(EXTRA_FINISH_CHAT_ENABLED, false);
     }

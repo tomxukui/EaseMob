@@ -29,7 +29,7 @@ public abstract class EaseBaseChainActivity extends EaseBaseActivity {
     @Override
     protected void initData() {
         super.initData();
-        mAccount = (EaseAccount) getIntent().getSerializableExtra(EXTRA_ACCOUNT);
+        mAccount = getIntent().getParcelableExtra(EXTRA_ACCOUNT);
     }
 
     @Override
