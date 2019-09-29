@@ -15,8 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.domain.EaseEmojicon;
-import com.hyphenate.easeui.domain.EaseEmojiconGroupEntity;
+import com.hyphenate.easeui.bean.EaseEmojicon;
+import com.hyphenate.easeui.bean.EaseEmojiconGroupEntity;
 import com.hyphenate.easeui.model.EaseDefaultEmojiconDatas;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
 import com.hyphenate.easeui.widget.EaseChatPrimaryMenuBase.EaseChatPrimaryMenuListener;

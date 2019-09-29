@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.domain;
+package com.hyphenate.easeui.bean;
 
 public class EaseAccount extends EaseUser {
 

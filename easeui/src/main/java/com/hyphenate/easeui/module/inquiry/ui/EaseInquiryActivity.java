@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 
-import com.hyphenate.easeui.domain.EaseAccount;
-import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.bean.EaseAccount;
+import com.hyphenate.easeui.bean.EaseUser;
 import com.hyphenate.easeui.module.base.ui.EaseBaseChainActivity;
 import com.hyphenate.easeui.utils.EaseContactUtil;
 

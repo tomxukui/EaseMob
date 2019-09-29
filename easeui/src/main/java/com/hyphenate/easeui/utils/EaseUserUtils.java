@@ -12,7 +12,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.EaseUI.EaseUserProfileProvider;
-import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.bean.EaseUser;
 
 public class EaseUserUtils {
 

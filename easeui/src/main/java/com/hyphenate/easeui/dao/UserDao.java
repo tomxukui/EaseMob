@@ -1,6 +1,6 @@
 package com.hyphenate.easeui.dao;
 
-import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.bean.EaseUser;
 
 import java.util.List;
 import java.util.Map;

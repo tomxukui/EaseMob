@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.adapter.EaseContactAdapter;
-import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.bean.EaseUser;
 
 public class EaseContactList extends RelativeLayout {
     protected static final String TAG = EaseContactList.class.getSimpleName();

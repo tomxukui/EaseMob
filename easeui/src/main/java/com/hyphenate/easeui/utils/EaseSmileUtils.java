@@ -28,7 +28,7 @@ import android.text.style.ImageSpan;
 
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.EaseUI.EaseEmojiconInfoProvider;
-import com.hyphenate.easeui.domain.EaseEmojicon;
+import com.hyphenate.easeui.bean.EaseEmojicon;
 import com.hyphenate.easeui.model.EaseDefaultEmojiconDatas;
 
 public class EaseSmileUtils {

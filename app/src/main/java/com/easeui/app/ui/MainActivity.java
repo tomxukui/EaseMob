@@ -12,8 +12,8 @@ import com.easeui.app.R;
 import com.easeui.app.dialog.LoadingDialog;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.easeui.domain.EaseAccount;
-import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.bean.EaseAccount;
+import com.hyphenate.easeui.bean.EaseUser;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryActivity;
 
 public class MainActivity extends AppCompatActivity {

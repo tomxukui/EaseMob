@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.bean.EaseUser;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 
 import java.util.Hashtable;

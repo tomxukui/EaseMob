@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.domain.EaseAvatarOptions;
-import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.bean.EaseAvatarOptions;
+import com.hyphenate.easeui.bean.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseImageView;
 

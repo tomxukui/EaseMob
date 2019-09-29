@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.bean.EaseUser;
 import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
 import com.hyphenate.easeui.ui.EaseChatActivity;
 import com.hyphenate.easeui.ui.EaseContactListFragment;

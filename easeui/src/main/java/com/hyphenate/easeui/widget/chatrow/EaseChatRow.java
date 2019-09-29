@@ -16,7 +16,7 @@ import com.hyphenate.chat.EMMessage.Direct;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.adapter.EaseMessageAdapter;
-import com.hyphenate.easeui.domain.EaseAvatarOptions;
+import com.hyphenate.easeui.bean.EaseAvatarOptions;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseChatMessageList;

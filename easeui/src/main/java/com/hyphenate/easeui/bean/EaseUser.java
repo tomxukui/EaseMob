@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.domain;
+package com.hyphenate.easeui.bean;
 
 import com.hyphenate.chat.EMContact;
 import com.hyphenate.easeui.utils.EaseCommonUtils;

@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.domain.EaseEmojicon;
-import com.hyphenate.easeui.domain.EaseEmojicon.Type;
+import com.hyphenate.easeui.bean.EaseEmojicon;
+import com.hyphenate.easeui.bean.EaseEmojicon.Type;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
 
 import java.util.List;

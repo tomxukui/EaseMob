@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.domain.EaseEmojicon;
-import com.hyphenate.easeui.domain.EaseEmojiconGroupEntity;
+import com.hyphenate.easeui.bean.EaseEmojicon;
+import com.hyphenate.easeui.bean.EaseEmojiconGroupEntity;
 import com.hyphenate.easeui.widget.emojicon.EaseEmojiconPagerView.EaseEmojiconPagerViewListener;
 import com.hyphenate.easeui.widget.emojicon.EaseEmojiconScrollTabBar.EaseScrollTabBarItemClickListener;
 

@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.dao.UserDao;
-import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.bean.EaseUser;
 
 import java.util.List;
 import java.util.Map;
