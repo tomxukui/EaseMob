@@ -25,6 +25,14 @@
             android:text="汤姆" />
 
         <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/et_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="请输入环信账号的头像"
+            android:text="http://img2.imgtn.bdimg.com/it/u=1926370085,3850656535&amp;fm=26&amp;gp=0.jpg" />
+
+        <android.support.v7.widget.AppCompatEditText
             android:id="@+id/et_pwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,6 +69,14 @@
             android:layout_marginTop="10dp"
             android:hint="请输入对方的环信昵称"
             android:text="杰克" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/et_toAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="请输入对方的环信头像"
+            android:text="http://img.zcool.cn/community/015f1959df2638a80121ae0c8e21fe.jpg@1280w_1l_2o_100sh.png" />
 
         <Button
             android:id="@+id/btn_chat"

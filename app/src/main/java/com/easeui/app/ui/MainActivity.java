@@ -20,11 +20,13 @@ public class MainActivity extends AppCompatActivity {
 
     private AppCompatEditText et_username;
     private AppCompatEditText et_nickname;
+    private AppCompatEditText et_avatar;
     private AppCompatEditText et_pwd;
     private Button btn_login;
     private Button btn_logout;
     private AppCompatEditText et_toUsername;
     private AppCompatEditText et_toNickname;
+    private AppCompatEditText et_toAvatar;
     private Button btn_chat;
 
     private LoadingDialog mLoadingDialog;
@@ -40,11 +42,13 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         et_username = findViewById(R.id.et_username);
         et_nickname = findViewById(R.id.et_nickname);
+        et_avatar = findViewById(R.id.et_avatar);
         et_pwd = findViewById(R.id.et_pwd);
         btn_login = findViewById(R.id.btn_login);
         btn_logout = findViewById(R.id.btn_logout);
         et_toUsername = findViewById(R.id.et_toUsername);
         et_toNickname = findViewById(R.id.et_toNickname);
+        et_toAvatar = findViewById(R.id.et_toAvatar);
         btn_chat = findViewById(R.id.btn_chat);
     }
 
@@ -192,9 +196,11 @@ public class MainActivity extends AppCompatActivity {
         btn_chat.setOnClickListener(v -> {
             String username = et_username.getText().toString().trim();
             String nickname = et_nickname.getText().toString().trim();
+            String avatar = et_avatar.getText().toString().trim();
             String pwd = et_pwd.getText().toString().trim();
             String toUsername = et_toUsername.getText().toString().trim();
             String toNickname = et_toNickname.getText().toString().trim();
+            String toAvatar = et_toAvatar.getText().toString().trim();
 
             if (TextUtils.isEmpty(username)) {
                 toast(et_username.getHint().toString());
@@ -217,8 +223,8 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            EaseAccount account = new EaseAccount(username, pwd, nickname, null);
-            EaseUser toUser = new EaseUser(toUsername, toNickname, null);
+            EaseAccount account = new EaseAccount(username, pwd, nickname, avatar);
+            EaseUser toUser = new EaseUser(toUsername, toNickname, toAvatar);
 
             Intent intent = EaseInquiryActivity.buildIntent(MainActivity.this, account, toUser, true, true);
             startActivity(intent);
