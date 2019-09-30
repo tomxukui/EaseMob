@@ -2,8 +2,6 @@ package com.hyphenate.easeui.module.base.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -18,8 +16,6 @@ import com.yanzhenjie.permission.AndPermission;
 import java.util.List;
 
 public abstract class EaseBaseActivity extends AppCompatActivity implements EaseIBase {
-
-    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -71,14 +67,6 @@ public abstract class EaseBaseActivity extends AppCompatActivity implements Ease
     }
 
     protected void setView() {
-    }
-
-    protected Handler getHandler() {
-        if (mHandler == null) {
-            mHandler = new Handler(Looper.getMainLooper());
-        }
-
-        return mHandler;
     }
 
     @Override

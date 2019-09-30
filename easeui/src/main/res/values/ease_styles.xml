@@ -8,6 +8,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="EaseAppTheme.Dark">
+        <item name="colorPrimaryDark">#000000</item>
+    </style>
+
     <style name="EaseAppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="actionMenuTextColor">#ffffff</item>
     </style>

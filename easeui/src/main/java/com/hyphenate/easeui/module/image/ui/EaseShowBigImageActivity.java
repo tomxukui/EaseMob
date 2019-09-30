@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.ui;
+package com.hyphenate.easeui.module.image.ui;
 
 import java.io.File;
 
@@ -16,10 +16,12 @@ import com.hyphenate.util.ImageUtils;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.widget.ProgressBar;
 
@@ -28,13 +30,20 @@ import android.widget.ProgressBar;
  */
 public class EaseShowBigImageActivity extends EaseBaseActivity {
 
-    private static final String TAG = "ShowBigImage";
+    private static final String EXTRA_DEFAULT_IMAGE = "DEFAULT_IMAGE";
+    private static final String EXTRA_URI = "EXTRA_URI";
+    private static final String EXTRA_LOCAL_URL = "EXTRA_LOCAL_URL";
+    private static final String EXTRA_MSG_ID = "EXTRA_MSG_ID";
 
     private ProgressDialog pd;
-    private EasePhotoView image;
-    private ProgressBar loadLocalPb;
-    private int default_res = R.drawable.ease_default_image;
-    private String localFilePath;
+    private EasePhotoView iv_photo;
+    private ProgressBar bar_loading;
+
+    private int mDefaultImage;
+    private Uri mUri;
+    private String mLocalUrl;
+    private String mMsgId;
+
     private Bitmap bitmap;
     private boolean isDownloaded;
 
@@ -44,46 +53,51 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
     }
 
     @Override
-    protected void initView() {
-        super.initView();
-        image = findViewById(R.id.image);
-        loadLocalPb = findViewById(R.id.pb_load_local);
+    protected void initData() {
+        super.initData();
+        mDefaultImage = getIntent().getIntExtra(EXTRA_DEFAULT_IMAGE, R.drawable.ease_default_image);
+        mUri = getIntent().getParcelableExtra(EXTRA_URI);
+        mLocalUrl = getIntent().getStringExtra(EXTRA_LOCAL_URL);
+        mMsgId = getIntent().getStringExtra(EXTRA_MSG_ID);
     }
 
-    @SuppressLint("NewApi")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        default_res = getIntent().getIntExtra("default_image", R.mipmap.ease_ic_portrait);
-        Uri uri = getIntent().getParcelableExtra("uri");
-        localFilePath = getIntent().getExtras().getString("localUrl");
-        String msgId = getIntent().getExtras().getString("messageId");
+    protected void initView() {
+        super.initView();
+        iv_photo = findViewById(R.id.iv_photo);
+        bar_loading = findViewById(R.id.bar_loading);
+    }
 
-        //show the image if it exist in local path
-        if (uri != null && new File(uri.getPath()).exists()) {
+    @Override
+    protected void setView() {
+        super.setView();
+        iv_photo.setOnClickListener(v -> finish());
+
+        if (mUri != null && new File(mUri.getPath()).exists()) {
             DisplayMetrics metrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            bitmap = EaseImageCache.getInstance().get(uri.getPath());
+            bitmap = EaseImageCache.getInstance().get(mUri.getPath());
+
             if (bitmap == null) {
-                EaseLoadLocalBigImgTask task = new EaseLoadLocalBigImgTask(this, uri.getPath(), image, loadLocalPb, ImageUtils.SCALE_IMAGE_WIDTH,
+                EaseLoadLocalBigImgTask task = new EaseLoadLocalBigImgTask(this, mUri.getPath(), iv_photo, bar_loading, ImageUtils.SCALE_IMAGE_WIDTH,
                         ImageUtils.SCALE_IMAGE_HEIGHT);
                 if (android.os.Build.VERSION.SDK_INT > 10) {
                     task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 } else {
                     task.execute();
                 }
+
             } else {
-                image.setImageBitmap(bitmap);
+                iv_photo.setImageBitmap(bitmap);
             }
-        } else if (msgId != null) {
-            downloadImage(msgId);
+
+        } else if (mMsgId != null) {
+            downloadImage(mMsgId);
+
         } else {
-            image.setImageResource(default_res);
+            iv_photo.setImageResource(mDefaultImage);
         }
-
-        image.setOnClickListener(v -> finish());
     }
-
 
     /**
      * download image
@@ -96,24 +110,24 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
         pd.setCanceledOnTouchOutside(false);
         pd.setMessage(str1);
         pd.show();
-        File temp = new File(localFilePath);
+        File temp = new File(mLocalUrl);
         final String tempPath = temp.getParent() + "/temp_" + temp.getName();
         final EMCallBack callback = new EMCallBack() {
             public void onSuccess() {
                 runOnUiThread(() -> {
-                    new File(tempPath).renameTo(new File(localFilePath));
+                    new File(tempPath).renameTo(new File(mLocalUrl));
 
                     DisplayMetrics metrics = new DisplayMetrics();
                     getWindowManager().getDefaultDisplay().getMetrics(metrics);
                     int screenWidth = metrics.widthPixels;
                     int screenHeight = metrics.heightPixels;
 
-                    bitmap = ImageUtils.decodeScaleImage(localFilePath, screenWidth, screenHeight);
+                    bitmap = ImageUtils.decodeScaleImage(mLocalUrl, screenWidth, screenHeight);
                     if (bitmap == null) {
-                        image.setImageResource(default_res);
+                        iv_photo.setImageResource(mDefaultImage);
                     } else {
-                        image.setImageBitmap(bitmap);
-                        EaseImageCache.getInstance().put(localFilePath, bitmap);
+                        iv_photo.setImageBitmap(bitmap);
+                        EaseImageCache.getInstance().put(mLocalUrl, bitmap);
                         isDownloaded = true;
                     }
                     if (isFinishing() || isDestroyed()) {
@@ -134,7 +148,7 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
                     if (EaseShowBigImageActivity.this.isFinishing() || EaseShowBigImageActivity.this.isDestroyed()) {
                         return;
                     }
-                    image.setImageResource(default_res);
+                    iv_photo.setImageResource(mDefaultImage);
                     pd.dismiss();
                     if (error == EMError.FILE_NOT_FOUND) {
                         EaseToastUtil.show(R.string.Image_expired);
@@ -161,8 +175,26 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (isDownloaded)
+        if (isDownloaded) {
             setResult(RESULT_OK);
+        }
+
         finish();
     }
+
+    public static Intent buildIntent(Context context, Uri uri, @Nullable Integer defaultImage) {
+        Intent intent = new Intent(context, EaseShowBigImageActivity.class);
+        intent.putExtra(EXTRA_URI, uri);
+        intent.putExtra(EXTRA_DEFAULT_IMAGE, defaultImage);
+        return intent;
+    }
+
+    public static Intent buildIntent(Context context, String msgId, String localUrl, @Nullable Integer defaultImage) {
+        Intent intent = new Intent(context, EaseShowBigImageActivity.class);
+        intent.putExtra(EXTRA_MSG_ID, msgId);
+        intent.putExtra(EXTRA_LOCAL_URL, localUrl);
+        intent.putExtra(EXTRA_DEFAULT_IMAGE, defaultImage);
+        return intent;
+    }
+
 }
