@@ -662,11 +662,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         void onSetMessageAttributes(EMMessage message);
 
         /**
-         * enter to chat detail
-         */
-        void onEnterToChatDetails();
-
-        /**
          * on avatar clicked
          */
         void onAvatarClick(String username);
@@ -685,11 +680,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
          * on message bubble long pressed
          */
         void onMessageBubbleLongClick(EMMessage message);
-
-        /**
-         * on extend menu item clicked, return true if you want to override
-         */
-        boolean onExtendMenuItemClick(int itemId, View view);
 
         /**
          * on set custom chat row provider
