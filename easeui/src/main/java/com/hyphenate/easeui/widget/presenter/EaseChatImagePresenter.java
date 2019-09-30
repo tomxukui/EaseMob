@@ -2,7 +2,6 @@ package com.hyphenate.easeui.widget.presenter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.widget.BaseAdapter;
 
 import com.hyphenate.EMCallBack;
@@ -13,8 +12,6 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.module.image.ui.EaseShowBigImageActivity;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRowImage;
-
-import java.io.File;
 
 /**
  * Created by zhangsong on 17-10-12.
@@ -72,16 +69,6 @@ public class EaseChatImagePresenter extends EaseChatFilePresenter {
             }
         }
 
-        Intent intent = null;
-
-        File file = new File(imgBody.getLocalUrl());
-        if (file.exists()) {
-            intent = EaseShowBigImageActivity.buildIntent(getContext(), Uri.fromFile(file), null);
-
-        } else {
-            intent = EaseShowBigImageActivity.buildIntent(getContext(), message.getMsgId(), imgBody.getLocalUrl(), null);
-        }
-
         if (message != null && message.direct() == EMMessage.Direct.RECEIVE && !message.isAcked() && message.getChatType() == EMMessage.ChatType.Chat) {
             try {
                 EMClient.getInstance().chatManager().ackMessageRead(message.getFrom(), message.getMsgId());
@@ -91,6 +78,7 @@ public class EaseChatImagePresenter extends EaseChatFilePresenter {
             }
         }
 
+        Intent intent = EaseShowBigImageActivity.buildIntent(getContext(), message.getMsgId(), imgBody.getLocalUrl(), null);
         getContext().startActivity(intent);
     }
 
