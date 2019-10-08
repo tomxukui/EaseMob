@@ -7,12 +7,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.0"
+        android:gravity="center"
+        android:minHeight="100dp"
         android:text="送心意" />
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.0"
+        android:gravity="center"
+        android:minHeight="100dp"
         android:text="再次咨询" />
 
 </merge>
