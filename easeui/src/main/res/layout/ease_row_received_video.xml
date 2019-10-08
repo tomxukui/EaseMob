@@ -23,7 +23,7 @@
             android:layout_height="@dimen/size_avatar"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/margin_chat_activity"
+            android:layout_marginLeft="@dimen/chat_avatar_margin_left"
             android:scaleType="fitXY"
             android:src="@mipmap/ease_ic_portrait" />
 
@@ -42,7 +42,7 @@
             android:layout_width="130dp"
             android:layout_height="145dp"
             android:layout_below="@+id/tv_userid"
-            android:layout_marginLeft="@dimen/margin_chat_activity"
+            android:layout_marginLeft="@dimen/chat_bubble_margin_left"
             android:layout_toRightOf="@id/iv_userhead"
             android:background="@drawable/ease_chatfrom_bg">
 
