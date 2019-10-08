@@ -43,12 +43,11 @@
                 android:autoLink="web"
                 android:gravity="center|left"
                 android:lineSpacingExtra="2dp"
-                android:maxWidth="225.0dip"
+                android:maxWidth="225dp"
                 android:minHeight="38dp"
-                android:paddingLeft="1dp"
-                android:paddingRight="6dp"
-                android:textColor="#000000"
-                android:textSize="15sp" />
+                android:padding="10dp"
+                android:textColor="@color/chat_bubble_text_color"
+                android:textSize="@dimen/chat_bubble_text_size" />
 
         </RelativeLayout>
 

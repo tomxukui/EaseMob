@@ -46,10 +46,9 @@
                 android:lineSpacingExtra="2dp"
                 android:maxWidth="225dp"
                 android:minHeight="38dp"
-                android:paddingLeft="6dp"
-                android:paddingRight="1dp"
-                android:textColor="#1A1A1A"
-                android:textSize="15sp" />
+                android:padding="10dp"
+                android:textColor="@color/chat_bubble_text_color"
+                android:textSize="@dimen/chat_bubble_text_size" />
 
         </RelativeLayout>
 
