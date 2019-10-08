@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -17,6 +18,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.utils.DensityUtil;
 
 import java.lang.reflect.Method;
 
@@ -34,7 +36,6 @@ class CanvasLegacy {
     static final int FULL_COLOR_LAYER_SAVE_FLAG;
     static final int CLIP_TO_LAYER_SAVE_FLAG;
 
-
     private static final Method SAVE;
 
     static {
@@ -51,7 +52,7 @@ class CanvasLegacy {
         }
     }
 
-    static void saveLayer(Canvas canvas, float left, float top, float right, float bottom, @Nullable Paint paint,  int saveFlags) {
+    static void saveLayer(Canvas canvas, float left, float top, float right, float bottom, @Nullable Paint paint, int saveFlags) {
         try {
             SAVE.invoke(canvas, left, top, right, bottom, paint, saveFlags);
         } catch (Throwable e) {
@@ -69,7 +70,6 @@ class CanvasLegacy {
         throw (T) t;
     }
 }
-
 
 /**
  * Created by lzan13 on 2015/4/30.
@@ -113,15 +113,14 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
         init(context, attrs);
     }
 
-
     private void init(Context context, AttributeSet attrs) {
         //init the value
-        borderWidth = 0;
-        borderColor = 0xddffffff;
+        borderWidth = DensityUtil.dp2px(0.5f);
+        borderColor = Color.parseColor("#D8D9DB");
         pressAlpha = 0x42;
         pressColor = 0x42000000;
         radius = 16;
-        shapeType = 0;
+        shapeType = 1;
 
         // get attribute of EaseImageView
         if (attrs != null) {
@@ -149,7 +148,6 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
 
     @Override
     protected void onDraw(Canvas canvas) {
-
         if (shapeType == 0) {
             super.onDraw(canvas);
             return;
@@ -165,7 +163,7 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
         Bitmap bitmap = getBitmapFromDrawable(drawable);
         drawDrawable(canvas, bitmap);
 
-        if(isClickable()){
+        if (isClickable()) {
             drawPress(canvas);
         }
         drawBorder(canvas);
@@ -190,13 +188,16 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
                     | CanvasLegacy.HAS_ALPHA_LAYER_SAVE_FLAG
                     | CanvasLegacy.FULL_COLOR_LAYER_SAVE_FLAG
                     | CanvasLegacy.CLIP_TO_LAYER_SAVE_FLAG;
-            CanvasLegacy.saveLayer(canvas,0, 0, width, height, null, saveFlags);
+
+            CanvasLegacy.saveLayer(canvas, 0, 0, width, height, null, saveFlags);
+
         } else {
             canvas.saveLayer(0, 0, width, height, null);
         }
 
         if (shapeType == 1) {
             canvas.drawCircle(width / 2, height / 2, width / 2 - 1, paint);
+
         } else if (shapeType == 2) {
             RectF rectf = new RectF(1, 1, getWidth() - 1, getHeight() - 1);
             canvas.drawRoundRect(rectf, radius + 1, radius + 1, paint);
@@ -226,6 +227,7 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
         // check is rectangle or circle
         if (shapeType == 1) {
             canvas.drawCircle(width / 2, height / 2, width / 2 - 1, pressPaint);
+
         } else if (shapeType == 2) {
             RectF rectF = new RectF(1, 1, width - 1, height - 1);
             canvas.drawRoundRect(rectF, radius + 1, radius + 1, pressPaint);
@@ -299,7 +301,6 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
     }
 
     /**
-     *
      * @param drawable
      * @return
      */
@@ -383,4 +384,5 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
         this.shapeType = shapeType;
         invalidate();
     }
+
 }

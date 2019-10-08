@@ -24,8 +24,8 @@ import com.hyphenate.easeui.widget.EaseImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements SectionIndexer{
-    private static final String TAG = "ContactAdapter";
+public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements SectionIndexer {
+
     List<String> list;
     List<EaseUser> userList;
     List<EaseUser> copyUserList;
@@ -40,82 +40,96 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
         super(context, resource, objects);
         this.res = resource;
         this.userList = objects;
-        copyUserList = new ArrayList<EaseUser>();
+        copyUserList = new ArrayList<>();
         copyUserList.addAll(objects);
         layoutInflater = LayoutInflater.from(context);
     }
-    
+
     private static class ViewHolder {
         ImageView avatar;
         TextView nameView;
         TextView headerView;
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        if(convertView == null){
+        if (convertView == null) {
             holder = new ViewHolder();
-            if(res == 0)
+            if (res == 0) {
                 convertView = layoutInflater.inflate(R.layout.ease_row_contact, parent, false);
-            else
+
+            } else {
                 convertView = layoutInflater.inflate(res, null);
-            holder.avatar = (ImageView) convertView.findViewById(R.id.avatar);
-            holder.nameView = (TextView) convertView.findViewById(R.id.name);
-            holder.headerView = (TextView) convertView.findViewById(R.id.header);
+            }
+            holder.avatar = convertView.findViewById(R.id.avatar);
+            holder.nameView = convertView.findViewById(R.id.name);
+            holder.headerView = convertView.findViewById(R.id.header);
             convertView.setTag(holder);
-        }else{
+
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        
+
         EaseUser user = getItem(position);
         String username = user.getUsername();
         String header = user.getInitialLetter();
-        
+
         if (position == 0 || header != null && !header.equals(getItem(position - 1).getInitialLetter())) {
             if (TextUtils.isEmpty(header)) {
                 holder.headerView.setVisibility(View.GONE);
+
             } else {
                 holder.headerView.setVisibility(View.VISIBLE);
                 holder.headerView.setText(header);
             }
+
         } else {
             holder.headerView.setVisibility(View.GONE);
         }
 
         EaseAvatarOptions avatarOptions = EaseUI.getInstance().getAvatarOptions();
-        if(avatarOptions != null && holder.avatar instanceof EaseImageView) {
+        if (avatarOptions != null && holder.avatar instanceof EaseImageView) {
             EaseImageView avatarView = ((EaseImageView) holder.avatar);
-            if (avatarOptions.getAvatarShape() != 0)
+
+            if (avatarOptions.getAvatarShape() != 0) {
                 avatarView.setShapeType(avatarOptions.getAvatarShape());
-            if (avatarOptions.getAvatarBorderWidth() != 0)
+            }
+            if (avatarOptions.getAvatarBorderWidth() != 0) {
                 avatarView.setBorderWidth(avatarOptions.getAvatarBorderWidth());
-            if (avatarOptions.getAvatarBorderColor() != 0)
+            }
+            if (avatarOptions.getAvatarBorderColor() != 0) {
                 avatarView.setBorderColor(avatarOptions.getAvatarBorderColor());
-            if (avatarOptions.getAvatarRadius() != 0)
+            }
+            if (avatarOptions.getAvatarRadius() != 0) {
                 avatarView.setRadius(avatarOptions.getAvatarRadius());
+            }
         }
 
         EaseUserUtils.setUserNick(username, holder.nameView);
         EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
-        
-       
-        if(primaryColor != 0)
+
+        if (primaryColor != 0) {
             holder.nameView.setTextColor(primaryColor);
-        if(primarySize != 0)
+        }
+        if (primarySize != 0) {
             holder.nameView.setTextSize(TypedValue.COMPLEX_UNIT_PX, primarySize);
-        if(initialLetterBg != null)
+        }
+        if (initialLetterBg != null) {
             holder.headerView.setBackground(initialLetterBg);
-        if(initialLetterColor != 0)
+        }
+        if (initialLetterColor != 0) {
             holder.headerView.setTextColor(initialLetterColor);
-        
+        }
+
         return convertView;
     }
-    
+
     @Override
     public EaseUser getItem(int position) {
         return super.getItem(position);
     }
-    
+
     @Override
     public int getCount() {
         return super.getCount();
@@ -130,13 +144,13 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
     public int getSectionForPosition(int position) {
         return sectionOfPosition.get(position);
     }
-    
+
     @Override
     public Object[] getSections() {
         positionOfSection = new SparseIntArray();
         sectionOfPosition = new SparseIntArray();
         int count = getCount();
-        list = new ArrayList<String>();
+        list = new ArrayList<>();
         list.add(getContext().getString(R.string.search_header));
         positionOfSection.put(0, 0);
         sectionOfPosition.put(0, 0);
@@ -153,18 +167,18 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
         }
         return list.toArray(new String[list.size()]);
     }
-    
+
     @Override
     public Filter getFilter() {
-        if(myFilter==null){
+        if (myFilter == null) {
             myFilter = new MyFilter(userList);
         }
         return myFilter;
     }
-    
-    protected class  MyFilter extends Filter{
+
+    protected class MyFilter extends Filter {
         List<EaseUser> mOriginalList = null;
-        
+
         public MyFilter(List<EaseUser> myList) {
             this.mOriginalList = myList;
         }
@@ -172,33 +186,32 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
         @Override
         protected synchronized FilterResults performFiltering(CharSequence prefix) {
             FilterResults results = new FilterResults();
-            if(mOriginalList==null){
+            if (mOriginalList == null) {
                 mOriginalList = new ArrayList<>();
             }
 
-            if(prefix==null || prefix.length()==0){
+            if (prefix == null || prefix.length() == 0) {
                 results.values = copyUserList;
                 results.count = copyUserList.size();
-            }else{
 
+            } else {
                 if (copyUserList.size() > mOriginalList.size()) {
                     mOriginalList = copyUserList;
                 }
                 String prefixString = prefix.toString();
                 final int count = mOriginalList.size();
                 final ArrayList<EaseUser> newValues = new ArrayList<EaseUser>();
-                for(int i=0;i<count;i++){
+                for (int i = 0; i < count; i++) {
                     final EaseUser user = mOriginalList.get(i);
                     String username = user.getUsername();
-                    
-                    if(username.startsWith(prefixString)){
+
+                    if (username.startsWith(prefixString)) {
                         newValues.add(user);
-                    }
-                    else{
-                         final String[] words = username.split(" ");
-                         final int wordCount = words.length;
-    
-                         // Start at index 0, in case valueText starts with space(s)
+
+                    } else {
+                        final String[] words = username.split(" ");
+
+                        // Start at index 0, in case valueText starts with space(s)
                         for (String word : words) {
                             if (word.startsWith(prefixString)) {
                                 newValues.add(user);
@@ -207,37 +220,39 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
                         }
                     }
                 }
-                results.values=newValues;
-                results.count=newValues.size();
+                results.values = newValues;
+                results.count = newValues.size();
             }
+
             return results;
         }
 
         @Override
-        protected synchronized void publishResults(CharSequence constraint,
-                FilterResults results) {
+        protected synchronized void publishResults(CharSequence constraint, FilterResults results) {
             userList.clear();
-            userList.addAll((List<EaseUser>)results.values);
+            userList.addAll((List<EaseUser>) results.values);
+
             if (results.count > 0) {
                 notiyfyByFilter = true;
                 notifyDataSetChanged();
                 notiyfyByFilter = false;
+
             } else {
                 notifyDataSetInvalidated();
             }
         }
     }
-    
-    
+
+
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
-        if(!notiyfyByFilter){
+        if (!notiyfyByFilter) {
             copyUserList.clear();
             copyUserList.addAll(userList);
         }
     }
-    
+
     protected int primaryColor;
     protected int primarySize;
     protected Drawable initialLetterBg;
@@ -247,7 +262,6 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
         this.primaryColor = primaryColor;
         return this;
     }
-
 
     public EaseContactAdapter setPrimarySize(int primarySize) {
         this.primarySize = primarySize;
@@ -263,5 +277,5 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
         this.initialLetterColor = initialLetterColor;
         return this;
     }
-    
+
 }
