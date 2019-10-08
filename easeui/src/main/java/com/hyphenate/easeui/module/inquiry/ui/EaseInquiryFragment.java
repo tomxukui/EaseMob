@@ -56,7 +56,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     private static final String EXTRA_TO_USERNAME = "EXTRA_TO_USERNAME";//聊天对象
     private static final String EXTRA_CHAT_ENABLED = "EXTRA_CHAT_ENABLED";//是否具备聊天功能
     private static final String EXTRA_FINISH_CHAT_ENABLED = "EXTRA_FINISH_CHAT_ENABLED";//是否具备结束聊天功能
-    private static final String EXTRA_ENDED_MENU_VISIBILITY = "EXTRA_ENDED_MENU_VISIBILITY";//已结束的菜单是否显示
+    private static final String EXTRA_SHOW_ENDED_MENU = "EXTRA_SHOW_ENDED_MENU";//已结束的菜单是否显示
 
     private static final int REQUEST_CAMERA = 2;
     private static final int REQUEST_ALBUM = 3;
@@ -77,7 +77,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     private String mToUsername;//对方username
     private boolean mChatEnabled;//是否可以聊天
     private boolean mFinishChatEnabled;//是否可以结束问诊
-    private boolean mEndedMenuVisibility;//是否显示结束后的菜单
+    private boolean mShowEndedMenu;//是否显示结束后的菜单
 
     private EMConversation mConversation;
 
@@ -130,13 +130,13 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
     };
 
-    public static EaseInquiryFragment newInstance(String toUsername, boolean chatEnabled, boolean finishChatEnabled, boolean endedMenuVisibility) {
+    public static EaseInquiryFragment newInstance(String toUsername, boolean chatEnabled, boolean finishChatEnabled, boolean showEndedMenu) {
         EaseInquiryFragment fragment = new EaseInquiryFragment();
         Bundle bundle = new Bundle();
         bundle.putString(EXTRA_TO_USERNAME, toUsername);
         bundle.putBoolean(EXTRA_CHAT_ENABLED, chatEnabled);
         bundle.putBoolean(EXTRA_FINISH_CHAT_ENABLED, finishChatEnabled);
-        bundle.putBoolean(EXTRA_ENDED_MENU_VISIBILITY, endedMenuVisibility);
+        bundle.putBoolean(EXTRA_SHOW_ENDED_MENU, showEndedMenu);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -154,7 +154,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             mToUsername = bundle.getString(EXTRA_TO_USERNAME);
             mChatEnabled = bundle.getBoolean(EXTRA_CHAT_ENABLED, true);
             mFinishChatEnabled = bundle.getBoolean(EXTRA_FINISH_CHAT_ENABLED, false);
-            mEndedMenuVisibility = bundle.getBoolean(EXTRA_ENDED_MENU_VISIBILITY, true);
+            mShowEndedMenu = bundle.getBoolean(EXTRA_SHOW_ENDED_MENU, true);
         }
     }
 
@@ -187,7 +187,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         onMessageListInit();
 
         //设置消息列表
-        list_message.setShowUserNick(true);
+        list_message.setShowUserNick(false);
         list_message.getSwipeRefreshLayout().setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light, R.color.holo_orange_light, R.color.holo_red_light);
         list_message.getSwipeRefreshLayout().setOnRefreshListener(() -> mHandler.postDelayed(() -> loadMoreLocalMessages(), 600));
 
@@ -653,7 +653,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         }
 
         if (menu_ended != null) {
-            if ((!mChatEnabled) && mEndedMenuVisibility) {
+            if ((!mChatEnabled) && mShowEndedMenu) {
                 menu_ended.setVisibility(View.VISIBLE);
 
             } else {
