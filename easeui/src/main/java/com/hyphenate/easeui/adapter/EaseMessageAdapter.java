@@ -57,8 +57,6 @@ public class EaseMessageAdapter extends BaseAdapter {
     private MessageListItemClickListener itemClickListener;
     private EaseCustomChatRowProvider customRowProvider;
 
-    private boolean showUserNick;
-    private boolean showAvatar;
     private Drawable myBubbleBg;
     private Drawable otherBuddleBg;
 
@@ -294,14 +292,6 @@ public class EaseMessageAdapter extends BaseAdapter {
 
     public void setCustomChatRowProvider(EaseCustomChatRowProvider rowProvider) {
         customRowProvider = rowProvider;
-    }
-
-    public boolean isShowUserNick() {
-        return showUserNick;
-    }
-
-    public boolean isShowAvatar() {
-        return showAvatar;
     }
 
     public Drawable getMyBubbleBg() {
