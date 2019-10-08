@@ -8,7 +8,6 @@ public class EaseImageUtils extends com.hyphenate.util.ImageUtils {
         String imageName = remoteUrl.substring(remoteUrl.lastIndexOf("/") + 1, remoteUrl.length());
         String path = PathUtil.getInstance().getImagePath() + "/" + imageName;
         return path;
-
     }
 
     public static String getThumbnailImagePath(String thumbRemoteUrl) {
