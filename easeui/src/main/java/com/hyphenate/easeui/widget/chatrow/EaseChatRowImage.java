@@ -1,22 +1,24 @@
 package com.hyphenate.easeui.widget.chatrow;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.model.EaseImageCache;
+import com.hyphenate.easeui.utils.AndroidLifecycleUtil;
 import com.hyphenate.easeui.utils.EaseImageUtils;
+import com.hyphenate.easeui.utils.FileUtil;
+
 import java.io.File;
 
-public class EaseChatRowImage extends EaseChatRowFile{
+public class EaseChatRowImage extends EaseChatRowFile {
 
     protected ImageView imageView;
     private EMImageMessageBody imgBody;
@@ -40,117 +42,85 @@ public class EaseChatRowImage extends EaseChatRowFile{
     protected void onSetUpView() {
         imgBody = (EMImageMessageBody) message.getBody();
 
-        // received messages
-        if (message.direct() == EMMessage.Direct.RECEIVE) {
-            return;
+        if (message.direct() == EMMessage.Direct.SEND) {//已发送的消息
+            String filePath = imgBody.getLocalUrl();
+            String thumbPath = EaseImageUtils.getThumbnailImagePath(filePath);
+            showImageView(thumbPath, filePath);
         }
-
-        String filePath = imgBody.getLocalUrl();
-        String thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
-        showImageView(thumbPath, filePath, message);
     }
 
     @Override
     protected void onViewUpdate(EMMessage msg) {
-        if (msg.direct() == EMMessage.Direct.SEND) {
-            if(EMClient.getInstance().getOptions().getAutodownloadThumbnail()){
+        if (msg.direct() == EMMessage.Direct.SEND) {//已发送的消息
+            if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
                 super.onViewUpdate(msg);
-            }else{
-                if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING ||
-                        imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING ||
-                            imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
+
+            } else {
+                if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING || imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING || imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
                     progressBar.setVisibility(View.INVISIBLE);
                     percentageView.setVisibility(View.INVISIBLE);
                     imageView.setImageResource(R.drawable.ease_default_image);
+
                 } else {
                     progressBar.setVisibility(View.GONE);
                     percentageView.setVisibility(View.GONE);
                     imageView.setImageResource(R.drawable.ease_default_image);
+
                     String thumbPath = imgBody.thumbnailLocalPath();
                     if (!new File(thumbPath).exists()) {
-                        // to make it compatible with thumbnail received in previous version
                         thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
                     }
-                    showImageView(thumbPath, imgBody.getLocalUrl(), message);
+                    showImageView(thumbPath, imgBody.getLocalUrl());
                 }
             }
-            return;
-        }
 
-        // received messages
-        if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING ||
-                imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING) {
-            if(EMClient.getInstance().getOptions().getAutodownloadThumbnail()){
+        } else {//已接收的消息
+            if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING || imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING) {
+                if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
+                    imageView.setImageResource(R.drawable.ease_default_image);
+
+                } else {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    percentageView.setVisibility(View.INVISIBLE);
+                    imageView.setImageResource(R.drawable.ease_default_image);
+                }
+
+            } else if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
+                if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    percentageView.setVisibility(View.VISIBLE);
+
+                } else {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    percentageView.setVisibility(View.INVISIBLE);
+                }
+
+            } else {
+                progressBar.setVisibility(View.GONE);
+                percentageView.setVisibility(View.GONE);
                 imageView.setImageResource(R.drawable.ease_default_image);
-            }else {
-                progressBar.setVisibility(View.INVISIBLE);
-                percentageView.setVisibility(View.INVISIBLE);
-                imageView.setImageResource(R.drawable.ease_default_image);
+
+                String thumbPath = imgBody.thumbnailLocalPath();
+                if (!new File(thumbPath).exists()) {
+                    thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
+                }
+
+                showImageView(thumbPath, imgBody.getLocalUrl());
             }
-        } else if(imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED){
-            if(EMClient.getInstance().getOptions().getAutodownloadThumbnail()){
-                progressBar.setVisibility(View.VISIBLE);
-                percentageView.setVisibility(View.VISIBLE);
-            }else {
-                progressBar.setVisibility(View.INVISIBLE);
-                percentageView.setVisibility(View.INVISIBLE);
-            }
-        } else {
-            progressBar.setVisibility(View.GONE);
-            percentageView.setVisibility(View.GONE);
-            imageView.setImageResource(R.drawable.ease_default_image);
-            String thumbPath = imgBody.thumbnailLocalPath();
-            if (!new File(thumbPath).exists()) {
-                // to make it compatible with thumbnail received in previous version
-                thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
-            }
-            showImageView(thumbPath, imgBody.getLocalUrl(), message);
         }
     }
 
     /**
-     * load image into image view
-     * 
+     * 显示图片
      */
-    private void showImageView(final String thumbernailPath, final String localFullSizePath,final EMMessage message) {
-        // first check if the thumbnail image already loaded into cache s
-        Bitmap bitmap = EaseImageCache.getInstance().get(thumbernailPath);
+    protected void showImageView(String thumbernailPath, String localFullSizePath) {
+        if (AndroidLifecycleUtil.canLoadImage(this)) {
+            String imgPath = (FileUtil.isFile(localFullSizePath) ? localFullSizePath : thumbernailPath);
 
-        if (bitmap != null) {
-            // thumbnail image is already loaded, reuse the drawable
-            imageView.setImageBitmap(bitmap);
-        } else {
-            imageView.setImageResource(R.drawable.ease_default_image);
-            new AsyncTask<Object, Void, Bitmap>() {
-
-                @Override
-                protected Bitmap doInBackground(Object... args) {
-                    File file = new File(thumbernailPath);
-                    if (file.exists()) {
-                        return EaseImageUtils.decodeScaleImage(thumbernailPath, 160, 160);
-                    } else if (new File(imgBody.thumbnailLocalPath()).exists()) {
-                        return EaseImageUtils.decodeScaleImage(imgBody.thumbnailLocalPath(), 160, 160);
-                    }
-                    else {
-                        if (message.direct() == EMMessage.Direct.SEND) {
-                            if (localFullSizePath != null && new File(localFullSizePath).exists()) {
-                                return EaseImageUtils.decodeScaleImage(localFullSizePath, 160, 160);
-                            } else {
-                                return null;
-                            }
-                        } else {
-                            return null;
-                        }
-                    }
-                }
-
-                protected void onPostExecute(Bitmap image) {
-                    if (image != null) {
-                        imageView.setImageBitmap(image);
-                        EaseImageCache.getInstance().put(thumbernailPath, image);
-                    }
-                }
-            }.execute();
+            Glide.with(this)
+                    .load(imgPath)
+                    .apply(new RequestOptions().placeholder(R.drawable.ease_default_image).error(R.drawable.ease_default_image).override(160))
+                    .into(imageView);
         }
     }
 
