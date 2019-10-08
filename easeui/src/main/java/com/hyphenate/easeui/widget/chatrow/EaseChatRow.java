@@ -122,24 +122,24 @@ public abstract class EaseChatRow extends LinearLayout {
     }
 
     private void setUpBaseView() {
-        TextView timestamp = findViewById(R.id.timestamp);
-        if (timestamp != null) {
+        if (timeStampView != null) {
             if (position == 0) {
-                timestamp.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
-                timestamp.setVisibility(View.VISIBLE);
+                timeStampView.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
+                timeStampView.setVisibility(View.VISIBLE);
 
             } else {
                 // show time stamp if interval with last message is > 30 seconds
                 EMMessage prevMessage = (EMMessage) adapter.getItem(position - 1);
                 if (prevMessage != null && DateUtils.isCloseEnough(message.getMsgTime(), prevMessage.getMsgTime())) {
-                    timestamp.setVisibility(View.GONE);
+                    timeStampView.setVisibility(View.GONE);
 
                 } else {
-                    timestamp.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
-                    timestamp.setVisibility(View.VISIBLE);
+                    timeStampView.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
+                    timeStampView.setVisibility(View.VISIBLE);
                 }
             }
         }
+
         if (userAvatarView != null) {
             if (message.direct() == Direct.SEND) {
                 EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
