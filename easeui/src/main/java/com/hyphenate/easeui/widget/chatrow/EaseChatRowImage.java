@@ -32,11 +32,10 @@ public class EaseChatRowImage extends EaseChatRowFile{
 
     @Override
     protected void onFindViewById() {
-        percentageView = (TextView) findViewById(R.id.percentage);
-        imageView = (ImageView) findViewById(R.id.image);
+        percentageView = findViewById(R.id.percentage);
+        imageView = findViewById(R.id.image);
     }
 
-    
     @Override
     protected void onSetUpView() {
         imgBody = (EMImageMessageBody) message.getBody();
