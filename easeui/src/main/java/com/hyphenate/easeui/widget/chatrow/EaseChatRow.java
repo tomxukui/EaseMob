@@ -38,8 +38,6 @@ public abstract class EaseChatRow extends LinearLayout {
 
     }
 
-    protected static final String TAG = EaseChatRow.class.getSimpleName();
-
     protected LayoutInflater inflater;
     protected Context context;
     protected BaseAdapter adapter;
