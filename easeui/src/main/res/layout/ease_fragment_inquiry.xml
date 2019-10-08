@@ -29,9 +29,23 @@
 
     </FrameLayout>
 
-    <com.hyphenate.easeui.widget.EaseChatInputMenu
-        android:id="@+id/input_menu"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <!--聊天输入菜单-->
+        <com.hyphenate.easeui.widget.EaseChatInputMenu
+            android:id="@+id/menu_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--聊天已结束的菜单-->
+        <com.hyphenate.easeui.module.inquiry.widget.EaseInquiryEndedMenu
+            android:id="@+id/menu_ended"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
 </LinearLayout>

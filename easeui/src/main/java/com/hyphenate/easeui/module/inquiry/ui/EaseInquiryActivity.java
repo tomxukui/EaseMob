@@ -14,10 +14,12 @@ public class EaseInquiryActivity extends EaseBaseChainActivity {
     private static final String EXTRA_TO_USERNAME = "EXTRA_TO_USERNAME";//聊天对象
     private static final String EXTRA_CHAT_ENABLED = "EXTRA_CHAT_ENABLED";//是否具备聊天功能
     private static final String EXTRA_FINISH_CHAT_ENABLED = "EXTRA_FINISH_CHAT_ENABLED";//是否具备结束聊天功能
+    private static final String EXTRA_ENDED_MENU_VISIBILITY = "EXTRA_ENDED_MENU_VISIBILITY";//已结束的菜单是否显示
 
     private String mToUsername;
     private boolean mChatEnabled;//是否可以聊天
     private boolean mFinishChatEnabled;//是否可以结束聊天
+    private boolean mEndedMenuVisibility;//是否显示结束后的菜单
 
     @Override
     protected void initData() {
@@ -25,14 +27,15 @@ public class EaseInquiryActivity extends EaseBaseChainActivity {
         mToUsername = getIntent().getStringExtra(EXTRA_TO_USERNAME);
         mChatEnabled = getIntent().getBooleanExtra(EXTRA_CHAT_ENABLED, true);
         mFinishChatEnabled = getIntent().getBooleanExtra(EXTRA_FINISH_CHAT_ENABLED, false);
+        mEndedMenuVisibility = getIntent().getBooleanExtra(EXTRA_ENDED_MENU_VISIBILITY, true);
     }
 
     @Override
     protected Fragment getMainFragment() {
-        return EaseInquiryFragment.newInstance(mToUsername, mChatEnabled, mFinishChatEnabled);
+        return EaseInquiryFragment.newInstance(mToUsername, mChatEnabled, mFinishChatEnabled, mEndedMenuVisibility);
     }
 
-    public static Intent buildIntent(Context context, EaseAccount account, EaseUser toUser, boolean chatEnabled, boolean finishChatEnabled) {
+    public static Intent buildIntent(Context context, EaseAccount account, EaseUser toUser, boolean chatEnabled, boolean finishChatEnabled, boolean endedMenuVisibility) {
         EaseContactUtil.getInstance().saveContact(account);
         EaseContactUtil.getInstance().saveContact(toUser);
 
@@ -42,6 +45,7 @@ public class EaseInquiryActivity extends EaseBaseChainActivity {
         intent.putExtra(EXTRA_TO_USERNAME, toUser.getUsername());
         intent.putExtra(EXTRA_CHAT_ENABLED, chatEnabled);
         intent.putExtra(EXTRA_FINISH_CHAT_ENABLED, finishChatEnabled);
+        intent.putExtra(EXTRA_ENDED_MENU_VISIBILITY, endedMenuVisibility);
         return intent;
     }
 

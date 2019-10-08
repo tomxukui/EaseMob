@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
             EaseAccount account = new EaseAccount(username, pwd, nickname, avatar);
             EaseUser toUser = new EaseUser(toUsername, toNickname, toAvatar);
 
-            Intent intent = EaseInquiryActivity.buildIntent(MainActivity.this, account, toUser, true, true);
+            Intent intent = EaseInquiryActivity.buildIntent(MainActivity.this, account, toUser, true, true, true);
             startActivity(intent);
         });
     }

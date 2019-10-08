@@ -30,6 +30,7 @@ import com.hyphenate.easeui.bean.EaseEmojicon;
 import com.hyphenate.easeui.bean.EaseUser;
 import com.hyphenate.easeui.model.EaseCompat;
 import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
+import com.hyphenate.easeui.module.inquiry.widget.EaseInquiryEndedMenu;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseContactUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
@@ -55,6 +56,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     private static final String EXTRA_TO_USERNAME = "EXTRA_TO_USERNAME";//聊天对象
     private static final String EXTRA_CHAT_ENABLED = "EXTRA_CHAT_ENABLED";//是否具备聊天功能
     private static final String EXTRA_FINISH_CHAT_ENABLED = "EXTRA_FINISH_CHAT_ENABLED";//是否具备结束聊天功能
+    private static final String EXTRA_ENDED_MENU_VISIBILITY = "EXTRA_ENDED_MENU_VISIBILITY";//已结束的菜单是否显示
 
     private static final int REQUEST_CAMERA = 2;
     private static final int REQUEST_ALBUM = 3;
@@ -67,13 +69,15 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
     private EaseToolbar toolbar;
     private EaseChatMessageList list_message;
-    private EaseChatInputMenu input_menu;
+    private EaseChatInputMenu menu_input;
+    private EaseInquiryEndedMenu menu_ended;
     private EaseVoiceRecorderView voice_recorder;
     private MenuItem menuItem;
 
     private String mToUsername;//对方username
     private boolean mChatEnabled;//是否可以聊天
     private boolean mFinishChatEnabled;//是否可以结束问诊
+    private boolean mEndedMenuVisibility;//是否显示结束后的菜单
 
     private EMConversation mConversation;
 
@@ -126,12 +130,13 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
     };
 
-    public static EaseInquiryFragment newInstance(String toUsername, boolean chatEnabled, boolean finishChatEnabled) {
+    public static EaseInquiryFragment newInstance(String toUsername, boolean chatEnabled, boolean finishChatEnabled, boolean endedMenuVisibility) {
         EaseInquiryFragment fragment = new EaseInquiryFragment();
         Bundle bundle = new Bundle();
         bundle.putString(EXTRA_TO_USERNAME, toUsername);
         bundle.putBoolean(EXTRA_CHAT_ENABLED, chatEnabled);
         bundle.putBoolean(EXTRA_FINISH_CHAT_ENABLED, finishChatEnabled);
+        bundle.putBoolean(EXTRA_ENDED_MENU_VISIBILITY, endedMenuVisibility);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -149,6 +154,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             mToUsername = bundle.getString(EXTRA_TO_USERNAME);
             mChatEnabled = bundle.getBoolean(EXTRA_CHAT_ENABLED, true);
             mFinishChatEnabled = bundle.getBoolean(EXTRA_FINISH_CHAT_ENABLED, false);
+            mEndedMenuVisibility = bundle.getBoolean(EXTRA_ENDED_MENU_VISIBILITY, true);
         }
     }
 
@@ -158,7 +164,8 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         toolbar = view.findViewById(R.id.toolbar);
         voice_recorder = view.findViewById(R.id.voice_recorder);
         list_message = view.findViewById(R.id.list_message);
-        input_menu = view.findViewById(R.id.input_menu);
+        menu_input = view.findViewById(R.id.menu_input);
+        menu_ended = view.findViewById(R.id.menu_ended);
     }
 
     @Override
@@ -185,13 +192,13 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         list_message.getSwipeRefreshLayout().setOnRefreshListener(() -> mHandler.postDelayed(() -> loadMoreLocalMessages(), 600));
 
         //设置功能菜单
-        input_menu.setVisibility(mChatEnabled ? View.VISIBLE : View.GONE);
-        input_menu.addExtendMenuItem(R.mipmap.ease_ic_camera, "拍照", v -> requestPermission(data -> pickPhotoFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE));
-        input_menu.addExtendMenuItem(R.mipmap.ease_ic_album, "相册", v -> requestPermission(data -> pickPhotoFromAlbum(), Permission.Group.CAMERA, Permission.Group.STORAGE));
+        setChatableView();
+        menu_input.addExtendMenuItem(R.mipmap.ease_ic_camera, "拍照", v -> requestPermission(data -> pickPhotoFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE));
+        menu_input.addExtendMenuItem(R.mipmap.ease_ic_album, "相册", v -> requestPermission(data -> pickPhotoFromAlbum(), Permission.Group.CAMERA, Permission.Group.STORAGE));
         if (mFinishChatEnabled) {
-            input_menu.addExtendMenuItem(R.mipmap.ease_ic_finish, "结束", v -> mHandler.sendEmptyMessage(MSG_FINISH_CONVERSATION));
+            menu_input.addExtendMenuItem(R.mipmap.ease_ic_finish, "结束", v -> mHandler.sendEmptyMessage(MSG_FINISH_CONVERSATION));
         }
-        input_menu.setChatInputMenuListener(new ChatInputMenuListener() {
+        menu_input.setChatInputMenuListener(new ChatInputMenuListener() {
 
             @Override
             public void onTyping(CharSequence s, int start, int before, int count) {
@@ -309,7 +316,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
         list_message.getListView().setOnTouchListener((v, event) -> {
             hideSoftKeyboard();
-            input_menu.hideExtendMenuContainer();
+            menu_input.hideExtendMenuContainer();
             return false;
         });
 
@@ -437,7 +444,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     }
 
     public void onBackPressed() {
-        if (input_menu.onBackPressed()) {
+        if (menu_input.onBackPressed()) {
             finish();
         }
     }
@@ -641,8 +648,17 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     }
 
     private void setChatableView() {
-        if (input_menu != null) {
-            input_menu.setVisibility(mChatEnabled ? View.VISIBLE : View.GONE);
+        if (menu_input != null) {
+            menu_input.setVisibility(mChatEnabled ? View.VISIBLE : View.GONE);
+        }
+
+        if (menu_ended != null) {
+            if ((!mChatEnabled) && mEndedMenuVisibility) {
+                menu_ended.setVisibility(View.VISIBLE);
+
+            } else {
+                menu_ended.setVisibility(View.GONE);
+            }
         }
 
         if (menuItem != null) {
