@@ -95,6 +95,7 @@ public abstract class EaseChatRowPresenter implements EaseChatRow.EaseChatRowAct
     private void handleMessage() {
         if (message.direct() == EMMessage.Direct.SEND) {
             handleSendMessage(message);
+
         } else if (message.direct() == EMMessage.Direct.RECEIVE) {
             handleReceiveMessage(message);
         }
