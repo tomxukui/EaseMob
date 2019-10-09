@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <!--分隔线-->
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
@@ -18,6 +19,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
 
+        <!--切换到语音模式的按钮-->
         <Button
             android:id="@+id/btn_setVoiceMode"
             android:layout_width="30dp"
@@ -25,6 +27,7 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/ease_chatting_setmode_voice_btn" />
 
+        <!--切换到键盘模式的按钮-->
         <Button
             android:id="@+id/btn_setKeyboardMode"
             android:layout_width="30dp"
@@ -33,25 +36,20 @@
             android:background="@drawable/ease_chatting_setmode_keyboard_btn"
             android:visibility="gone" />
 
-        <LinearLayout
-            android:id="@+id/btn_press_to_speak"
+        <!--语音发送的按钮-->
+        <TextView
+            android:id="@+id/tv_sendVoice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="6dp"
-            android:layout_weight="1"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1.0"
             android:background="@drawable/ease_chat_press_speak_btn"
             android:gravity="center"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button_pushtotalk"
-                android:textColor="#666666"
-                android:textSize="16sp" />
-
-        </LinearLayout>
+            android:text="@string/button_pushtotalk"
+            android:textColor="#666666"
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/edittext_layout"

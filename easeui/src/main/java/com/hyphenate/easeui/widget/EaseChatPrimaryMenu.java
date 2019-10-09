@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.hyphenate.easeui.R;
 
@@ -20,11 +21,12 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
     private Button btn_setVoiceMode;
     private Button btn_setKeyboardMode;
+    private TextView tv_sendVoice;
 
     private EditText editText;
     private RelativeLayout edittext_layout;
     private View buttonSend;
-    private View buttonPressToSpeak;
+
     private ImageView faceNormal;
     private ImageView faceChecked;
     private RelativeLayout faceLayout;
@@ -55,11 +57,12 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
         btn_setVoiceMode = view.findViewById(R.id.btn_setVoiceMode);
         btn_setKeyboardMode = view.findViewById(R.id.btn_setKeyboardMode);
+        tv_sendVoice = view.findViewById(R.id.tv_sendVoice);
 
         editText = view.findViewById(R.id.et_sendmessage);
         edittext_layout = view.findViewById(R.id.edittext_layout);
         buttonSend = view.findViewById(R.id.btn_send);
-        buttonPressToSpeak = view.findViewById(R.id.btn_press_to_speak);
+
         faceNormal = view.findViewById(R.id.iv_face_normal);
         faceChecked = view.findViewById(R.id.iv_face_checked);
         faceLayout = view.findViewById(R.id.rl_face);
@@ -98,7 +101,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
             btn_setVoiceMode.setVisibility(View.VISIBLE);
             btn_setKeyboardMode.setVisibility(View.GONE);
             edittext_layout.setVisibility(View.VISIBLE);
-            buttonPressToSpeak.setVisibility(View.GONE);
+            tv_sendVoice.setVisibility(View.GONE);
 
             showNormalFaceImage();
 
@@ -183,7 +186,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
             }
         });
 
-        buttonPressToSpeak.setOnTouchListener((v, event) -> {
+        tv_sendVoice.setOnTouchListener((v, event) -> {
             if (listener != null) {
                 return listener.onPressToSpeakBtnTouch(v, event);
             }
@@ -229,7 +232,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         btn_setKeyboardMode.setVisibility(View.VISIBLE);
         buttonSend.setVisibility(View.GONE);
         buttonMore.setVisibility(View.VISIBLE);
-        buttonPressToSpeak.setVisibility(View.VISIBLE);
+        tv_sendVoice.setVisibility(View.VISIBLE);
         faceNormal.setVisibility(View.VISIBLE);
         faceChecked.setVisibility(View.INVISIBLE);
     }
@@ -244,7 +247,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         // mEditTextContent.setVisibility(View.VISIBLE);
         editText.requestFocus();
         // buttonSend.setVisibility(View.VISIBLE);
-        buttonPressToSpeak.setVisibility(View.GONE);
+        tv_sendVoice.setVisibility(View.GONE);
 
         if (TextUtils.isEmpty(editText.getText())) {
             buttonMore.setVisibility(View.VISIBLE);
