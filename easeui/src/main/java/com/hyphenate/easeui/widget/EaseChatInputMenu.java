@@ -33,8 +33,9 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
     private EaseChatExtendMenu menu_extend;
     private FrameLayout frame_extend;
 
-    private Handler mHandler = new Handler(Looper.getMainLooper());
     private ChatInputMenuListener mChatInputMenuListener;
+
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     public EaseChatInputMenu(Context context) {
         super(context);
