@@ -2,6 +2,7 @@ package com.hyphenate.easeui.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.RelativeLayout;
 
 public abstract class EaseChatPrimaryMenuBase extends RelativeLayout {
 
+    @Nullable
     protected EaseChatPrimaryMenuListener listener;
 
     public EaseChatPrimaryMenuBase(Context context, AttributeSet attrs, int defStyle) {
@@ -26,19 +28,12 @@ public abstract class EaseChatPrimaryMenuBase extends RelativeLayout {
         super(context);
     }
 
-    /**
-     * set primary menu listener
-     *
-     * @param listener
-     */
     public void setChatPrimaryMenuListener(EaseChatPrimaryMenuListener listener) {
         this.listener = listener;
     }
 
     /**
      * emoji icon input event
-     *
-     * @param emojiContent
      */
     public abstract void onEmojiconInputEvent(CharSequence emojiContent);
 
@@ -54,8 +49,6 @@ public abstract class EaseChatPrimaryMenuBase extends RelativeLayout {
 
     /**
      * insert text
-     *
-     * @param text
      */
     public abstract void onTextInsert(CharSequence text);
 
@@ -79,10 +72,9 @@ public abstract class EaseChatPrimaryMenuBase extends RelativeLayout {
     }
 
     public interface EaseChatPrimaryMenuListener {
+
         /**
          * when send button clicked
-         *
-         * @param content
          */
         void onSendBtnClicked(String content);
 
@@ -93,8 +85,6 @@ public abstract class EaseChatPrimaryMenuBase extends RelativeLayout {
 
         /**
          * when speak button is touched
-         *
-         * @return
          */
         boolean onPressToSpeakBtnTouch(View v, MotionEvent event);
 
