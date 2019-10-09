@@ -19,14 +19,14 @@
         android:paddingBottom="10dp">
 
         <Button
-            android:id="@+id/btn_set_mode_voice"
+            android:id="@+id/btn_setVoiceMode"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/ease_chatting_setmode_voice_btn" />
 
         <Button
-            android:id="@+id/btn_set_mode_keyboard"
+            android:id="@+id/btn_setKeyboardMode"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
