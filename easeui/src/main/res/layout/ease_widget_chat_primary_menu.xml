@@ -61,16 +61,16 @@
             android:textSize="16sp" />
 
         <!--表情按钮-->
-        <ImageView
-            android:id="@+id/iv_face"
+        <Button
+            android:id="@+id/btn_switchFaceMode"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginRight="10dp"
-            android:src="@drawable/ease_btn_face" />
+            android:background="@drawable/ease_btn_switch_face_mode" />
 
         <!--更多按钮-->
-        <ImageButton
-            android:id="@+id/ib_more"
+        <Button
+            android:id="@+id/btn_more"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginRight="10dp"
