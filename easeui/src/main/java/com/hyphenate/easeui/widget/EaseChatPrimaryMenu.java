@@ -85,7 +85,6 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
             return false;
         });
 
-        et_sendText.requestFocus();
         et_sendText.setOnClickListener(v -> {
             iv_face.setSelected(false);
 
