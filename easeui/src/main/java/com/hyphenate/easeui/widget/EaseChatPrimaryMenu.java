@@ -60,13 +60,6 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
     }
 
     private void setView() {
-        btn_send.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onSendBtnClicked(et_sendText.getText().toString());
-                et_sendText.setText("");
-            }
-        });
-
         btn_setKeyboardMode.setOnClickListener(v -> {
             setModeKeyboard();
             iv_face.setSelected(false);
@@ -85,25 +78,11 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
             }
         });
 
-        ib_more.setOnClickListener(v -> {
-            btn_setVoiceMode.setVisibility(View.VISIBLE);
-            btn_setKeyboardMode.setVisibility(View.GONE);
-            tv_sendVoice.setVisibility(View.GONE);
-            et_sendText.setVisibility(View.VISIBLE);
-            iv_face.setVisibility(View.VISIBLE);
-            iv_face.setSelected(false);
-
+        tv_sendVoice.setOnTouchListener((v, event) -> {
             if (listener != null) {
-                listener.onToggleExtendClicked();
+                return listener.onPressToSpeakBtnTouch(v, event);
             }
-        });
-
-        iv_face.setOnClickListener(v -> {
-            iv_face.setSelected(!iv_face.isSelected());
-
-            if (listener != null) {
-                listener.onToggleEmojiconClicked();
-            }
+            return false;
         });
 
         et_sendText.requestFocus();
@@ -114,14 +93,6 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
                 listener.onEditTextClicked();
             }
         });
-//        et_sendText.setOnFocusChangeListener((v, hasFocus) -> {
-//            if (hasFocus) {
-//                edittext_layout.setBackgroundResource(R.drawable.ease_input_bar_bg_active);
-//
-//            } else {
-//                edittext_layout.setBackgroundResource(R.drawable.ease_input_bar_bg_normal);
-//            }
-//        });
         et_sendText.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -172,11 +143,32 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
             }
         });
 
-        tv_sendVoice.setOnTouchListener((v, event) -> {
+        iv_face.setOnClickListener(v -> {
+            iv_face.setSelected(!iv_face.isSelected());
+
             if (listener != null) {
-                return listener.onPressToSpeakBtnTouch(v, event);
+                listener.onToggleEmojiconClicked();
             }
-            return false;
+        });
+
+        ib_more.setOnClickListener(v -> {
+            btn_setVoiceMode.setVisibility(View.VISIBLE);
+            btn_setKeyboardMode.setVisibility(View.GONE);
+            tv_sendVoice.setVisibility(View.GONE);
+            et_sendText.setVisibility(View.VISIBLE);
+            iv_face.setVisibility(View.VISIBLE);
+            iv_face.setSelected(false);
+
+            if (listener != null) {
+                listener.onToggleExtendClicked();
+            }
+        });
+
+        btn_send.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onSendBtnClicked(et_sendText.getText().toString());
+                et_sendText.setText("");
+            }
         });
     }
 
@@ -208,7 +200,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
     }
 
     /**
-     * show voice icon when speak bar is touched
+     * 显示语音模式
      */
     protected void setModeVoice() {
         hideKeyboard();
@@ -219,13 +211,12 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         et_sendText.setVisibility(View.GONE);
         iv_face.setVisibility(View.GONE);
         iv_face.setSelected(false);
-
         btn_send.setVisibility(View.GONE);
         ib_more.setVisibility(View.VISIBLE);
     }
 
     /**
-     * show keyboard
+     * 显示键盘模式
      */
     protected void setModeKeyboard() {
         btn_setKeyboardMode.setVisibility(View.GONE);
@@ -234,9 +225,6 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         et_sendText.setVisibility(View.VISIBLE);
         et_sendText.requestFocus();
         iv_face.setVisibility(View.VISIBLE);
-
-
-        // mEditTextContent.setVisibility(View.VISIBLE);
 
         if (TextUtils.isEmpty(et_sendText.getText())) {
             ib_more.setVisibility(View.VISIBLE);
