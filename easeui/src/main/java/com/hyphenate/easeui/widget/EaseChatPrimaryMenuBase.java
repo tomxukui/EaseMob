@@ -3,29 +3,29 @@ package com.hyphenate.easeui.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
-public abstract class EaseChatPrimaryMenuBase extends RelativeLayout {
+public abstract class EaseChatPrimaryMenuBase extends LinearLayoutCompat {
 
     @Nullable
     protected EaseChatPrimaryMenuListener listener;
 
-    public EaseChatPrimaryMenuBase(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+    public EaseChatPrimaryMenuBase(Context context) {
+        super(context);
     }
 
     public EaseChatPrimaryMenuBase(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public EaseChatPrimaryMenuBase(Context context) {
-        super(context);
+    public EaseChatPrimaryMenuBase(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
     }
 
     public void setChatPrimaryMenuListener(EaseChatPrimaryMenuListener listener) {
