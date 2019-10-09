@@ -2,9 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingTop="2dp"
-    android:paddingBottom="2dp">
+    android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
@@ -14,24 +12,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#aaffffff"
+        android:background="@android:color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingTop="4dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
         <Button
             android:id="@+id/btn_set_mode_voice"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginLeft="6dp"
-            android:background="@drawable/ease_chatting_setmode_voice_btn"
-            android:visibility="visible" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ease_chatting_setmode_voice_btn" />
 
         <Button
             android:id="@+id/btn_set_mode_keyboard"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginLeft="6dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/ease_chatting_setmode_keyboard_btn"
             android:visibility="gone" />
 
@@ -39,10 +37,8 @@
             android:id="@+id/btn_press_to_speak"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="6dp"
-            android:layout_marginBottom="6dp"
             android:layout_weight="1"
             android:background="@drawable/ease_chat_press_speak_btn"
             android:gravity="center"
@@ -51,7 +47,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:text="@string/button_pushtotalk"
                 android:textColor="#666666"
                 android:textSize="16sp" />
@@ -64,7 +59,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
-            android:layout_marginBottom="3dp"
             android:layout_weight="1"
             android:gravity="bottom">
 
@@ -78,9 +72,7 @@
                 android:maxLines="3"
                 android:minHeight="40dp"
                 android:paddingLeft="1dp"
-                android:paddingTop="3dp"
                 android:paddingRight="1dp"
-                android:paddingBottom="3dp"
                 android:textSize="18sp" />
 
             <RelativeLayout
