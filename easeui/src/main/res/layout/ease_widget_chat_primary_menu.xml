@@ -44,7 +44,7 @@
 
         <!--文字输入框-->
         <EditText
-            android:id="@+id/et_sendText"
+            android:id="@+id/et_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

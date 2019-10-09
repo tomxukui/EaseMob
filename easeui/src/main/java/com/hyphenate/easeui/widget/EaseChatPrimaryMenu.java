@@ -21,7 +21,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
     private Button btn_switchVoiceMode;
     private TextView tv_sendVoice;
-    private EditText et_sendText;
+    private EditText et_text;
     private ImageView iv_face;
     private ImageButton ib_more;
     private Button btn_send;
@@ -53,7 +53,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
         btn_switchVoiceMode = view.findViewById(R.id.btn_switchVoiceMode);
         tv_sendVoice = view.findViewById(R.id.tv_sendVoice);
-        et_sendText = view.findViewById(R.id.et_sendText);
+        et_text = view.findViewById(R.id.et_text);
         iv_face = view.findViewById(R.id.iv_face);
         ib_more = view.findViewById(R.id.ib_more);
         btn_send = view.findViewById(R.id.btn_send);
@@ -82,14 +82,14 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
             return false;
         });
 
-        et_sendText.setOnClickListener(v -> {
+        et_text.setOnClickListener(v -> {
             iv_face.setSelected(false);
 
             if (listener != null) {
                 listener.onEditTextClicked();
             }
         });
-        et_sendText.addTextChangedListener(new TextWatcher() {
+        et_text.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -116,7 +116,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
             }
 
         });
-        et_sendText.setOnKeyListener((v, keyCode, event) -> {
+        et_text.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_UNKNOWN) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
                     mCtrlPress = true;
@@ -128,10 +128,10 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
             return false;
         });
-        et_sendText.setOnEditorActionListener((v, actionId, event) -> {
+        et_text.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN && mCtrlPress)) {
-                listener.onSendBtnClicked(et_sendText.getText().toString());
-                et_sendText.setText("");
+                listener.onSendBtnClicked(et_text.getText().toString());
+                et_text.setText("");
                 return true;
 
             } else {
@@ -142,7 +142,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         iv_face.setOnClickListener(v -> {
             btn_switchVoiceMode.setSelected(false);
             tv_sendVoice.setVisibility(View.GONE);
-            et_sendText.setVisibility(View.VISIBLE);
+            et_text.setVisibility(View.VISIBLE);
             iv_face.setSelected(!iv_face.isSelected());
 
             if (listener != null) {
@@ -153,7 +153,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         ib_more.setOnClickListener(v -> {
             btn_switchVoiceMode.setSelected(false);
             tv_sendVoice.setVisibility(View.GONE);
-            et_sendText.setVisibility(View.VISIBLE);
+            et_text.setVisibility(View.VISIBLE);
             iv_face.setSelected(false);
 
             if (listener != null) {
@@ -163,8 +163,8 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
         btn_send.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onSendBtnClicked(et_sendText.getText().toString());
-                et_sendText.setText("");
+                listener.onSendBtnClicked(et_text.getText().toString());
+                et_text.setText("");
             }
         });
     }
@@ -183,16 +183,16 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
      * @param emojiContent
      */
     public void onEmojiconInputEvent(CharSequence emojiContent) {
-        et_sendText.append(emojiContent);
+        et_text.append(emojiContent);
     }
 
     /**
      * delete emojicon
      */
     public void onEmojiconDeleteEvent() {
-        if (!TextUtils.isEmpty(et_sendText.getText())) {
+        if (!TextUtils.isEmpty(et_text.getText())) {
             KeyEvent event = new KeyEvent(0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL);
-            et_sendText.dispatchKeyEvent(event);
+            et_text.dispatchKeyEvent(event);
         }
     }
 
@@ -204,7 +204,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
         btn_switchVoiceMode.setSelected(true);
         tv_sendVoice.setVisibility(View.VISIBLE);
-        et_sendText.setVisibility(View.GONE);
+        et_text.setVisibility(View.GONE);
         iv_face.setSelected(false);
         btn_send.setVisibility(View.GONE);
         ib_more.setVisibility(View.VISIBLE);
@@ -216,10 +216,10 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
     protected void setModeKeyboard() {
         btn_switchVoiceMode.setSelected(false);
         tv_sendVoice.setVisibility(View.GONE);
-        et_sendText.setVisibility(View.VISIBLE);
-        et_sendText.requestFocus();
+        et_text.setVisibility(View.VISIBLE);
+        et_text.requestFocus();
 
-        if (TextUtils.isEmpty(et_sendText.getText())) {
+        if (TextUtils.isEmpty(et_text.getText())) {
             ib_more.setVisibility(View.VISIBLE);
             btn_send.setVisibility(View.GONE);
 
@@ -236,8 +236,8 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
     @Override
     public void onTextInsert(CharSequence text) {
-        int start = et_sendText.getSelectionStart();
-        Editable editable = et_sendText.getEditableText();
+        int start = et_text.getSelectionStart();
+        Editable editable = et_text.getEditableText();
         editable.insert(start, text);
 
         setModeKeyboard();
@@ -245,7 +245,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
     @Override
     public EditText getEditText() {
-        return et_sendText;
+        return et_text;
     }
 
 }
