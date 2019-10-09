@@ -258,27 +258,6 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         }
     }
 
-    /**
-     * 显示键盘模式
-     */
-    protected void setModeKeyboard() {
-        btn_switchVoiceMode.setSelected(false);
-        tv_sendVoice.setVisibility(View.GONE);
-        et_text.setVisibility(View.VISIBLE);
-        et_text.requestFocus();
-
-        btn_more.setSelected(false);
-
-        if (TextUtils.isEmpty(et_text.getText())) {
-            btn_more.setVisibility(View.VISIBLE);
-            btn_send.setVisibility(View.GONE);
-
-        } else {
-            btn_more.setVisibility(View.GONE);
-            btn_send.setVisibility(View.VISIBLE);
-        }
-    }
-
     @Override
     public void onExtendMenuContainerHide() {
         btn_switchFaceMode.setSelected(false);
@@ -291,7 +270,28 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         Editable editable = et_text.getEditableText();
         editable.insert(start, text);
 
-        setModeKeyboard();
+        btn_switchVoiceMode.setSelected(false);
+        tv_sendVoice.setVisibility(View.GONE);
+
+        et_text.setVisibility(View.VISIBLE);
+        et_text.requestFocus();
+
+        btn_switchFaceMode.setSelected(false);
+
+        if (TextUtils.isEmpty(et_text.getText().toString())) {
+            btn_more.setSelected(false);
+            btn_more.setVisibility(View.VISIBLE);
+
+            btn_send.setVisibility(View.GONE);
+
+        } else {
+            btn_more.setSelected(false);
+            btn_more.setVisibility(View.GONE);
+
+            btn_send.setVisibility(View.VISIBLE);
+        }
+
+        SoftInputUtil.show(et_text);
     }
 
     @Override
