@@ -263,6 +263,7 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
          * 语音输入
          */
         boolean onPressToSpeakBtnTouch(View v, MotionEvent event);
+
     }
 
 }
