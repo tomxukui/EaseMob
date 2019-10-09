@@ -246,6 +246,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         int start = et_sendText.getSelectionStart();
         Editable editable = et_sendText.getEditableText();
         editable.insert(start, text);
+
         setModeKeyboard();
     }
 
