@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hyphenate.easeui.R;
@@ -22,17 +22,12 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
     private Button btn_setVoiceMode;
     private Button btn_setKeyboardMode;
     private TextView tv_sendVoice;
+    private EditText et_sendText;
+    private ImageView iv_face;
+    private ImageButton ib_more;
+    private Button btn_send;
 
-    private EditText editText;
-    private RelativeLayout edittext_layout;
-    private View buttonSend;
-
-    private ImageView faceNormal;
-    private ImageView faceChecked;
-    private RelativeLayout faceLayout;
-    private Button buttonMore;
-
-    private boolean ctrlPress = false;
+    private boolean mCtrlPress = false;
 
     public EaseChatPrimaryMenu(Context context) {
         super(context);
@@ -58,30 +53,23 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         btn_setVoiceMode = view.findViewById(R.id.btn_setVoiceMode);
         btn_setKeyboardMode = view.findViewById(R.id.btn_setKeyboardMode);
         tv_sendVoice = view.findViewById(R.id.tv_sendVoice);
-
-        editText = view.findViewById(R.id.et_sendmessage);
-        edittext_layout = view.findViewById(R.id.edittext_layout);
-        buttonSend = view.findViewById(R.id.btn_send);
-
-        faceNormal = view.findViewById(R.id.iv_face_normal);
-        faceChecked = view.findViewById(R.id.iv_face_checked);
-        faceLayout = view.findViewById(R.id.rl_face);
-        buttonMore = view.findViewById(R.id.btn_more);
+        et_sendText = view.findViewById(R.id.et_sendText);
+        iv_face = view.findViewById(R.id.iv_face);
+        ib_more = view.findViewById(R.id.ib_more);
+        btn_send = view.findViewById(R.id.btn_send);
     }
 
     private void setView() {
-        edittext_layout.setBackgroundResource(R.drawable.ease_input_bar_bg_normal);
-
-        buttonSend.setOnClickListener(v -> {
+        btn_send.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onSendBtnClicked(editText.getText().toString());
-                editText.setText("");
+                listener.onSendBtnClicked(et_sendText.getText().toString());
+                et_sendText.setText("");
             }
         });
 
         btn_setKeyboardMode.setOnClickListener(v -> {
             setModeKeyboard();
-            showNormalFaceImage();
+            iv_face.setSelected(false);
 
             if (listener != null) {
                 listener.onToggleVoiceBtnClicked();
@@ -90,63 +78,61 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
         btn_setVoiceMode.setOnClickListener(v -> {
             setModeVoice();
-            showNormalFaceImage();
+            iv_face.setSelected(false);
 
             if (listener != null) {
                 listener.onToggleVoiceBtnClicked();
             }
         });
 
-        buttonMore.setOnClickListener(v -> {
+        ib_more.setOnClickListener(v -> {
             btn_setVoiceMode.setVisibility(View.VISIBLE);
             btn_setKeyboardMode.setVisibility(View.GONE);
-            edittext_layout.setVisibility(View.VISIBLE);
             tv_sendVoice.setVisibility(View.GONE);
-
-            showNormalFaceImage();
+            et_sendText.setVisibility(View.VISIBLE);
+            iv_face.setVisibility(View.VISIBLE);
+            iv_face.setSelected(false);
 
             if (listener != null) {
                 listener.onToggleExtendClicked();
             }
         });
 
-        faceLayout.setOnClickListener(v -> {
-            toggleFaceImage();
+        iv_face.setOnClickListener(v -> {
+            iv_face.setSelected(!iv_face.isSelected());
 
             if (listener != null) {
                 listener.onToggleEmojiconClicked();
             }
         });
 
-        editText.requestFocus();
-        editText.setOnClickListener(v -> {
-            edittext_layout.setBackgroundResource(R.drawable.ease_input_bar_bg_active);
-            faceNormal.setVisibility(View.VISIBLE);
-            faceChecked.setVisibility(View.INVISIBLE);
+        et_sendText.requestFocus();
+        et_sendText.setOnClickListener(v -> {
+            iv_face.setSelected(false);
 
             if (listener != null) {
                 listener.onEditTextClicked();
             }
         });
-        editText.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                edittext_layout.setBackgroundResource(R.drawable.ease_input_bar_bg_active);
-
-            } else {
-                edittext_layout.setBackgroundResource(R.drawable.ease_input_bar_bg_normal);
-            }
-        });
-        editText.addTextChangedListener(new TextWatcher() {
+//        et_sendText.setOnFocusChangeListener((v, hasFocus) -> {
+//            if (hasFocus) {
+//                edittext_layout.setBackgroundResource(R.drawable.ease_input_bar_bg_active);
+//
+//            } else {
+//                edittext_layout.setBackgroundResource(R.drawable.ease_input_bar_bg_normal);
+//            }
+//        });
+        et_sendText.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(s)) {
-                    buttonMore.setVisibility(View.GONE);
-                    buttonSend.setVisibility(View.VISIBLE);
+                    ib_more.setVisibility(View.GONE);
+                    btn_send.setVisibility(View.VISIBLE);
 
                 } else {
-                    buttonMore.setVisibility(View.VISIBLE);
-                    buttonSend.setVisibility(View.GONE);
+                    ib_more.setVisibility(View.VISIBLE);
+                    btn_send.setVisibility(View.GONE);
                 }
 
                 if (listener != null) {
@@ -163,22 +149,22 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
             }
 
         });
-        editText.setOnKeyListener((v, keyCode, event) -> {
+        et_sendText.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_UNKNOWN) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                    ctrlPress = true;
+                    mCtrlPress = true;
 
                 } else if (event.getAction() == KeyEvent.ACTION_UP) {
-                    ctrlPress = false;
+                    mCtrlPress = false;
                 }
             }
 
             return false;
         });
-        editText.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN && ctrlPress == true)) {
-                listener.onSendBtnClicked(editText.getText().toString());
-                editText.setText("");
+        et_sendText.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN && mCtrlPress)) {
+                listener.onSendBtnClicked(et_sendText.getText().toString());
+                et_sendText.setText("");
                 return true;
 
             } else {
@@ -208,16 +194,16 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
      * @param emojiContent
      */
     public void onEmojiconInputEvent(CharSequence emojiContent) {
-        editText.append(emojiContent);
+        et_sendText.append(emojiContent);
     }
 
     /**
      * delete emojicon
      */
     public void onEmojiconDeleteEvent() {
-        if (!TextUtils.isEmpty(editText.getText())) {
+        if (!TextUtils.isEmpty(et_sendText.getText())) {
             KeyEvent event = new KeyEvent(0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL);
-            editText.dispatchKeyEvent(event);
+            et_sendText.dispatchKeyEvent(event);
         }
     }
 
@@ -227,71 +213,57 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
     protected void setModeVoice() {
         hideKeyboard();
 
-        edittext_layout.setVisibility(View.GONE);
         btn_setVoiceMode.setVisibility(View.GONE);
         btn_setKeyboardMode.setVisibility(View.VISIBLE);
-        buttonSend.setVisibility(View.GONE);
-        buttonMore.setVisibility(View.VISIBLE);
         tv_sendVoice.setVisibility(View.VISIBLE);
-        faceNormal.setVisibility(View.VISIBLE);
-        faceChecked.setVisibility(View.INVISIBLE);
+        et_sendText.setVisibility(View.GONE);
+        iv_face.setVisibility(View.GONE);
+        iv_face.setSelected(false);
+
+        btn_send.setVisibility(View.GONE);
+        ib_more.setVisibility(View.VISIBLE);
     }
 
     /**
      * show keyboard
      */
     protected void setModeKeyboard() {
-        edittext_layout.setVisibility(View.VISIBLE);
         btn_setKeyboardMode.setVisibility(View.GONE);
         btn_setVoiceMode.setVisibility(View.VISIBLE);
-        // mEditTextContent.setVisibility(View.VISIBLE);
-        editText.requestFocus();
-        // buttonSend.setVisibility(View.VISIBLE);
         tv_sendVoice.setVisibility(View.GONE);
+        et_sendText.setVisibility(View.VISIBLE);
+        et_sendText.requestFocus();
+        iv_face.setVisibility(View.VISIBLE);
 
-        if (TextUtils.isEmpty(editText.getText())) {
-            buttonMore.setVisibility(View.VISIBLE);
-            buttonSend.setVisibility(View.GONE);
+
+        // mEditTextContent.setVisibility(View.VISIBLE);
+
+        if (TextUtils.isEmpty(et_sendText.getText())) {
+            ib_more.setVisibility(View.VISIBLE);
+            btn_send.setVisibility(View.GONE);
+
         } else {
-            buttonMore.setVisibility(View.GONE);
-            buttonSend.setVisibility(View.VISIBLE);
+            ib_more.setVisibility(View.GONE);
+            btn_send.setVisibility(View.VISIBLE);
         }
-    }
-
-    protected void toggleFaceImage() {
-        if (faceNormal.getVisibility() == View.VISIBLE) {
-            showSelectedFaceImage();
-        } else {
-            showNormalFaceImage();
-        }
-    }
-
-    private void showNormalFaceImage() {
-        faceNormal.setVisibility(View.VISIBLE);
-        faceChecked.setVisibility(View.INVISIBLE);
-    }
-
-    private void showSelectedFaceImage() {
-        faceNormal.setVisibility(View.INVISIBLE);
-        faceChecked.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onExtendMenuContainerHide() {
-        showNormalFaceImage();
+        iv_face.setSelected(false);
     }
 
     @Override
     public void onTextInsert(CharSequence text) {
-        int start = editText.getSelectionStart();
-        Editable editable = editText.getEditableText();
+        int start = et_sendText.getSelectionStart();
+        Editable editable = et_sendText.getEditableText();
         editable.insert(start, text);
         setModeKeyboard();
     }
 
     @Override
     public EditText getEditText() {
-        return editText;
+        return et_sendText;
     }
 
 }
