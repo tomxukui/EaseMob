@@ -7,12 +7,12 @@ import java.util.List;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.bean.EaseEmojicon;
@@ -26,40 +26,38 @@ import com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenuBase.EaseEmojiconMen
 /**
  * 聊天输入菜单
  */
-public class EaseChatInputMenu extends LinearLayout {
+public class EaseChatInputMenu extends LinearLayoutCompat {
 
     private EaseChatPrimaryMenuBase menu_primary;
     private EaseEmojiconMenu menu_emoji;
     private EaseChatExtendMenu menu_extend;
     private FrameLayout frame_extend;
-    private LayoutInflater mInflater;
 
-    private Context mContext;
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private ChatInputMenuListener mChatInputMenuListener;
 
     public EaseChatInputMenu(Context context) {
-        this(context, null);
-    }
-
-    public EaseChatInputMenu(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public EaseChatInputMenu(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        initData(context);
-        initView();
+        super(context);
+        initView(context);
         setView();
     }
 
-    private void initData(Context context) {
-        mContext = context;
-        mInflater = LayoutInflater.from(context);
+    public EaseChatInputMenu(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initView(context);
+        setView();
     }
 
-    private void initView() {
-        View view = mInflater.inflate(R.layout.ease_widget_chat_input_menu, this);
+    public EaseChatInputMenu(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initView(context);
+        setView();
+    }
+
+    private void initView(Context context) {
+        setOrientation(VERTICAL);
+
+        View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_chat_input_menu, this);
 
         menu_primary = view.findViewById(R.id.menu_primary);
         menu_emoji = view.findViewById(R.id.menu_emoji);
@@ -124,7 +122,7 @@ public class EaseChatInputMenu extends LinearLayout {
             public void onExpressionClicked(EaseEmojicon emojicon) {
                 if (emojicon.getType() != EaseEmojicon.Type.BIG_EXPRESSION) {
                     if (emojicon.getEmojiText() != null) {
-                        menu_primary.onEmojiconInputEvent(EaseSmileUtils.getSmiledText(mContext, emojicon.getEmojiText()));
+                        menu_primary.onEmojiconInputEvent(EaseSmileUtils.getSmiledText(getContext(), emojicon.getEmojiText()));
                     }
 
                 } else {
