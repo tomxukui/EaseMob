@@ -48,6 +48,8 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
     }
 
     private void initView(Context context) {
+        setOrientation(VERTICAL);
+
         View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_chat_primary_menu, this);
 
         btn_setVoiceMode = view.findViewById(R.id.btn_setVoiceMode);
