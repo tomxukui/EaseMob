@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.utils.SoftInputUtil;
 
 public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
@@ -59,14 +60,46 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
     private void setView() {
         btn_switchVoiceMode.setOnClickListener(v -> {
-            if (btn_switchVoiceMode.isSelected()) {
-                setModeKeyboard();
+            v.setSelected(!v.isSelected());
+
+            if (v.isSelected()) {
+                tv_sendVoice.setVisibility(View.VISIBLE);
+
+                et_text.setVisibility(View.GONE);
+                et_text.clearFocus();
+
+                btn_switchFaceMode.setSelected(false);
+
+                btn_more.setSelected(false);
+                btn_more.setVisibility(View.VISIBLE);
+
+                btn_send.setVisibility(View.GONE);
+
+                SoftInputUtil.hide(et_text);
 
             } else {
-                setModeVoice();
-            }
+                tv_sendVoice.setVisibility(View.GONE);
 
-            btn_switchFaceMode.setSelected(false);
+                et_text.setVisibility(View.VISIBLE);
+                et_text.requestFocus();
+
+                btn_switchFaceMode.setSelected(false);
+
+                if (TextUtils.isEmpty(et_text.getText().toString())) {
+                    btn_more.setSelected(false);
+                    btn_more.setVisibility(View.VISIBLE);
+
+                    btn_send.setVisibility(View.GONE);
+
+                } else {
+                    btn_more.setSelected(false);
+                    btn_more.setVisibility(View.GONE);
+
+                    btn_send.setVisibility(View.VISIBLE);
+                }
+
+                SoftInputUtil.show(et_text);
+            }
 
             if (listener != null) {
                 listener.onToggleVoiceBtnClicked();
@@ -82,6 +115,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
         et_text.setOnClickListener(v -> {
             btn_switchFaceMode.setSelected(false);
+            btn_more.setSelected(false);
 
             if (listener != null) {
                 listener.onEditTextClicked();
@@ -138,10 +172,22 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         });
 
         btn_switchFaceMode.setOnClickListener(v -> {
+            v.setSelected(!v.isSelected());
+
             btn_switchVoiceMode.setSelected(false);
             tv_sendVoice.setVisibility(View.GONE);
+
             et_text.setVisibility(View.VISIBLE);
-            btn_switchFaceMode.setSelected(!btn_switchFaceMode.isSelected());
+            et_text.requestFocus();
+
+            btn_more.setSelected(false);
+
+            if (v.isSelected()) {
+                SoftInputUtil.hide(et_text);
+
+            } else {
+                SoftInputUtil.show(et_text);
+            }
 
             if (listener != null) {
                 listener.onToggleEmojiconClicked();
@@ -149,10 +195,28 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         });
 
         btn_more.setOnClickListener(v -> {
+            v.setSelected(!v.isSelected());
+
             btn_switchVoiceMode.setSelected(false);
             tv_sendVoice.setVisibility(View.GONE);
-            et_text.setVisibility(View.VISIBLE);
+
+            if (v.isSelected()) {
+                et_text.setVisibility(View.VISIBLE);
+                et_text.clearFocus();
+
+            } else {
+                et_text.setVisibility(View.VISIBLE);
+                et_text.requestFocus();
+            }
+
             btn_switchFaceMode.setSelected(false);
+
+            if (v.isSelected()) {
+                SoftInputUtil.hide(et_text);
+
+            } else {
+                SoftInputUtil.show(et_text);
+            }
 
             if (listener != null) {
                 listener.onToggleExtendClicked();
@@ -195,20 +259,6 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
     }
 
     /**
-     * 显示语音模式
-     */
-    protected void setModeVoice() {
-        hideKeyboard();
-
-        btn_switchVoiceMode.setSelected(true);
-        tv_sendVoice.setVisibility(View.VISIBLE);
-        et_text.setVisibility(View.GONE);
-        btn_switchFaceMode.setSelected(false);
-        btn_send.setVisibility(View.GONE);
-        btn_more.setVisibility(View.VISIBLE);
-    }
-
-    /**
      * 显示键盘模式
      */
     protected void setModeKeyboard() {
@@ -216,6 +266,8 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         tv_sendVoice.setVisibility(View.GONE);
         et_text.setVisibility(View.VISIBLE);
         et_text.requestFocus();
+
+        btn_more.setSelected(false);
 
         if (TextUtils.isEmpty(et_text.getText())) {
             btn_more.setVisibility(View.VISIBLE);
@@ -230,6 +282,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
     @Override
     public void onExtendMenuContainerHide() {
         btn_switchFaceMode.setSelected(false);
+        btn_more.setSelected(false);
     }
 
     @Override

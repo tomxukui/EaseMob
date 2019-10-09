@@ -162,8 +162,6 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
      */
     protected void toggleMore() {
         if (frame_extend.getVisibility() == View.GONE) {
-            hideKeyboard();
-
             mHandler.postDelayed(() -> {
                 frame_extend.setVisibility(View.VISIBLE);
                 menu_extend.setVisibility(View.VISIBLE);
@@ -186,8 +184,6 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
      */
     protected void toggleEmojicon() {
         if (frame_extend.getVisibility() == View.GONE) {
-            hideKeyboard();
-
             mHandler.postDelayed(() -> {
                 frame_extend.setVisibility(View.VISIBLE);
                 menu_extend.setVisibility(View.GONE);
@@ -204,13 +200,6 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
                 menu_emoji.setVisibility(View.VISIBLE);
             }
         }
-    }
-
-    /**
-     * hide keyboard
-     */
-    private void hideKeyboard() {
-        menu_primary.hideKeyboard();
     }
 
     /**

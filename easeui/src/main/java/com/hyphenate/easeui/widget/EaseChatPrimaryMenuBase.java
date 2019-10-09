@@ -1,14 +1,11 @@
 package com.hyphenate.easeui.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 public abstract class EaseChatPrimaryMenuBase extends LinearLayoutCompat {
@@ -53,23 +50,6 @@ public abstract class EaseChatPrimaryMenuBase extends LinearLayoutCompat {
     public abstract void onTextInsert(CharSequence text);
 
     public abstract EditText getEditText();
-
-    /**
-     * hide keyboard
-     */
-    public void hideKeyboard() {
-        if (getContext() != null && getContext() instanceof Activity) {
-            Activity activity = (Activity) getContext();
-
-            if (activity.getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
-                if (activity.getCurrentFocus() != null) {
-                    InputMethodManager inputManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-
-                    inputManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                }
-            }
-        }
-    }
 
     public interface EaseChatPrimaryMenuListener {
 
