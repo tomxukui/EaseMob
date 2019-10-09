@@ -18,22 +18,13 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp">
 
-        <!--切换到语音模式的按钮-->
+        <!--语音模式按钮-->
         <Button
-            android:id="@+id/btn_setVoiceMode"
+            android:id="@+id/btn_switchVoiceMode"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/ease_chatting_setmode_voice_btn" />
-
-        <!--切换到键盘模式的按钮-->
-        <Button
-            android:id="@+id/btn_setKeyboardMode"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/ease_chatting_setmode_keyboard_btn"
-            android:visibility="gone" />
+            android:background="@drawable/ease_btn_switch_voice_mode" />
 
         <!--语音发送的按钮-->
         <TextView

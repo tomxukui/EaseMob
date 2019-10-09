@@ -19,8 +19,7 @@ import com.hyphenate.easeui.R;
 
 public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
-    private Button btn_setVoiceMode;
-    private Button btn_setKeyboardMode;
+    private Button btn_switchVoiceMode;
     private TextView tv_sendVoice;
     private EditText et_sendText;
     private ImageView iv_face;
@@ -52,8 +51,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
         View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_chat_primary_menu, this);
 
-        btn_setVoiceMode = view.findViewById(R.id.btn_setVoiceMode);
-        btn_setKeyboardMode = view.findViewById(R.id.btn_setKeyboardMode);
+        btn_switchVoiceMode = view.findViewById(R.id.btn_switchVoiceMode);
         tv_sendVoice = view.findViewById(R.id.tv_sendVoice);
         et_sendText = view.findViewById(R.id.et_sendText);
         iv_face = view.findViewById(R.id.iv_face);
@@ -62,17 +60,14 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
     }
 
     private void setView() {
-        btn_setKeyboardMode.setOnClickListener(v -> {
-            setModeKeyboard();
-            iv_face.setSelected(false);
+        btn_switchVoiceMode.setOnClickListener(v -> {
+            if (btn_switchVoiceMode.isSelected()) {
+                setModeKeyboard();
 
-            if (listener != null) {
-                listener.onToggleVoiceBtnClicked();
+            } else {
+                setModeVoice();
             }
-        });
 
-        btn_setVoiceMode.setOnClickListener(v -> {
-            setModeVoice();
             iv_face.setSelected(false);
 
             if (listener != null) {
@@ -145,6 +140,9 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         });
 
         iv_face.setOnClickListener(v -> {
+            btn_switchVoiceMode.setSelected(false);
+            tv_sendVoice.setVisibility(View.GONE);
+            et_sendText.setVisibility(View.VISIBLE);
             iv_face.setSelected(!iv_face.isSelected());
 
             if (listener != null) {
@@ -153,11 +151,9 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         });
 
         ib_more.setOnClickListener(v -> {
-            btn_setVoiceMode.setVisibility(View.VISIBLE);
-            btn_setKeyboardMode.setVisibility(View.GONE);
+            btn_switchVoiceMode.setSelected(false);
             tv_sendVoice.setVisibility(View.GONE);
             et_sendText.setVisibility(View.VISIBLE);
-            iv_face.setVisibility(View.VISIBLE);
             iv_face.setSelected(false);
 
             if (listener != null) {
@@ -206,11 +202,9 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
     protected void setModeVoice() {
         hideKeyboard();
 
-        btn_setVoiceMode.setVisibility(View.GONE);
-        btn_setKeyboardMode.setVisibility(View.VISIBLE);
+        btn_switchVoiceMode.setSelected(true);
         tv_sendVoice.setVisibility(View.VISIBLE);
         et_sendText.setVisibility(View.GONE);
-        iv_face.setVisibility(View.GONE);
         iv_face.setSelected(false);
         btn_send.setVisibility(View.GONE);
         ib_more.setVisibility(View.VISIBLE);
@@ -220,12 +214,10 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
      * 显示键盘模式
      */
     protected void setModeKeyboard() {
-        btn_setKeyboardMode.setVisibility(View.GONE);
-        btn_setVoiceMode.setVisibility(View.VISIBLE);
+        btn_switchVoiceMode.setSelected(false);
         tv_sendVoice.setVisibility(View.GONE);
         et_sendText.setVisibility(View.VISIBLE);
         et_sendText.requestFocus();
-        iv_face.setVisibility(View.VISIBLE);
 
         if (TextUtils.isEmpty(et_sendText.getText())) {
             ib_more.setVisibility(View.VISIBLE);
