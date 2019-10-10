@@ -1,22 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.0"
-        android:gravity="center"
-        android:minHeight="100dp"
-        android:text="送心意" />
+    <!--分隔线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ECECEC" />
 
-    <TextView
-        android:layout_width="0dp"
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1.0"
-        android:gravity="center"
-        android:minHeight="100dp"
-        android:text="再次咨询" />
+        android:background="#FCFCFC"
+        android:orientation="horizontal"
+        app:divider="@drawable/divider_vertical_1_t8b8"
+        app:showDividers="middle">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:minHeight="50dp"
+            android:text="送心意"
+            android:textColor="#1A1A1A"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:minHeight="50dp"
+            android:text="再次咨询"
+            android:textColor="#1A1A1A"
+            android:textSize="15sp" />
+
+    </android.support.v7.widget.LinearLayoutCompat>
 
 </merge>

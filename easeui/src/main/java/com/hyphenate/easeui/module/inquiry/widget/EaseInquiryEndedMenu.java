@@ -1,13 +1,13 @@
 package com.hyphenate.easeui.module.inquiry.widget;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.LinearLayout;
 
 import com.hyphenate.easeui.R;
 
-public class EaseInquiryEndedMenu extends LinearLayoutCompat {
+public class EaseInquiryEndedMenu extends LinearLayout {
 
     public EaseInquiryEndedMenu(Context context) {
         super(context);
@@ -25,6 +25,8 @@ public class EaseInquiryEndedMenu extends LinearLayoutCompat {
     }
 
     private void initView(Context context) {
+        setOrientation(VERTICAL);
+
         LayoutInflater.from(context).inflate(R.layout.ease_widget_inquiry_ended_menu, this);
     }
 
