@@ -70,7 +70,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
             if (v.isSelected()) {
                 tv_sendVoice.setVisibility(View.VISIBLE);
 
-                setTextEditView(false, false);
+                setTextEditView(false, false, false);
 
                 btn_switchFaceMode.setSelected(false);
 
@@ -79,12 +79,10 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
                 btn_send.setVisibility(View.GONE);
 
-                SoftInputUtil.hide(et_text);
-
             } else {
                 tv_sendVoice.setVisibility(View.GONE);
 
-                setTextEditView(true, true);
+                setTextEditView(true, true, true);
 
                 btn_switchFaceMode.setSelected(false);
 
@@ -100,8 +98,6 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
                     btn_send.setVisibility(View.VISIBLE);
                 }
-
-                SoftInputUtil.show(et_text);
             }
 
             if (listener != null) {
@@ -179,9 +175,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
             btn_switchFaceMode.setSelected(false);
             btn_more.setSelected(false);
 
-            setTextEditView(true, true);
-
-            SoftInputUtil.show(et_text);
+            setTextEditView(true, true, true);
 
             if (listener != null) {
                 listener.onEditTextClicked();
@@ -194,16 +188,9 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
             btn_switchVoiceMode.setSelected(false);
             tv_sendVoice.setVisibility(View.GONE);
 
-            setTextEditView(true, true);
+            setTextEditView(true, true, !v.isSelected());
 
             btn_more.setSelected(false);
-
-            if (v.isSelected()) {
-                SoftInputUtil.hide(et_text);
-
-            } else {
-                SoftInputUtil.show(et_text);
-            }
 
             if (listener != null) {
                 listener.onToggleEmojiconClicked();
@@ -216,21 +203,9 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
             btn_switchVoiceMode.setSelected(false);
             tv_sendVoice.setVisibility(View.GONE);
 
-            if (v.isSelected()) {
-                setTextEditView(true, false);
-
-            } else {
-                setTextEditView(true, true);
-            }
+            setTextEditView(true, !v.isSelected(), !v.isSelected());
 
             btn_switchFaceMode.setSelected(false);
-
-            if (v.isSelected()) {
-                SoftInputUtil.hide(et_text);
-
-            } else {
-                SoftInputUtil.show(et_text);
-            }
 
             if (listener != null) {
                 listener.onToggleExtendClicked();
@@ -248,10 +223,11 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
     /**
      * 设置文字输入控件
      *
-     * @param show   是否显示
-     * @param fource 是否聚焦
+     * @param show      是否显示
+     * @param fource    是否聚焦
+     * @param softInput 是否显示键盘
      */
-    private void setTextEditView(boolean show, boolean fource) {
+    private void setTextEditView(boolean show, boolean fource, boolean softInput) {
         if (show) {
             frame_text.setVisibility(View.VISIBLE);
 
@@ -261,15 +237,25 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
                 et_text.setVisibility(View.VISIBLE);
                 et_text.requestFocus();
 
+                if (softInput) {
+                    SoftInputUtil.show(et_text);
+
+                } else {
+                    SoftInputUtil.hide(et_text);
+                }
+
             } else {
                 tv_text.setVisibility(View.VISIBLE);
 
                 et_text.setVisibility(View.GONE);
-                et_text.clearFocus();
+
+                SoftInputUtil.hide(et_text);
             }
 
         } else {
             frame_text.setVisibility(View.GONE);
+
+            SoftInputUtil.hide(et_text);
         }
     }
 
@@ -315,7 +301,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         btn_switchVoiceMode.setSelected(false);
         tv_sendVoice.setVisibility(View.GONE);
 
-        setTextEditView(true, true);
+        setTextEditView(true, true, true);
 
         btn_switchFaceMode.setSelected(false);
 
@@ -331,8 +317,6 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
             btn_send.setVisibility(View.VISIBLE);
         }
-
-        SoftInputUtil.show(et_text);
     }
 
     @Override
