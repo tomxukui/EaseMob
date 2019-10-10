@@ -11,22 +11,19 @@ import android.view.inputmethod.InputMethodManager;
  */
 public class SoftInputUtil {
 
-    private static final long SHOW_SPACE = 200L;
-
     /**
      * 显示软键盘
      */
     public static void show(View view) {
-        if (view != null) {
-            Context context = view.getContext();
+        if (view != null && view.getContext() != null) {
+            view.requestFocus();
 
-            if (context != null) {
-                view.requestFocus();
-                view.postDelayed(() -> {
-                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            view.post(() -> {
+                if (view != null && view.getContext() != null) {
+                    InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
-                }, SHOW_SPACE);
-            }
+                }
+            });
         }
     }
 
@@ -34,13 +31,9 @@ public class SoftInputUtil {
      * 隐藏软键盘
      */
     public static void hide(View view) {
-        if (view != null) {
-            Context context = view.getContext();
-
-            if (context != null) {
-                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-            }
+        if (view != null && view.getContext() != null) {
+            InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 
