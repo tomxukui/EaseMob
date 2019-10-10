@@ -24,12 +24,13 @@ public class EaseChatMessageList extends FrameLayout {
 
     protected SwipeRefreshLayout swipeRefreshLayout;
     protected ListView listView;
+
     protected EMConversation conversation;
+    protected EaseMessageAdapter messageAdapter;
+    protected EaseMessageListItemStyle itemStyle;
+
     protected int chatType;
     protected String toChatUsername;
-    protected EaseMessageAdapter messageAdapter;
-
-    protected EaseMessageListItemStyle itemStyle;
 
     public EaseChatMessageList(@NonNull Context context) {
         super(context);
@@ -38,26 +39,29 @@ public class EaseChatMessageList extends FrameLayout {
 
     public EaseChatMessageList(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initData(context, attrs);
+        initData(context, attrs, 0);
         initView(context);
     }
 
     public EaseChatMessageList(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initData(context, attrs);
+        initData(context, attrs, defStyleAttr);
         initView(context);
     }
 
-    private void initData(Context context, AttributeSet attrs) {
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.EaseChatMessageList);
-        EaseMessageListItemStyle.Builder builder = new EaseMessageListItemStyle.Builder();
-        builder.showAvatar(ta.getBoolean(R.styleable.EaseChatMessageList_msgListShowUserAvatar, true))
-                .showUserNick(ta.getBoolean(R.styleable.EaseChatMessageList_msgListShowUserNick, false))
-                .myBubbleBg(ta.getDrawable(R.styleable.EaseChatMessageList_msgListMyBubbleBackground))
-                .otherBuddleBg(ta.getDrawable(R.styleable.EaseChatMessageList_msgListMyBubbleBackground));
+    private void initData(Context context, AttributeSet attrs, int defStyleAttr) {
+        if (attrs != null) {
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.EaseChatMessageList, defStyleAttr, 0);
 
-        itemStyle = builder.build();
-        ta.recycle();
+            EaseMessageListItemStyle.Builder builder = new EaseMessageListItemStyle.Builder();
+            builder.showAvatar(ta.getBoolean(R.styleable.EaseChatMessageList_msgListShowUserAvatar, true))
+                    .showUserNick(ta.getBoolean(R.styleable.EaseChatMessageList_msgListShowUserNick, false))
+                    .myBubbleBg(ta.getDrawable(R.styleable.EaseChatMessageList_msgListMyBubbleBackground))
+                    .otherBuddleBg(ta.getDrawable(R.styleable.EaseChatMessageList_msgListMyBubbleBackground));
+            itemStyle = builder.build();
+
+            ta.recycle();
+        }
     }
 
     private void initView(Context context) {
@@ -89,7 +93,7 @@ public class EaseChatMessageList extends FrameLayout {
     }
 
     /**
-     * refresh
+     * 刷新
      */
     public void refresh() {
         if (messageAdapter != null) {
@@ -98,7 +102,7 @@ public class EaseChatMessageList extends FrameLayout {
     }
 
     /**
-     * refresh and jump to the last
+     * 刷新并滑动到最下面
      */
     public void refreshSelectLast() {
         if (messageAdapter != null) {
@@ -107,9 +111,7 @@ public class EaseChatMessageList extends FrameLayout {
     }
 
     /**
-     * refresh and jump to the position
-     *
-     * @param position
+     * 刷新并滑动到指定位置
      */
     public void refreshSeekTo(int position) {
         if (messageAdapter != null) {
@@ -138,6 +140,7 @@ public class EaseChatMessageList extends FrameLayout {
     }
 
     public interface MessageListItemClickListener {
+
         /**
          * there is default handling when bubble is clicked, if you want handle it, return true
          * another way is you implement in onBubbleClick() of chat row
@@ -156,12 +159,11 @@ public class EaseChatMessageList extends FrameLayout {
         void onUserAvatarLongClick(String username);
 
         void onMessageInProgress(EMMessage message);
+
     }
 
     /**
-     * set click listener
-     *
-     * @param listener
+     * 设置子项点击事件
      */
     public void setItemClickListener(MessageListItemClickListener listener) {
         if (messageAdapter != null) {
@@ -170,9 +172,7 @@ public class EaseChatMessageList extends FrameLayout {
     }
 
     /**
-     * set chat row provider
-     *
-     * @param rowProvider
+     * 设置自定义子项的提供者
      */
     public void setCustomChatRowProvider(EaseCustomChatRowProvider rowProvider) {
         if (messageAdapter != null) {
