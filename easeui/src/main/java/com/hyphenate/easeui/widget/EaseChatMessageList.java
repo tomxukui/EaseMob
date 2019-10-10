@@ -2,11 +2,14 @@ package com.hyphenate.easeui.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -17,11 +20,10 @@ import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 
-public class EaseChatMessageList extends RelativeLayout {
+public class EaseChatMessageList extends FrameLayout {
 
-    protected ListView listView;
     protected SwipeRefreshLayout swipeRefreshLayout;
-    protected Context context;
+    protected ListView listView;
     protected EMConversation conversation;
     protected int chatType;
     protected String toChatUsername;
@@ -29,26 +31,40 @@ public class EaseChatMessageList extends RelativeLayout {
 
     protected EaseMessageListItemStyle itemStyle;
 
-    public EaseChatMessageList(Context context, AttributeSet attrs, int defStyle) {
-        this(context, attrs);
-    }
-
-    public EaseChatMessageList(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        parseStyle(context, attrs);
-        init(context);
-    }
-
-    public EaseChatMessageList(Context context) {
+    public EaseChatMessageList(@NonNull Context context) {
         super(context);
-        init(context);
+        initView(context);
     }
 
-    private void init(Context context) {
-        this.context = context;
-        LayoutInflater.from(context).inflate(R.layout.ease_chat_message_list, this);
-        swipeRefreshLayout = findViewById(R.id.chat_swipe_layout);
-        listView = findViewById(R.id.list);
+    public EaseChatMessageList(@NonNull Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        initData(context, attrs);
+        initView(context);
+    }
+
+    public EaseChatMessageList(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initData(context, attrs);
+        initView(context);
+    }
+
+    private void initData(Context context, AttributeSet attrs) {
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.EaseChatMessageList);
+        EaseMessageListItemStyle.Builder builder = new EaseMessageListItemStyle.Builder();
+        builder.showAvatar(ta.getBoolean(R.styleable.EaseChatMessageList_msgListShowUserAvatar, true))
+                .showUserNick(ta.getBoolean(R.styleable.EaseChatMessageList_msgListShowUserNick, false))
+                .myBubbleBg(ta.getDrawable(R.styleable.EaseChatMessageList_msgListMyBubbleBackground))
+                .otherBuddleBg(ta.getDrawable(R.styleable.EaseChatMessageList_msgListMyBubbleBackground));
+
+        itemStyle = builder.build();
+        ta.recycle();
+    }
+
+    private void initView(Context context) {
+        View view = LayoutInflater.from(context).inflate(R.layout.ease_chat_message_list, this);
+
+        swipeRefreshLayout = view.findViewById(R.id.chat_swipe_layout);
+        listView = view.findViewById(R.id.list);
     }
 
     /**
@@ -63,25 +79,13 @@ public class EaseChatMessageList extends RelativeLayout {
         this.toChatUsername = toChatUsername;
 
         conversation = EMClient.getInstance().chatManager().getConversation(toChatUsername, EaseCommonUtils.getConversationType(chatType), true);
-        messageAdapter = new EaseMessageAdapter(context, toChatUsername, chatType, listView);
+        messageAdapter = new EaseMessageAdapter(getContext(), toChatUsername, chatType, listView);
         messageAdapter.setItemStyle(itemStyle);
         messageAdapter.setCustomChatRowProvider(customChatRowProvider);
         // set message adapter
         listView.setAdapter(messageAdapter);
 
         refreshSelectLast();
-    }
-
-    protected void parseStyle(Context context, AttributeSet attrs) {
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.EaseChatMessageList);
-        EaseMessageListItemStyle.Builder builder = new EaseMessageListItemStyle.Builder();
-        builder.showAvatar(ta.getBoolean(R.styleable.EaseChatMessageList_msgListShowUserAvatar, true))
-                .showUserNick(ta.getBoolean(R.styleable.EaseChatMessageList_msgListShowUserNick, false))
-                .myBubbleBg(ta.getDrawable(R.styleable.EaseChatMessageList_msgListMyBubbleBackground))
-                .otherBuddleBg(ta.getDrawable(R.styleable.EaseChatMessageList_msgListMyBubbleBackground));
-
-        itemStyle = builder.build();
-        ta.recycle();
     }
 
     /**
