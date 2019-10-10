@@ -74,10 +74,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
                 btn_switchFaceMode.setSelected(false);
 
-                btn_more.setSelected(false);
-                btn_more.setVisibility(View.VISIBLE);
-
-                btn_send.setVisibility(View.GONE);
+                setSendBtn(false);
 
             } else {
                 tv_sendVoice.setVisibility(View.GONE);
@@ -86,18 +83,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
                 btn_switchFaceMode.setSelected(false);
 
-                if (TextUtils.isEmpty(et_text.getText().toString())) {
-                    btn_more.setSelected(false);
-                    btn_more.setVisibility(View.VISIBLE);
-
-                    btn_send.setVisibility(View.GONE);
-
-                } else {
-                    btn_more.setSelected(false);
-                    btn_more.setVisibility(View.GONE);
-
-                    btn_send.setVisibility(View.VISIBLE);
-                }
+                setSendBtn(TextUtils.isEmpty(et_text.getText().toString()));
             }
 
             if (listener != null) {
@@ -124,14 +110,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!TextUtils.isEmpty(s)) {
-                    btn_more.setVisibility(View.GONE);
-                    btn_send.setVisibility(View.VISIBLE);
-
-                } else {
-                    btn_more.setVisibility(View.VISIBLE);
-                    btn_send.setVisibility(View.GONE);
-                }
+                setSendBtn(TextUtils.isEmpty(s));
 
                 if (listener != null) {
                     listener.onTyping(s, start, before, count);
@@ -260,6 +239,24 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
     }
 
     /**
+     * 设置发送按钮
+     *
+     * @param show 是否显示发送按钮
+     */
+    private void setSendBtn(boolean show) {
+        btn_more.setSelected(false);
+
+        if (show) {
+            btn_more.setVisibility(View.GONE);
+            btn_send.setVisibility(View.VISIBLE);
+
+        } else {
+            btn_more.setVisibility(View.VISIBLE);
+            btn_send.setVisibility(View.GONE);
+        }
+    }
+
+    /**
      * set recorder view when speak icon is touched
      *
      * @param voiceRecorderView
@@ -305,18 +302,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
         btn_switchFaceMode.setSelected(false);
 
-        if (TextUtils.isEmpty(et_text.getText().toString())) {
-            btn_more.setSelected(false);
-            btn_more.setVisibility(View.VISIBLE);
-
-            btn_send.setVisibility(View.GONE);
-
-        } else {
-            btn_more.setSelected(false);
-            btn_more.setVisibility(View.GONE);
-
-            btn_send.setVisibility(View.VISIBLE);
-        }
+        setSendBtn(TextUtils.isEmpty(et_text.getText().toString()));
     }
 
     @Override
