@@ -43,22 +43,43 @@
             android:visibility="gone" />
 
         <!--文字输入-->
-        <EditText
-            android:id="@+id/et_text"
+        <FrameLayout
+            android:id="@+id/frame_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="1.0"
-            android:background="@drawable/ease_chat_edit_bg"
-            android:gravity="left|center_vertical"
-            android:imeOptions="actionSend"
-            android:maxLines="3"
-            android:minHeight="30dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textColor="#1A1A1A"
-            android:textSize="16sp" />
+            android:layout_weight="1.0">
+
+            <EditText
+                android:id="@+id/et_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ease_chat_edit_bg"
+                android:gravity="left|center_vertical"
+                android:imeOptions="actionSend"
+                android:maxLines="5"
+                android:minHeight="30dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#1A1A1A"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ease_chat_edit_bg"
+                android:gravity="left|center_vertical"
+                android:maxLines="5"
+                android:minHeight="30dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#1A1A1A"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+        </FrameLayout>
 
         <!--表情按钮-->
         <Button
