@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hyphenate.easeui.R;
-import com.hyphenate.util.DensityUtil;
+import com.hyphenate.easeui.utils.DensityUtil;
 
 /**
  * 网格功能菜单
@@ -30,17 +30,21 @@ public class EaseChatExtendMenu extends GridView {
     private LayoutInflater mInflater;
 
     public EaseChatExtendMenu(Context context) {
-        this(context, null);
+        super(context);
+        initData(context, null, 0);
+        initView();
     }
 
     public EaseChatExtendMenu(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        initData(context, attrs, 0);
+        initView();
     }
 
     public EaseChatExtendMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initData(context, attrs, defStyleAttr);
-        initView(context);
+        initView();
     }
 
     private void initData(Context context, AttributeSet attrs, int defStyle) {
@@ -56,11 +60,11 @@ public class EaseChatExtendMenu extends GridView {
         mItemAdapter = new ItemAdapter();
     }
 
-    private void initView(Context context) {
+    private void initView() {
         setNumColumns(mNumColumns);
         setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
         setGravity(Gravity.CENTER_VERTICAL);
-        setVerticalSpacing(DensityUtil.dip2px(context, 8));
+        setVerticalSpacing(DensityUtil.dp2px(8));
         setAdapter(mItemAdapter);
     }
 

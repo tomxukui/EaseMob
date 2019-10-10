@@ -13,21 +13,22 @@
         android:id="@+id/frame_extend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
         android:visibility="gone">
 
         <com.hyphenate.easeui.widget.EaseChatExtendMenu
             android:id="@+id/menu_extend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:background="#ffffff"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             app:numColumns="4" />
 
         <com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenu
             android:id="@+id/menu_emoji"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="#ffffff" />
 
     </FrameLayout>
 
