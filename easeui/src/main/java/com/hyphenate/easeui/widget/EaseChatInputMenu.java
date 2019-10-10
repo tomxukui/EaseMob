@@ -149,16 +149,14 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
     }
 
     /**
-     * insert text
-     *
-     * @param text
+     * 插入文字
      */
     public void insertText(String text) {
         menu_primary.onTextInsert(text);
     }
 
     /**
-     * show or hide extend menu
+     * 显示或隐藏更多按钮
      */
     protected void toggleMore() {
         if (frame_extend.getVisibility() == View.GONE) {
@@ -180,7 +178,7 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
     }
 
     /**
-     * show or hide emojicon
+     * 显示或隐藏表情
      */
     protected void toggleEmojicon() {
         if (frame_extend.getVisibility() == View.GONE) {
@@ -203,7 +201,7 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
     }
 
     /**
-     * hide extend menu
+     * 隐藏菜单
      */
     public void hideExtendMenuContainer() {
         menu_extend.setVisibility(View.GONE);
