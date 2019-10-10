@@ -83,7 +83,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
                 btn_switchFaceMode.setSelected(false);
 
-                setSendBtn(TextUtils.isEmpty(et_text.getText().toString()));
+                setSendBtn(et_text.getText().toString());
             }
 
             if (listener != null) {
@@ -110,7 +110,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                setSendBtn(TextUtils.isEmpty(s));
+                setSendBtn(!TextUtils.isEmpty(s));
 
                 if (listener != null) {
                     listener.onTyping(s, start, before, count);
@@ -256,6 +256,10 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         }
     }
 
+    private void setSendBtn(String content) {
+        setSendBtn(!TextUtils.isEmpty(content));
+    }
+
     /**
      * set recorder view when speak icon is touched
      *
@@ -302,7 +306,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
         btn_switchFaceMode.setSelected(false);
 
-        setSendBtn(TextUtils.isEmpty(et_text.getText().toString()));
+        setSendBtn(et_text.getText().toString());
     }
 
     @Override
