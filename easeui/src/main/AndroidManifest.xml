@@ -30,7 +30,8 @@
             android:name=".module.inquiry.ui.EaseInquiryActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/EaseAppTheme" />
+            android:theme="@style/EaseAppTheme"
+            android:windowSoftInputMode="adjustResize" />
 
         <!--图片查看-->
         <activity
