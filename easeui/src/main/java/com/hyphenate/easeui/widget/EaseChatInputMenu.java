@@ -207,6 +207,7 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
         menu_extend.setVisibility(View.GONE);
         menu_emoji.setVisibility(View.GONE);
         frame_extend.setVisibility(View.GONE);
+
         menu_primary.onExtendMenuContainerHide();
     }
 
