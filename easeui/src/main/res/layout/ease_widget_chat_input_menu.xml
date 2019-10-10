@@ -10,25 +10,24 @@
         android:layout_height="wrap_content" />
 
     <FrameLayout
-        android:id="@+id/frame_extend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone">
+        android:background="#ffffff">
 
         <com.hyphenate.easeui.widget.EaseChatExtendMenu
-            android:id="@+id/menu_extend"
+            android:id="@+id/menu_more"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
+            android:visibility="gone"
             app:numColumns="4" />
 
         <com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenu
             android:id="@+id/menu_emoji"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff" />
+            android:visibility="gone" />
 
     </FrameLayout>
 
