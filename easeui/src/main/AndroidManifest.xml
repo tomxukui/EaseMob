@@ -33,6 +33,14 @@
             android:theme="@style/EaseAppTheme"
             android:windowSoftInputMode="adjustResize" />
 
+        <!--病人问诊页面-->
+        <activity
+            android:name=".module.inquiry.ui.EaseInquiryPatientActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/EaseAppTheme"
+            android:windowSoftInputMode="adjustResize" />
+
         <!--图片查看-->
         <activity
             android:name=".module.image.ui.EaseShowBigImageActivity"
