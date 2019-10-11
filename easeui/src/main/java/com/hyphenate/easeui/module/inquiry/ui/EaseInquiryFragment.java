@@ -74,7 +74,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     private EaseInquiryEndedMenu menu_ended;
     private EaseVoiceRecorderView voice_recorder;
     private TextView tv_availableCount;
-    private MenuItem menuItem;
 
     private String mToUsername;//对方username
     private boolean mChatEnabled;//是否可以聊天
@@ -180,6 +179,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     protected void initActionBar() {
         setSupportActionBar(toolbar);
         super.initActionBar();
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
         setTitle();
     }
 
@@ -270,33 +270,26 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.ease_menu_chat, menu);
-        menuItem = menu.findItem(R.id.ease_action);
+        inflater.inflate(R.menu.ease_menu_inquiry, menu);
 
-        //设置右边按钮
-        menuItem.setIcon(R.mipmap.ease_ic_clear);
-        menuItem.setTitle("清空");
-        menuItem.setOnMenuItemClickListener(item -> {
-            emptyHistory();
-            return true;
-        });
-        menuItem.setVisible(mChatEnabled);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case android.R.id.home: {
-                onBackPressed();
+        MenuItem moreMenu = menu.findItem(R.id.action_more);
+        moreMenu.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                EaseToastUtil.show("dd");
+                return true;
             }
-            break;
+        });
 
-            default:
-                break;
 
-        }
-        return super.onOptionsItemSelected(item);
+//        //设置右边按钮
+//        menuItem.setIcon(R.mipmap.ease_ic_clear);
+//        menuItem.setTitle("清空");
+//        menuItem.setOnMenuItemClickListener(item -> {
+//            emptyHistory();
+//            return true;
+//        });
+//        menuItem.setVisible(mChatEnabled);
     }
 
     /**
@@ -662,10 +655,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             } else {
                 menu_ended.setVisibility(View.GONE);
             }
-        }
-
-        if (menuItem != null) {
-            menuItem.setVisible(mChatEnabled);
         }
     }
 

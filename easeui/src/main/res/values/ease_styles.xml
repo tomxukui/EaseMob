@@ -24,7 +24,7 @@
         <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="android:background">#0089e1</item>
         <item name="elevation">0dp</item>
-        <item name="navigationIcon">@drawable/ease_mm_title_back</item>
+        <item name="navigationIcon">@mipmap/ease_ic_back</item>
         <item name="android:textColor">#ffffff</item>
         <item name="popupTheme">@style/EaseAppTheme.PopupOverlay</item>
         <item name="android:theme">@style/EaseAppTheme.AppBarOverlay</item>
