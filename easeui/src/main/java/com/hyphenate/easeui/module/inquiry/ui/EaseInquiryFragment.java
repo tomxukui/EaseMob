@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMMessageListener;
@@ -72,6 +73,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     private EaseChatInputMenu menu_input;
     private EaseInquiryEndedMenu menu_ended;
     private EaseVoiceRecorderView voice_recorder;
+    private TextView tv_availableCount;
     private MenuItem menuItem;
 
     private String mToUsername;//对方username
@@ -165,6 +167,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         voice_recorder = view.findViewById(R.id.voice_recorder);
         list_message = view.findViewById(R.id.list_message);
         menu_input = view.findViewById(R.id.menu_input);
+        tv_availableCount = view.findViewById(R.id.tv_availableCount);
         menu_ended = view.findViewById(R.id.menu_ended);
     }
 

@@ -27,6 +27,18 @@
             android:layout_gravity="center"
             android:visibility="invisible" />
 
+        <!--剩余对话次数-->
+        <TextView
+            android:id="@+id/tv_availableCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="剩余对话xx次"
+            android:layout_gravity="left|bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="6dp"
+            android:textColor="#AAAAAA"
+            android:textSize="12sp" />
+
     </FrameLayout>
 
     <FrameLayout
