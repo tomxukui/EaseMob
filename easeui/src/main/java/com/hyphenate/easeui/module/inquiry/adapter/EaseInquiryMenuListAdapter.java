@@ -45,6 +45,7 @@ public class EaseInquiryMenuListAdapter extends BaseAdapter {
             mViewHolder = new ViewHolder();
             mViewHolder.iv_icon = convertView.findViewById(R.id.iv_icon);
             mViewHolder.tv_name = convertView.findViewById(R.id.tv_name);
+            mViewHolder.v_line = convertView.findViewById(R.id.v_line);
             convertView.setTag(mViewHolder);
 
         } else {
@@ -55,6 +56,7 @@ public class EaseInquiryMenuListAdapter extends BaseAdapter {
 
         mViewHolder.iv_icon.setImageResource(menuItem.getResId());
         mViewHolder.tv_name.setText(menuItem.getName());
+        mViewHolder.v_line.setVisibility((position < getCount() - 1) ? View.VISIBLE : View.GONE);
 
         return convertView;
     }
@@ -63,6 +65,7 @@ public class EaseInquiryMenuListAdapter extends BaseAdapter {
 
         ImageView iv_icon;
         TextView tv_name;
+        View v_line;
 
     }
 
