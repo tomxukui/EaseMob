@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -10,34 +9,10 @@
         android:layout_height="1dp"
         android:background="#ECECEC" />
 
-    <android.support.v7.widget.LinearLayoutCompat
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FCFCFC"
-        android:orientation="horizontal"
-        app:divider="@drawable/divider_vertical_1_t8b8"
-        app:showDividers="middle">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:gravity="center"
-            android:minHeight="50dp"
-            android:text="送心意"
-            android:textColor="#1A1A1A"
-            android:textSize="15sp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:gravity="center"
-            android:minHeight="50dp"
-            android:text="再次咨询"
-            android:textColor="#1A1A1A"
-            android:textSize="15sp" />
-
-    </android.support.v7.widget.LinearLayoutCompat>
+        android:background="#FCFCFC" />
 
 </merge>

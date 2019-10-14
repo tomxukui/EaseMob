@@ -34,6 +34,7 @@ import com.hyphenate.easeui.bean.EaseUser;
 import com.hyphenate.easeui.model.EaseCompat;
 import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
 import com.hyphenate.easeui.module.inquiry.adapter.EaseInquiryMenuListAdapter;
+import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryMenuItem;
 import com.hyphenate.easeui.module.inquiry.widget.EaseInquiryEndedMenu;
 import com.hyphenate.easeui.utils.ContextCompatUtil;
@@ -230,6 +231,8 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             }
 
         });
+
+        menu_ended.setData(getEndedMenuItems());
     }
 
     @Override
@@ -661,14 +664,24 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             menu_input.setVisibility(mChatEnabled ? View.VISIBLE : View.GONE);
         }
 
-        if (menu_ended != null) {
-            if ((!mChatEnabled) && mShowEndedMenu) {
-                menu_ended.setVisibility(View.VISIBLE);
+//        if (menu_ended != null) {
+//            if ((!mChatEnabled) && mShowEndedMenu) {
+//                menu_ended.setVisibility(View.VISIBLE);
+//
+//            } else {
+//                menu_ended.setVisibility(View.GONE);
+//            }
+//        }
+    }
 
-            } else {
-                menu_ended.setVisibility(View.GONE);
-            }
-        }
+    /**
+     * 结束问诊
+     */
+    protected void finishInquiry() {
+//        mHandler.sendEmptyMessage(MSG_FINISH_CONVERSATION);
+//
+//        mChatEnabled = false;
+//        setChatableView();
     }
 
     public void setChatFragmentHelper(EaseChatFragmentHelper chatFragmentHelper) {
@@ -789,6 +802,11 @@ public class EaseInquiryFragment extends EaseBaseFragment {
      */
     @Nullable
     protected List<EaseInquiryMenuItem> getMenuItems() {
+        return null;
+    }
+
+    @Nullable
+    protected List<EaseInquiryEndedMenuItem> getEndedMenuItems() {
         return null;
     }
 
