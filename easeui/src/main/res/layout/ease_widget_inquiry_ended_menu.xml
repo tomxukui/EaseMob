@@ -13,6 +13,6 @@
         android:id="@+id/recycler_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FCFCFC" />
+        android:background="@color/ease_gray" />
 
 </merge>
