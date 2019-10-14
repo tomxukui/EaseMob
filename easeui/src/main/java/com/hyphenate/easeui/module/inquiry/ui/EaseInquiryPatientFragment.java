@@ -43,9 +43,6 @@ public class EaseInquiryPatientFragment extends EaseInquiryFragment {
         List<EaseInquiryEndedMenuItem> menuItems = new ArrayList<>();
         menuItems.add(new EaseInquiryEndedMenuItem("送心意", (menuItem, position) -> EaseToastUtil.show("送心意")));
         menuItems.add(new EaseInquiryEndedMenuItem("再次咨询", (menuItem, position) -> EaseToastUtil.show("再次咨询")));
-
-        menuItems.add(new EaseInquiryEndedMenuItem("送心意1", (menuItem, position) -> EaseToastUtil.show("送心意")));
-        menuItems.add(new EaseInquiryEndedMenuItem("再次咨询1", (menuItem, position) -> EaseToastUtil.show("再次咨询")));
         return menuItems;
     }
 
