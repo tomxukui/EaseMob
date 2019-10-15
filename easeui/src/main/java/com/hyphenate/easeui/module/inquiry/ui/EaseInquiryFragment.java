@@ -587,9 +587,9 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     }
 
     /**
-     * 空的历史记录
+     * 清空所有聊天消息
      */
-    protected void emptyHistory() {
+    protected void clearAllMessages() {
         String msg = getResources().getString(R.string.Whether_to_empty_all_chats);
         new EaseAlertDialog(getActivity(), null, msg, null, (confirmed, bundle) -> {
             if (confirmed) {
