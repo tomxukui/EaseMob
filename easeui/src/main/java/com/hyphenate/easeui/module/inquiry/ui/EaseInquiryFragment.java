@@ -34,6 +34,7 @@ import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
 import com.hyphenate.easeui.module.inquiry.adapter.EaseInquiryMenuListAdapter;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryMenuItem;
+import com.hyphenate.easeui.module.inquiry.model.EaseInquiryMoreMenuItem;
 import com.hyphenate.easeui.module.inquiry.widget.EaseInquiryEndedMenu;
 import com.hyphenate.easeui.utils.ContextCompatUtil;
 import com.hyphenate.easeui.utils.DensityUtil;
@@ -52,6 +53,7 @@ import com.hyphenate.util.PathUtil;
 import com.yanzhenjie.permission.Permission;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -153,8 +155,25 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         list_message.getSwipeRefreshLayout().setOnRefreshListener(() -> getHandler().postDelayed(() -> loadMoreLocalMessages(), 600));
 
         //设置功能菜单
-        menu_input.addExtendMenuItem(R.mipmap.ease_ic_camera, "拍照", v -> requestPermission(data -> pickPhotoFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE));
-        menu_input.addExtendMenuItem(R.mipmap.ease_ic_album, "相册", v -> requestPermission(data -> pickPhotoFromAlbum(), Permission.Group.CAMERA, Permission.Group.STORAGE));
+        List<EaseInquiryMoreMenuItem> moreMenuItems = new ArrayList<>();
+        moreMenuItems.add(new EaseInquiryMoreMenuItem(R.mipmap.ease_ic_camera, "拍照", (itemModel, position) -> requestPermission(data -> pickPhotoFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE)));
+        moreMenuItems.add(new EaseInquiryMoreMenuItem(R.mipmap.ease_ic_album, "相册", (itemModel, position) -> requestPermission(data -> pickPhotoFromAlbum(), Permission.Group.CAMERA, Permission.Group.STORAGE)));
+        List<EaseInquiryMoreMenuItem> otherMoreMenuItems = getMoreMenuItems();
+        if (otherMoreMenuItems != null) {
+            moreMenuItems.addAll(otherMoreMenuItems);
+        }
+        for (int i = 0; i < moreMenuItems.size(); i++) {
+            EaseInquiryMoreMenuItem menuItem = moreMenuItems.get(i);
+            EaseInquiryMoreMenuItem.OnItemClickListener listener = menuItem.getOnItemClickListener();
+
+            int finalI = i;
+            menu_input.addExtendMenuItem(menuItem.getResId(), menuItem.getName(), v -> {
+                if (listener != null) {
+                    listener.onItemClick(menuItem, finalI);
+                }
+            });
+        }
+
         menu_input.setChatInputMenuListener(new ChatInputMenuListener() {
 
             @Override
@@ -748,6 +767,14 @@ public class EaseInquiryFragment extends EaseBaseFragment {
      */
     @Nullable
     protected List<EaseInquiryEndedMenuItem> getEndedMenuItems() {
+        return null;
+    }
+
+    /**
+     * 获取输入框的更多菜单子项集合
+     */
+    @Nullable
+    protected List<EaseInquiryMoreMenuItem> getMoreMenuItems() {
         return null;
     }
 
