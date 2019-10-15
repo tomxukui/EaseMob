@@ -2,6 +2,8 @@ package com.hyphenate.easeui.module.base.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,8 @@ import java.util.List;
 public abstract class EaseBaseFragment extends Fragment implements EaseIBase {
 
     private ActionBar mActionBar;
+
+    private Handler mBaseHandler;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,6 +84,18 @@ public abstract class EaseBaseFragment extends Fragment implements EaseIBase {
     @Override
     public void hideSoftKeyboard() {
         EaseSoftInputUtil.hide(getActivity());
+    }
+
+    protected Handler getHandler() {
+        if (mBaseHandler == null) {
+            mBaseHandler = new Handler(Looper.getMainLooper());
+        }
+
+        return mBaseHandler;
+    }
+
+    protected void runOnUiThread(Runnable action) {
+        getHandler().post(action);
     }
 
     protected void finish() {

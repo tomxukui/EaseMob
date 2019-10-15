@@ -6,9 +6,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.ListPopupWindow;
@@ -68,11 +65,12 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     private static final int REQUEST_CAMERA = 2;
     private static final int REQUEST_ALBUM = 3;
 
-    //handle消息类型
-    private static final int MSG_FINISH_CONVERSATION = 2;
-
     //透传类型
     private static final String ACTION_CLOSE_CONVERSATION = "cmd_close_conversation";
+
+    private File mCameraFile;
+
+    private EaseChatFragmentHelper mChatFragmentHelper;
 
     private EaseToolbar toolbar;
     private EaseChatMessageList list_message;
@@ -81,67 +79,19 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     private EaseVoiceRecorderView voice_recorder;
     private TextView tv_availableCount;
 
+    //标题栏菜单
     private ListPopupWindow mPopupMenu;
-    private MenuItem mMoreMenu;
-
-    private EMConversation mConversation;
-
     private EaseInquiryMenuListAdapter mMenuListAdapter;
+
+    //主要参数
+    private EMConversation mConversation;
     private String mToUsername;//对方主键
     @EaseType.ChatMode
     private String mChatMode;//聊天模式
     private boolean mIsFinished;//问诊是否已结束
-
-
-    private File mCameraFile;
     private boolean mIsMessagesInited;//消息列表是否已初始化
-    private EaseChatFragmentHelper mChatFragmentHelper;
-
-
-    protected int mPagesize = 20;
-    protected boolean mHaveMoreData = true;
-
-    private Handler mHandler = new Handler(Looper.getMainLooper()) {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-            switch (msg.what) {
-
-                case MSG_FINISH_CONVERSATION: {//结束聊天
-                    //透传发送结束聊天的消息
-                    EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
-                    EMCmdMessageBody body = new EMCmdMessageBody(ACTION_CLOSE_CONVERSATION);
-                    message.addBody(body);
-                    message.setTo(mToUsername);
-                    EMClient.getInstance().chatManager().sendMessage(message);
-
-                    //新增一条文本消息到本地数据库
-                    if (mConversation != null) {
-                        EMMessage textMessage = EMMessage.createTxtSendMessage("本次问诊已结束", mToUsername);
-                        textMessage.setAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, true);
-                        mConversation.insertMessage(textMessage);
-                    }
-
-                    //刷新消息列表
-                    if (mIsMessagesInited) {
-                        list_message.refreshSelectLast();
-                    }
-
-                    //结束问诊
-                    mIsFinished = true;
-                    setChatView();
-                }
-                break;
-
-                default:
-                    break;
-
-            }
-        }
-
-    };
+    private int mPageSize = 20;
+    private boolean mHaveMoreData = true;
 
     public static EaseInquiryFragment newInstance(String toUsername, @EaseType.ChatMode String chatMode) {
         EaseInquiryFragment fragment = new EaseInquiryFragment();
@@ -202,7 +152,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         //设置消息列表
         list_message.setShowUserNick(false);
         list_message.getSwipeRefreshLayout().setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light, R.color.holo_orange_light, R.color.holo_red_light);
-        list_message.getSwipeRefreshLayout().setOnRefreshListener(() -> mHandler.postDelayed(() -> loadMoreLocalMessages(), 600));
+        list_message.getSwipeRefreshLayout().setOnRefreshListener(() -> getHandler().postDelayed(() -> loadMoreLocalMessages(), 600));
 
         //设置功能菜单
         menu_input.addExtendMenuItem(R.mipmap.ease_ic_camera, "拍照", v -> requestPermission(data -> pickPhotoFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE));
@@ -273,12 +223,12 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
         List<EMMessage> msgs = mConversation.getAllMessages();
         int msgCount = msgs != null ? msgs.size() : 0;
-        if (msgCount < mConversation.getAllMsgCount() && msgCount < mPagesize) {
+        if (msgCount < mConversation.getAllMsgCount() && msgCount < mPageSize) {
             String msgId = null;
             if (msgs != null && msgs.size() > 0) {
                 msgId = msgs.get(0).getMsgId();
             }
-            mConversation.loadMoreMsgFromDB(msgId, mPagesize - msgCount);
+            mConversation.loadMoreMsgFromDB(msgId, mPageSize - msgCount);
         }
     }
 
@@ -287,37 +237,12 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.ease_menu_inquiry, menu);
 
-        mMoreMenu = menu.findItem(R.id.action_more);
-        mMoreMenu.setVisible(!mMenuListAdapter.isEmpty());
-        mMoreMenu.setOnMenuItemClickListener(item -> {
+        MenuItem mMoreMenuItem = menu.findItem(R.id.action_more);
+        mMoreMenuItem.setVisible(!mMenuListAdapter.isEmpty());
+        mMoreMenuItem.setOnMenuItemClickListener(item -> {
             showPopupMenu();
             return true;
         });
-    }
-
-    private void showPopupMenu() {
-        if (mPopupMenu == null) {
-            mPopupMenu = new ListPopupWindow(getContext());
-            mPopupMenu.setContentWidth(DensityUtil.dp2px(138));
-            mPopupMenu.setBackgroundDrawable(ContextCompatUtil.getDrawable(R.drawable.ease_bg_menu));
-            mPopupMenu.setDropDownGravity(Gravity.RIGHT);
-            mPopupMenu.setHorizontalOffset(DensityUtil.dp2px(-5));
-            mPopupMenu.setVerticalOffset(DensityUtil.dp2px(4));
-            mPopupMenu.setAdapter(mMenuListAdapter);
-            mPopupMenu.setOnItemClickListener((parent, view, position, id) -> {
-                EaseInquiryMenuItem menuItem = mMenuListAdapter.getItem(position);
-
-                EaseInquiryMenuItem.OnItemClickListener listener = menuItem.getOnItemClickListener();
-                if (listener != null) {
-                    listener.onItemClick(menuItem, position);
-                }
-            });
-            mPopupMenu.setAnchorView(toolbar);
-        }
-
-        if (!mPopupMenu.isShowing()) {
-            mPopupMenu.show();
-        }
     }
 
     /**
@@ -409,7 +334,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             List<EMMessage> messages;
 
             try {
-                messages = mConversation.loadMoreMsgFromDB(mConversation.getAllMessages().size() == 0 ? "" : mConversation.getAllMessages().get(0).getMsgId(), mPagesize);
+                messages = mConversation.loadMoreMsgFromDB(mConversation.getAllMessages().size() == 0 ? "" : mConversation.getAllMessages().get(0).getMsgId(), mPageSize);
 
             } catch (Exception e) {
                 list_message.getSwipeRefreshLayout().setRefreshing(false);
@@ -419,7 +344,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             if (messages.size() > 0) {
                 list_message.refreshSeekTo(messages.size() - 1);
 
-                if (messages.size() != mPagesize) {
+                if (messages.size() != mPageSize) {
                     mHaveMoreData = false;
                 }
 
@@ -700,7 +625,56 @@ public class EaseInquiryFragment extends EaseBaseFragment {
      * 结束问诊
      */
     protected void finishInquiry() {
-        mHandler.sendEmptyMessage(MSG_FINISH_CONVERSATION);
+        //透传发送结束聊天的消息
+        EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
+        EMCmdMessageBody body = new EMCmdMessageBody(ACTION_CLOSE_CONVERSATION);
+        message.addBody(body);
+        message.setTo(mToUsername);
+        EMClient.getInstance().chatManager().sendMessage(message);
+
+        //新增一条文本消息到本地数据库
+        if (mConversation != null) {
+            EMMessage textMessage = EMMessage.createTxtSendMessage("本次问诊已结束", mToUsername);
+            textMessage.setAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, true);
+            mConversation.insertMessage(textMessage);
+        }
+
+        //刷新消息列表
+        if (mIsMessagesInited) {
+            list_message.refreshSelectLast();
+        }
+
+        //结束问诊
+        mIsFinished = true;
+        setChatView();
+    }
+
+    /**
+     * 显示标题栏菜单
+     */
+    private void showPopupMenu() {
+        if (mPopupMenu == null) {
+            mPopupMenu = new ListPopupWindow(getContext());
+            mPopupMenu.setContentWidth(DensityUtil.dp2px(138));
+            mPopupMenu.setBackgroundDrawable(ContextCompatUtil.getDrawable(R.drawable.ease_bg_menu));
+            mPopupMenu.setDropDownGravity(Gravity.RIGHT);
+            mPopupMenu.setHorizontalOffset(DensityUtil.dp2px(-5));
+            mPopupMenu.setVerticalOffset(DensityUtil.dp2px(4));
+            mPopupMenu.setAdapter(mMenuListAdapter);
+            mPopupMenu.setOnItemClickListener((parent, view, position, id) -> {
+                EaseInquiryMenuItem menuItem = mMenuListAdapter.getItem(position);
+
+                EaseInquiryMenuItem.OnItemClickListener listener = menuItem.getOnItemClickListener();
+                if (listener != null) {
+                    listener.onItemClick(menuItem, position);
+                }
+            });
+            mPopupMenu.setAnchorView(toolbar);
+        }
+
+        if (!mPopupMenu.isShowing()) {
+            mPopupMenu.show();
+        }
     }
 
     public void setChatFragmentHelper(EaseChatFragmentHelper chatFragmentHelper) {
@@ -748,7 +722,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
         @Override
         public void onMessageReceived(List<EMMessage> messages) {
-            mHandler.post(() -> {
+            getHandler().post(() -> {
                 if (messages.size() > 0) {
                     EMMessage message = messages.get(messages.size() - 1);
 
@@ -772,7 +746,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
         @Override
         public void onCmdMessageReceived(List<EMMessage> messages) {
-            mHandler.post(() -> {
+            getHandler().post(() -> {
                 for (EMMessage msg : messages) {
                     EMCmdMessageBody body = (EMCmdMessageBody) msg.getBody();
 
@@ -787,28 +761,28 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         @Override
         public void onMessageRead(List<EMMessage> list) {
             if (mIsMessagesInited) {
-                mHandler.post(() -> list_message.refresh());
+                getHandler().post(() -> list_message.refresh());
             }
         }
 
         @Override
         public void onMessageDelivered(List<EMMessage> list) {
             if (mIsMessagesInited) {
-                mHandler.post(() -> list_message.refresh());
+                getHandler().post(() -> list_message.refresh());
             }
         }
 
         @Override
         public void onMessageRecalled(List<EMMessage> list) {
             if (mIsMessagesInited) {
-                mHandler.post(() -> list_message.refresh());
+                getHandler().post(() -> list_message.refresh());
             }
         }
 
         @Override
         public void onMessageChanged(EMMessage emMessage, Object o) {
             if (mIsMessagesInited) {
-                mHandler.post(() -> list_message.refresh());
+                getHandler().post(() -> list_message.refresh());
             }
         }
 
