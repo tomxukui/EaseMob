@@ -281,18 +281,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
     protected void onMessageListInit() {
         list_message.init(mToUsername, EaseConstant.CHATTYPE_SINGLE, onSetCustomChatRowProvider());
-        setListItemClickListener();
-
-        list_message.getListView().setOnTouchListener((v, event) -> {
-            hideSoftKeyboard();
-            menu_input.hideExtendMenuContainer();
-            return false;
-        });
-
-        mIsMessagesInited = true;
-    }
-
-    protected void setListItemClickListener() {
         list_message.setItemClickListener(new EaseChatMessageList.MessageListItemClickListener() {
 
             @Override
@@ -334,6 +322,13 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             }
 
         });
+        list_message.getListView().setOnTouchListener((v, event) -> {
+            hideSoftKeyboard();
+            menu_input.hideExtendMenuContainer();
+            return false;
+        });
+
+        mIsMessagesInited = true;
     }
 
     /**
