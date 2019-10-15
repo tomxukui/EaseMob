@@ -22,11 +22,11 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.bean.EaseAvatarOptions;
-import com.hyphenate.easeui.bean.EaseUser;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
-import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.hyphenate.easeui.utils.EaseUserUtil;
 import com.hyphenate.easeui.widget.EaseConversationList.EaseConversationListHelper;
 import com.hyphenate.easeui.widget.EaseImageView;
 import com.hyphenate.util.DateUtils;
@@ -127,11 +127,21 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             holder.motioned.setVisibility(View.GONE);
 
         } else {
-//            conversation.getLastMessage()
+            EMMessage message = conversation.getLastMessage();
+            String avatar;
+            String nickname;
 
+            if (message.direct() == EMMessage.Direct.SEND) {
+                avatar = EaseMessageUtil.getToAvatar(message, null);
+                nickname = EaseMessageUtil.getToNickname(message, message.getTo());
 
-            EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
-            EaseUserUtils.setUserNick(username, holder.name);
+            } else {
+                avatar = EaseMessageUtil.getFromAvatar(message, null);
+                nickname = EaseMessageUtil.getFromNickname(message, message.getFrom());
+            }
+
+            EaseUserUtil.setUserAvatar(holder.avatar, avatar, R.mipmap.ease_ic_chatto_portrait);
+            holder.name.setText(nickname);
             holder.motioned.setVisibility(View.GONE);
         }
 
