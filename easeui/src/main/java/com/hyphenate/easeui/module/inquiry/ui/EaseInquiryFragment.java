@@ -87,7 +87,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     private EMConversation mConversation;
     private String mToUsername;//对方主键
     @EaseType.ChatMode
-    private String mChatMode;//聊天模式
+    private String mChatMode;//问诊模式
     private boolean mIsFinished;//问诊是否已结束
     private boolean mIsMessagesInited;//消息列表是否已初始化
     private int mPageSize = 20;//消息分页一页最多数量
@@ -154,7 +154,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         list_message.getSwipeRefreshLayout().setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light, R.color.holo_orange_light, R.color.holo_red_light);
         list_message.getSwipeRefreshLayout().setOnRefreshListener(() -> getHandler().postDelayed(() -> loadMoreLocalMessages(), 600));
 
-        //设置功能菜单
+        //设置输入框的更多菜单
         List<EaseInquiryMoreMenuItem> moreMenuItems = new ArrayList<>();
         moreMenuItems.add(new EaseInquiryMoreMenuItem(R.mipmap.ease_ic_camera, "拍照", (itemModel, position) -> requestPermission(data -> pickPhotoFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE)));
         moreMenuItems.add(new EaseInquiryMoreMenuItem(R.mipmap.ease_ic_album, "相册", (itemModel, position) -> requestPermission(data -> pickPhotoFromAlbum(), Permission.Group.CAMERA, Permission.Group.STORAGE)));
@@ -174,6 +174,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             });
         }
 
+        //监听输入框的输入
         menu_input.setChatInputMenuListener(new ChatInputMenuListener() {
 
             @Override
@@ -204,12 +205,14 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
         });
 
+        //设置问诊结束后的底部菜单
         menu_ended.setData(getEndedMenuItems());
 
+        //设置问诊模式
         if (EaseType.BROWSE.equals(mChatMode)) {//浏览模式
             setBrowseView();
 
-        } else {
+        } else {//聊天模式
             setChatView();
         }
     }
