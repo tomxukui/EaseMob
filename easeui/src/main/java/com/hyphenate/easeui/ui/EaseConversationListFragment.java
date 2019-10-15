@@ -18,7 +18,6 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
-import com.hyphenate.easeui.utils.EaseContactUtil;
 import com.hyphenate.easeui.widget.EaseConversationList;
 import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 
@@ -87,11 +86,11 @@ public class EaseConversationListFragment extends EaseBaseFragment {
             }
 
             if (chatType > 0) {
-                startActivity(new EaseChatActivity.Builder(getContext())
-                        .setChatType(chatType)
-                        .setToUser(conversation.conversationId())
-                        .setFinishConversationEnabled(true)
-                        .create());
+//                startActivity(new EaseChatActivity.Builder(getContext())
+//                        .setChatType(chatType)
+//                        .setToUser(conversation.conversationId())
+//                        .setFinishConversationEnabled(true)
+//                        .create());
             }
         });
 
@@ -226,7 +225,7 @@ public class EaseConversationListFragment extends EaseBaseFragment {
 
                     for (EMConversation item : conversationList) {
                         if (item.getType() == EMConversation.EMConversationType.Chat) {
-                            EaseContactUtil.getInstance().saveContact(item.getLastMessage());
+//                            EaseContactUtil.getInstance().saveContact(item.getLastMessage());
                         }
                     }
 

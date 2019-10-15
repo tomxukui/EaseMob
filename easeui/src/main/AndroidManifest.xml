@@ -48,29 +48,6 @@
             android:theme="@style/EaseAppTheme.Dark" />
 
         <activity
-            android:name=".ui.EaseDingAckUserListActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/EaseAppTheme"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
-            android:name=".ui.EaseDingMsgSendActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/EaseAppTheme"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
-            android:name=".ui.EaseBaiduMapActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/EaseAppTheme" />
-
-        <activity
-            android:name=".ui.EaseChatActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/EaseAppTheme" />
-
-        <activity
             android:name=".ui.EaseConversationListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/EaseAppTheme" />

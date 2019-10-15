@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.ListPopupWindow;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,9 +28,9 @@ import com.hyphenate.chat.EMMessage.ChatType;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.bean.EaseEmojicon;
-import com.hyphenate.easeui.bean.EaseUser;
 import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.model.EaseCompat;
+import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
 import com.hyphenate.easeui.module.inquiry.adapter.EaseInquiryMenuListAdapter;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
@@ -39,9 +40,8 @@ import com.hyphenate.easeui.module.inquiry.widget.EaseInquiryEndedMenu;
 import com.hyphenate.easeui.utils.ContextCompatUtil;
 import com.hyphenate.easeui.utils.DensityUtil;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
-import com.hyphenate.easeui.utils.EaseContactUtil;
+import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
-import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.easeui.widget.EaseChatInputMenu;
 import com.hyphenate.easeui.widget.EaseChatInputMenu.ChatInputMenuListener;
@@ -61,7 +61,8 @@ import java.util.List;
  */
 public class EaseInquiryFragment extends EaseBaseFragment {
 
-    protected static final String EXTRA_TO_USERNAME = "EXTRA_TO_USERNAME";
+    protected static final String EXTRA_FROM_USER = "EXTRA_FROM_USER";
+    protected static final String EXTRA_TO_USER = "EXTRA_TO_USER";
     protected static final String EXTRA_CHAT_MODE = "EXTRA_CHAT_MODE";
 
     private static final int REQUEST_CAMERA = 1;
@@ -82,7 +83,8 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     private EaseInquiryMenuListAdapter mMenuListAdapter;
 
     private EMConversation mConversation;//会话
-    private String mToUsername;//对方主键
+    private EaseUser mFromUser;
+    private EaseUser mToUser;
     @EaseType.ChatMode
     private String mChatMode;//问诊模式
     private boolean mIsFinished;//问诊是否已结束
@@ -91,10 +93,11 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     private boolean mHaveMoreData = true;//是否有更多消息
     private File mCameraFile;//相机拍照照片文件
 
-    public static EaseInquiryFragment newInstance(String toUsername, @EaseType.ChatMode String chatMode) {
+    public static EaseInquiryFragment newInstance(EaseUser fromUser, EaseUser toUser, @EaseType.ChatMode String chatMode) {
         EaseInquiryFragment fragment = new EaseInquiryFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(EXTRA_TO_USERNAME, toUsername);
+        bundle.putSerializable(EXTRA_FROM_USER, fromUser);
+        bundle.putSerializable(EXTRA_TO_USER, toUser);
         bundle.putString(EXTRA_CHAT_MODE, chatMode);
         fragment.setArguments(bundle);
         return fragment;
@@ -110,7 +113,8 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         super.initData(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mToUsername = bundle.getString(EXTRA_TO_USERNAME);
+            mFromUser = (EaseUser) bundle.getSerializable(EXTRA_FROM_USER);
+            mToUser = (EaseUser) bundle.getSerializable(EXTRA_TO_USER);
             mChatMode = bundle.getString(EXTRA_CHAT_MODE);
         }
 
@@ -236,7 +240,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     }
 
     protected void onConversationInit() {
-        mConversation = EMClient.getInstance().chatManager().getConversation(mToUsername, EaseCommonUtils.getConversationType(EaseConstant.CHATTYPE_SINGLE), true);
+        mConversation = EMClient.getInstance().chatManager().getConversation(mToUser.getUsername(), EaseCommonUtils.getConversationType(EaseConstant.CHATTYPE_SINGLE), true);
         mConversation.markAllMessagesAsRead();
 
         List<EMMessage> msgs = mConversation.getAllMessages();
@@ -267,18 +271,17 @@ public class EaseInquiryFragment extends EaseBaseFragment {
      * 设置标题
      */
     private void setTitle() {
-        String title = mToUsername;
+        String title = mToUser.getNickname();
 
-        EaseUser user = EaseUserUtils.getUserInfo(mToUsername);
-        if (user != null) {
-            title = user.getNickname();
+        if (TextUtils.isEmpty(title)) {
+            title = mToUser.getUsername();
         }
 
         toolbar.setTitle(title);
     }
 
     protected void onMessageListInit() {
-        list_message.init(mToUsername, EaseConstant.CHATTYPE_SINGLE, onSetCustomChatRowProvider());
+        list_message.init(mToUser.getUsername(), EaseConstant.CHATTYPE_SINGLE, onSetCustomChatRowProvider());
         list_message.setItemClickListener(new EaseChatMessageList.MessageListItemClickListener() {
 
             @Override
@@ -405,7 +408,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
      * 发送文字消息
      */
     protected void sendTextMessage(String content) {
-        EMMessage message = EMMessage.createTxtSendMessage(content, mToUsername);
+        EMMessage message = EMMessage.createTxtSendMessage(content, mToUser.getUsername());
         sendMessage(message);
     }
 
@@ -413,7 +416,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
      * 发送大表情消息
      */
     protected void sendBigExpressionMessage(String name, String identityCode) {
-        EMMessage message = EaseCommonUtils.createExpressionMessage(mToUsername, name, identityCode);
+        EMMessage message = EaseCommonUtils.createExpressionMessage(mToUser.getUsername(), name, identityCode);
         sendMessage(message);
     }
 
@@ -421,7 +424,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
      * 发送语音消息
      */
     protected void sendVoiceMessage(String filePath, int length) {
-        EMMessage message = EMMessage.createVoiceSendMessage(filePath, length, mToUsername);
+        EMMessage message = EMMessage.createVoiceSendMessage(filePath, length, mToUser.getUsername());
         sendMessage(message);
     }
 
@@ -429,7 +432,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
      * 发送图片消息
      */
     protected void sendImageMessage(String imagePath) {
-        EMMessage message = EMMessage.createImageSendMessage(imagePath, false, mToUsername);
+        EMMessage message = EMMessage.createImageSendMessage(imagePath, false, mToUser.getUsername());
         sendMessage(message);
     }
 
@@ -437,7 +440,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
      * 发送文件消息
      */
     protected void sendFileMessage(String filePath) {
-        EMMessage message = EMMessage.createFileSendMessage(filePath, mToUsername);
+        EMMessage message = EMMessage.createFileSendMessage(filePath, mToUser.getUsername());
         sendMessage(message);
     }
 
@@ -451,14 +454,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
         message.setChatType(ChatType.Chat);
 
-        EaseUser myUser = EaseUserUtils.getUserInfo(EMClient.getInstance().getCurrentUser());
-        EaseUser toUser = EaseUserUtils.getUserInfo(mToUsername);
-        if (myUser != null && toUser != null) {
-            message.setAttribute("send_nickname", myUser.getNickname());
-            message.setAttribute("send_avatar", myUser.getAvatar());
-            message.setAttribute("to_nickname", toUser.getNickname());
-            message.setAttribute("to_avatar", toUser.getAvatar());
-        }
+        EaseMessageUtil.setUserMessage(message, mFromUser, mToUser);
 
         onSetMessageAttributes(message);
 
@@ -629,12 +625,12 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
         EMCmdMessageBody body = new EMCmdMessageBody(ACTION_CLOSE_CONVERSATION);
         message.addBody(body);
-        message.setTo(mToUsername);
+        message.setTo(mToUser.getUsername());
         EMClient.getInstance().chatManager().sendMessage(message);
 
         //新增一条文本消息到本地数据库
         if (mConversation != null) {
-            EMMessage textMessage = EMMessage.createTxtSendMessage("本次问诊已结束", mToUsername);
+            EMMessage textMessage = EMMessage.createTxtSendMessage("本次问诊已结束", mToUser.getUsername());
             textMessage.setAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, true);
             mConversation.insertMessage(textMessage);
         }
@@ -685,20 +681,10 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         @Override
         public void onMessageReceived(List<EMMessage> messages) {
             getHandler().post(() -> {
-                if (messages.size() > 0) {
-                    EMMessage message = messages.get(messages.size() - 1);
-
-                    if (message.getChatType() == ChatType.Chat) {
-                        EaseContactUtil.getInstance().saveContact(message);
-
-                        setTitle();
-                    }
-                }
-
                 for (EMMessage message : messages) {
                     String username = message.getFrom();
 
-                    if (username.equals(mToUsername) || message.getTo().equals(mToUsername) || message.conversationId().equals(mToUsername)) {
+                    if (username.equals(mToUser.getUsername()) || message.getTo().equals(mToUser.getUsername()) || message.conversationId().equals(mToUser.getUsername())) {
                         list_message.refreshSelectLast();
                         mConversation.markMessageAsRead(message.getMsgId());
                     }
@@ -712,7 +698,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
                 for (EMMessage msg : messages) {
                     EMCmdMessageBody body = (EMCmdMessageBody) msg.getBody();
 
-                    if (ACTION_CLOSE_CONVERSATION.equals(body.action()) && msg.getFrom().equals(mToUsername)) {
+                    if (ACTION_CLOSE_CONVERSATION.equals(body.action()) && msg.getFrom().equals(mToUser.getUsername())) {
                         mIsFinished = true;
                         setChatView();
                     }

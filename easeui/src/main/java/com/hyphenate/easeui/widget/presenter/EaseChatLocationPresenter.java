@@ -6,7 +6,6 @@ import android.widget.BaseAdapter;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMLocationMessageBody;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.easeui.ui.EaseBaiduMapActivity;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRowLocation;
 import com.hyphenate.exceptions.HyphenateException;
@@ -35,7 +34,7 @@ public class EaseChatLocationPresenter extends EaseChatRowPresenter {
     @Override
     public void onBubbleClick(EMMessage message) {
         EMLocationMessageBody locBody = (EMLocationMessageBody) message.getBody();
-        getContext().startActivity(EaseBaiduMapActivity.buildIntent(getContext(), locBody.getLatitude(), locBody.getLongitude()));
+//        getContext().startActivity(EaseBaiduMapActivity.buildIntent(getContext(), locBody.getLatitude(), locBody.getLongitude()));
     }
 
 }

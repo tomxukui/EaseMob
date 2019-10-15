@@ -12,11 +12,9 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.bean.EaseAvatarOptions;
 import com.hyphenate.easeui.bean.EaseEmojicon;
-import com.hyphenate.easeui.bean.EaseUser;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.model.EaseNotifier;
 import com.hyphenate.easeui.model.EaseDingMessageHelper;
-import com.hyphenate.easeui.utils.EaseContactUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +22,6 @@ import java.util.Map;
 
 public final class EaseUI {
 
-    private EaseUserProfileProvider userProvider;
     private EaseSettingsProvider settingsProvider;
     private EaseAvatarOptions avatarOptions;
 
@@ -59,10 +56,6 @@ public final class EaseUI {
         initNotifier(context);
 
         EMClient.getInstance().addConnectionListener(mConnectionListener);
-
-        if (userProvider == null) {
-            userProvider = username -> EaseContactUtil.getInstance().getContact(username);
-        }
 
         if (settingsProvider == null) {
             settingsProvider = new DefaultSettingsProvider();
@@ -189,26 +182,12 @@ public final class EaseUI {
         return avatarOptions;
     }
 
-    public void setUserProfileProvider(EaseUserProfileProvider userProvider) {
-        this.userProvider = userProvider;
-    }
-
-    public EaseUserProfileProvider getUserProfileProvider() {
-        return userProvider;
-    }
-
     public void setSettingsProvider(EaseSettingsProvider settingsProvider) {
         this.settingsProvider = settingsProvider;
     }
 
     public EaseSettingsProvider getSettingsProvider() {
         return settingsProvider;
-    }
-
-    public interface EaseUserProfileProvider {
-
-        EaseUser getUser(String username);
-
     }
 
     public interface EaseEmojiconInfoProvider {
