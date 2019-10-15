@@ -43,6 +43,10 @@ public class EaseInquiryEndedMenuRecyclerAdapter extends RecyclerView.Adapter<Ea
         });
     }
 
+    public boolean isEmpty() {
+        return getItemCount() == 0;
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_name;

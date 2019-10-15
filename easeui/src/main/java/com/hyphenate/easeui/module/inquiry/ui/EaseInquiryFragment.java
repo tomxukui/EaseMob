@@ -31,6 +31,7 @@ import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.bean.EaseEmojicon;
 import com.hyphenate.easeui.bean.EaseUser;
+import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.model.EaseCompat;
 import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
 import com.hyphenate.easeui.module.inquiry.adapter.EaseInquiryMenuListAdapter;
@@ -62,6 +63,7 @@ import java.util.List;
 public class EaseInquiryFragment extends EaseBaseFragment {
 
     protected static final String EXTRA_TO_USERNAME = "EXTRA_TO_USERNAME";
+    protected static final String EXTRA_CHAT_MODE = "EXTRA_CHAT_MODE";
 
     private static final int REQUEST_CAMERA = 2;
     private static final int REQUEST_ALBUM = 3;
@@ -85,9 +87,11 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     private EMConversation mConversation;
 
     private EaseInquiryMenuListAdapter mMenuListAdapter;
-    private String mToUsername;
-    private boolean mChatEnabled = true;//是否可以聊天
-    private boolean mShowEndedMenu;
+    private String mToUsername;//对方主键
+    @EaseType.ChatMode
+    private String mChatMode;//聊天模式
+    private boolean mIsFinished;//问诊是否已结束
+
 
     private File mCameraFile;
     private boolean mIsMessagesInited;//消息列表是否已初始化
@@ -125,9 +129,9 @@ public class EaseInquiryFragment extends EaseBaseFragment {
                         list_message.refreshSelectLast();
                     }
 
-                    //关闭聊天功能
-                    mChatEnabled = false;
-                    setChatableView();
+                    //结束问诊
+                    mIsFinished = true;
+                    setChatView();
                 }
                 break;
 
@@ -139,10 +143,11 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
     };
 
-    public static EaseInquiryFragment newInstance(String toUsername) {
+    public static EaseInquiryFragment newInstance(String toUsername, @EaseType.ChatMode String chatMode) {
         EaseInquiryFragment fragment = new EaseInquiryFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(EXTRA_TO_USERNAME, toUsername);
+        bundle.putString(EXTRA_TO_USERNAME, toUsername);
+        bundle.putString(EXTRA_CHAT_MODE, chatMode);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -158,6 +163,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             mToUsername = bundle.getString(EXTRA_TO_USERNAME);
+            mChatMode = bundle.getString(EXTRA_CHAT_MODE);
         }
 
         mMenuListAdapter = new EaseInquiryMenuListAdapter(getMenuItems());
@@ -199,7 +205,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         list_message.getSwipeRefreshLayout().setOnRefreshListener(() -> mHandler.postDelayed(() -> loadMoreLocalMessages(), 600));
 
         //设置功能菜单
-        setChatableView();
         menu_input.addExtendMenuItem(R.mipmap.ease_ic_camera, "拍照", v -> requestPermission(data -> pickPhotoFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE));
         menu_input.addExtendMenuItem(R.mipmap.ease_ic_album, "相册", v -> requestPermission(data -> pickPhotoFromAlbum(), Permission.Group.CAMERA, Permission.Group.STORAGE));
         menu_input.setChatInputMenuListener(new ChatInputMenuListener() {
@@ -233,6 +238,13 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         });
 
         menu_ended.setData(getEndedMenuItems());
+
+        if (EaseType.BROWSE.equals(mChatMode)) {//浏览模式
+            setBrowseView();
+
+        } else {
+            setChatView();
+        }
     }
 
     @Override
@@ -659,29 +671,36 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         }, true).show();
     }
 
-    private void setChatableView() {
-        if (menu_input != null) {
-            menu_input.setVisibility(mChatEnabled ? View.VISIBLE : View.GONE);
-        }
+    /**
+     * 设置浏览控件
+     */
+    private void setBrowseView() {
+        tv_availableCount.setVisibility(View.GONE);
+        menu_input.setVisibility(View.GONE);
+        menu_ended.setVisibility(View.GONE);
+    }
 
-//        if (menu_ended != null) {
-//            if ((!mChatEnabled) && mShowEndedMenu) {
-//                menu_ended.setVisibility(View.VISIBLE);
-//
-//            } else {
-//                menu_ended.setVisibility(View.GONE);
-//            }
-//        }
+    /**
+     * 设置聊天控件
+     */
+    private void setChatView() {
+        if (mIsFinished) {
+            tv_availableCount.setVisibility(View.GONE);
+            menu_input.setVisibility(View.GONE);
+            menu_ended.setVisibility(menu_ended.isEmpty() ? View.GONE : View.VISIBLE);
+
+        } else {
+            tv_availableCount.setVisibility(View.VISIBLE);
+            menu_input.setVisibility(View.VISIBLE);
+            menu_ended.setVisibility(View.GONE);
+        }
     }
 
     /**
      * 结束问诊
      */
     protected void finishInquiry() {
-//        mHandler.sendEmptyMessage(MSG_FINISH_CONVERSATION);
-//
-//        mChatEnabled = false;
-//        setChatableView();
+        mHandler.sendEmptyMessage(MSG_FINISH_CONVERSATION);
     }
 
     public void setChatFragmentHelper(EaseChatFragmentHelper chatFragmentHelper) {
@@ -758,9 +777,8 @@ public class EaseInquiryFragment extends EaseBaseFragment {
                     EMCmdMessageBody body = (EMCmdMessageBody) msg.getBody();
 
                     if (ACTION_CLOSE_CONVERSATION.equals(body.action()) && msg.getFrom().equals(mToUsername)) {
-                        mChatEnabled = false;
-
-                        setChatableView();
+                        mIsFinished = true;
+                        setChatView();
                     }
                 }
             });
@@ -796,25 +814,20 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
     };
 
-
     /**
-     * 获取菜单子项集合, 如果为空, 则隐藏菜单按钮
+     * 获取菜单子项集合, 如果为空, 则隐藏
      */
     @Nullable
     protected List<EaseInquiryMenuItem> getMenuItems() {
         return null;
     }
 
+    /**
+     * 获取结束问诊后的底部菜单子项集合, 如果为空, 则隐藏
+     */
     @Nullable
     protected List<EaseInquiryEndedMenuItem> getEndedMenuItems() {
         return null;
-    }
-
-    /**
-     * 是否能聊天
-     */
-    protected boolean chatEnable() {
-        return true;
     }
 
 }

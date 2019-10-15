@@ -14,6 +14,7 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.bean.EaseAccount;
 import com.hyphenate.easeui.bean.EaseUser;
+import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryPatientActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -226,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
             EaseAccount account = new EaseAccount(username, pwd, nickname, avatar);
             EaseUser toUser = new EaseUser(toUsername, toNickname, toAvatar);
 
-            Intent intent = EaseInquiryPatientActivity.buildIntent(MainActivity.this, account, toUser);
+            Intent intent = EaseInquiryPatientActivity.buildIntent(MainActivity.this, account, toUser, EaseType.BROWSE);
             startActivity(intent);
         });
     }

@@ -77,6 +77,10 @@ public class EaseInquiryEndedMenu extends LinearLayoutCompat {
         mRecyclerAdapter.setData(menuItems);
     }
 
+    public boolean isEmpty() {
+        return mRecyclerAdapter == null || mRecyclerAdapter.isEmpty();
+    }
+
     class EaseGridItemDecoration extends RecyclerView.ItemDecoration {
 
         private Paint mPaint;

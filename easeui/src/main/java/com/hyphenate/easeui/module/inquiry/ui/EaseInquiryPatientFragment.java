@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryMenuItem;
 import com.hyphenate.easeui.utils.EaseToastUtil;
@@ -13,10 +14,11 @@ import java.util.List;
 
 public class EaseInquiryPatientFragment extends EaseInquiryFragment {
 
-    public static EaseInquiryPatientFragment newInstance(String toUsername) {
+    public static EaseInquiryPatientFragment newInstance(String toUsername, @EaseType.ChatMode String chatMode) {
         EaseInquiryPatientFragment fragment = new EaseInquiryPatientFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(EXTRA_TO_USERNAME, toUsername);
+        bundle.putString(EXTRA_TO_USERNAME, toUsername);
+        bundle.putString(EXTRA_CHAT_MODE, chatMode);
         fragment.setArguments(bundle);
         return fragment;
     }
