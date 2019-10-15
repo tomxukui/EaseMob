@@ -17,8 +17,8 @@ import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.bean.EaseAvatarOptions;
-import com.hyphenate.easeui.constants.EaseAttribute;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
+import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseUserUtil;
 import com.hyphenate.easeui.widget.EaseChatMessageList;
 import com.hyphenate.easeui.widget.EaseChatMessageList.MessageListItemClickListener;
@@ -141,14 +141,14 @@ public abstract class EaseChatRow extends LinearLayout {
 
         //设置头像
         if (userAvatarView != null) {
-            String avatar = message.getStringAttribute(EaseAttribute.FROM_AVATAR, null);
+            String avatar = EaseMessageUtil.getFromAvatar(message, null);
 
             EaseUserUtil.setUserAvatar(userAvatarView, avatar, message.direct() == Direct.SEND ? R.mipmap.ease_ic_chatfrom_portrait : R.mipmap.ease_ic_chatto_portrait);
         }
 
         //设置昵称
         if (usernickView != null) {
-            String nickname = message.getStringAttribute(EaseAttribute.FROM_NICKNAME, message.getFrom());
+            String nickname = EaseMessageUtil.getFromNickname(message, message.getFrom());
 
             usernickView.setText(nickname);
         }

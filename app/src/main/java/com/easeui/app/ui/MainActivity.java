@@ -16,6 +16,7 @@ import com.hyphenate.easeui.bean.EaseAccount;
 import com.hyphenate.easeui.bean.EaseUser;
 import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryPatientActivity;
+import com.hyphenate.easeui.ui.EaseConversationListActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private AppCompatEditText et_toNickname;
     private AppCompatEditText et_toAvatar;
     private Button btn_chat;
+    private Button btn_conversationList;
 
     private LoadingDialog mLoadingDialog;
 
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         et_toNickname = findViewById(R.id.et_toNickname);
         et_toAvatar = findViewById(R.id.et_toAvatar);
         btn_chat = findViewById(R.id.btn_chat);
+        btn_conversationList = findViewById(R.id.btn_conversationList);
     }
 
     private void setView() {
@@ -228,6 +231,12 @@ public class MainActivity extends AppCompatActivity {
             EaseUser toUser = new EaseUser(toUsername, toNickname, toAvatar);
 
             Intent intent = EaseInquiryPatientActivity.buildIntent(MainActivity.this, account, toUser, EaseType.CHAT);
+            startActivity(intent);
+        });
+
+        btn_conversationList.setOnClickListener(v -> {
+            Intent intent = new EaseConversationListActivity.Builder(MainActivity.this).create();
+
             startActivity(intent);
         });
     }

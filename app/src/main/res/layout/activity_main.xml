@@ -85,6 +85,13 @@
             android:layout_marginTop="10dp"
             android:text="开启聊天" />
 
+        <Button
+            android:id="@+id/btn_conversationList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="打开会话列表页面" />
+
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
