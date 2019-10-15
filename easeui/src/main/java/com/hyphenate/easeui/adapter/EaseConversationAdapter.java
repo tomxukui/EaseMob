@@ -83,7 +83,9 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.ease_row_chat_history, parent, false);
         }
+
         ViewHolder holder = (ViewHolder) convertView.getTag();
+
         if (holder == null) {
             holder = new ViewHolder();
             holder.name = convertView.findViewById(R.id.name);
@@ -105,21 +107,29 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
 
         if (conversation.getType() == EMConversationType.GroupChat) {
             String groupId = conversation.conversationId();
+
             if (EaseAtMessageHelper.get().hasAtMeMsg(groupId)) {
                 holder.motioned.setVisibility(View.VISIBLE);
+
             } else {
                 holder.motioned.setVisibility(View.GONE);
             }
+
             // group message, show group avatar
             holder.avatar.setImageResource(R.drawable.ease_group_icon);
             EMGroup group = EMClient.getInstance().groupManager().getGroup(username);
             holder.name.setText(group != null ? group.getGroupName() : username);
+
         } else if (conversation.getType() == EMConversationType.ChatRoom) {
             holder.avatar.setImageResource(R.drawable.ease_group_icon);
             EMChatRoom room = EMClient.getInstance().chatroomManager().getChatRoom(username);
             holder.name.setText(room != null && !TextUtils.isEmpty(room.getName()) ? room.getName() : username);
             holder.motioned.setVisibility(View.GONE);
+
         } else {
+//            conversation.getLastMessage()
+
+
             EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
             EaseUserUtils.setUserNick(username, holder.name);
             holder.motioned.setVisibility(View.GONE);
@@ -142,10 +152,12 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
                 avatarView.setRadius(avatarOptions.getAvatarRadius());
             }
         }
+
         if (conversation.getUnreadMsgCount() > 0) {
             // show unread message count
             holder.unreadLabel.setText(String.valueOf(conversation.getUnreadMsgCount()));
             holder.unreadLabel.setVisibility(View.VISIBLE);
+
         } else {
             holder.unreadLabel.setVisibility(View.INVISIBLE);
         }
@@ -157,14 +169,15 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             if (cvsListHelper != null) {
                 content = cvsListHelper.onSetItemSecondaryText(lastMessage);
             }
-            holder.message.setText(EaseSmileUtils.getSmiledText(getContext(), EaseCommonUtils.getMessageDigest(lastMessage, (this.getContext()))),
-                    BufferType.SPANNABLE);
+            holder.message.setText(EaseSmileUtils.getSmiledText(getContext(), EaseCommonUtils.getMessageDigest(lastMessage, (this.getContext()))), BufferType.SPANNABLE);
             if (content != null) {
                 holder.message.setText(content);
             }
             holder.time.setText(DateUtils.getTimestampString(new Date(lastMessage.getMsgTime())));
+
             if (lastMessage.direct() == EMMessage.Direct.SEND && lastMessage.status() == EMMessage.Status.FAIL) {
                 holder.msgState.setVisibility(View.VISIBLE);
+
             } else {
                 holder.msgState.setVisibility(View.GONE);
             }
@@ -231,7 +244,8 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
     }
 
     private class ConversationFilter extends Filter {
-        List<EMConversation> mOriginalValues = null;
+
+        List<EMConversation> mOriginalValues;
 
         public ConversationFilter(List<EMConversation> mList) {
             mOriginalValues = mList;
@@ -247,10 +261,12 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             if (prefix == null || prefix.length() == 0) {
                 results.values = copyConversationList;
                 results.count = copyConversationList.size();
+
             } else {
                 if (copyConversationList.size() > mOriginalValues.size()) {
                     mOriginalValues = copyConversationList;
                 }
+
                 String prefixString = prefix.toString();
                 final int count = mOriginalValues.size();
                 final ArrayList<EMConversation> newValues = new ArrayList<>();
@@ -262,11 +278,6 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
                     EMGroup group = EMClient.getInstance().groupManager().getGroup(username);
                     if (group != null) {
                         username = group.getGroupName();
-                    } else {
-                        EaseUser user = EaseUserUtils.getUserInfo(username);
-                        // TODO: not support Nick anymore
-//                        if(user != null && user.getNick() != null)
-//                            username = user.getNick();
                     }
 
                     // First match against the whole ,non-splitted value
