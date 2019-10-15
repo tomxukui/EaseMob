@@ -17,8 +17,9 @@ import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.bean.EaseAvatarOptions;
+import com.hyphenate.easeui.constants.EaseAttribute;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
-import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.hyphenate.easeui.utils.EaseUserUtil;
 import com.hyphenate.easeui.widget.EaseChatMessageList;
 import com.hyphenate.easeui.widget.EaseChatMessageList.MessageListItemClickListener;
 import com.hyphenate.easeui.widget.EaseImageView;
@@ -140,13 +141,22 @@ public abstract class EaseChatRow extends LinearLayout {
 
         if (userAvatarView != null) {
             if (message.direct() == Direct.SEND) {
-                EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
+                String nickname = message.getStringAttribute(EaseAttribute.SEND_NICKNAME, EMClient.getInstance().getCurrentUser());
+                String avatar = message.getStringAttribute(EaseAttribute.SEND_AVATAR, null);
+
+                EaseUserUtil.setUserAvatar(userAvatarView, avatar, R.mipmap.ease_ic_chatfrom_portrait);
+                if (usernickView != null) {
+                    usernickView.setText(nickname);
+                }
 
             } else {
-                EaseUserUtils.setUserAvatar(context, message.getFrom(), userAvatarView);
+                String nickname = message.getStringAttribute(EaseAttribute.TO_NICKNAME, message.getFrom());
+                String avatar = message.getStringAttribute(EaseAttribute.TO_AVATAR, null);
+
+                EaseUserUtil.setUserAvatar(userAvatarView, avatar, R.mipmap.ease_ic_chatto_portrait);
 
                 if (usernickView != null) {
-                    EaseUserUtils.setUserNick(message.getFrom(), usernickView);
+                    usernickView.setText(nickname);
                 }
             }
         }
