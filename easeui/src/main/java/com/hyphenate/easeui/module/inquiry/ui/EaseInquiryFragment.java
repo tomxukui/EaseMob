@@ -70,8 +70,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
     private File mCameraFile;
 
-    private EaseChatFragmentHelper mChatFragmentHelper;
-
     private EaseToolbar toolbar;
     private EaseChatMessageList list_message;
     private EaseChatInputMenu menu_input;
@@ -260,7 +258,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     }
 
     protected void onMessageListInit() {
-        list_message.init(mToUsername, EaseConstant.CHATTYPE_SINGLE, mChatFragmentHelper != null ? mChatFragmentHelper.onSetCustomChatRowProvider() : null);
+        list_message.init(mToUsername, EaseConstant.CHATTYPE_SINGLE, onSetCustomChatRowProvider());
         setListItemClickListener();
 
         list_message.getListView().setOnTouchListener((v, event) -> {
@@ -277,9 +275,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
             @Override
             public void onUserAvatarClick(String username) {
-                if (mChatFragmentHelper != null) {
-                    mChatFragmentHelper.onAvatarClick(username);
-                }
+                onAvatarClick(username);
             }
 
             @Override
@@ -297,25 +293,17 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
             @Override
             public void onUserAvatarLongClick(String username) {
-                if (mChatFragmentHelper != null) {
-                    mChatFragmentHelper.onAvatarLongClick(username);
-                }
+                onAvatarLongClick(username);
             }
 
             @Override
             public void onBubbleLongClick(EMMessage message) {
-                if (mChatFragmentHelper != null) {
-                    mChatFragmentHelper.onMessageBubbleLongClick(message);
-                }
+                onMessageBubbleLongClick(message);
             }
 
             @Override
             public boolean onBubbleClick(EMMessage message) {
-                if (mChatFragmentHelper == null) {
-                    return false;
-                }
-
-                return mChatFragmentHelper.onMessageBubbleClick(message);
+                return onMessageBubbleClick(message);
             }
 
             @Override
@@ -446,21 +434,18 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             return;
         }
 
-        if (mChatFragmentHelper != null) {
-            mChatFragmentHelper.onSetMessageAttributes(message);
-        }
-
         message.setChatType(ChatType.Chat);
 
         EaseUser myUser = EaseUserUtils.getUserInfo(EMClient.getInstance().getCurrentUser());
         EaseUser toUser = EaseUserUtils.getUserInfo(mToUsername);
-
         if (myUser != null && toUser != null) {
             message.setAttribute("send_nickname", myUser.getNickname());
             message.setAttribute("send_avatar", myUser.getAvatar());
             message.setAttribute("to_nickname", toUser.getNickname());
             message.setAttribute("to_avatar", toUser.getAvatar());
         }
+
+        onSetMessageAttributes(message);
 
         message.setMessageStatusCallback(mMessageStatusCallback);
 
@@ -677,44 +662,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         }
     }
 
-    public void setChatFragmentHelper(EaseChatFragmentHelper chatFragmentHelper) {
-        this.mChatFragmentHelper = chatFragmentHelper;
-    }
-
-    public interface EaseChatFragmentHelper {
-
-        /**
-         * set message attribute
-         */
-        void onSetMessageAttributes(EMMessage message);
-
-        /**
-         * on avatar clicked
-         */
-        void onAvatarClick(String username);
-
-        /**
-         * on avatar long pressed
-         */
-        void onAvatarLongClick(String username);
-
-        /**
-         * on message bubble clicked
-         */
-        boolean onMessageBubbleClick(EMMessage message);
-
-        /**
-         * on message bubble long pressed
-         */
-        void onMessageBubbleLongClick(EMMessage message);
-
-        /**
-         * on set custom chat row provider
-         */
-        EaseCustomChatRowProvider onSetCustomChatRowProvider();
-
-    }
-
     /**
      * 消息回调
      */
@@ -801,6 +748,44 @@ public class EaseInquiryFragment extends EaseBaseFragment {
      */
     @Nullable
     protected List<EaseInquiryEndedMenuItem> getEndedMenuItems() {
+        return null;
+    }
+
+    /**
+     * 添加自定义消息
+     */
+    protected void onSetMessageAttributes(EMMessage message) {
+    }
+
+    /**
+     * 点击头像事件
+     */
+    protected void onAvatarClick(String username) {
+    }
+
+    /**
+     * 长按头像事件
+     */
+    protected void onAvatarLongClick(String username) {
+    }
+
+    /**
+     * 点击消息事件
+     */
+    protected boolean onMessageBubbleClick(EMMessage message) {
+        return false;
+    }
+
+    /**
+     * 长按消息事件
+     */
+    protected void onMessageBubbleLongClick(EMMessage message) {
+    }
+
+    /**
+     * 设置自定义聊天消息样式提供者
+     */
+    protected EaseCustomChatRowProvider onSetCustomChatRowProvider() {
         return null;
     }
 
