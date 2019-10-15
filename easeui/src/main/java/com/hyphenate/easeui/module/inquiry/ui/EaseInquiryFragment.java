@@ -64,13 +64,11 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     protected static final String EXTRA_TO_USERNAME = "EXTRA_TO_USERNAME";
     protected static final String EXTRA_CHAT_MODE = "EXTRA_CHAT_MODE";
 
-    private static final int REQUEST_CAMERA = 2;
-    private static final int REQUEST_ALBUM = 3;
+    private static final int REQUEST_CAMERA = 1;
+    private static final int REQUEST_ALBUM = 2;
 
     //透传类型
-    private static final String ACTION_CLOSE_CONVERSATION = "cmd_close_conversation";
-
-    private File mCameraFile;
+    private static final String ACTION_CLOSE_CONVERSATION = "cmd_close_conversation";//结束问诊
 
     private EaseToolbar toolbar;
     private EaseChatMessageList list_message;
@@ -92,6 +90,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     private boolean mIsMessagesInited;//消息列表是否已初始化
     private int mPageSize = 20;//消息分页一页最多数量
     private boolean mHaveMoreData = true;//是否有更多消息
+    private File mCameraFile;//相机拍照照片文件
 
     public static EaseInquiryFragment newInstance(String toUsername, @EaseType.ChatMode String chatMode) {
         EaseInquiryFragment fragment = new EaseInquiryFragment();
