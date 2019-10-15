@@ -139,27 +139,18 @@ public abstract class EaseChatRow extends LinearLayout {
             }
         }
 
+        //设置头像
         if (userAvatarView != null) {
-            if (message.direct() == Direct.SEND) {
-                String nickname = message.getStringAttribute(EaseAttribute.TO_NICKNAME, EMClient.getInstance().getCurrentUser());
-                String avatar = message.getStringAttribute(EaseAttribute.TO_AVATAR, null);
+            String avatar = message.getStringAttribute(EaseAttribute.FROM_AVATAR, null);
 
-                EaseUserUtil.setUserAvatar(userAvatarView, avatar, R.mipmap.ease_ic_chatfrom_portrait);
+            EaseUserUtil.setUserAvatar(userAvatarView, avatar, message.direct() == Direct.SEND ? R.mipmap.ease_ic_chatfrom_portrait : R.mipmap.ease_ic_chatto_portrait);
+        }
 
-                if (usernickView != null) {
-                    usernickView.setText(nickname);
-                }
+        //设置昵称
+        if (usernickView != null) {
+            String nickname = message.getStringAttribute(EaseAttribute.FROM_NICKNAME, message.getFrom());
 
-            } else {
-                String nickname = message.getStringAttribute(EaseAttribute.FROM_NICKNAME, message.getFrom());
-                String avatar = message.getStringAttribute(EaseAttribute.FROM_AVATAR, null);
-
-                EaseUserUtil.setUserAvatar(userAvatarView, avatar, R.mipmap.ease_ic_chatto_portrait);
-
-                if (usernickView != null) {
-                    usernickView.setText(nickname);
-                }
-            }
+            usernickView.setText(nickname);
         }
 
         if (EMClient.getInstance().getOptions().getRequireDeliveryAck()) {
