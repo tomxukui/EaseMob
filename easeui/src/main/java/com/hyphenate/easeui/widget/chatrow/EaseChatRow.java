@@ -141,8 +141,8 @@ public abstract class EaseChatRow extends LinearLayout {
 
         if (userAvatarView != null) {
             if (message.direct() == Direct.SEND) {
-                String nickname = message.getStringAttribute(EaseAttribute.SEND_NICKNAME, EMClient.getInstance().getCurrentUser());
-                String avatar = message.getStringAttribute(EaseAttribute.SEND_AVATAR, null);
+                String nickname = message.getStringAttribute(EaseAttribute.TO_NICKNAME, EMClient.getInstance().getCurrentUser());
+                String avatar = message.getStringAttribute(EaseAttribute.TO_AVATAR, null);
 
                 EaseUserUtil.setUserAvatar(userAvatarView, avatar, R.mipmap.ease_ic_chatfrom_portrait);
 
@@ -151,8 +151,8 @@ public abstract class EaseChatRow extends LinearLayout {
                 }
 
             } else {
-                String nickname = message.getStringAttribute(EaseAttribute.TO_NICKNAME, message.getFrom());
-                String avatar = message.getStringAttribute(EaseAttribute.TO_AVATAR, null);
+                String nickname = message.getStringAttribute(EaseAttribute.FROM_NICKNAME, message.getFrom());
+                String avatar = message.getStringAttribute(EaseAttribute.FROM_AVATAR, null);
 
                 EaseUserUtil.setUserAvatar(userAvatarView, avatar, R.mipmap.ease_ic_chatto_portrait);
 
