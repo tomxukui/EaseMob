@@ -90,8 +90,8 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     private String mChatMode;//聊天模式
     private boolean mIsFinished;//问诊是否已结束
     private boolean mIsMessagesInited;//消息列表是否已初始化
-    private int mPageSize = 20;
-    private boolean mHaveMoreData = true;
+    private int mPageSize = 20;//消息分页一页最多数量
+    private boolean mHaveMoreData = true;//是否有更多消息
 
     public static EaseInquiryFragment newInstance(String toUsername, @EaseType.ChatMode String chatMode) {
         EaseInquiryFragment fragment = new EaseInquiryFragment();
