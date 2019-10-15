@@ -145,6 +145,7 @@ public abstract class EaseChatRow extends LinearLayout {
                 String avatar = message.getStringAttribute(EaseAttribute.SEND_AVATAR, null);
 
                 EaseUserUtil.setUserAvatar(userAvatarView, avatar, R.mipmap.ease_ic_chatfrom_portrait);
+
                 if (usernickView != null) {
                     usernickView.setText(nickname);
                 }
