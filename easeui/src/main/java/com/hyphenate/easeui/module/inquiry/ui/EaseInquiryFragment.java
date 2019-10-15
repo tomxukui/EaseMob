@@ -81,8 +81,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     private ListPopupWindow mPopupMenu;
     private EaseInquiryMenuListAdapter mMenuListAdapter;
 
-    //主要参数
-    private EMConversation mConversation;
+    private EMConversation mConversation;//会话
     private String mToUsername;//对方主键
     @EaseType.ChatMode
     private String mChatMode;//问诊模式
