@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <color name="common_bg">#fcfcfc</color>
     <color name="bottom_bar_normal_bg" tools:keep="@color/bottom_bar_normal_bg">#2D2F31</color>
     <color name="btn_gray_normal">#c0c0c0</color>
@@ -19,10 +20,6 @@
     <color name="colorPrimary">#3D8CFF</color>
     <color name="colorPrimaryDark">#3D8CFF</color>
     <color name="colorAccent">#3D8CFF</color>
-
-    <color name="press">#bbbbbb</color>
-
-    <color name="text_second">#4C4C4C</color>
 
     <color name="ease_press">#bbbbbb</color>
     <color name="ease_white">#ffffff</color>
