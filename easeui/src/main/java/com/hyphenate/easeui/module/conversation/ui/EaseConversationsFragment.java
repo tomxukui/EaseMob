@@ -1,7 +1,6 @@
 package com.hyphenate.easeui.module.conversation.ui;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Pair;
 import android.view.View;
 
@@ -10,7 +9,6 @@ import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
 import com.hyphenate.easeui.module.base.widget.EaseToolbar;
@@ -21,12 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-/**
- * conversation list fragment
- */
 public class EaseConversationsFragment extends EaseBaseFragment {
-
-    private final static int MSG_REFRESH = 2;
 
     private EaseToolbar toolbar;
     private EaseConversationListView listView;
@@ -63,25 +56,8 @@ public class EaseConversationsFragment extends EaseBaseFragment {
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
             EMConversation conversation = listView.getItem(position);
-            EMConversation.EMConversationType type = conversation.getType();
-            int chatType = 0;
-            if (type == EMConversation.EMConversationType.Chat) {
-                chatType = EaseConstant.CHATTYPE_SINGLE;
 
-            } else if (type == EMConversation.EMConversationType.GroupChat) {
-                chatType = EaseConstant.CHATTYPE_GROUP;
-
-            } else if (type == EMConversation.EMConversationType.ChatRoom) {
-                chatType = EaseConstant.CHATTYPE_CHATROOM;
-            }
-
-            if (chatType > 0) {
-//                startActivity(new EaseChatActivity.Builder(getContext())
-//                        .setChatType(chatType)
-//                        .setToUser(conversation.conversationId())
-//                        .setFinishConversationEnabled(true)
-//                        .create());
-            }
+            onItemClickListener(conversation, position);
         });
 
         listView.setOnTouchListener((v, event) -> {
@@ -107,28 +83,17 @@ public class EaseConversationsFragment extends EaseBaseFragment {
     }
 
     /**
-     * connected to server
+     * 刷新数据
      */
-    protected void onConnectionConnected() {
+    protected void refresh() {
+        conversationList.clear();
+        conversationList.addAll(loadConversationList());
+
+        listView.refresh();
     }
 
     /**
-     * disconnected with server
-     */
-    protected void onConnectionDisconnected() {
-    }
-
-    /**
-     * refresh ui
-     */
-    public void refresh() {
-        if (!handler.hasMessages(MSG_REFRESH)) {
-            handler.sendEmptyMessage(MSG_REFRESH);
-        }
-    }
-
-    /**
-     * load conversation list
+     * 下载会话列表
      */
     protected List<EMConversation> loadConversationList() {
         Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
@@ -158,7 +123,7 @@ public class EaseConversationsFragment extends EaseBaseFragment {
     }
 
     /**
-     * sort conversations according time stamp of last message
+     * 根据最新聊天信息的顺序排序
      */
     private void sortConversationByLastChatTime(List<Pair<Long, EMConversation>> conversationList) {
         Collections.sort(conversationList, (con1, con2) -> {
@@ -174,33 +139,6 @@ public class EaseConversationsFragment extends EaseBaseFragment {
         });
     }
 
-    private final Handler handler = new Handler() {
-
-        public void handleMessage(android.os.Message msg) {
-            switch (msg.what) {
-
-                case 0:
-                    onConnectionDisconnected();
-                    break;
-
-                case 1:
-                    onConnectionConnected();
-                    break;
-
-                case MSG_REFRESH: {
-                    conversationList.clear();
-                    conversationList.addAll(loadConversationList());
-                    listView.refresh();
-                    break;
-                }
-
-                default:
-                    break;
-            }
-        }
-
-    };
-
     /**
      * 监听账号登录
      */
@@ -208,12 +146,12 @@ public class EaseConversationsFragment extends EaseBaseFragment {
 
         @Override
         public void onDisconnected(int error) {
-            handler.sendEmptyMessage(0);
+            runOnUiThread(() -> onConnectionDisconnected());
         }
 
         @Override
         public void onConnected() {
-            handler.sendEmptyMessage(1);
+            runOnUiThread(() -> onConnectionConnected());
         }
 
     };
@@ -249,5 +187,23 @@ public class EaseConversationsFragment extends EaseBaseFragment {
         }
 
     };
+
+    /**
+     * 服务已连接
+     */
+    protected void onConnectionConnected() {
+    }
+
+    /**
+     * 服务已断开
+     */
+    protected void onConnectionDisconnected() {
+    }
+
+    /**
+     * 单击消息列表子项事件
+     */
+    protected void onItemClickListener(EMConversation conversation, int position) {
+    }
 
 }
