@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
@@ -32,9 +31,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * conversation list adapter
- */
 public class EaseConversationsListAdapter extends ArrayAdapter<EMConversation> {
 
     private List<EMConversation> mConversations;
@@ -77,7 +73,6 @@ public class EaseConversationsListAdapter extends ArrayAdapter<EMConversation> {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.ease_item_list_converstations, parent, false);
 
             mHolder = new ViewHolder();
-            mHolder.relative_container = convertView.findViewById(R.id.relative_container);
             mHolder.iv_avatar = convertView.findViewById(R.id.iv_avatar);
             mHolder.tv_unreadCount = convertView.findViewById(R.id.tv_unreadCount);
             mHolder.tv_name = convertView.findViewById(R.id.tv_name);
@@ -262,7 +257,6 @@ public class EaseConversationsListAdapter extends ArrayAdapter<EMConversation> {
 
     static class ViewHolder {
 
-        RelativeLayout relative_container;
         EaseImageView iv_avatar;
         TextView tv_unreadCount;
         TextView tv_name;
