@@ -63,23 +63,23 @@ public class MainActivity extends AppCompatActivity {
         btn_tom.setOnClickListener(v -> {
             et_username.setText("tom");
             et_nickname.setText("汤姆");
-            et_avatar.setText("http://img2.imgtn.bdimg.com/it/u=1926370085,3850656535&amp;fm=26&amp;gp=0.jpg");
+            et_avatar.setText("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571199911001&di=46867437d9fc793deb524b946911bb69&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F8ebb64306b64f8d614bb59cc042ca46c571c99fcbac2-wliIxx_fw658");
             et_pwd.setText("123456");
 
             et_toUsername.setText("jack");
             et_toNickname.setText("杰克");
-            et_toAvatar.setText("http://img.zcool.cn/community/015f1959df2638a80121ae0c8e21fe.jpg@1280w_1l_2o_100sh.png");
+            et_toAvatar.setText("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571794650&di=0e71fe6b3c283fcd59144de1b3207d74&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F016e7157b17fd30000018c1b234887.png");
         });
 
         btn_jack.setOnClickListener(v -> {
             et_username.setText("jack");
             et_nickname.setText("杰克");
-            et_avatar.setText("http://img.zcool.cn/community/015f1959df2638a80121ae0c8e21fe.jpg@1280w_1l_2o_100sh.png");
+            et_avatar.setText("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571794650&di=0e71fe6b3c283fcd59144de1b3207d74&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F016e7157b17fd30000018c1b234887.png");
             et_pwd.setText("123456");
 
             et_toUsername.setText("tom");
             et_toNickname.setText("汤姆");
-            et_toAvatar.setText("http://img2.imgtn.bdimg.com/it/u=1926370085,3850656535&amp;fm=26&amp;gp=0.jpg");
+            et_toAvatar.setText("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571199911001&di=46867437d9fc793deb524b946911bb69&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F8ebb64306b64f8d614bb59cc042ca46c571c99fcbac2-wliIxx_fw658");
         });
 
         btn_login.setOnClickListener(v -> {
