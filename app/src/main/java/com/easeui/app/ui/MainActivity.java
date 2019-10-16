@@ -14,8 +14,6 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.base.model.EaseUser;
-import com.hyphenate.easeui.module.conversation.ui.EaseConversationsActivity;
-import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryPatientActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -254,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
             EaseUser fromUser = new EaseUser(username, nickname, avatar, null);
             EaseUser toUser = new EaseUser(toUsername, toNickname, toAvatar);
 
-            Intent intent = EaseInquiryPatientActivity.buildIntent(MainActivity.this, fromUser, pwd, toUser, EaseType.CHAT);
+            Intent intent = InquiryActivity.buildIntent(MainActivity.this, fromUser, pwd, toUser, EaseType.CHAT);
             startActivity(intent);
         });
 
@@ -278,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
             }
             EaseUser fromUser = new EaseUser(username, nickname, avatar, null);
 
-            Intent intent = EaseConversationsActivity.buildIntent(MainActivity.this, fromUser, pwd);
+            Intent intent = ConverstationsActivity.buildIntent(MainActivity.this, fromUser, pwd);
             startActivity(intent);
         });
     }

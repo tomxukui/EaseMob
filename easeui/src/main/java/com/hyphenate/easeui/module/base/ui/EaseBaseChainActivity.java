@@ -1,6 +1,7 @@
 package com.hyphenate.easeui.module.base.ui;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
@@ -21,6 +22,7 @@ public abstract class EaseBaseChainActivity extends EaseBaseActivity {
     private EasePaperLayer layer_paper;
 
     protected EaseUser mFromUser;
+    @Nullable
     protected String mPwd;
 
     @Override

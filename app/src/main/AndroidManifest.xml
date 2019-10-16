@@ -22,6 +22,20 @@
             </intent-filter>
         </activity>
 
+        <!--问诊页面-->
+        <activity
+            android:name=".ui.InquiryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/EaseAppTheme"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!--会话页面-->
+        <activity
+            android:name=".ui.ConverstationsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/EaseAppTheme"
+            android:windowSoftInputMode="adjustResize" />
+
         <!--####################################环信#########################################-->
         <meta-data
             android:name="EASEMOB_APPKEY"

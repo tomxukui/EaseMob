@@ -110,4 +110,46 @@ public class EaseMessageUtil {
         setToMemberId(message, toUser.getMemberId());
     }
 
+    private static EaseUser assertGetFromUser(EMMessage message) {
+        EaseUser user = new EaseUser();
+        user.setUsername(message.getFrom());
+        user.setAvatar(getFromAvatar(message, null));
+        user.setNickname(getFromNickname(message, null));
+        user.setMemberId(getFromMemberId(message));
+        return user;
+    }
+
+    private static EaseUser assertGetToUser(EMMessage message) {
+        EaseUser user = new EaseUser();
+        user.setUsername(message.getTo());
+        user.setAvatar(getToAvatar(message, null));
+        user.setNickname(getToNickname(message, null));
+        user.setMemberId(getToMemberId(message));
+        return user;
+    }
+
+    /**
+     * 根据消息获取发送者
+     */
+    public static EaseUser getFromUser(EMMessage message) {
+        if (message.direct() == EMMessage.Direct.SEND) {//自己发送的消息
+            return assertGetFromUser(message);
+
+        } else {//对方发送的消息
+            return assertGetToUser(message);
+        }
+    }
+
+    /**
+     * 根据消息获取被发送者
+     */
+    public static EaseUser getToUser(EMMessage message) {
+        if (message.direct() == EMMessage.Direct.SEND) {//自己发送的消息
+            return assertGetToUser(message);
+
+        } else {//对方发送的消息
+            return assertGetFromUser(message);
+        }
+    }
+
 }

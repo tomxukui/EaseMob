@@ -201,7 +201,7 @@ public class EaseConversationsFragment extends EaseBaseFragment {
     }
 
     /**
-     * 单击消息列表子项事件
+     * 会话列表子项点击事件
      */
     protected void onItemClickListener(EMConversation conversation, int position) {
     }

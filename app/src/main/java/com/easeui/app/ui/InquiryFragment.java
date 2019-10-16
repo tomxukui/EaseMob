@@ -1,22 +1,23 @@
-package com.hyphenate.easeui.module.inquiry.ui;
+package com.easeui.app.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.hyphenate.easeui.R;
+import com.easeui.app.R;
 import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryMenuItem;
+import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EaseInquiryPatientFragment extends EaseInquiryFragment {
+public class InquiryFragment extends EaseInquiryFragment {
 
-    public static EaseInquiryPatientFragment newInstance(EaseUser fromUser, EaseUser toUser, @EaseType.ChatMode String chatMode) {
-        EaseInquiryPatientFragment fragment = new EaseInquiryPatientFragment();
+    public static InquiryFragment newInstance(EaseUser fromUser, EaseUser toUser, @EaseType.ChatMode String chatMode) {
+        InquiryFragment fragment = new InquiryFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(EXTRA_FROM_USER, fromUser);
         bundle.putSerializable(EXTRA_TO_USER, toUser);
