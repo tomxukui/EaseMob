@@ -9,36 +9,55 @@
         android:orientation="vertical"
         android:padding="20dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_tom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:text="tom" />
+
+            <Button
+                android:id="@+id/btn_jack"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1.0"
+                android:text="jack" />
+
+        </LinearLayout>
+
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/et_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="请输入环信用户名"
-            android:text="tom" />
+            android:hint="请输入环信用户名" />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/et_nickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="请输入环信昵称"
-            android:text="汤姆" />
+            android:hint="请输入环信昵称" />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/et_avatar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="请输入环信账号的头像"
-            android:text="http://img2.imgtn.bdimg.com/it/u=1926370085,3850656535&amp;fm=26&amp;gp=0.jpg" />
+            android:hint="请输入环信账号的头像" />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/et_pwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="请输入环信账号的密码"
-            android:text="123456" />
+            android:hint="请输入环信账号的密码" />
 
         <Button
             android:id="@+id/btn_login"
@@ -59,24 +78,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="请输入对方的环信用户名"
-            android:text="jack" />
+            android:hint="请输入对方的环信用户名" />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/et_toNickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="请输入对方的环信昵称"
-            android:text="杰克" />
+            android:hint="请输入对方的环信昵称" />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/et_toAvatar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="请输入对方的环信头像"
-            android:text="http://img.zcool.cn/community/015f1959df2638a80121ae0c8e21fe.jpg@1280w_1l_2o_100sh.png" />
+            android:hint="请输入对方的环信头像" />
 
         <Button
             android:id="@+id/btn_chat"

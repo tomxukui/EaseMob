@@ -12,14 +12,15 @@ import com.easeui.app.R;
 import com.easeui.app.dialog.LoadingDialog;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.easeui.bean.EaseAccount;
-import com.hyphenate.easeui.bean.EaseUser;
 import com.hyphenate.easeui.constants.EaseType;
+import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryPatientActivity;
 import com.hyphenate.easeui.ui.EaseConversationListActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Button btn_tom;
+    private Button btn_jack;
     private AppCompatEditText et_username;
     private AppCompatEditText et_nickname;
     private AppCompatEditText et_avatar;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        btn_tom = findViewById(R.id.btn_tom);
+        btn_jack = findViewById(R.id.btn_jack);
         et_username = findViewById(R.id.et_username);
         et_nickname = findViewById(R.id.et_nickname);
         et_avatar = findViewById(R.id.et_avatar);
@@ -57,6 +60,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setView() {
+        btn_tom.setOnClickListener(v -> {
+            et_username.setText("tom");
+            et_nickname.setText("汤姆");
+            et_avatar.setText("http://img2.imgtn.bdimg.com/it/u=1926370085,3850656535&amp;fm=26&amp;gp=0.jpg");
+            et_pwd.setText("123456");
+
+            et_toUsername.setText("jack");
+            et_toNickname.setText("杰克");
+            et_toAvatar.setText("http://img.zcool.cn/community/015f1959df2638a80121ae0c8e21fe.jpg@1280w_1l_2o_100sh.png");
+        });
+
+        btn_jack.setOnClickListener(v -> {
+            et_username.setText("jack");
+            et_nickname.setText("杰克");
+            et_avatar.setText("http://img.zcool.cn/community/015f1959df2638a80121ae0c8e21fe.jpg@1280w_1l_2o_100sh.png");
+            et_pwd.setText("123456");
+
+            et_toUsername.setText("tom");
+            et_toNickname.setText("汤姆");
+            et_toAvatar.setText("http://img2.imgtn.bdimg.com/it/u=1926370085,3850656535&amp;fm=26&amp;gp=0.jpg");
+        });
+
         btn_login.setOnClickListener(v -> {
             String username = et_username.getText().toString().trim();
             String nickname = et_nickname.getText().toString().trim();
@@ -226,11 +251,10 @@ public class MainActivity extends AppCompatActivity {
                 toast(et_toNickname.getHint().toString());
                 return;
             }
-
-            EaseAccount account = new EaseAccount(username, pwd, nickname, avatar);
+            EaseUser fromUser = new EaseUser(username, nickname, avatar, null);
             EaseUser toUser = new EaseUser(toUsername, toNickname, toAvatar);
 
-            Intent intent = EaseInquiryPatientActivity.buildIntent(MainActivity.this, account, toUser, EaseType.CHAT);
+            Intent intent = EaseInquiryPatientActivity.buildIntent(MainActivity.this, fromUser, pwd, toUser, EaseType.CHAT);
             startActivity(intent);
         });
 

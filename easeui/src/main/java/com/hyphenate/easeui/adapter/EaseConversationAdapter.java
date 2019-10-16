@@ -22,7 +22,6 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.bean.EaseAvatarOptions;
-import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
@@ -108,12 +107,7 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
         if (conversation.getType() == EMConversationType.GroupChat) {
             String groupId = conversation.conversationId();
 
-            if (EaseAtMessageHelper.get().hasAtMeMsg(groupId)) {
-                holder.motioned.setVisibility(View.VISIBLE);
-
-            } else {
-                holder.motioned.setVisibility(View.GONE);
-            }
+            holder.motioned.setVisibility(View.GONE);
 
             // group message, show group avatar
             holder.avatar.setImageResource(R.drawable.ease_group_icon);

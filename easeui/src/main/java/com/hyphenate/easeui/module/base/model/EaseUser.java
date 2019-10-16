@@ -1,5 +1,7 @@
 package com.hyphenate.easeui.module.base.model;
 
+import android.support.annotation.Nullable;
+
 import java.io.Serializable;
 
 public class EaseUser implements Serializable {
@@ -7,13 +9,20 @@ public class EaseUser implements Serializable {
     private String username;//主键
     private String nickname;//昵称
     private String avatar;//头像
+    @Nullable
     private String memberId;//成员id
 
-    public EaseUser(String username, String nickname, String avatar, String memberId) {
+    public EaseUser(String username, String nickname, String avatar, @Nullable String memberId) {
         this.username = username;
         this.nickname = nickname;
         this.avatar = avatar;
         this.memberId = memberId;
+    }
+
+    public EaseUser(String username, String nickname, String avatar) {
+        this.username = username;
+        this.nickname = nickname;
+        this.avatar = avatar;
     }
 
     public EaseUser() {
@@ -43,11 +52,12 @@ public class EaseUser implements Serializable {
         this.avatar = avatar;
     }
 
+    @Nullable
     public String getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(String memberId) {
+    public void setMemberId(@Nullable String memberId) {
         this.memberId = memberId;
     }
 
