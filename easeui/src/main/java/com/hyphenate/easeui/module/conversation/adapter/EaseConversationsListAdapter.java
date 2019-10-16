@@ -58,9 +58,9 @@ public class EaseConversationsListAdapter extends ArrayAdapter<EMConversation> {
     }
 
     @Override
-    public EMConversation getItem(int arg0) {
-        if (arg0 < mConversations.size()) {
-            return mConversations.get(arg0);
+    public EMConversation getItem(int position) {
+        if (position >= 0 && position < mConversations.size()) {
+            return mConversations.get(position);
         }
 
         return null;

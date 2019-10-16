@@ -1,9 +1,6 @@
 package com.hyphenate.easeui.module.conversation.widget;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
@@ -13,8 +10,6 @@ import com.hyphenate.easeui.module.conversation.adapter.EaseConversationsListAda
 import java.util.List;
 
 public class EaseConversationListView extends ListView {
-
-    protected final int MSG_REFRESH_ADAPTER_DATA = 1;
 
     protected EaseConversationsListAdapter mListAdapter;
 
@@ -35,37 +30,20 @@ public class EaseConversationListView extends ListView {
         setAdapter(mListAdapter);
     }
 
-    private final Handler mHandler = new Handler(Looper.getMainLooper()) {
-
-        @Override
-        public void handleMessage(Message message) {
-            switch (message.what) {
-
-                case MSG_REFRESH_ADAPTER_DATA:
-                    if (mListAdapter != null) {
-                        mListAdapter.notifyDataSetChanged();
-                    }
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-    };
-
     public EMConversation getItem(int position) {
         return mListAdapter.getItem(position);
     }
 
     public void refresh() {
-        if (!mHandler.hasMessages(MSG_REFRESH_ADAPTER_DATA)) {
-            mHandler.sendEmptyMessage(MSG_REFRESH_ADAPTER_DATA);
+        if (mListAdapter != null) {
+            mListAdapter.notifyDataSetChanged();
         }
     }
 
     public void filter(CharSequence str) {
-        mListAdapter.getFilter().filter(str);
+        if (mListAdapter != null) {
+            mListAdapter.getFilter().filter(str);
+        }
     }
 
 }
