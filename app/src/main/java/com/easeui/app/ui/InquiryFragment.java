@@ -30,13 +30,13 @@ public class InquiryFragment extends EaseInquiryFragment {
     @Override
     protected List<EaseInquiryMenuItem> getMenuItems() {
         List<EaseInquiryMenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new EaseInquiryMenuItem(R.mipmap.ease_menu_doctor, "医生介绍", (itemModel, position) -> {
+        menuItems.add(new EaseInquiryMenuItem(R.mipmap.ic_menu_doctor, "医生介绍", (itemModel, position) -> {
             EaseToastUtil.show("医生介绍");
         }));
-        menuItems.add(new EaseInquiryMenuItem(R.mipmap.ease_menu_appoint, "去挂号", (itemModel, position) -> {
+        menuItems.add(new EaseInquiryMenuItem(R.mipmap.ic_menu_appoint, "去挂号", (itemModel, position) -> {
             EaseToastUtil.show("去挂号");
         }));
-        menuItems.add(new EaseInquiryMenuItem(R.mipmap.ease_menu_inquiry_info, "问诊信息", (itemModel, position) -> {
+        menuItems.add(new EaseInquiryMenuItem(R.mipmap.ic_menu_inquiry_info, "问诊信息", (itemModel, position) -> {
             EaseToastUtil.show("问诊信息");
         }));
         return menuItems;
