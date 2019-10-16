@@ -2,7 +2,6 @@ package com.hyphenate.easeui.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.widget.EaseChatMessageList.MessageListItemClickListener;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.easeui.widget.presenter.EaseChatBigExpressionPresenter;
@@ -57,16 +55,13 @@ public class EaseMessageAdapter extends BaseAdapter {
     private MessageListItemClickListener itemClickListener;
     private EaseCustomChatRowProvider customRowProvider;
 
-    private Drawable myBubbleBg;
-    private Drawable otherBuddleBg;
-
     private ListView listView;
     private EaseMessageListItemStyle itemStyle;
 
-    public EaseMessageAdapter(Context context, String username, int chatType, ListView listView) {
+    public EaseMessageAdapter(Context context, String username, EMConversation.EMConversationType conversationType, ListView listView) {
         this.context = context;
         this.listView = listView;
-        this.conversation = EMClient.getInstance().chatManager().getConversation(username, EaseCommonUtils.getConversationType(chatType), true);
+        this.conversation = EMClient.getInstance().chatManager().getConversation(username, conversationType, true);
     }
 
     Handler handler = new Handler() {
@@ -292,14 +287,6 @@ public class EaseMessageAdapter extends BaseAdapter {
 
     public void setCustomChatRowProvider(EaseCustomChatRowProvider rowProvider) {
         customRowProvider = rowProvider;
-    }
-
-    public Drawable getMyBubbleBg() {
-        return myBubbleBg;
-    }
-
-    public Drawable getOtherBubbleBg() {
-        return otherBuddleBg;
     }
 
 }

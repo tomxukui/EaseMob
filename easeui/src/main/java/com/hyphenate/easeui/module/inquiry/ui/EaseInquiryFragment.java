@@ -30,6 +30,7 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.bean.EaseEmojicon;
 import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.model.EaseCompat;
+import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
 import com.hyphenate.easeui.module.inquiry.adapter.EaseInquiryMenuListAdapter;
@@ -152,7 +153,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         onMessageListInit();
 
         //设置消息列表
-        list_message.setShowUserNick(false);
         list_message.getSwipeRefreshLayout().setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light, R.color.holo_orange_light, R.color.holo_red_light);
         list_message.getSwipeRefreshLayout().setOnRefreshListener(() -> getHandler().postDelayed(() -> loadMoreLocalMessages(), 600));
 
@@ -240,7 +240,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     }
 
     protected void onConversationInit() {
-        mConversation = EMClient.getInstance().chatManager().getConversation(mToUser.getUsername(), EaseCommonUtils.getConversationType(EaseConstant.CHATTYPE_SINGLE), true);
+        mConversation = EMClient.getInstance().chatManager().getConversation(mToUser.getUsername(), EMConversation.EMConversationType.Chat, true);
         mConversation.markAllMessagesAsRead();
 
         List<EMMessage> msgs = mConversation.getAllMessages();
@@ -281,7 +281,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     }
 
     protected void onMessageListInit() {
-        list_message.init(mToUser.getUsername(), EaseConstant.CHATTYPE_SINGLE, onSetCustomChatRowProvider());
+        list_message.init(mToUser.getUsername(), EMConversation.EMConversationType.Chat, getMessageListItemStyle(), getCustomChatRowProvider());
         list_message.setItemClickListener(new EaseChatMessageList.MessageListItemClickListener() {
 
             @Override
@@ -792,9 +792,16 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     }
 
     /**
-     * 设置自定义聊天消息样式提供者
+     * 获取自定义聊天消息样式提供者
      */
-    protected EaseCustomChatRowProvider onSetCustomChatRowProvider() {
+    protected EaseCustomChatRowProvider getCustomChatRowProvider() {
+        return null;
+    }
+
+    /**
+     * 获取聊天消息样式
+     */
+    protected EaseMessageListItemStyle getMessageListItemStyle() {
         return null;
     }
 

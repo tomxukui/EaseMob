@@ -1,7 +1,6 @@
 package com.hyphenate.easeui.widget;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,7 +16,6 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 
 public class EaseChatMessageList extends FrameLayout {
@@ -27,9 +25,7 @@ public class EaseChatMessageList extends FrameLayout {
 
     protected EMConversation conversation;
     protected EaseMessageAdapter messageAdapter;
-    protected EaseMessageListItemStyle itemStyle;
 
-    protected int chatType;
     protected String toChatUsername;
 
     public EaseChatMessageList(@NonNull Context context) {
@@ -39,29 +35,12 @@ public class EaseChatMessageList extends FrameLayout {
 
     public EaseChatMessageList(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initData(context, attrs, 0);
         initView(context);
     }
 
     public EaseChatMessageList(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initData(context, attrs, defStyleAttr);
         initView(context);
-    }
-
-    private void initData(Context context, AttributeSet attrs, int defStyleAttr) {
-        if (attrs != null) {
-            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.EaseChatMessageList, defStyleAttr, 0);
-
-            EaseMessageListItemStyle.Builder builder = new EaseMessageListItemStyle.Builder();
-            builder.showAvatar(ta.getBoolean(R.styleable.EaseChatMessageList_msgListShowUserAvatar, true))
-                    .showUserNick(ta.getBoolean(R.styleable.EaseChatMessageList_msgListShowUserNick, false))
-                    .myBubbleBg(ta.getDrawable(R.styleable.EaseChatMessageList_msgListMyBubbleBackground))
-                    .otherBuddleBg(ta.getDrawable(R.styleable.EaseChatMessageList_msgListMyBubbleBackground));
-            itemStyle = builder.build();
-
-            ta.recycle();
-        }
     }
 
     private void initView(Context context) {
@@ -71,22 +50,15 @@ public class EaseChatMessageList extends FrameLayout {
         listView = view.findViewById(R.id.list);
     }
 
-    /**
-     * init widget
-     *
-     * @param toChatUsername
-     * @param chatType
-     * @param customChatRowProvider
-     */
-    public void init(String toChatUsername, int chatType, EaseCustomChatRowProvider customChatRowProvider) {
-        this.chatType = chatType;
+    public void init(String toChatUsername, EMConversation.EMConversationType conversationType, @Nullable EaseMessageListItemStyle listItemStyle, @Nullable EaseCustomChatRowProvider customChatRowProvider) {
         this.toChatUsername = toChatUsername;
 
-        conversation = EMClient.getInstance().chatManager().getConversation(toChatUsername, EaseCommonUtils.getConversationType(chatType), true);
-        messageAdapter = new EaseMessageAdapter(getContext(), toChatUsername, chatType, listView);
-        messageAdapter.setItemStyle(itemStyle);
+        conversation = EMClient.getInstance().chatManager().getConversation(toChatUsername, conversationType, true);
+
+        messageAdapter = new EaseMessageAdapter(getContext(), toChatUsername, conversationType, listView);
+        messageAdapter.setItemStyle(listItemStyle);
         messageAdapter.setCustomChatRowProvider(customChatRowProvider);
-        // set message adapter
+
         listView.setAdapter(messageAdapter);
 
         refreshSelectLast();
@@ -129,14 +101,6 @@ public class EaseChatMessageList extends FrameLayout {
 
     public EMMessage getItem(int position) {
         return messageAdapter.getItem(position);
-    }
-
-    public void setShowUserNick(boolean showUserNick) {
-        itemStyle.setShowUserNick(showUserNick);
-    }
-
-    public boolean isShowUserNick() {
-        return itemStyle.isShowUserNick();
     }
 
     public interface MessageListItemClickListener {

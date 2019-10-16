@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="EaseChatMessageList">
-        <attr name="msgListMyBubbleBackground" format="reference"/>
-        <attr name="msgListOtherBubbleBackground" format="reference"/>
-        <attr name="msgListShowUserAvatar" format="boolean"/>
-        <attr name="msgListShowUserNick" format="boolean"/>
-    </declare-styleable>
 
     <declare-styleable name="EasePaperLayer">
         <attr name="epl_empty_icon" format="reference" />

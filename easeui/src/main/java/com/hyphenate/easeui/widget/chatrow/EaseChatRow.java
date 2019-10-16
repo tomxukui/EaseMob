@@ -15,7 +15,6 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.Direct;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.bean.EaseAvatarOptions;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
@@ -163,6 +162,7 @@ public abstract class EaseChatRow extends LinearLayout {
                 }
             }
         }
+
         if (EMClient.getInstance().getOptions().getRequireAck()) {
             if (ackedView != null) {
                 if (message.isAcked()) {
@@ -180,49 +180,32 @@ public abstract class EaseChatRow extends LinearLayout {
 
         if (itemStyle != null) {
             if (userAvatarView != null) {
-                if (itemStyle.isShowAvatar()) {
-                    userAvatarView.setVisibility(View.VISIBLE);
+                EaseAvatarOptions avatarOptions = EaseUI.getInstance().getAvatarOptions();
 
-                    EaseAvatarOptions avatarOptions = EaseUI.getInstance().getAvatarOptions();
-                    if (avatarOptions != null && userAvatarView instanceof EaseImageView) {
-                        EaseImageView avatarView = ((EaseImageView) userAvatarView);
+                if (avatarOptions != null && userAvatarView instanceof EaseImageView) {
+                    EaseImageView avatarView = ((EaseImageView) userAvatarView);
 
-                        if (avatarOptions.getAvatarShape() != 0) {
-                            avatarView.setShapeType(avatarOptions.getAvatarShape());
-                        }
-                        if (avatarOptions.getAvatarBorderWidth() != 0) {
-                            avatarView.setBorderWidth(avatarOptions.getAvatarBorderWidth());
-                        }
-                        if (avatarOptions.getAvatarBorderColor() != 0) {
-                            avatarView.setBorderColor(avatarOptions.getAvatarBorderColor());
-                        }
-                        if (avatarOptions.getAvatarRadius() != 0) {
-                            avatarView.setRadius(avatarOptions.getAvatarRadius());
-                        }
+                    if (avatarOptions.getAvatarShape() != 0) {
+                        avatarView.setShapeType(avatarOptions.getAvatarShape());
                     }
-
-                } else {
-                    userAvatarView.setVisibility(View.GONE);
+                    if (avatarOptions.getAvatarBorderWidth() != 0) {
+                        avatarView.setBorderWidth(avatarOptions.getAvatarBorderWidth());
+                    }
+                    if (avatarOptions.getAvatarBorderColor() != 0) {
+                        avatarView.setBorderColor(avatarOptions.getAvatarBorderColor());
+                    }
+                    if (avatarOptions.getAvatarRadius() != 0) {
+                        avatarView.setRadius(avatarOptions.getAvatarRadius());
+                    }
                 }
             }
+
             if (usernickView != null) {
-                if (itemStyle.isShowUserNick()) {
-                    usernickView.setVisibility(View.VISIBLE);
+                if (message.direct() == Direct.SEND) {
+                    usernickView.setVisibility(itemStyle.isShowFromUserNickname() ? View.VISIBLE : View.GONE);
 
                 } else {
-                    usernickView.setVisibility(View.GONE);
-                }
-            }
-            if (bubbleLayout != null) {
-                if (message.direct() == Direct.SEND) {
-                    if (itemStyle.getMyBubbleBg() != null) {
-                        bubbleLayout.setBackground(((EaseMessageAdapter) adapter).getMyBubbleBg());
-                    }
-
-                } else if (message.direct() == Direct.RECEIVE) {
-                    if (itemStyle.getOtherBubbleBg() != null) {
-                        bubbleLayout.setBackground(((EaseMessageAdapter) adapter).getOtherBubbleBg());
-                    }
+                    usernickView.setVisibility(itemStyle.isShowToUserNickname() ? View.VISIBLE : View.GONE);
                 }
             }
         }

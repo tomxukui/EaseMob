@@ -1,7 +1,5 @@
 package com.hyphenate.easeui.utils;
 
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningTaskInfo;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -12,7 +10,6 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.R;
-import java.util.List;
 
 public class EaseCommonUtils {
 
@@ -108,38 +105,6 @@ public class EaseCommonUtils {
 
     static String getString(Context context, int resId) {
         return context.getResources().getString(resId);
-    }
-
-    /**
-     * get top activity
-     *
-     * @param context
-     * @return
-     */
-    public static String getTopActivity(Context context) {
-        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<RunningTaskInfo> runningTaskInfos = manager.getRunningTasks(1);
-
-        if (runningTaskInfos != null)
-            return runningTaskInfos.get(0).topActivity.getClassName();
-        else
-            return "";
-    }
-
-    /**
-     * change the chat type to EMConversationType
-     *
-     * @param chatType
-     * @return
-     */
-    public static EMConversationType getConversationType(int chatType) {
-        if (chatType == EaseConstant.CHATTYPE_SINGLE) {
-            return EMConversationType.Chat;
-        } else if (chatType == EaseConstant.CHATTYPE_GROUP) {
-            return EMConversationType.GroupChat;
-        } else {
-            return EMConversationType.ChatRoom;
-        }
     }
 
     /**
