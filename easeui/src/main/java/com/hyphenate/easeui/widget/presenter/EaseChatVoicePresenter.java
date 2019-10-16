@@ -1,7 +1,6 @@
 package com.hyphenate.easeui.widget.presenter;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.widget.BaseAdapter;
 
