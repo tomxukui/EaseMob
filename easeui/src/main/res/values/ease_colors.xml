@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="common_bottom_bar_normal_bg">#2d2f31</color>
-    <color name="common_bottom_bar_selected_bg">#161718</color>
-    <color name="common_botton_bar_blue">#2ea7e0</color>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="common_bg">#fcfcfc</color>
-    <color name="divider_list">#d4d4d4</color>
-    <color name="error_item_color">#F6EBE6</color>
-    <color name="bottom_bar_normal_bg">#2D2F31</color>
+    <color name="bottom_bar_normal_bg" tools:keep="@color/bottom_bar_normal_bg">#2D2F31</color>
     <color name="btn_gray_normal">#c0c0c0</color>
     <color name="btn_gray_pressed_status">#b5b5b6</color>
     <color name="btn_blue_normal">#1e90ff</color>
@@ -25,15 +20,9 @@
     <color name="colorPrimaryDark">#3D8CFF</color>
     <color name="colorAccent">#3D8CFF</color>
 
-    <color name="divider">#E2E2E2</color>
     <color name="press">#bbbbbb</color>
-    <color name="mask">#66bdb8b8</color>
 
-    <color name="text_primary">#1A1A1A</color>
     <color name="text_second">#4C4C4C</color>
-    <color name="text_third">#888888</color>
-    <color name="text_four">#AAAAAA</color>
-    <color name="text_hint">#CACACA</color>
 
     <color name="ease_press">#bbbbbb</color>
     <color name="ease_white">#ffffff</color>
