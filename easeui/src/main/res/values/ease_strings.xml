@@ -22,7 +22,6 @@
     <string name="dynamic_expression">[动态表情]</string>
     <string name="recoding_fail">录音失败，请重试！</string>
     <string name="session">会话</string>
-    <string name="search">搜索</string>
     <string name="downwaiting">正在下载文件请稍后</string>
     <string name="not_download">未下载:</string>
     <string name="is_down_please_wait">正在下载视频请稍候</string>
@@ -41,7 +40,6 @@
     <string name="Have_downloaded">已下载</string>
     <string name="Did_not_download">未下载</string>
     <string name="Is_download_voice_click_later">正在下载语音，稍后点击</string>
-    <string name="were_mentioned">[有人@我]</string>
     <string name="no_more_messages">没有更多的消息了</string>
     <string name="group_ack_read_count">%1$d 已读</string>
 

@@ -1,6 +1,4 @@
 <resources>
-    <dimen name="padding_search_bar">5dp</dimen>
-
     <dimen name="margin_chat_activity">15dp</dimen>
 
     <dimen name="chat_avatar_size">40dp</dimen>
