@@ -14,8 +14,8 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.base.model.EaseUser;
+import com.hyphenate.easeui.module.conversation.ui.EaseConversationsActivity;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryPatientActivity;
-import com.hyphenate.easeui.ui.EaseConversationListActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -259,8 +259,26 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btn_conversationList.setOnClickListener(v -> {
-            Intent intent = new EaseConversationListActivity.Builder(MainActivity.this).create();
+            String username = et_username.getText().toString().trim();
+            String nickname = et_nickname.getText().toString().trim();
+            String avatar = et_avatar.getText().toString().trim();
+            String pwd = et_pwd.getText().toString().trim();
 
+            if (TextUtils.isEmpty(username)) {
+                toast(et_username.getHint().toString());
+                return;
+            }
+            if (TextUtils.isEmpty(nickname)) {
+                toast(et_nickname.getHint().toString());
+                return;
+            }
+            if (TextUtils.isEmpty(pwd)) {
+                toast(et_pwd.getHint().toString());
+                return;
+            }
+            EaseUser fromUser = new EaseUser(username, nickname, avatar, null);
+
+            Intent intent = EaseConversationsActivity.buildIntent(MainActivity.this, fromUser, pwd);
             startActivity(intent);
         });
     }

@@ -25,7 +25,6 @@
     <color name="colorPrimaryDark">#3D8CFF</color>
     <color name="colorAccent">#3D8CFF</color>
 
-    <color name="bg">#F5F5F5</color>
     <color name="divider">#E2E2E2</color>
     <color name="press">#bbbbbb</color>
     <color name="mask">#66bdb8b8</color>
@@ -40,5 +39,10 @@
     <color name="ease_white">#ffffff</color>
     <color name="ease_gray">#FCFCFC</color>
     <color name="ease_bg">#F5F5F5</color>
+
+    <!--会话-->
+    <color name="ease_converstation_list_name">#000</color>
+    <color name="ease_converstation_list_message">#888888</color>
+    <color name="ease_converstation_list_time">#888888</color>
 
 </resources>

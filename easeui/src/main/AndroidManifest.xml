@@ -28,7 +28,6 @@
         <!--问诊页面-->
         <activity
             android:name=".module.inquiry.ui.EaseInquiryActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/EaseAppTheme"
             android:windowSoftInputMode="adjustResize" />
@@ -36,7 +35,13 @@
         <!--病人问诊页面-->
         <activity
             android:name=".module.inquiry.ui.EaseInquiryPatientActivity"
-            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/EaseAppTheme"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!--会话页面-->
+        <activity
+            android:name=".module.conversation.ui.EaseConversationsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/EaseAppTheme"
             android:windowSoftInputMode="adjustResize" />
@@ -46,11 +51,6 @@
             android:name=".module.image.ui.EaseShowBigImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/EaseAppTheme.Dark" />
-
-        <activity
-            android:name=".ui.EaseConversationListActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/EaseAppTheme" />
 
     </application>
 

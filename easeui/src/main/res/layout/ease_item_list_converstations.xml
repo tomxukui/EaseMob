@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relative_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ease_converstaions_row_bg"
+    android:minHeight="60dp">
+
+    <RelativeLayout
+        android:id="@+id/relative_avatar"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true">
+
+        <com.hyphenate.easeui.widget.EaseImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ease_ic_portrait" />
+
+        <TextView
+            android:id="@+id/tv_unreadCount"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/ease_bg_unread_count"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="6dp"
+        android:layout_toRightOf="@id/relative_avatar"
+        android:textColor="@color/ease_converstation_list_name"
+        android:textSize="@dimen/ease_converstation_list_name" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="7dp"
+        android:textColor="@color/ease_converstation_list_time"
+        android:textSize="@dimen/ease_converstation_list_time" />
+
+    <ImageView
+        android:id="@+id/iv_state"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="7dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toRightOf="@id/relative_avatar"
+        android:src="@drawable/ease_ic_msg_state_fail_resend"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/tv_time"
+        android:layout_toRightOf="@id/iv_state"
+        android:ellipsize="end"
+        android:padding="7dp"
+        android:singleLine="true"
+        android:textColor="@color/ease_converstation_list_message"
+        android:textSize="@dimen/ease_converstation_list_message" />
+
+</RelativeLayout>

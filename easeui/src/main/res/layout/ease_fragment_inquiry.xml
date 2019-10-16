@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/bg"
+    android:background="@color/ease_bg"
     android:orientation="vertical">
 
     <com.hyphenate.easeui.module.base.widget.EaseToolbar
