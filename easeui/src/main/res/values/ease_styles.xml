@@ -13,7 +13,7 @@
     </style>
 
     <style name="EaseAppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="actionMenuTextColor">#ffffff</item>
+        <item name="actionMenuTextColor">@color/ease_toolbar_menu</item>
     </style>
 
     <style name="EaseAppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

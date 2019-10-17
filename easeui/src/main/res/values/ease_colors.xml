@@ -27,6 +27,7 @@
     <!--标题栏-->
     <color name="ease_toolbar_title">#FFFFFF</color>
     <color name="ease_toolbar_background">#0089e1</color>
+    <color name="ease_toolbar_menu">#FFFFFF</color>
 
     <!--会话-->
     <color name="ease_converstation_list_name">#1A1A1A</color>
