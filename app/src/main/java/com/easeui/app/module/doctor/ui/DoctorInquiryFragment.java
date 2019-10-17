@@ -23,6 +23,12 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
     }
 
     @Override
+    protected void setToolbar() {
+        super.setToolbar();
+        toolbar.setNavigationIcon(R.mipmap.ic_back_black);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_doctor_inquiry, menu);
