@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hyphenate.EMCallBack;
@@ -64,6 +65,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     //透传类型
     private static final String ACTION_CLOSE_CONVERSATION = "cmd_close_conversation";//结束问诊
 
+    protected LinearLayout linear_container;
     protected EaseToolbar toolbar;
     protected EaseChatMessageList list_message;
     protected EaseChatInputMenu menu_input;
@@ -111,6 +113,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         super.initView(view, savedInstanceState);
+        linear_container = view.findViewById(R.id.linear_container);
         toolbar = view.findViewById(R.id.toolbar);
         voice_recorder = view.findViewById(R.id.voice_recorder);
         list_message = view.findViewById(R.id.list_message);
