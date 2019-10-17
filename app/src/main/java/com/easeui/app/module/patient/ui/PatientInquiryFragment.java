@@ -1,5 +1,6 @@
 package com.easeui.app.module.patient.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.ListPopupWindow;
@@ -51,6 +52,13 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
             EaseToastUtil.show("问诊信息");
         }));
         mMenuListAdapter = new PatientInquiryMenuListAdapter(menuItems);
+    }
+
+    @Override
+    protected void setToolbar() {
+        super.setToolbar();
+        toolbar.setBackgroundColor(Color.parseColor("#2693FF"));
+        toolbar.setTitleTextColor(Color.WHITE);
     }
 
     @Override
