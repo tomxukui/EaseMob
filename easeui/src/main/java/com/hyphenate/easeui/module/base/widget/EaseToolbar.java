@@ -110,6 +110,8 @@ public class EaseToolbar extends Toolbar {
 
     /**
      * 设置标题字体大小
+     *
+     * @param textSize px单位
      */
     public void setTitleTextSize(int textSize) {
         mTitleTextSize = textSize;
@@ -152,6 +154,8 @@ public class EaseToolbar extends Toolbar {
 
     /**
      * 设置副标题字体大小
+     *
+     * @param textSize px单位
      */
     public void setSubtitleTextSize(int textSize) {
         mSubtitleTextSize = textSize;
