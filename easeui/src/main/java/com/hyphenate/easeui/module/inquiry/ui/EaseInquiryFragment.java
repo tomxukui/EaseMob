@@ -10,8 +10,6 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -254,11 +252,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             }
             mConversation.loadMoreMsgFromDB(msgId, mPageSize - msgCount);
         }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     protected void onMessageListInit() {
