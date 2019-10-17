@@ -13,6 +13,14 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.NoActionBar.PatientInquiry">
+        <item name="colorPrimaryDark">#2693FF</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.DoctorInquiry">
+        <item name="colorPrimaryDark">#FFFFFF</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

@@ -26,14 +26,14 @@
         <activity
             android:name=".module.patient.ui.PatientInquiryActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/EaseAppTheme"
+            android:theme="@style/AppTheme.NoActionBar.PatientInquiry"
             android:windowSoftInputMode="adjustResize" />
 
         <!--医生问诊页面-->
         <activity
             android:name=".module.doctor.ui.DoctorInquiryActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/EaseAppTheme"
+            android:theme="@style/AppTheme.NoActionBar.DoctorInquiry"
             android:windowSoftInputMode="adjustResize" />
 
         <!--会话页面-->
