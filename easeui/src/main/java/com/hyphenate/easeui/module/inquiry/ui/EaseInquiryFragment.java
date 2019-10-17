@@ -39,7 +39,7 @@ import com.hyphenate.easeui.utils.EaseToastUtil;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.easeui.widget.EaseChatInputMenu;
 import com.hyphenate.easeui.widget.EaseChatInputMenu.ChatInputMenuListener;
-import com.hyphenate.easeui.widget.EaseChatMessageList;
+import com.hyphenate.easeui.module.base.widget.messagelist.EaseMessageListView;
 import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 import com.hyphenate.easeui.widget.EaseVoiceRecorderView;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
@@ -67,7 +67,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
     protected LinearLayout linear_container;
     protected EaseToolbar toolbar;
-    protected EaseChatMessageList list_message;
+    protected EaseMessageListView list_message;
     protected EaseChatInputMenu menu_input;
     protected EaseInquiryEndedMenu menu_ended;
     protected EaseVoiceRecorderView voice_recorder;
@@ -259,7 +259,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
     protected void onMessageListInit() {
         list_message.init(mToUser.getUsername(), EMConversation.EMConversationType.Chat, getMessageListItemStyle(), getCustomChatRowProvider());
-        list_message.setItemClickListener(new EaseChatMessageList.MessageListItemClickListener() {
+        list_message.setItemClickListener(new EaseMessageListView.MessageListItemClickListener() {
 
             @Override
             public void onUserAvatarClick(String username) {

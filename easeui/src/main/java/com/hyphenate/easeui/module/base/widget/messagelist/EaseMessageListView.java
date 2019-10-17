@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget;
+package com.hyphenate.easeui.module.base.widget.messagelist;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -14,11 +14,10 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 
-public class EaseChatMessageList extends FrameLayout {
+public class EaseMessageListView extends FrameLayout {
 
     protected SwipeRefreshLayout refreshLayout;
     protected ListView listView;
@@ -28,17 +27,17 @@ public class EaseChatMessageList extends FrameLayout {
 
     protected String toChatUsername;
 
-    public EaseChatMessageList(@NonNull Context context) {
+    public EaseMessageListView(@NonNull Context context) {
         super(context);
         initView(context);
     }
 
-    public EaseChatMessageList(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public EaseMessageListView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initView(context);
     }
 
-    public EaseChatMessageList(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public EaseMessageListView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context);
     }

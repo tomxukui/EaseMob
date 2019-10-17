@@ -7,7 +7,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
-import com.hyphenate.easeui.widget.EaseChatMessageList;
+import com.hyphenate.easeui.module.base.widget.messagelist.EaseMessageListView;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 
 public abstract class EaseChatRowPresenter implements EaseChatRow.EaseChatRowActionCallback {
@@ -19,7 +19,7 @@ public abstract class EaseChatRowPresenter implements EaseChatRow.EaseChatRowAct
     private EMMessage message;
     private int position;
 
-    private EaseChatMessageList.MessageListItemClickListener itemClickListener;
+    private EaseMessageListView.MessageListItemClickListener itemClickListener;
 
     @Override
     public void onResendClick(final EMMessage message) {
@@ -47,7 +47,7 @@ public abstract class EaseChatRowPresenter implements EaseChatRow.EaseChatRowAct
         return chatRow;
     }
 
-    public void setup(EMMessage msg, int position, EaseChatMessageList.MessageListItemClickListener itemClickListener, EaseMessageListItemStyle itemStyle) {
+    public void setup(EMMessage msg, int position, EaseMessageListView.MessageListItemClickListener itemClickListener, EaseMessageListItemStyle itemStyle) {
         this.message = msg;
         this.position = position;
         this.itemClickListener = itemClickListener;
