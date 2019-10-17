@@ -6,7 +6,6 @@ import android.support.v7.widget.ListPopupWindow;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 
 import com.easeui.app.R;
 import com.easeui.app.module.adapter.InquiryMenuListAdapter;
@@ -14,7 +13,6 @@ import com.easeui.app.module.module.InquiryMenuItem;
 import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
-import com.hyphenate.easeui.module.inquiry.provider.EaseInquiryProvider;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
 import com.hyphenate.easeui.utils.ContextCompatUtil;
 import com.hyphenate.easeui.utils.DensityUtil;
@@ -42,13 +40,6 @@ public class InquiryFragment extends EaseInquiryFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        mMenuListAdapter = new InquiryMenuListAdapter(createMenuItems());
-    }
-
-    /**
-     * 创建标题栏菜单
-     */
-    private List<InquiryMenuItem> createMenuItems() {
         List<InquiryMenuItem> menuItems = new ArrayList<>();
         menuItems.add(new InquiryMenuItem(R.mipmap.ic_menu_doctor, "医生介绍", (itemModel, position) -> {
             EaseToastUtil.show("医生介绍");
@@ -59,35 +50,18 @@ public class InquiryFragment extends EaseInquiryFragment {
         menuItems.add(new InquiryMenuItem(R.mipmap.ic_menu_inquiry_info, "问诊信息", (itemModel, position) -> {
             EaseToastUtil.show("问诊信息");
         }));
-        return menuItems;
-    }
-
-    @Nullable
-    @Override
-    protected List<EaseInquiryEndedMenuItem> getEndedMenuItems() {
-        List<EaseInquiryEndedMenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new EaseInquiryEndedMenuItem("送心意", (menuItem, position) -> EaseToastUtil.show("送心意")));
-        menuItems.add(new EaseInquiryEndedMenuItem("再次咨询", (menuItem, position) -> EaseToastUtil.show("再次咨询")));
-        return menuItems;
+        mMenuListAdapter = new InquiryMenuListAdapter(menuItems);
     }
 
     @Override
-    protected EaseInquiryProvider getInquiryProvider() {
-        return new EaseInquiryProvider() {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_inquiry, menu);
 
-            @Override
-            public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-                inflater.inflate(R.menu.menu_inquiry, menu);
-
-                MenuItem moreMenuItem = menu.findItem(R.id.action_more);
-                moreMenuItem.setVisible(!mMenuListAdapter.isEmpty());
-                moreMenuItem.setOnMenuItemClickListener(item -> {
-                    showPopupMenu();
-                    return true;
-                });
-            }
-
-        };
+        menu.findItem(R.id.action_more).setOnMenuItemClickListener(item -> {
+            showPopupMenu();
+            return true;
+        });
     }
 
     /**
@@ -116,6 +90,15 @@ public class InquiryFragment extends EaseInquiryFragment {
         if (!mPopupMenu.isShowing()) {
             mPopupMenu.show();
         }
+    }
+
+    @Nullable
+    @Override
+    protected List<EaseInquiryEndedMenuItem> getEndedMenuItems() {
+        List<EaseInquiryEndedMenuItem> menuItems = new ArrayList<>();
+        menuItems.add(new EaseInquiryEndedMenuItem("送心意", (menuItem, position) -> EaseToastUtil.show("送心意")));
+        menuItems.add(new EaseInquiryEndedMenuItem("再次咨询", (menuItem, position) -> EaseToastUtil.show("再次咨询")));
+        return menuItems;
     }
 
 }
