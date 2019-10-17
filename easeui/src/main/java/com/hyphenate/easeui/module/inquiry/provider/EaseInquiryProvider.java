@@ -1,5 +1,8 @@
 package com.hyphenate.easeui.module.inquiry.provider;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+
 import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 
 public class EaseInquiryProvider {
@@ -15,6 +18,12 @@ public class EaseInquiryProvider {
      */
     public boolean isShowBackBtn() {
         return true;
+    }
+
+    /**
+     * 创建标题栏的菜单
+     */
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     }
 
 }

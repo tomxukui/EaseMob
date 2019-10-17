@@ -1,23 +1,23 @@
-package com.hyphenate.easeui.module.inquiry.model;
+package com.easeui.app.module.module;
 
 import android.support.annotation.Nullable;
 
 import java.io.Serializable;
 
-public class EaseInquiryMenuItem implements Serializable {
+public class InquiryMenuItem implements Serializable {
 
     private int resId;
     private String name;
     @Nullable
     private OnItemClickListener onItemClickListener;
 
-    public EaseInquiryMenuItem(int resId, String name, @Nullable OnItemClickListener listener) {
+    public InquiryMenuItem(int resId, String name, @Nullable OnItemClickListener listener) {
         this.resId = resId;
         this.name = name;
         this.onItemClickListener = listener;
     }
 
-    public EaseInquiryMenuItem() {
+    public InquiryMenuItem() {
     }
 
     public int getResId() {
@@ -47,7 +47,7 @@ public class EaseInquiryMenuItem implements Serializable {
 
     public interface OnItemClickListener {
 
-        void onItemClick(EaseInquiryMenuItem itemModel, int position);
+        void onItemClick(InquiryMenuItem itemModel, int position);
 
     }
 

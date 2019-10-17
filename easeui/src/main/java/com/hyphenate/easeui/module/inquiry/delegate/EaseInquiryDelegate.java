@@ -2,6 +2,8 @@ package com.hyphenate.easeui.module.inquiry.delegate;
 
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.base.widget.EaseToolbar;
@@ -41,6 +43,15 @@ public class EaseInquiryDelegate {
      */
     public boolean IsShowBackBtn() {
         return mProvider == null ? true : mProvider.isShowBackBtn();
+    }
+
+    /**
+     * 创建标题栏的菜单
+     */
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if (mProvider != null) {
+            mProvider.onCreateOptionsMenu(menu, inflater);
+        }
     }
 
 

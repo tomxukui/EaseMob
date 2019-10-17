@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import com.easeui.app.module.ui.InquiryFragment;
 import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryActivity;

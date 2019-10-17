@@ -8,12 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.ListPopupWindow;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -33,15 +30,11 @@ import com.hyphenate.easeui.model.EaseCompat;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
-import com.hyphenate.easeui.module.inquiry.adapter.EaseInquiryMenuListAdapter;
 import com.hyphenate.easeui.module.inquiry.delegate.EaseInquiryDelegate;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
-import com.hyphenate.easeui.module.inquiry.model.EaseInquiryMenuItem;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryMoreMenuItem;
 import com.hyphenate.easeui.module.inquiry.provider.EaseInquiryProvider;
 import com.hyphenate.easeui.module.inquiry.widget.EaseInquiryEndedMenu;
-import com.hyphenate.easeui.utils.ContextCompatUtil;
-import com.hyphenate.easeui.utils.DensityUtil;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
@@ -76,27 +69,23 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
     final EaseInquiryDelegate mDelegate = new EaseInquiryDelegate(getInquiryProvider());
 
-    private EaseToolbar toolbar;
-    private EaseChatMessageList list_message;
-    private EaseChatInputMenu menu_input;
-    private EaseInquiryEndedMenu menu_ended;
-    private EaseVoiceRecorderView voice_recorder;
-    private TextView tv_availableCount;
+    protected EaseToolbar toolbar;
+    protected EaseChatMessageList list_message;
+    protected EaseChatInputMenu menu_input;
+    protected EaseInquiryEndedMenu menu_ended;
+    protected EaseVoiceRecorderView voice_recorder;
+    protected TextView tv_availableCount;
 
-    //标题栏菜单
-    private ListPopupWindow mPopupMenu;
-    private EaseInquiryMenuListAdapter mMenuListAdapter;
-
-    private EMConversation mConversation;//会话
-    private EaseUser mFromUser;
-    private EaseUser mToUser;
+    protected EMConversation mConversation;//会话
+    protected EaseUser mFromUser;
+    protected EaseUser mToUser;
     @EaseType.ChatMode
-    private String mChatMode;//问诊模式
-    private boolean mIsFinished;//问诊是否已结束
-    private boolean mIsMessagesInited;//消息列表是否已初始化
-    private int mPageSize = 20;//消息分页一页最多数量
-    private boolean mHaveMoreData = true;//是否有更多消息
-    private File mCameraFile;//相机拍照照片文件
+    protected String mChatMode;//问诊模式
+    protected boolean mIsFinished;//问诊是否已结束
+    protected boolean mIsMessagesInited;//消息列表是否已初始化
+    protected int mPageSize = 20;//消息分页一页最多数量
+    protected boolean mHaveMoreData = true;//是否有更多消息
+    protected File mCameraFile;//相机拍照照片文件
 
     public static EaseInquiryFragment newInstance(EaseUser fromUser, EaseUser toUser, @EaseType.ChatMode String chatMode) {
         EaseInquiryFragment fragment = new EaseInquiryFragment();
@@ -122,8 +111,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             mToUser = (EaseUser) bundle.getSerializable(EXTRA_TO_USER);
             mChatMode = bundle.getString(EXTRA_CHAT_MODE);
         }
-
-        mMenuListAdapter = new EaseInquiryMenuListAdapter(getMenuItems());
     }
 
     @Override
@@ -260,14 +247,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.ease_menu_inquiry, menu);
-
-        MenuItem mMoreMenuItem = menu.findItem(R.id.action_more);
-        mMoreMenuItem.setVisible(!mMenuListAdapter.isEmpty());
-        mMoreMenuItem.setOnMenuItemClickListener(item -> {
-            showPopupMenu();
-            return true;
-        });
+        mDelegate.onCreateOptionsMenu(menu, inflater);
     }
 
     protected void onMessageListInit() {
@@ -636,34 +616,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     }
 
     /**
-     * 显示标题栏菜单
-     */
-    private void showPopupMenu() {
-        if (mPopupMenu == null) {
-            mPopupMenu = new ListPopupWindow(getContext());
-            mPopupMenu.setContentWidth(DensityUtil.dp2px(138));
-            mPopupMenu.setBackgroundDrawable(ContextCompatUtil.getDrawable(R.drawable.ease_bg_menu));
-            mPopupMenu.setDropDownGravity(Gravity.RIGHT);
-            mPopupMenu.setHorizontalOffset(DensityUtil.dp2px(-5));
-            mPopupMenu.setVerticalOffset(DensityUtil.dp2px(4));
-            mPopupMenu.setAdapter(mMenuListAdapter);
-            mPopupMenu.setOnItemClickListener((parent, view, position, id) -> {
-                EaseInquiryMenuItem menuItem = mMenuListAdapter.getItem(position);
-
-                EaseInquiryMenuItem.OnItemClickListener listener = menuItem.getOnItemClickListener();
-                if (listener != null) {
-                    listener.onItemClick(menuItem, position);
-                }
-            });
-            mPopupMenu.setAnchorView(toolbar);
-        }
-
-        if (!mPopupMenu.isShowing()) {
-            mPopupMenu.show();
-        }
-    }
-
-    /**
      * 消息回调
      */
     private final EMMessageListener mMessageListener = new EMMessageListener() {
@@ -725,14 +677,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         }
 
     };
-
-    /**
-     * 获取菜单子项集合, 如果为空, 则隐藏
-     */
-    @Nullable
-    protected List<EaseInquiryMenuItem> getMenuItems() {
-        return null;
-    }
 
     /**
      * 获取结束问诊后的底部菜单子项集合, 如果为空, 则隐藏
