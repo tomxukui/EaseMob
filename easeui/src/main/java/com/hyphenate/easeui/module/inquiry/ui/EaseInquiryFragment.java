@@ -595,6 +595,10 @@ public class EaseInquiryFragment extends EaseBaseFragment {
      * 结束问诊
      */
     protected void finishInquiry() {
+        if (mIsFinished) {
+            return;
+        }
+
         //透传发送结束聊天的消息
         EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
         EMCmdMessageBody body = new EMCmdMessageBody(ACTION_CLOSE_CONVERSATION);
