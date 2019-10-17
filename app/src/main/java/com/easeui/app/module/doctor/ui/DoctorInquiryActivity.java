@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
-import com.easeui.app.module.patient.ui.PatientInquiryFragment;
 import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryActivity;
@@ -14,7 +13,7 @@ public class DoctorInquiryActivity extends EaseInquiryActivity {
 
     @Override
     protected Fragment getMainFragment() {
-        return DoctorInquiryFragment.newInstance(mFromUser, mToUser, mChatMode);
+        return DoctorInquiryFragment.newInstance(mFromUser, mToUser, mChatMode, "12345678910");
     }
 
     /**
