@@ -24,6 +24,8 @@ import com.hyphenate.easeui.widget.presenter.EaseChatTextPresenter;
 import com.hyphenate.easeui.widget.presenter.EaseChatVideoPresenter;
 import com.hyphenate.easeui.widget.presenter.EaseChatVoicePresenter;
 
+import java.util.List;
+
 public class EaseMessageAdapter extends BaseAdapter {
 
     private static final int HANDLER_MESSAGE_REFRESH_LIST = 0;
@@ -46,26 +48,26 @@ public class EaseMessageAdapter extends BaseAdapter {
     private static final int MESSAGE_TYPE_RECV_EXPRESSION = 13;
     private static final int MESSAGE_TYPE_FINISH_CONVERSATION = 14;
 
-    private EMConversation conversation;
-    EMMessage[] messages = null;
-
-    private OnItemClickListener mOnItemClickListener;
-    private EaseCustomChatRowProvider customRowProvider;
-
     private ListView listView;
+
+    private EMConversation mConversation;
+    private EMMessage[] mMessages;
+
     private EaseMessageListItemStyle itemStyle;
+    private EaseCustomChatRowProvider customRowProvider;
+    private OnItemClickListener mOnItemClickListener;
 
     public EaseMessageAdapter(String username, EMConversation.EMConversationType conversationType, ListView listView) {
         this.listView = listView;
-        this.conversation = EMClient.getInstance().chatManager().getConversation(username, conversationType, true);
+        mConversation = EMClient.getInstance().chatManager().getConversation(username, conversationType, true);
     }
 
     Handler handler = new Handler() {
 
         private void refreshList() {
-            java.util.List<EMMessage> var = conversation.getAllMessages();
-            messages = var.toArray(new EMMessage[var.size()]);
-            conversation.markAllMessagesAsRead();
+            List<EMMessage> var = mConversation.getAllMessages();
+            mMessages = var.toArray(new EMMessage[var.size()]);
+            mConversation.markAllMessagesAsRead();
             notifyDataSetChanged();
         }
 
@@ -79,8 +81,8 @@ public class EaseMessageAdapter extends BaseAdapter {
                 break;
 
                 case HANDLER_MESSAGE_SELECT_LAST: {
-                    if (messages != null && messages.length > 0) {
-                        listView.setSelection(messages.length - 1);
+                    if (mMessages != null && mMessages.length > 0) {
+                        listView.setSelection(mMessages.length - 1);
                     }
                 }
                 break;
@@ -123,81 +125,6 @@ public class EaseMessageAdapter extends BaseAdapter {
      */
     public void refreshSeekTo(int position) {
         handler.sendMessage(handler.obtainMessage(HANDLER_MESSAGE_REFRESH_LIST));
-    }
-
-    public EMMessage getItem(int position) {
-        if (messages != null && position < messages.length) {
-            return messages[position];
-        }
-        return null;
-    }
-
-    public long getItemId(int position) {
-        return position;
-    }
-
-    /**
-     * get count of messages
-     */
-    public int getCount() {
-        return messages == null ? 0 : messages.length;
-    }
-
-    /**
-     * get number of message type, here 15 = (EMMessage.Type) * 2
-     */
-    public int getViewTypeCount() {
-        int count = 15;
-
-        if (customRowProvider != null && customRowProvider.getCustomChatRowTypeCount() > 0) {
-            count += customRowProvider.getCustomChatRowTypeCount();
-        }
-
-        return count;
-    }
-
-    /**
-     * get type of item
-     */
-    public int getItemViewType(int position) {
-        EMMessage message = getItem(position);
-
-        if (message == null) {
-            return -1;
-        }
-
-        if (customRowProvider != null && customRowProvider.getCustomChatRowType(message) > 0) {
-            return customRowProvider.getCustomChatRowType(message) + 14;
-        }
-
-        if (message.getType() == EMMessage.Type.TXT) {
-            if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, false)) {//结束问诊消息
-                return MESSAGE_TYPE_FINISH_CONVERSATION;
-
-            } else if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)) {//表情消息
-                return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_EXPRESSION : MESSAGE_TYPE_SENT_EXPRESSION;
-
-            } else {//其他文本消息
-                return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TXT : MESSAGE_TYPE_SENT_TXT;
-            }
-        }
-        if (message.getType() == EMMessage.Type.IMAGE) {
-            return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_IMAGE : MESSAGE_TYPE_SENT_IMAGE;
-        }
-        if (message.getType() == EMMessage.Type.LOCATION) {
-            return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_LOCATION : MESSAGE_TYPE_SENT_LOCATION;
-        }
-        if (message.getType() == EMMessage.Type.VOICE) {
-            return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VOICE : MESSAGE_TYPE_SENT_VOICE;
-        }
-        if (message.getType() == EMMessage.Type.VIDEO) {
-            return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO : MESSAGE_TYPE_SENT_VIDEO;
-        }
-        if (message.getType() == EMMessage.Type.FILE) {
-            return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_FILE : MESSAGE_TYPE_SENT_FILE;
-        }
-
-        return -1;// invalid
     }
 
     protected EaseChatRowPresenter createChatRowPresenter(EMMessage message, int position) {
@@ -252,6 +179,76 @@ public class EaseMessageAdapter extends BaseAdapter {
         }
 
         return presenter;
+    }
+
+    @Override
+    public int getCount() {
+        return mMessages == null ? 0 : mMessages.length;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        int count = 15;
+
+        if (customRowProvider != null && customRowProvider.getCustomChatRowTypeCount() > 0) {
+            count += customRowProvider.getCustomChatRowTypeCount();
+        }
+
+        return count;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        EMMessage message = getItem(position);
+
+        if (message != null) {
+            if (customRowProvider != null && customRowProvider.getCustomChatRowType(message) > 0) {
+                return customRowProvider.getCustomChatRowType(message) + 14;
+            }
+
+            if (message.getType() == EMMessage.Type.TXT) {//文字
+                if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, false)) {//结束问诊消息
+                    return MESSAGE_TYPE_FINISH_CONVERSATION;
+
+                } else if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)) {//表情消息
+                    return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_EXPRESSION : MESSAGE_TYPE_SENT_EXPRESSION;
+
+                } else {//其他文本消息
+                    return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TXT : MESSAGE_TYPE_SENT_TXT;
+                }
+
+            } else if (message.getType() == EMMessage.Type.IMAGE) {//图片
+                return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_IMAGE : MESSAGE_TYPE_SENT_IMAGE;
+
+            } else if (message.getType() == EMMessage.Type.LOCATION) {//定位
+                return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_LOCATION : MESSAGE_TYPE_SENT_LOCATION;
+
+            } else if (message.getType() == EMMessage.Type.VOICE) {//语音
+                return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VOICE : MESSAGE_TYPE_SENT_VOICE;
+
+            } else if (message.getType() == EMMessage.Type.VIDEO) {//视频
+                return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO : MESSAGE_TYPE_SENT_VIDEO;
+
+            } else if (message.getType() == EMMessage.Type.FILE) {//文件
+                return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_FILE : MESSAGE_TYPE_SENT_FILE;
+            }
+        }
+
+        return -1;
+    }
+
+    @Override
+    public EMMessage getItem(int position) {
+        if (mMessages != null && position >= 0 && position < mMessages.length) {
+            return mMessages[position];
+        }
+
+        return null;
     }
 
     @Override
