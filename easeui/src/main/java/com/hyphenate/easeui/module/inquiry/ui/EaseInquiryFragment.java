@@ -34,9 +34,11 @@ import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
 import com.hyphenate.easeui.module.inquiry.adapter.EaseInquiryMenuListAdapter;
+import com.hyphenate.easeui.module.inquiry.delegate.EaseInquiryDelegate;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryMenuItem;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryMoreMenuItem;
+import com.hyphenate.easeui.module.inquiry.provider.EaseInquiryProvider;
 import com.hyphenate.easeui.module.inquiry.widget.EaseInquiryEndedMenu;
 import com.hyphenate.easeui.utils.ContextCompatUtil;
 import com.hyphenate.easeui.utils.DensityUtil;
@@ -71,6 +73,8 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
     //透传类型
     private static final String ACTION_CLOSE_CONVERSATION = "cmd_close_conversation";//结束问诊
+
+    final EaseInquiryDelegate mDelegate = new EaseInquiryDelegate(getInquiryProvider());
 
     private EaseToolbar toolbar;
     private EaseChatMessageList list_message;
@@ -135,15 +139,14 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
     @Override
     protected boolean canBack() {
-        return true;
+        return mDelegate.IsShowBackBtn();
     }
 
     @Override
     protected void initActionBar() {
         setSupportActionBar(toolbar);
         super.initActionBar();
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
-        setTitle();
+        mDelegate.onInitToolbar(this, toolbar, mToUser);
     }
 
     @Override
@@ -265,19 +268,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             showPopupMenu();
             return true;
         });
-    }
-
-    /**
-     * 设置标题
-     */
-    private void setTitle() {
-        String title = mToUser.getNickname();
-
-        if (TextUtils.isEmpty(title)) {
-            title = mToUser.getUsername();
-        }
-
-        toolbar.setTitle(title);
     }
 
     protected void onMessageListInit() {
@@ -802,6 +792,13 @@ public class EaseInquiryFragment extends EaseBaseFragment {
      * 获取聊天消息样式
      */
     protected EaseMessageListItemStyle getMessageListItemStyle() {
+        return null;
+    }
+
+    /**
+     * 获取问诊配置提供者
+     */
+    protected EaseInquiryProvider getInquiryProvider() {
         return null;
     }
 

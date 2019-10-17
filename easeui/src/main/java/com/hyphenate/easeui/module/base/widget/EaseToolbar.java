@@ -177,4 +177,11 @@ public class EaseToolbar extends Toolbar {
         tv_subtitle.setOnClickListener(listener);
     }
 
+    /**
+     * 设置返回点击事件
+     */
+    public void setOnBackClickListener(@Nullable OnClickListener listener) {
+        setNavigationOnClickListener(listener);
+    }
+
 }
