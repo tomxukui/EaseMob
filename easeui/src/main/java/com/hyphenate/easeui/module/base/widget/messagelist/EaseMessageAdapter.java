@@ -1,7 +1,5 @@
 package com.hyphenate.easeui.module.base.widget.messagelist;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -27,8 +25,6 @@ import com.hyphenate.easeui.widget.presenter.EaseChatVideoPresenter;
 import com.hyphenate.easeui.widget.presenter.EaseChatVoicePresenter;
 
 public class EaseMessageAdapter extends BaseAdapter {
-
-    private Context context;
 
     private static final int HANDLER_MESSAGE_REFRESH_LIST = 0;
     private static final int HANDLER_MESSAGE_SELECT_LAST = 1;
@@ -59,8 +55,7 @@ public class EaseMessageAdapter extends BaseAdapter {
     private ListView listView;
     private EaseMessageListItemStyle itemStyle;
 
-    public EaseMessageAdapter(Context context, String username, EMConversation.EMConversationType conversationType, ListView listView) {
-        this.context = context;
+    public EaseMessageAdapter(String username, EMConversation.EMConversationType conversationType, ListView listView) {
         this.listView = listView;
         this.conversation = EMClient.getInstance().chatManager().getConversation(username, conversationType, true);
     }
@@ -259,14 +254,15 @@ public class EaseMessageAdapter extends BaseAdapter {
         return presenter;
     }
 
-    @SuppressLint("NewApi")
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
         EMMessage message = getItem(position);
+
         EaseChatRowPresenter presenter;
 
         if (convertView == null) {
             presenter = createChatRowPresenter(message, position);
-            convertView = presenter.createChatRow(context, message, position, this);
+            convertView = presenter.createChatRow(parent.getContext(), message, position, this);
             convertView.setTag(presenter);
 
         } else {

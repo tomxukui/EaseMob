@@ -50,7 +50,7 @@ public class EaseMessageListView extends FrameLayout {
     public void init(String toChatUsername, EMConversation.EMConversationType conversationType, @Nullable EaseMessageListItemStyle listItemStyle, @Nullable EaseCustomChatRowProvider customChatRowProvider) {
         conversation = EMClient.getInstance().chatManager().getConversation(toChatUsername, conversationType, true);
 
-        messageAdapter = new EaseMessageAdapter(getContext(), toChatUsername, conversationType, listView);
+        messageAdapter = new EaseMessageAdapter(toChatUsername, conversationType, listView);
         messageAdapter.setItemStyle(listItemStyle);
         messageAdapter.setCustomChatRowProvider(customChatRowProvider);
 
