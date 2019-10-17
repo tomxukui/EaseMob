@@ -74,12 +74,12 @@ public class EaseToolbar extends Toolbar {
         tv_title.setText(mTitle == null ? "" : mTitle);
         tv_title.setTextColor(mTitleTextColor);
         tv_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleTextSize);
-        tv_title.setVisibility(mTitle == null ? VISIBLE : GONE);
+        tv_title.setVisibility(mTitle == null ? GONE : VISIBLE);
 
         tv_subtitle.setText(mSubtitle == null ? "" : mSubtitle);
         tv_subtitle.setTextColor(mSubtitleTextColor);
         tv_subtitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mSubtitleTextSize);
-        tv_subtitle.setVisibility(mSubtitle == null ? VISIBLE : GONE);
+        tv_subtitle.setVisibility(mSubtitle == null ? GONE : VISIBLE);
     }
 
     /**
@@ -89,7 +89,7 @@ public class EaseToolbar extends Toolbar {
         mTitle = title;
 
         tv_title.setText(mTitle == null ? "" : mTitle);
-        tv_title.setVisibility(mTitle == null ? VISIBLE : GONE);
+        tv_title.setVisibility(mTitle == null ? GONE : VISIBLE);
     }
 
     /**
@@ -124,7 +124,7 @@ public class EaseToolbar extends Toolbar {
         mSubtitle = subtitle;
 
         tv_subtitle.setText(mSubtitle == null ? "" : mSubtitle);
-        tv_subtitle.setVisibility(mSubtitle == null ? VISIBLE : GONE);
+        tv_subtitle.setVisibility(mSubtitle == null ? GONE : VISIBLE);
     }
 
     /**
