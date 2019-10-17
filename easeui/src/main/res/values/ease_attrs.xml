@@ -6,35 +6,37 @@
         <attr name="epl_empty_msg" format="string" />
         <attr name="epl_error_icon" format="reference" />
     </declare-styleable>
-    
+
     <declare-styleable name="EaseEmojiconMenu">
-       	<attr name="bigEmojiconRows" format="integer"/>
-       	<attr name="emojiconColumns" format="integer"/>
+        <attr name="bigEmojiconRows" format="integer" />
+        <attr name="emojiconColumns" format="integer" />
     </declare-styleable>
-    
+
     <declare-styleable name="EaseChatExtendMenu">
-        <attr name="numColumns" format="integer"/>
+        <attr name="numColumns" format="integer" />
     </declare-styleable>
-    
+
     <declare-styleable name="EaseToolbar">
-        <attr name="android:text" format="string" />
-        <attr name="android:textColor" format="color" />
-        <attr name="android:textSize" format="dimension" />
-        <attr name="toolbarLeftText" format="string" />
-        <attr name="toolbarLeftTextColor" format="color" />
-        <attr name="toolbarLeftTextSize" format="dimension" />
+        <!--标题-->
+        <attr name="toolbar_title" format="string" />
+        <attr name="toolbar_title_textColor" format="color" />
+        <attr name="toolbar_title_textSize" format="dimension" />
+        <!--副标题-->
+        <attr name="toolbar_subtitle" format="string" />
+        <attr name="toolbar_subtitle_textColor" format="color" />
+        <attr name="toolbar_subtitle_textSize" format="dimension" />
     </declare-styleable>
-    
+
     <declare-styleable name="EaseSwitchButton">
-        <attr name="switchOpenImage" format="reference"/>
-        <attr name="switchCloseImage" format="reference"/>
+        <attr name="switchOpenImage" format="reference" />
+        <attr name="switchCloseImage" format="reference" />
         <attr name="switchStatus">
-            <enum name="open" value="0"/>
-            <enum name="close" value="1"/>
+            <enum name="open" value="0" />
+            <enum name="close" value="1" />
         </attr>
     </declare-styleable>
-    
-     <declare-styleable name="EaseImageView">
+
+    <declare-styleable name="EaseImageView">
         <attr name="ease_border_color" format="color" />
         <attr name="ease_border_width" format="dimension" />
         <attr name="ease_press_alpha" format="integer" />

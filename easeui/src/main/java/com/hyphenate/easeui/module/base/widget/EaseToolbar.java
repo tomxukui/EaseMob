@@ -11,19 +11,19 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hyphenate.easeui.R;
-import com.hyphenate.util.DensityUtil;
+import com.hyphenate.easeui.utils.DensityUtil;
 
 public class EaseToolbar extends Toolbar {
 
     private TextView tv_title;
-    private TextView tv_left;
+    private TextView tv_subtitle;
 
     private String mTitle;
     private int mTitleTextColor;
     private int mTitleTextSize;
-    private String mLeftText;
-    private int mLeftTextColor;
-    private int mLeftTextSize;
+    private String mSubtitle;
+    private int mSubtitleTextColor;
+    private int mSubtitleTextSize;
 
     public EaseToolbar(Context context) {
         this(context, null);
@@ -41,19 +41,23 @@ public class EaseToolbar extends Toolbar {
     }
 
     private void initData(Context context, AttributeSet attrs, int defStyleAttr) {
-        mTitle = "";
+        mTitle = null;
         mTitleTextColor = Color.parseColor("#ffffff");
-        mTitleTextSize = DensityUtil.sp2px(context, 18);
+        mTitleTextSize = DensityUtil.sp2px(18);
+        mSubtitle = null;
+        mSubtitleTextColor = Color.parseColor("#ffffff");
+        mSubtitleTextSize = DensityUtil.sp2px(10);
 
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.EaseToolbar, defStyleAttr, 0);
 
-            mTitle = ta.getString(R.styleable.EaseToolbar_android_text);
-            mTitleTextColor = ta.getColor(R.styleable.EaseToolbar_android_textColor, mTitleTextColor);
-            mTitleTextSize = ta.getDimensionPixelSize(R.styleable.EaseToolbar_android_textSize, mTitleTextSize);
-            mLeftText = ta.getString(R.styleable.EaseToolbar_toolbarLeftText);
-            mLeftTextColor = ta.getColor(R.styleable.EaseToolbar_toolbarLeftTextColor, mTitleTextColor);
-            mLeftTextSize = ta.getDimensionPixelSize(R.styleable.EaseToolbar_toolbarLeftTextSize, mTitleTextSize);
+            mTitle = ta.getString(R.styleable.EaseToolbar_toolbar_title);
+            mTitleTextColor = ta.getColor(R.styleable.EaseToolbar_toolbar_title_textColor, mTitleTextColor);
+            mTitleTextSize = ta.getDimensionPixelSize(R.styleable.EaseToolbar_toolbar_title_textSize, mTitleTextSize);
+
+            mSubtitle = ta.getString(R.styleable.EaseToolbar_toolbar_subtitle);
+            mSubtitleTextColor = ta.getColor(R.styleable.EaseToolbar_toolbar_subtitle_textColor, mSubtitleTextColor);
+            mSubtitleTextSize = ta.getDimensionPixelSize(R.styleable.EaseToolbar_toolbar_subtitle_textSize, mSubtitleTextSize);
 
             ta.recycle();
         }
@@ -63,41 +67,89 @@ public class EaseToolbar extends Toolbar {
         View view = inflate(context, R.layout.ease_toolbar, this);
 
         tv_title = view.findViewById(R.id.tv_title);
-        tv_left = view.findViewById(R.id.tv_left);
+        tv_subtitle = view.findViewById(R.id.tv_subtitle);
     }
 
     private void setView() {
         tv_title.setText(mTitle == null ? "" : mTitle);
         tv_title.setTextColor(mTitleTextColor);
         tv_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleTextSize);
+        tv_title.setVisibility(mTitle == null ? VISIBLE : GONE);
 
-        tv_left.setText(mLeftText == null ? "" : mLeftText);
-        tv_left.setTextColor(mLeftTextColor);
-        tv_left.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLeftTextSize);
+        tv_subtitle.setText(mSubtitle == null ? "" : mSubtitle);
+        tv_subtitle.setTextColor(mSubtitleTextColor);
+        tv_subtitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mSubtitleTextSize);
+        tv_subtitle.setVisibility(mSubtitle == null ? VISIBLE : GONE);
     }
 
+    /**
+     * 设置标题
+     */
     public void setTitle(String title) {
-        this.mTitle = title;
+        mTitle = title;
 
-        setView();
+        tv_title.setText(mTitle == null ? "" : mTitle);
+        tv_title.setVisibility(mTitle == null ? VISIBLE : GONE);
     }
 
-    public void setLeftText(String text) {
-        this.mLeftText = text;
+    /**
+     * 设置标题颜色
+     */
+    public void setTitleTextColor(int textColor) {
+        mTitleTextColor = textColor;
 
-        setView();
+        tv_title.setTextColor(mTitleTextColor);
     }
 
-    public TextView getTitleView() {
-        return this.tv_title;
+    /**
+     * 设置标题字体大小
+     */
+    public void setTitleTextSize(int textSize) {
+        mTitleTextSize = textSize;
+
+        tv_title.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTitleTextSize);
     }
 
-    public void setOnLeftClickListener(OnClickListener listener) {
-        tv_left.setOnClickListener(listener);
+    /**
+     * 设置副标题
+     */
+    public void setSubtitle(String subtitle) {
+        mSubtitle = subtitle;
+
+        tv_subtitle.setText(mSubtitle == null ? "" : mSubtitle);
+        tv_subtitle.setVisibility(mSubtitle == null ? VISIBLE : GONE);
     }
 
-    public void setOnTitleClickListener(OnClickListener listener) {
+    /**
+     * 设置副标题颜色
+     */
+    public void setSubtitleTextColor(int textColor) {
+        mSubtitleTextColor = textColor;
+
+        tv_subtitle.setTextColor(mSubtitleTextColor);
+    }
+
+    /**
+     * 设置副标题字体大小
+     */
+    public void setSubtitleTextSize(int textSize) {
+        mSubtitleTextSize = textSize;
+
+        tv_subtitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mSubtitleTextSize);
+    }
+
+    /**
+     * 设置标题点击事件
+     */
+    public void setOnTitleClickListener(@Nullable OnClickListener listener) {
         tv_title.setOnClickListener(listener);
+    }
+
+    /**
+     * 设置副标题点击事件
+     */
+    public void setOnSubtitleClickListener(@Nullable OnClickListener listener) {
+        tv_subtitle.setOnClickListener(listener);
     }
 
 }
