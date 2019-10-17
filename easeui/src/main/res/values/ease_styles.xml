@@ -21,17 +21,19 @@
     <style name="EaseToolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:minHeight">@dimen/ease_toolbar_minHeight</item>
-        <item name="android:background">@color/ease_toolbar_background</item>
         <item name="elevation">0dp</item>
-        <item name="navigationIcon">@mipmap/ease_toolbar_back</item>
-        <item name="android:textColor">@color/ease_toolbar_title</item>
         <item name="popupTheme">@style/EaseAppTheme.PopupOverlay</item>
         <item name="android:theme">@style/EaseAppTheme.AppBarOverlay</item>
-        <item name="android:textSize">@dimen/ease_toolbar_title_textSize</item>
         <item name="android:padding">0dp</item>
         <item name="contentInsetStart">0dp</item>
         <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="android:minHeight">@dimen/ease_toolbar_minHeight</item>
+        <item name="android:background">@color/ease_toolbar_background</item>
+        <item name="navigationIcon">@mipmap/ease_toolbar_back</item>
+        <item name="toolbar_title_textColor">@color/ease_toolbar_title</item>
+        <item name="toolbar_title_textSize">@dimen/ease_toolbar_title_textSize</item>
+        <item name="toolbar_subtitle_textColor">@color/ease_toolbar_subtitle</item>
+        <item name="toolbar_subtitle_textSize">@dimen/ease_toolbar_subtitle_textSize</item>
     </style>
 
     <style name="chat_content_date_style">

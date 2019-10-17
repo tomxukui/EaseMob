@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!--标题栏-->
+    <color name="ease_toolbar_background">#FFFFFF</color>
+    <color name="ease_toolbar_title">#1A1A1A</color>
+    <color name="ease_toolbar_subtitle">#1A1A1A</color>
+    <color name="ease_toolbar_menu">#00B8C1</color>
+
 </resources>

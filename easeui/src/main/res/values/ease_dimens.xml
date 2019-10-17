@@ -11,8 +11,9 @@
     <dimen name="chat_nick_text_size">13sp</dimen>
 
     <!--标题栏-->
-    <dimen name="ease_toolbar_title_textSize">18sp</dimen>
     <dimen name="ease_toolbar_minHeight">50dp</dimen>
+    <dimen name="ease_toolbar_title_textSize">18sp</dimen>
+    <dimen name="ease_toolbar_subtitle_textSize">10sp</dimen>
 
     <!--会话-->
     <dimen name="ease_converstation_list_name">16sp</dimen>
