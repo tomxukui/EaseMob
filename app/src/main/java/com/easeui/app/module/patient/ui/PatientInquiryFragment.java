@@ -1,4 +1,4 @@
-package com.easeui.app.module.ui;
+package com.easeui.app.module.patient.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,8 +8,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.easeui.app.R;
-import com.easeui.app.module.adapter.InquiryMenuListAdapter;
-import com.easeui.app.module.module.InquiryMenuItem;
+import com.easeui.app.module.patient.adapter.PatientInquiryMenuListAdapter;
+import com.easeui.app.module.patient.model.PatientInquiryMenuItem;
 import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
@@ -21,14 +21,14 @@ import com.hyphenate.easeui.utils.EaseToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InquiryFragment extends EaseInquiryFragment {
+public class PatientInquiryFragment extends EaseInquiryFragment {
 
     //标题栏菜单
     private ListPopupWindow mPopupMenu;
-    private InquiryMenuListAdapter mMenuListAdapter;
+    private PatientInquiryMenuListAdapter mMenuListAdapter;
 
-    public static InquiryFragment newInstance(EaseUser fromUser, EaseUser toUser, @EaseType.ChatMode String chatMode) {
-        InquiryFragment fragment = new InquiryFragment();
+    public static PatientInquiryFragment newInstance(EaseUser fromUser, EaseUser toUser, @EaseType.ChatMode String chatMode) {
+        PatientInquiryFragment fragment = new PatientInquiryFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(EXTRA_FROM_USER, fromUser);
         bundle.putSerializable(EXTRA_TO_USER, toUser);
@@ -40,23 +40,23 @@ public class InquiryFragment extends EaseInquiryFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        List<InquiryMenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new InquiryMenuItem(R.mipmap.ic_menu_doctor, "医生介绍", (itemModel, position) -> {
+        List<PatientInquiryMenuItem> menuItems = new ArrayList<>();
+        menuItems.add(new PatientInquiryMenuItem(R.mipmap.ic_menu_doctor, "医生介绍", (itemModel, position) -> {
             EaseToastUtil.show("医生介绍");
         }));
-        menuItems.add(new InquiryMenuItem(R.mipmap.ic_menu_appoint, "去挂号", (itemModel, position) -> {
+        menuItems.add(new PatientInquiryMenuItem(R.mipmap.ic_menu_appoint, "去挂号", (itemModel, position) -> {
             EaseToastUtil.show("去挂号");
         }));
-        menuItems.add(new InquiryMenuItem(R.mipmap.ic_menu_inquiry_info, "问诊信息", (itemModel, position) -> {
+        menuItems.add(new PatientInquiryMenuItem(R.mipmap.ic_menu_inquiry_info, "问诊信息", (itemModel, position) -> {
             EaseToastUtil.show("问诊信息");
         }));
-        mMenuListAdapter = new InquiryMenuListAdapter(menuItems);
+        mMenuListAdapter = new PatientInquiryMenuListAdapter(menuItems);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_inquiry, menu);
+        inflater.inflate(R.menu.menu_patient_inquiry, menu);
 
         menu.findItem(R.id.action_more).setOnMenuItemClickListener(item -> {
             showPopupMenu();
@@ -77,9 +77,9 @@ public class InquiryFragment extends EaseInquiryFragment {
             mPopupMenu.setVerticalOffset(DensityUtil.dp2px(4));
             mPopupMenu.setAdapter(mMenuListAdapter);
             mPopupMenu.setOnItemClickListener((parent, view, position, id) -> {
-                InquiryMenuItem menuItem = mMenuListAdapter.getItem(position);
+                PatientInquiryMenuItem menuItem = mMenuListAdapter.getItem(position);
 
-                InquiryMenuItem.OnItemClickListener listener = menuItem.getOnItemClickListener();
+                PatientInquiryMenuItem.OnItemClickListener listener = menuItem.getOnItemClickListener();
                 if (listener != null) {
                     listener.onItemClick(menuItem, position);
                 }

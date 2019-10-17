@@ -22,9 +22,9 @@
             </intent-filter>
         </activity>
 
-        <!--问诊页面-->
+        <!--病人问诊页面-->
         <activity
-            android:name=".ui.InquiryActivity"
+            android:name=".module.patient.ui.PatientInquiryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/EaseAppTheme"
             android:windowSoftInputMode="adjustResize" />

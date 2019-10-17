@@ -1,20 +1,19 @@
-package com.easeui.app.ui;
+package com.easeui.app.module.patient.ui;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
-import com.easeui.app.module.ui.InquiryFragment;
 import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryActivity;
 
-public class InquiryActivity extends EaseInquiryActivity {
+public class PatientInquiryActivity extends EaseInquiryActivity {
 
     @Override
     protected Fragment getMainFragment() {
-        return InquiryFragment.newInstance(mFromUser, mToUser, mChatMode);
+        return PatientInquiryFragment.newInstance(mFromUser, mToUser, mChatMode);
     }
 
     /**
@@ -27,7 +26,7 @@ public class InquiryActivity extends EaseInquiryActivity {
      * @param chatMode 问诊模式
      */
     public static Intent buildIntent(Context context, EaseUser fromUser, @Nullable String pwd, EaseUser toUser, @EaseType.ChatMode String chatMode) {
-        Intent intent = new Intent(context, InquiryActivity.class);
+        Intent intent = new Intent(context, PatientInquiryActivity.class);
         intent.putExtra(EXTRA_FROM_USER, fromUser);
         intent.putExtra(EXTRA_PWD, pwd);
         intent.putExtra(EXTRA_TO_USER, toUser);

@@ -1,4 +1,4 @@
-package com.easeui.app.module.adapter;
+package com.easeui.app.module.patient.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,17 +8,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.easeui.app.R;
-import com.easeui.app.module.module.InquiryMenuItem;
+import com.easeui.app.module.patient.model.PatientInquiryMenuItem;
 
 import java.util.List;
 
-public class InquiryMenuListAdapter extends BaseAdapter {
+public class PatientInquiryMenuListAdapter extends BaseAdapter {
 
-    private List<InquiryMenuItem> mMenuItems;
+    private List<PatientInquiryMenuItem> mMenuItems;
 
     private ViewHolder mViewHolder;
 
-    public InquiryMenuListAdapter(List<InquiryMenuItem> menuItems) {
+    public PatientInquiryMenuListAdapter(List<PatientInquiryMenuItem> menuItems) {
         this.mMenuItems = menuItems;
     }
 
@@ -28,7 +28,7 @@ public class InquiryMenuListAdapter extends BaseAdapter {
     }
 
     @Override
-    public InquiryMenuItem getItem(int position) {
+    public PatientInquiryMenuItem getItem(int position) {
         return mMenuItems.get(position);
     }
 
@@ -40,7 +40,7 @@ public class InquiryMenuListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_inquiry_menu, parent, false);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_patient_inquiry_menu, parent, false);
 
             mViewHolder = new ViewHolder();
             mViewHolder.iv_icon = convertView.findViewById(R.id.iv_icon);
@@ -52,7 +52,7 @@ public class InquiryMenuListAdapter extends BaseAdapter {
             mViewHolder = (ViewHolder) convertView.getTag();
         }
 
-        InquiryMenuItem menuItem = getItem(position);
+        PatientInquiryMenuItem menuItem = getItem(position);
 
         mViewHolder.iv_icon.setImageResource(menuItem.getResId());
         mViewHolder.tv_name.setText(menuItem.getName());

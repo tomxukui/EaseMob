@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.easeui.app.R;
 import com.easeui.app.dialog.LoadingDialog;
+import com.easeui.app.module.patient.ui.PatientInquiryActivity;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.constants.EaseType;
@@ -252,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
             EaseUser fromUser = new EaseUser(username, nickname, avatar, null);
             EaseUser toUser = new EaseUser(toUsername, toNickname, toAvatar);
 
-            Intent intent = InquiryActivity.buildIntent(MainActivity.this, fromUser, pwd, toUser, EaseType.CHAT);
+            Intent intent = PatientInquiryActivity.buildIntent(MainActivity.this, fromUser, pwd, toUser, EaseType.CHAT);
             startActivity(intent);
         });
 

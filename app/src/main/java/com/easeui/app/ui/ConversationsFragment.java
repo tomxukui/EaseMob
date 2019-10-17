@@ -2,6 +2,7 @@ package com.easeui.app.ui;
 
 import android.content.Intent;
 
+import com.easeui.app.module.patient.ui.PatientInquiryActivity;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.constants.EaseType;
@@ -25,7 +26,7 @@ public class ConversationsFragment extends EaseConversationsFragment {
             EaseUser fromUser = EaseMessageUtil.getFromUser(message);
             EaseUser toUser = EaseMessageUtil.getToUser(message);
 
-            Intent intent = InquiryActivity.buildIntent(getContext(), fromUser, null, toUser, EaseType.CHAT);
+            Intent intent = PatientInquiryActivity.buildIntent(getContext(), fromUser, null, toUser, EaseType.CHAT);
             startActivity(intent);
 
         } else if (type == EMConversation.EMConversationType.GroupChat) {

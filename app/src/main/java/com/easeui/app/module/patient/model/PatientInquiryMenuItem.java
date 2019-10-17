@@ -1,23 +1,23 @@
-package com.easeui.app.module.module;
+package com.easeui.app.module.patient.model;
 
 import android.support.annotation.Nullable;
 
 import java.io.Serializable;
 
-public class InquiryMenuItem implements Serializable {
+public class PatientInquiryMenuItem implements Serializable {
 
     private int resId;
     private String name;
     @Nullable
     private OnItemClickListener onItemClickListener;
 
-    public InquiryMenuItem(int resId, String name, @Nullable OnItemClickListener listener) {
+    public PatientInquiryMenuItem(int resId, String name, @Nullable OnItemClickListener listener) {
         this.resId = resId;
         this.name = name;
         this.onItemClickListener = listener;
     }
 
-    public InquiryMenuItem() {
+    public PatientInquiryMenuItem() {
     }
 
     public int getResId() {
@@ -47,7 +47,7 @@ public class InquiryMenuItem implements Serializable {
 
     public interface OnItemClickListener {
 
-        void onItemClick(InquiryMenuItem itemModel, int position);
+        void onItemClick(PatientInquiryMenuItem itemModel, int position);
 
     }
 
