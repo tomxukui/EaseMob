@@ -40,6 +40,7 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
     protected void setToolbar() {
         super.setToolbar();
         toolbar.setNavigationIcon(R.mipmap.ic_back_black);
+        toolbar.setTitleTextBold(true);
         toolbar.setSubtitle(mToUserMobile);
     }
 
