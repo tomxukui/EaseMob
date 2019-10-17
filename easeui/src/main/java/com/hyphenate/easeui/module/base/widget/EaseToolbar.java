@@ -42,10 +42,10 @@ public class EaseToolbar extends Toolbar {
 
     private void initData(Context context, AttributeSet attrs, int defStyleAttr) {
         mTitle = null;
-        mTitleTextColor = Color.parseColor("#ffffff");
+        mTitleTextColor = Color.WHITE;
         mTitleTextSize = DensityUtil.sp2px(18);
         mSubtitle = null;
-        mSubtitleTextColor = Color.parseColor("#ffffff");
+        mSubtitleTextColor = Color.WHITE;
         mSubtitleTextSize = DensityUtil.sp2px(10);
 
         if (attrs != null) {
