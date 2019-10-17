@@ -1,4 +1,4 @@
-package com.easeui.app.ui;
+package com.easeui.app.module.converstaion.ui;
 
 import android.content.Context;
 import android.content.Intent;

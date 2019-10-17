@@ -95,14 +95,21 @@
             android:hint="请输入对方的环信头像" />
 
         <Button
-            android:id="@+id/btn_chat"
+            android:id="@+id/btn_patientInquiry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="开启聊天" />
+            android:text="开启病人问诊" />
 
         <Button
-            android:id="@+id/btn_conversationList"
+            android:id="@+id/btn_doctorInquiry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="开启医生问诊" />
+
+        <Button
+            android:id="@+id/btn_conversations"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

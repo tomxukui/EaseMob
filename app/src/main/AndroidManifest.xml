@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme.NoActionBar">
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".module.main.ui.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -29,9 +29,16 @@
             android:theme="@style/EaseAppTheme"
             android:windowSoftInputMode="adjustResize" />
 
+        <!--医生问诊页面-->
+        <activity
+            android:name=".module.doctor.ui.DoctorInquiryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/EaseAppTheme"
+            android:windowSoftInputMode="adjustResize" />
+
         <!--会话页面-->
         <activity
-            android:name=".ui.ConverstationsActivity"
+            android:name=".module.converstaion.ui.ConverstationsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/EaseAppTheme"
             android:windowSoftInputMode="adjustResize" />

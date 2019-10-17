@@ -1,4 +1,4 @@
-package com.easeui.app.ui;
+package com.easeui.app.module.main.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,9 @@ import android.widget.Toast;
 
 import com.easeui.app.R;
 import com.easeui.app.dialog.LoadingDialog;
+import com.easeui.app.module.doctor.ui.DoctorInquiryActivity;
 import com.easeui.app.module.patient.ui.PatientInquiryActivity;
+import com.easeui.app.module.converstaion.ui.ConverstationsActivity;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.constants.EaseType;
@@ -29,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private AppCompatEditText et_toUsername;
     private AppCompatEditText et_toNickname;
     private AppCompatEditText et_toAvatar;
-    private Button btn_chat;
-    private Button btn_conversationList;
+    private Button btn_patientInquiry;
+    private Button btn_doctorInquiry;
+    private Button btn_conversations;
 
     private LoadingDialog mLoadingDialog;
 
@@ -54,8 +57,9 @@ public class MainActivity extends AppCompatActivity {
         et_toUsername = findViewById(R.id.et_toUsername);
         et_toNickname = findViewById(R.id.et_toNickname);
         et_toAvatar = findViewById(R.id.et_toAvatar);
-        btn_chat = findViewById(R.id.btn_chat);
-        btn_conversationList = findViewById(R.id.btn_conversationList);
+        btn_patientInquiry = findViewById(R.id.btn_patientInquiry);
+        btn_doctorInquiry = findViewById(R.id.btn_doctorInquiry);
+        btn_conversations = findViewById(R.id.btn_conversations);
     }
 
     private void setView() {
@@ -221,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn_chat.setOnClickListener(v -> {
+        btn_patientInquiry.setOnClickListener(v -> {
             String username = et_username.getText().toString().trim();
             String nickname = et_nickname.getText().toString().trim();
             String avatar = et_avatar.getText().toString().trim();
@@ -257,7 +261,43 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        btn_conversationList.setOnClickListener(v -> {
+        btn_doctorInquiry.setOnClickListener(v -> {
+            String username = et_username.getText().toString().trim();
+            String nickname = et_nickname.getText().toString().trim();
+            String avatar = et_avatar.getText().toString().trim();
+            String pwd = et_pwd.getText().toString().trim();
+            String toUsername = et_toUsername.getText().toString().trim();
+            String toNickname = et_toNickname.getText().toString().trim();
+            String toAvatar = et_toAvatar.getText().toString().trim();
+
+            if (TextUtils.isEmpty(username)) {
+                toast(et_username.getHint().toString());
+                return;
+            }
+            if (TextUtils.isEmpty(nickname)) {
+                toast(et_nickname.getHint().toString());
+                return;
+            }
+            if (TextUtils.isEmpty(pwd)) {
+                toast(et_pwd.getHint().toString());
+                return;
+            }
+            if (TextUtils.isEmpty(toUsername)) {
+                toast(et_toUsername.getHint().toString());
+                return;
+            }
+            if (TextUtils.isEmpty(toNickname)) {
+                toast(et_toNickname.getHint().toString());
+                return;
+            }
+            EaseUser fromUser = new EaseUser(username, nickname, avatar, null);
+            EaseUser toUser = new EaseUser(toUsername, toNickname, toAvatar);
+
+            Intent intent = DoctorInquiryActivity.buildIntent(MainActivity.this, fromUser, pwd, toUser, EaseType.CHAT);
+            startActivity(intent);
+        });
+
+        btn_conversations.setOnClickListener(v -> {
             String username = et_username.getText().toString().trim();
             String nickname = et_nickname.getText().toString().trim();
             String avatar = et_avatar.getText().toString().trim();
