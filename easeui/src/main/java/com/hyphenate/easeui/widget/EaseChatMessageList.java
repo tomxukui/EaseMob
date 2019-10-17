@@ -20,7 +20,7 @@ import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 
 public class EaseChatMessageList extends FrameLayout {
 
-    protected SwipeRefreshLayout swipeRefreshLayout;
+    protected SwipeRefreshLayout refreshLayout;
     protected ListView listView;
 
     protected EMConversation conversation;
@@ -46,8 +46,8 @@ public class EaseChatMessageList extends FrameLayout {
     private void initView(Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.ease_chat_message_list, this);
 
-        swipeRefreshLayout = view.findViewById(R.id.chat_swipe_layout);
-        listView = view.findViewById(R.id.list);
+        refreshLayout = view.findViewById(R.id.refreshLayout);
+        listView = view.findViewById(R.id.listView);
     }
 
     public void init(String toChatUsername, EMConversation.EMConversationType conversationType, @Nullable EaseMessageListItemStyle listItemStyle, @Nullable EaseCustomChatRowProvider customChatRowProvider) {
@@ -91,14 +91,23 @@ public class EaseChatMessageList extends FrameLayout {
         }
     }
 
+    /**
+     * 获取下拉刷新控件
+     */
+    public SwipeRefreshLayout getSwipeRefreshLayout() {
+        return refreshLayout;
+    }
+
+    /**
+     * 获取列表控件
+     */
     public ListView getListView() {
         return listView;
     }
 
-    public SwipeRefreshLayout getSwipeRefreshLayout() {
-        return swipeRefreshLayout;
-    }
-
+    /**
+     * 获取指定位置的数据
+     */
     public EMMessage getItem(int position) {
         return messageAdapter.getItem(position);
     }
@@ -106,22 +115,33 @@ public class EaseChatMessageList extends FrameLayout {
     public interface MessageListItemClickListener {
 
         /**
-         * there is default handling when bubble is clicked, if you want handle it, return true
-         * another way is you implement in onBubbleClick() of chat row
-         *
-         * @param message
-         * @return
+         * 消息点击
          */
         boolean onBubbleClick(EMMessage message);
 
-        boolean onResendClick(EMMessage message);
-
+        /**
+         * 消息长按
+         */
         void onBubbleLongClick(EMMessage message);
 
+        /**
+         * 重新发送点击
+         */
+        boolean onResendClick(EMMessage message);
+
+        /**
+         * 头像点击
+         */
         void onUserAvatarClick(String username);
 
+        /**
+         * 头像长按
+         */
         void onUserAvatarLongClick(String username);
 
+        /**
+         * 消息进度
+         */
         void onMessageInProgress(EMMessage message);
 
     }
