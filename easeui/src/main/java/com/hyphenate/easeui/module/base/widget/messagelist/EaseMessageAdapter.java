@@ -32,21 +32,21 @@ public class EaseMessageAdapter extends BaseAdapter {
     private static final int HANDLER_MESSAGE_SELECT_LAST = 1;
     private static final int HANDLER_MESSAGE_SEEK_TO = 2;
 
-    private static final int MESSAGE_TYPE_RECV_TXT = 0;
-    private static final int MESSAGE_TYPE_SENT_TXT = 1;
-    private static final int MESSAGE_TYPE_SENT_IMAGE = 2;
-    private static final int MESSAGE_TYPE_SENT_LOCATION = 3;
-    private static final int MESSAGE_TYPE_RECV_LOCATION = 4;
-    private static final int MESSAGE_TYPE_RECV_IMAGE = 5;
-    private static final int MESSAGE_TYPE_SENT_VOICE = 6;
-    private static final int MESSAGE_TYPE_RECV_VOICE = 7;
-    private static final int MESSAGE_TYPE_SENT_VIDEO = 8;
-    private static final int MESSAGE_TYPE_RECV_VIDEO = 9;
-    private static final int MESSAGE_TYPE_SENT_FILE = 10;
-    private static final int MESSAGE_TYPE_RECV_FILE = 11;
-    private static final int MESSAGE_TYPE_SENT_EXPRESSION = 12;
-    private static final int MESSAGE_TYPE_RECV_EXPRESSION = 13;
-    private static final int MESSAGE_TYPE_FINISH_CONVERSATION = 14;
+    private static final int MESSAGE_TYPE_SENT_TXT = 0;//发送的文字
+    private static final int MESSAGE_TYPE_RECV_TXT = 1;//接收的文字
+    private static final int MESSAGE_TYPE_SENT_IMAGE = 2;//发送的图片
+    private static final int MESSAGE_TYPE_RECV_IMAGE = 3;//接收的图片
+    private static final int MESSAGE_TYPE_SENT_LOCATION = 4;//发送的定位
+    private static final int MESSAGE_TYPE_RECV_LOCATION = 5;//接收的定位
+    private static final int MESSAGE_TYPE_SENT_VOICE = 6;//发送的语音
+    private static final int MESSAGE_TYPE_RECV_VOICE = 7;//接收的语音
+    private static final int MESSAGE_TYPE_SENT_VIDEO = 8;//发送的视频
+    private static final int MESSAGE_TYPE_RECV_VIDEO = 9;//接收的视频
+    private static final int MESSAGE_TYPE_SENT_FILE = 10;//发送的文件
+    private static final int MESSAGE_TYPE_RECV_FILE = 11;//接收的文件
+    private static final int MESSAGE_TYPE_SENT_EXPRESSION = 12;//发送的表情
+    private static final int MESSAGE_TYPE_RECV_EXPRESSION = 13;//接收的表情
+    private static final int MESSAGE_TYPE_FINISH_CONVERSATION = 14;//问诊结束
 
     private ListView listView;
 
