@@ -20,17 +20,15 @@
 
     <style name="EaseToolbar">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:minHeight">?attr/actionBarSize</item>
-        <item name="android:background">#0089e1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/ease_toolbar_minHeight</item>
+        <item name="android:background">@color/ease_toolbar_background</item>
         <item name="elevation">0dp</item>
-        <item name="navigationIcon">@mipmap/ease_ic_back</item>
-        <item name="android:textColor">#ffffff</item>
+        <item name="navigationIcon">@mipmap/ease_toolbar_back</item>
+        <item name="android:textColor">@color/ease_toolbar_title</item>
         <item name="popupTheme">@style/EaseAppTheme.PopupOverlay</item>
         <item name="android:theme">@style/EaseAppTheme.AppBarOverlay</item>
-        <item name="android:textSize">18sp</item>
-        <item name="toolbarLeftTextColor">#ffffff</item>
-        <item name="toolbarLeftTextSize">14sp</item>
+        <item name="android:textSize">@dimen/ease_toolbar_title_textSize</item>
         <item name="android:padding">0dp</item>
         <item name="contentInsetStart">0dp</item>
         <item name="contentInsetStartWithNavigation">0dp</item>
@@ -61,12 +59,5 @@
         <item name="android:textSize">12sp</item>
         <item name="android:background">@drawable/ease_timestampe_bg</item>
     </style>
-
-    <!--
-    <style name="horizontal_slide2" parent="android:style/Theme.Holo.Light.NoActionBar">
-        <item name="android:windowAnimationStyle">@style/AnimFade2</item>
-    </style>
-    -->
-
 
 </resources>
