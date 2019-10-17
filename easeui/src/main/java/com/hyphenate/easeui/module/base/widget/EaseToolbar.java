@@ -83,6 +83,13 @@ public class EaseToolbar extends Toolbar {
     }
 
     /**
+     * 获取标题控件
+     */
+    public TextView getTitleTextView() {
+        return tv_title;
+    }
+
+    /**
      * 设置标题
      */
     public void setTitle(String title) {
@@ -115,6 +122,13 @@ public class EaseToolbar extends Toolbar {
      */
     public void setTitleTextBold(boolean bold) {
         tv_title.getPaint().setFakeBoldText(bold);
+    }
+
+    /**
+     * 获取副标题控件
+     */
+    public TextView getSubtitleTextView() {
+        return tv_subtitle;
     }
 
     /**
