@@ -111,6 +111,13 @@ public class EaseToolbar extends Toolbar {
     }
 
     /**
+     * 设置标题字体是否粗体
+     */
+    public void setTitleTextBold(boolean bold) {
+        tv_title.getPaint().setFakeBoldText(bold);
+    }
+
+    /**
      * 设置副标题
      */
     public void setSubtitle(String subtitle) {
