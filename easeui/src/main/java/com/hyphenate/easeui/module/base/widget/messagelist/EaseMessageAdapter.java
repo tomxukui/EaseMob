@@ -13,7 +13,7 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
-import com.hyphenate.easeui.module.base.widget.messagelist.EaseMessageListView.MessageListItemClickListener;
+import com.hyphenate.easeui.module.base.widget.messagelist.EaseMessageListView.OnItemClickListener;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.easeui.widget.presenter.EaseChatBigExpressionPresenter;
 import com.hyphenate.easeui.widget.presenter.EaseChatFilePresenter;
@@ -52,7 +52,7 @@ public class EaseMessageAdapter extends BaseAdapter {
     private EMConversation conversation;
     EMMessage[] messages = null;
 
-    private MessageListItemClickListener itemClickListener;
+    private OnItemClickListener itemClickListener;
     private EaseCustomChatRowProvider customRowProvider;
 
     private ListView listView;
@@ -281,7 +281,7 @@ public class EaseMessageAdapter extends BaseAdapter {
         this.itemStyle = itemStyle;
     }
 
-    public void setItemClickListener(MessageListItemClickListener listener) {
+    public void setItemClickListener(OnItemClickListener listener) {
         itemClickListener = listener;
     }
 

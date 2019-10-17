@@ -25,8 +25,6 @@ public class EaseMessageListView extends FrameLayout {
     protected EMConversation conversation;
     protected EaseMessageAdapter messageAdapter;
 
-    protected String toChatUsername;
-
     public EaseMessageListView(@NonNull Context context) {
         super(context);
         initView(context);
@@ -50,8 +48,6 @@ public class EaseMessageListView extends FrameLayout {
     }
 
     public void init(String toChatUsername, EMConversation.EMConversationType conversationType, @Nullable EaseMessageListItemStyle listItemStyle, @Nullable EaseCustomChatRowProvider customChatRowProvider) {
-        this.toChatUsername = toChatUsername;
-
         conversation = EMClient.getInstance().chatManager().getConversation(toChatUsername, conversationType, true);
 
         messageAdapter = new EaseMessageAdapter(getContext(), toChatUsername, conversationType, listView);
@@ -111,7 +107,7 @@ public class EaseMessageListView extends FrameLayout {
         return messageAdapter.getItem(position);
     }
 
-    public interface MessageListItemClickListener {
+    public interface OnItemClickListener {
 
         /**
          * 消息点击
@@ -148,7 +144,7 @@ public class EaseMessageListView extends FrameLayout {
     /**
      * 设置子项点击事件
      */
-    public void setItemClickListener(MessageListItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         if (messageAdapter != null) {
             messageAdapter.setItemClickListener(listener);
         }

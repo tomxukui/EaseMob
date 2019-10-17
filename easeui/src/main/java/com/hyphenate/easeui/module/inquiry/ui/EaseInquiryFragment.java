@@ -259,7 +259,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
     protected void onMessageListInit() {
         list_message.init(mToUser.getUsername(), EMConversation.EMConversationType.Chat, getMessageListItemStyle(), getCustomChatRowProvider());
-        list_message.setItemClickListener(new EaseMessageListView.MessageListItemClickListener() {
+        list_message.setOnItemClickListener(new EaseMessageListView.OnItemClickListener() {
 
             @Override
             public void onUserAvatarClick(String username) {

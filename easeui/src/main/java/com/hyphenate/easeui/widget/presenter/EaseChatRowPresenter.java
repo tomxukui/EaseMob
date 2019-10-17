@@ -19,7 +19,7 @@ public abstract class EaseChatRowPresenter implements EaseChatRow.EaseChatRowAct
     private EMMessage message;
     private int position;
 
-    private EaseMessageListView.MessageListItemClickListener itemClickListener;
+    private EaseMessageListView.OnItemClickListener itemClickListener;
 
     @Override
     public void onResendClick(final EMMessage message) {
@@ -47,7 +47,7 @@ public abstract class EaseChatRowPresenter implements EaseChatRow.EaseChatRowAct
         return chatRow;
     }
 
-    public void setup(EMMessage msg, int position, EaseMessageListView.MessageListItemClickListener itemClickListener, EaseMessageListItemStyle itemStyle) {
+    public void setup(EMMessage msg, int position, EaseMessageListView.OnItemClickListener itemClickListener, EaseMessageListItemStyle itemStyle) {
         this.message = msg;
         this.position = position;
         this.itemClickListener = itemClickListener;

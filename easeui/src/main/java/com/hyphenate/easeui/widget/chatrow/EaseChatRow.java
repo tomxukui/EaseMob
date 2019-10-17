@@ -19,8 +19,7 @@ import com.hyphenate.easeui.bean.EaseAvatarOptions;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseUserUtil;
-import com.hyphenate.easeui.module.base.widget.messagelist.EaseMessageListView;
-import com.hyphenate.easeui.module.base.widget.messagelist.EaseMessageListView.MessageListItemClickListener;
+import com.hyphenate.easeui.module.base.widget.messagelist.EaseMessageListView.OnItemClickListener;
 import com.hyphenate.easeui.widget.EaseImageView;
 import com.hyphenate.util.DateUtils;
 
@@ -57,7 +56,7 @@ public abstract class EaseChatRow extends LinearLayout {
     protected TextView ackedView;
     protected TextView deliveredView;
 
-    protected MessageListItemClickListener itemClickListener;
+    protected OnItemClickListener itemClickListener;
     protected EaseMessageListItemStyle itemStyle;
 
     private EaseChatRowActionCallback itemActionCallback;
@@ -105,7 +104,7 @@ public abstract class EaseChatRow extends LinearLayout {
      * @param position
      */
     public void setUpView(EMMessage message, int position,
-                          EaseMessageListView.MessageListItemClickListener itemClickListener,
+                          OnItemClickListener itemClickListener,
                           EaseChatRowActionCallback itemActionCallback,
                           EaseMessageListItemStyle itemStyle) {
         this.message = message;
