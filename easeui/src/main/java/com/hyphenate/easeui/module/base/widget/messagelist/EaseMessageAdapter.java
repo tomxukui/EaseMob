@@ -3,6 +3,7 @@ package com.hyphenate.easeui.module.base.widget.messagelist;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -52,7 +53,7 @@ public class EaseMessageAdapter extends BaseAdapter {
     private EMConversation conversation;
     EMMessage[] messages = null;
 
-    private OnItemClickListener itemClickListener;
+    private OnItemClickListener mOnItemClickListener;
     private EaseCustomChatRowProvider customRowProvider;
 
     private ListView listView;
@@ -272,7 +273,7 @@ public class EaseMessageAdapter extends BaseAdapter {
             presenter = (EaseChatRowPresenter) convertView.getTag();
         }
 
-        presenter.setup(message, position, itemClickListener, itemStyle);
+        presenter.setup(message, position, mOnItemClickListener, itemStyle);
 
         return convertView;
     }
@@ -281,8 +282,8 @@ public class EaseMessageAdapter extends BaseAdapter {
         this.itemStyle = itemStyle;
     }
 
-    public void setItemClickListener(OnItemClickListener listener) {
-        itemClickListener = listener;
+    public void setOnItemClickListener(@Nullable OnItemClickListener listener) {
+        mOnItemClickListener = listener;
     }
 
     public void setCustomChatRowProvider(EaseCustomChatRowProvider rowProvider) {

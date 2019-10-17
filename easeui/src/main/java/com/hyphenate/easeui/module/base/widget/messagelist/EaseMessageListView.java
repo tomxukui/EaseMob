@@ -107,6 +107,24 @@ public class EaseMessageListView extends FrameLayout {
         return messageAdapter.getItem(position);
     }
 
+    /**
+     * 设置子项点击事件
+     */
+    public void setOnItemClickListener(@Nullable OnItemClickListener listener) {
+        if (messageAdapter != null) {
+            messageAdapter.setOnItemClickListener(listener);
+        }
+    }
+
+    /**
+     * 设置自定义子项的提供者
+     */
+    public void setCustomChatRowProvider(EaseCustomChatRowProvider rowProvider) {
+        if (messageAdapter != null) {
+            messageAdapter.setCustomChatRowProvider(rowProvider);
+        }
+    }
+
     public interface OnItemClickListener {
 
         /**
@@ -139,24 +157,6 @@ public class EaseMessageListView extends FrameLayout {
          */
         void onMessageInProgress(EMMessage message);
 
-    }
-
-    /**
-     * 设置子项点击事件
-     */
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        if (messageAdapter != null) {
-            messageAdapter.setItemClickListener(listener);
-        }
-    }
-
-    /**
-     * 设置自定义子项的提供者
-     */
-    public void setCustomChatRowProvider(EaseCustomChatRowProvider rowProvider) {
-        if (messageAdapter != null) {
-            messageAdapter.setCustomChatRowProvider(rowProvider);
-        }
     }
 
 }
