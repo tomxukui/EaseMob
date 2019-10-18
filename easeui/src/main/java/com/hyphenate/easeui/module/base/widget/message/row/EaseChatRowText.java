@@ -11,7 +11,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.model.EaseDingMessageHelper;
-import com.hyphenate.easeui.utils.EaseSmileUtils;
+import com.hyphenate.easeui.utils.EaseSmileUtil;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class EaseChatRowText extends EaseChatRow {
     @Override
     public void onSetUpView() {
         EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
-        Spannable span = EaseSmileUtils.getSmiledText(context, txtBody.getMessage());
+        Spannable span = EaseSmileUtil.getSmiledText(context, txtBody.getMessage());
         contentView.setText(span, BufferType.SPANNABLE);
     }
 

@@ -31,7 +31,7 @@ import com.hyphenate.easeui.EaseUI.EaseEmojiconInfoProvider;
 import com.hyphenate.easeui.bean.EaseEmojicon;
 import com.hyphenate.easeui.model.EaseDefaultEmojiconDatas;
 
-public class EaseSmileUtils {
+public class EaseSmileUtil {
     public static final String DELETE_KEY = "em_delete_delete_expression";
     
 	public static final String ee_1 = "[):]";

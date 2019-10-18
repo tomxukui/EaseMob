@@ -17,7 +17,7 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.bean.EaseEmojicon;
 import com.hyphenate.easeui.bean.EaseEmojiconGroupEntity;
 import com.hyphenate.easeui.model.EaseDefaultEmojiconDatas;
-import com.hyphenate.easeui.utils.EaseSmileUtils;
+import com.hyphenate.easeui.utils.EaseSmileUtil;
 import com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatPrimaryMenuBase.EaseChatPrimaryMenuListener;
 import com.hyphenate.easeui.module.base.widget.emojicon.EaseEmojiconMenu;
 import com.hyphenate.easeui.module.base.widget.emojicon.EaseEmojiconMenuBase.EaseEmojiconMenuListener;
@@ -118,7 +118,7 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
             public void onExpressionClicked(EaseEmojicon emojicon) {
                 if (emojicon.getType() != EaseEmojicon.Type.BIG_EXPRESSION) {
                     if (emojicon.getEmojiText() != null) {
-                        menu_primary.onEmojiconInputEvent(EaseSmileUtils.getSmiledText(getContext(), emojicon.getEmojiText()));
+                        menu_primary.onEmojiconInputEvent(EaseSmileUtil.getSmiledText(getContext(), emojicon.getEmojiText()));
                     }
 
                 } else {

@@ -18,6 +18,7 @@ import com.hyphenate.EMError;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.model.EaseVoiceRecorder;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.hyphenate.easeui.utils.EaseFileUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowVoicePlayer;
 
@@ -171,7 +172,7 @@ public class EaseVoiceRecorderView extends RelativeLayout {
     }
 
     public void startRecording() {
-        if (!EaseCommonUtils.isSdcardExist()) {
+        if (!EaseFileUtil.isSdcardExist()) {
             EaseToastUtil.show(R.string.Send_voice_need_sdcard_support);
             return;
         }

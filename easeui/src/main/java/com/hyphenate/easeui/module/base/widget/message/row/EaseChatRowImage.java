@@ -13,7 +13,7 @@ import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.utils.EaseAndroidLifecycleUtil;
-import com.hyphenate.easeui.utils.EaseImageUtils;
+import com.hyphenate.easeui.utils.EaseImageUtil;
 import com.hyphenate.easeui.utils.EaseFileUtil;
 
 import java.io.File;
@@ -44,7 +44,7 @@ public class EaseChatRowImage extends EaseChatRowFile {
 
         if (message.direct() == EMMessage.Direct.SEND) {//已发送的消息
             String filePath = imgBody.getLocalUrl();
-            String thumbPath = EaseImageUtils.getThumbnailImagePath(filePath);
+            String thumbPath = EaseImageUtil.getThumbnailImagePath(filePath);
             showImageView(thumbPath, filePath);
         }
     }
@@ -68,7 +68,7 @@ public class EaseChatRowImage extends EaseChatRowFile {
 
                     String thumbPath = imgBody.thumbnailLocalPath();
                     if (!new File(thumbPath).exists()) {
-                        thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
+                        thumbPath = EaseImageUtil.getThumbnailImagePath(imgBody.getLocalUrl());
                     }
                     showImageView(thumbPath, imgBody.getLocalUrl());
                 }
@@ -102,7 +102,7 @@ public class EaseChatRowImage extends EaseChatRowFile {
 
                 String thumbPath = imgBody.thumbnailLocalPath();
                 if (!new File(thumbPath).exists()) {
-                    thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
+                    thumbPath = EaseImageUtil.getThumbnailImagePath(imgBody.getLocalUrl());
                 }
 
                 showImageView(thumbPath, imgBody.getLocalUrl());

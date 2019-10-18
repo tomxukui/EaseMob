@@ -78,4 +78,11 @@ public class EaseFileUtil {
         return isFileExists(file) && file.isFile();
     }
 
+    /**
+     * 是否存在sd卡
+     */
+    public static boolean isSdcardExist() {
+        return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+    }
+
 }

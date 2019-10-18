@@ -1,44 +1,13 @@
 package com.hyphenate.easeui.utils;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.text.TextUtils;
 
-import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.R;
 
 public class EaseCommonUtils {
-
-    /**
-     * check if network avalable
-     *
-     * @param context
-     * @return
-     */
-    public static boolean isNetWorkConnected(Context context) {
-        if (context != null) {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
-            if (mNetworkInfo != null) {
-                return mNetworkInfo.isAvailable() && mNetworkInfo.isConnected();
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * check if sdcard exist
-     *
-     * @return
-     */
-    public static boolean isSdcardExist() {
-        return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
-    }
 
     public static EMMessage createExpressionMessage(String toChatUsername, String expressioName, String identityCode) {
         EMMessage message = EMMessage.createTxtSendMessage("[" + expressioName + "]", toChatUsername);
@@ -50,61 +19,74 @@ public class EaseCommonUtils {
     }
 
     /**
-     * Get digest according message type and content
-     *
-     * @param message
-     * @param context
-     * @return
+     * 获取消息摘要
      */
-    public static String getMessageDigest(EMMessage message, Context context) {
-        String digest = "";
+    public static String getMessageDigest(EMMessage message) {
+        String digest;
+
         switch (message.getType()) {
-            case LOCATION:
+
+            case LOCATION: {
                 if (message.direct() == EMMessage.Direct.RECEIVE) {
-                    digest = getString(context, R.string.location_recv);
+                    digest = EaseContextCompatUtil.getString(R.string.location_recv);
                     digest = String.format(digest, message.getFrom());
                     return digest;
+
                 } else {
-                    digest = getString(context, R.string.location_prefix);
+                    digest = EaseContextCompatUtil.getString(R.string.location_prefix);
                 }
-                break;
-            case IMAGE:
-                digest = getString(context, R.string.picture);
-                break;
-            case VOICE:
-                digest = getString(context, R.string.voice_prefix);
-                break;
-            case VIDEO:
-                digest = getString(context, R.string.video);
-                break;
-            case TXT:
+            }
+            break;
+
+            case IMAGE: {
+                digest = EaseContextCompatUtil.getString(R.string.picture);
+            }
+            break;
+
+            case VOICE: {
+                digest = EaseContextCompatUtil.getString(R.string.voice_prefix);
+            }
+            break;
+
+            case VIDEO: {
+                digest = EaseContextCompatUtil.getString(R.string.video);
+            }
+            break;
+
+            case TXT: {
                 EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
+
                 if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_VOICE_CALL, false)) {
-                    digest = getString(context, R.string.voice_call) + txtBody.getMessage();
+                    digest = EaseContextCompatUtil.getString(R.string.voice_call) + txtBody.getMessage();
+
                 } else if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_VIDEO_CALL, false)) {
-                    digest = getString(context, R.string.video_call) + txtBody.getMessage();
+                    digest = EaseContextCompatUtil.getString(R.string.video_call) + txtBody.getMessage();
+
                 } else if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)) {
                     if (!TextUtils.isEmpty(txtBody.getMessage())) {
                         digest = txtBody.getMessage();
+
                     } else {
-                        digest = getString(context, R.string.dynamic_expression);
+                        digest = EaseContextCompatUtil.getString(R.string.dynamic_expression);
                     }
+
                 } else {
                     digest = txtBody.getMessage();
                 }
-                break;
-            case FILE:
-                digest = getString(context, R.string.file);
-                break;
+            }
+            break;
+
+            case FILE: {
+                digest = EaseContextCompatUtil.getString(R.string.file);
+            }
+            break;
+
             default:
                 return "";
+
         }
 
         return digest;
-    }
-
-    static String getString(Context context, int resId) {
-        return context.getResources().getString(resId);
     }
 
     /**

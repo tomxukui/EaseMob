@@ -12,7 +12,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.bean.EaseEmojicon;
 import com.hyphenate.easeui.bean.EaseEmojicon.Type;
-import com.hyphenate.easeui.utils.EaseSmileUtils;
+import com.hyphenate.easeui.utils.EaseSmileUtil;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class EmojiconGridAdapter extends ArrayAdapter<EaseEmojicon> {
             textView.setText(emojicon.getName());
         }
 
-        if (EaseSmileUtils.DELETE_KEY.equals(emojicon.getEmojiText())) {
+        if (EaseSmileUtil.DELETE_KEY.equals(emojicon.getEmojiText())) {
             imageView.setImageResource(R.drawable.ease_delete_expression);
         } else {
             if (emojicon.getIcon() != 0) {

@@ -14,8 +14,8 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMVideoMessageBody;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.utils.EaseAndroidLifecycleUtil;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseFileUtil;
+import com.hyphenate.easeui.utils.EaseNetworkUtil;
 import com.hyphenate.util.DateUtils;
 import com.hyphenate.util.TextFormater;
 
@@ -113,7 +113,7 @@ public class EaseChatRowVideo extends EaseChatRowFile {
 
         if (!EaseFileUtil.isFile(localThumb)) {
             if (message.status() == EMMessage.Status.FAIL) {
-                if (EaseCommonUtils.isNetWorkConnected(activity)) {
+                if (EaseNetworkUtil.isNetWorkConnected()) {
                     EMClient.getInstance().chatManager().downloadThumbnail(message);
                 }
             }

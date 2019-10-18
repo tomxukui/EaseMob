@@ -18,7 +18,7 @@ import com.hyphenate.easeui.adapter.EmojiconPagerAdapter;
 import com.hyphenate.easeui.bean.EaseEmojicon;
 import com.hyphenate.easeui.bean.EaseEmojicon.Type;
 import com.hyphenate.easeui.bean.EaseEmojiconGroupEntity;
-import com.hyphenate.easeui.utils.EaseSmileUtils;
+import com.hyphenate.easeui.utils.EaseSmileUtil;
 
 public class EaseEmojiconPagerView extends ViewPager{
 
@@ -130,7 +130,7 @@ public class EaseEmojiconPagerView extends ViewPager{
             }
             if(emojiType != Type.BIG_EXPRESSION){
                 EaseEmojicon deleteIcon = new EaseEmojicon();
-                deleteIcon.setEmojiText(EaseSmileUtils.DELETE_KEY);
+                deleteIcon.setEmojiText(EaseSmileUtil.DELETE_KEY);
                 list.add(deleteIcon);
             }
             final EmojiconGridAdapter gridAdapter = new EmojiconGridAdapter(context, 1, list, emojiType);
@@ -142,7 +142,7 @@ public class EaseEmojiconPagerView extends ViewPager{
                     EaseEmojicon emojicon = gridAdapter.getItem(position);
                     if(pagerViewListener != null){
                         String emojiText = emojicon.getEmojiText();
-                        if(emojiText != null && emojiText.equals(EaseSmileUtils.DELETE_KEY)){
+                        if(emojiText != null && emojiText.equals(EaseSmileUtil.DELETE_KEY)){
                             pagerViewListener.onDeleteImageClicked();
                         }else{
                             pagerViewListener.onExpressionClicked(emojicon);

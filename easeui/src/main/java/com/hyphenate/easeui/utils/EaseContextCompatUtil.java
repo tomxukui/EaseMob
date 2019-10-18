@@ -10,7 +10,6 @@ import com.hyphenate.easeui.EaseUI;
 /**
  * Created by xukui on 2017/8/9.
  */
-
 public class EaseContextCompatUtil {
 
     public static final int getColor(@ColorRes int id) {
@@ -19,6 +18,10 @@ public class EaseContextCompatUtil {
 
     public static final Drawable getDrawable(@DrawableRes int id) {
         return ContextCompat.getDrawable(EaseUI.getInstance().getContext(), id);
+    }
+
+    public static String getString(int resId) {
+        return EaseUI.getInstance().getContext().getResources().getString(resId);
     }
 
 }

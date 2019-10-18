@@ -34,6 +34,7 @@ import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryMoreMenuItem;
 import com.hyphenate.easeui.module.inquiry.widget.EaseInquiryEndedMenu;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.hyphenate.easeui.utils.EaseFileUtil;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 import com.hyphenate.easeui.dialog.EaseAlertDialog;
@@ -523,7 +524,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
      * 拍照获取照片
      */
     private void pickPhotoFromCamera() {
-        if (!EaseCommonUtils.isSdcardExist()) {
+        if (!EaseFileUtil.isSdcardExist()) {
             EaseToastUtil.show(R.string.sd_card_does_not_exist);
             return;
         }
