@@ -15,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hyphenate.easeui.utils.EasePermissionUtil;
-import com.hyphenate.easeui.utils.EaseSoftInputUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
+import com.hyphenate.easeui.utils.EaseSoftInputUtil;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 
@@ -83,7 +83,7 @@ public abstract class EaseBaseFragment extends Fragment implements EaseIBase {
 
     @Override
     public void hideSoftKeyboard() {
-        EaseSoftInputUtil.hide(getActivity());
+        EaseSoftInputUtil.hide(this);
     }
 
     protected Handler getHandler() {

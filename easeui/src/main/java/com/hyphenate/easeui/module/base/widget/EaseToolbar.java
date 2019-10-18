@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.utils.DensityUtil;
+import com.hyphenate.easeui.utils.EaseDensityUtil;
 
 public class EaseToolbar extends Toolbar {
 
@@ -43,10 +43,10 @@ public class EaseToolbar extends Toolbar {
     private void initData(Context context, AttributeSet attrs, int defStyleAttr) {
         mTitle = null;
         mTitleTextColor = Color.WHITE;
-        mTitleTextSize = DensityUtil.sp2px(18);
+        mTitleTextSize = EaseDensityUtil.sp2px(18);
         mSubtitle = null;
         mSubtitleTextColor = Color.WHITE;
-        mSubtitleTextSize = DensityUtil.sp2px(10);
+        mSubtitleTextSize = EaseDensityUtil.sp2px(10);
 
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.EaseToolbar, defStyleAttr, 0);

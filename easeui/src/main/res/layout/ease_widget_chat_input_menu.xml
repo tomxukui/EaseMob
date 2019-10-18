@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.hyphenate.easeui.widget.EaseChatPrimaryMenu
+    <com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatPrimaryMenu
         android:id="@+id/menu_primary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:background="#ffffff">
 
-        <com.hyphenate.easeui.widget.EaseChatExtendMenu
+        <com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatExtendMenu
             android:id="@+id/menu_more"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -13,9 +13,9 @@ import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMVideoMessageBody;
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.utils.AndroidLifecycleUtil;
+import com.hyphenate.easeui.utils.EaseAndroidLifecycleUtil;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
-import com.hyphenate.easeui.utils.FileUtil;
+import com.hyphenate.easeui.utils.EaseFileUtil;
 import com.hyphenate.util.DateUtils;
 import com.hyphenate.util.TextFormater;
 
@@ -102,8 +102,8 @@ public class EaseChatRowVideo extends EaseChatRowFile {
      * 显示视频缩略图
      */
     protected void showVideoThumbView(String localThumb, String thumbnailUrl, EMMessage message) {
-        if (AndroidLifecycleUtil.canLoadImage(this)) {
-            String imgPath = (FileUtil.isFile(localThumb) ? localThumb : thumbnailUrl);
+        if (EaseAndroidLifecycleUtil.canLoadImage(this)) {
+            String imgPath = (EaseFileUtil.isFile(localThumb) ? localThumb : thumbnailUrl);
 
             Glide.with(this)
                     .load(imgPath)
@@ -111,7 +111,7 @@ public class EaseChatRowVideo extends EaseChatRowFile {
                     .into(imageView);
         }
 
-        if (!FileUtil.isFile(localThumb)) {
+        if (!EaseFileUtil.isFile(localThumb)) {
             if (message.status() == EMMessage.Status.FAIL) {
                 if (EaseCommonUtils.isNetWorkConnected(activity)) {
                     EMClient.getInstance().chatManager().downloadThumbnail(message);

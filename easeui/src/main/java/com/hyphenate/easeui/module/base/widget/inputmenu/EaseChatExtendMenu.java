@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget;
+package com.hyphenate.easeui.module.base.widget.inputmenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.utils.DensityUtil;
+import com.hyphenate.easeui.utils.EaseDensityUtil;
 
 /**
  * 网格功能菜单
@@ -64,7 +64,7 @@ public class EaseChatExtendMenu extends GridView {
         setNumColumns(mNumColumns);
         setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
         setGravity(Gravity.CENTER_VERTICAL);
-        setVerticalSpacing(DensityUtil.dp2px(8));
+        setVerticalSpacing(EaseDensityUtil.dp2px(8));
         setAdapter(mItemAdapter);
     }
 

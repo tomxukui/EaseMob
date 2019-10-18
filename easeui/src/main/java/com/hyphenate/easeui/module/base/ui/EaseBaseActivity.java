@@ -8,8 +8,8 @@ import android.view.MenuItem;
 
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.utils.EasePermissionUtil;
-import com.hyphenate.easeui.utils.EaseSoftInputUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
+import com.hyphenate.easeui.utils.EaseSoftInputUtil;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 

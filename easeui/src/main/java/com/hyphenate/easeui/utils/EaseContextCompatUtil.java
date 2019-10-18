@@ -11,7 +11,7 @@ import com.hyphenate.easeui.EaseUI;
  * Created by xukui on 2017/8/9.
  */
 
-public class ContextCompatUtil {
+public class EaseContextCompatUtil {
 
     public static final int getColor(@ColorRes int id) {
         return ContextCompat.getColor(EaseUI.getInstance().getContext(), id);

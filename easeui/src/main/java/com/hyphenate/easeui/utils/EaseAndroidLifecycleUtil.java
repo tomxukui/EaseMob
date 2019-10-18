@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
-public class AndroidLifecycleUtil {
+public class EaseAndroidLifecycleUtil {
 
     public static boolean canLoadImage(Fragment fragment) {
         if (fragment == null) {

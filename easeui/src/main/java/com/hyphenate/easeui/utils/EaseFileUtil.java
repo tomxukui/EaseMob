@@ -2,7 +2,7 @@ package com.hyphenate.easeui.utils;
 
 import java.io.File;
 
-public class FileUtil {
+public class EaseFileUtil {
 
     private static boolean isSpace(String s) {
         return (s == null || s.trim().length() == 0);

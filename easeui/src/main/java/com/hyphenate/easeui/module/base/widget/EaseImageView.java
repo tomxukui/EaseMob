@@ -19,7 +19,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.utils.DensityUtil;
+import com.hyphenate.easeui.utils.EaseDensityUtil;
 
 import java.lang.reflect.Method;
 
@@ -109,7 +109,7 @@ public class EaseImageView extends AppCompatImageView {
 
     private void init(Context context, AttributeSet attrs) {
         //init the value
-        borderWidth = DensityUtil.dp2px(0.5f);
+        borderWidth = EaseDensityUtil.dp2px(0.5f);
         borderColor = Color.parseColor("#D8D9DB");
         pressAlpha = 0x42;
         pressColor = 0x42000000;

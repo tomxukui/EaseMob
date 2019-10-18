@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget;
+package com.hyphenate.easeui.module.base.widget.inputmenu;
 
 import android.content.Context;
 import android.text.Editable;
@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.module.base.widget.EaseVoiceRecorderView;
-import com.hyphenate.easeui.utils.SoftInputUtil;
+import com.hyphenate.easeui.utils.EaseSoftInputUtil;
 
 public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
@@ -218,10 +218,10 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
                 et_text.requestFocus();
 
                 if (softInput) {
-                    SoftInputUtil.show(et_text);
+                    EaseSoftInputUtil.show(et_text);
 
                 } else {
-                    SoftInputUtil.hide(et_text);
+                    EaseSoftInputUtil.hide(et_text);
                 }
 
             } else {
@@ -229,13 +229,13 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
                 et_text.setVisibility(View.GONE);
 
-                SoftInputUtil.hide(et_text);
+                EaseSoftInputUtil.hide(et_text);
             }
 
         } else {
             frame_text.setVisibility(View.GONE);
 
-            SoftInputUtil.hide(et_text);
+            EaseSoftInputUtil.hide(et_text);
         }
     }
 

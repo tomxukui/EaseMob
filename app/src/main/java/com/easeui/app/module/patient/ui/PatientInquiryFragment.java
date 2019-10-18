@@ -15,8 +15,8 @@ import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
-import com.hyphenate.easeui.utils.ContextCompatUtil;
-import com.hyphenate.easeui.utils.DensityUtil;
+import com.hyphenate.easeui.utils.EaseContextCompatUtil;
+import com.hyphenate.easeui.utils.EaseDensityUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 
 import java.util.ArrayList;
@@ -78,11 +78,11 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
     private void showPopupMenu() {
         if (mPopupMenu == null) {
             mPopupMenu = new ListPopupWindow(getContext());
-            mPopupMenu.setContentWidth(DensityUtil.dp2px(138));
-            mPopupMenu.setBackgroundDrawable(ContextCompatUtil.getDrawable(com.hyphenate.easeui.R.drawable.ease_bg_menu));
+            mPopupMenu.setContentWidth(EaseDensityUtil.dp2px(138));
+            mPopupMenu.setBackgroundDrawable(EaseContextCompatUtil.getDrawable(com.hyphenate.easeui.R.drawable.ease_bg_menu));
             mPopupMenu.setDropDownGravity(Gravity.RIGHT);
-            mPopupMenu.setHorizontalOffset(DensityUtil.dp2px(-5));
-            mPopupMenu.setVerticalOffset(DensityUtil.dp2px(4));
+            mPopupMenu.setHorizontalOffset(EaseDensityUtil.dp2px(-5));
+            mPopupMenu.setVerticalOffset(EaseDensityUtil.dp2px(4));
             mPopupMenu.setAdapter(mMenuListAdapter);
             mPopupMenu.setOnItemClickListener((parent, view, position, id) -> {
                 PatientInquiryMenuItem menuItem = mMenuListAdapter.getItem(position);

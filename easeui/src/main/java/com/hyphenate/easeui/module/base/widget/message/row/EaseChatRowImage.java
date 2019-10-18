@@ -12,9 +12,9 @@ import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.utils.AndroidLifecycleUtil;
+import com.hyphenate.easeui.utils.EaseAndroidLifecycleUtil;
 import com.hyphenate.easeui.utils.EaseImageUtils;
-import com.hyphenate.easeui.utils.FileUtil;
+import com.hyphenate.easeui.utils.EaseFileUtil;
 
 import java.io.File;
 
@@ -114,8 +114,8 @@ public class EaseChatRowImage extends EaseChatRowFile {
      * 显示图片
      */
     protected void showImageView(String thumbernailPath, String localFullSizePath) {
-        if (AndroidLifecycleUtil.canLoadImage(this)) {
-            String imgPath = (FileUtil.isFile(localFullSizePath) ? localFullSizePath : thumbernailPath);
+        if (EaseAndroidLifecycleUtil.canLoadImage(this)) {
+            String imgPath = (EaseFileUtil.isFile(localFullSizePath) ? localFullSizePath : thumbernailPath);
 
             Glide.with(this)
                     .load(imgPath)

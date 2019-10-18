@@ -14,8 +14,8 @@ import android.view.View;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.module.inquiry.adapter.EaseInquiryEndedMenuRecyclerAdapter;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
-import com.hyphenate.easeui.utils.ContextCompatUtil;
-import com.hyphenate.easeui.utils.DensityUtil;
+import com.hyphenate.easeui.utils.EaseContextCompatUtil;
+import com.hyphenate.easeui.utils.EaseDensityUtil;
 
 import java.util.List;
 
@@ -88,11 +88,11 @@ public class EaseInquiryEndedMenu extends LinearLayoutCompat {
         private int mPadding;
 
         public EaseGridItemDecoration() {
-            mSpace = DensityUtil.dp2px(1);
-            mPadding = DensityUtil.dp2px(10);
+            mSpace = EaseDensityUtil.dp2px(1);
+            mPadding = EaseDensityUtil.dp2px(10);
 
             mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mPaint.setColor(ContextCompatUtil.getColor(R.color.ease_bg));
+            mPaint.setColor(EaseContextCompatUtil.getColor(R.color.ease_bg));
             mPaint.setStyle(Paint.Style.FILL);
             mPaint.setStrokeWidth(mSpace);
         }

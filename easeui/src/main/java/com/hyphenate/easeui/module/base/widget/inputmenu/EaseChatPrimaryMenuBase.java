@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget;
+package com.hyphenate.easeui.module.base.widget.inputmenu;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

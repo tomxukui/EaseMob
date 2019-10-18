@@ -9,7 +9,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
-import com.hyphenate.easeui.utils.AndroidLifecycleUtil;
+import com.hyphenate.easeui.utils.EaseAndroidLifecycleUtil;
 import com.hyphenate.easeui.module.base.widget.photoview.EasePhotoView;
 
 import android.content.Context;
@@ -82,7 +82,7 @@ public class EaseShowBigImageActivity extends EaseBaseActivity {
      * 显示本地图片
      */
     private void showImageFile(String filePath) {
-        if (AndroidLifecycleUtil.canLoadImage(this)) {
+        if (EaseAndroidLifecycleUtil.canLoadImage(this)) {
             Glide.with(this)
                     .load(filePath)
                     .apply(new RequestOptions().error(mDefaultImg).fallback(mDefaultImg))

@@ -15,7 +15,7 @@ public class EaseUserUtil {
      * @param defaultAvatarResId 默认图
      */
     public static void setUserAvatar(ImageView imageView, String avatar, int defaultAvatarResId) {
-        if (AndroidLifecycleUtil.canLoadImage(imageView)) {
+        if (EaseAndroidLifecycleUtil.canLoadImage(imageView)) {
             Glide.with(imageView)
                     .load(avatar)
                     .apply(new RequestOptions().placeholder(defaultAvatarResId).error(defaultAvatarResId).fallback(defaultAvatarResId))
