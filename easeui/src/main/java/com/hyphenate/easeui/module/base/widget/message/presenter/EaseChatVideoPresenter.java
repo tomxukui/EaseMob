@@ -8,7 +8,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMVideoMessageBody;
-import com.hyphenate.easeui.ui.EaseShowVideoActivity;
+import com.hyphenate.easeui.module.video.ui.EaseShowVideoActivity;
 import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRow;
 import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowVideo;
 

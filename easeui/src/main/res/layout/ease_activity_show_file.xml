@@ -4,29 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:gravity="center"
-    android:background="@color/common_bg"
-    android:visibility="visible"
-     >
+    android:background="@color/ease_show_file_bg"
+    android:gravity="center">
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
         android:layout_height="wrap_content"
-        android:max="100"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:max="100" />
+
     <TextView
-        android:layout_below="@id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/progressBar"
         android:gravity="center"
         android:text="@string/downwaiting"
-        android:textColor="@android:color/black"
-
-        />
+        android:textColor="@android:color/black" />
 
 </RelativeLayout>
 

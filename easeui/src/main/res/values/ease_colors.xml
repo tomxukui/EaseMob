@@ -33,6 +33,12 @@
     <!--消息列表-->
     <color name="ease_message_list_bg">#F5F5F5</color>
 
+    <!--查看文件-->
+    <color name="ease_show_file_bg">#F5F5F5</color>
+
+    <!--查看视频-->
+    <color name="ease_show_video_bg">#F5F5F5</color>
+
     <!--会话-->
     <color name="ease_converstation_list_name">#1A1A1A</color>
     <color name="ease_converstation_list_message">#AAAAAA</color>

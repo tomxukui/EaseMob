@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.ui;
+package com.hyphenate.easeui.module.file.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +17,10 @@ import com.hyphenate.easeui.utils.EaseToastUtil;
 
 import java.io.File;
 
-public class EaseShowNormalFileActivity extends EaseBaseActivity {
+/**
+ * 查看文件
+ */
+public class EaseShowFileActivity extends EaseBaseActivity {
 
     private static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
 
@@ -51,7 +54,7 @@ public class EaseShowNormalFileActivity extends EaseBaseActivity {
             @Override
             public void onSuccess() {
                 runOnUiThread(() -> {
-                    EaseCompat.openFile(file, EaseShowNormalFileActivity.this);
+                    EaseCompat.openFile(file, EaseShowFileActivity.this);
                     finish();
                 });
 
@@ -84,7 +87,7 @@ public class EaseShowNormalFileActivity extends EaseBaseActivity {
     }
 
     public static Intent buildIntent(Context context, EMMessage message) {
-        Intent intent = new Intent(context, EaseShowNormalFileActivity.class);
+        Intent intent = new Intent(context, EaseShowFileActivity.class);
         intent.putExtra(EXTRA_MESSAGE, message);
         return intent;
     }

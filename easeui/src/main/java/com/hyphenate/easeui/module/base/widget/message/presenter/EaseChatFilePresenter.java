@@ -9,7 +9,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMNormalFileMessageBody;
 import com.hyphenate.easeui.model.EaseCompat;
-import com.hyphenate.easeui.ui.EaseShowNormalFileActivity;
+import com.hyphenate.easeui.module.file.ui.EaseShowFileActivity;
 import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRow;
 import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowFile;
 import com.hyphenate.exceptions.HyphenateException;
@@ -35,7 +35,7 @@ public class EaseChatFilePresenter extends EaseChatRowPresenter {
             EaseCompat.openFile(file, (Activity) getContext());
 
         } else {
-            Intent intent = EaseShowNormalFileActivity.buildIntent(getContext(), message);
+            Intent intent = EaseShowFileActivity.buildIntent(getContext(), message);
             getContext().startActivity(intent);
         }
 
