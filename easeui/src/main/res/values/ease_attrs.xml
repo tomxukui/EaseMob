@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <declare-styleable name="EaseToolbar">
+        <!--标题-->
+        <attr name="toolbar_title" format="string" />
+        <attr name="toolbar_title_textColor" format="color" />
+        <attr name="toolbar_title_textSize" format="dimension" />
+        <!--副标题-->
+        <attr name="toolbar_subtitle" format="string" />
+        <attr name="toolbar_subtitle_textColor" format="color" />
+        <attr name="toolbar_subtitle_textSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="EaseImageView">
+        <attr name="ease_border_color" format="color" />
+        <attr name="ease_border_width" format="dimension" />
+        <attr name="ease_press_alpha" format="integer" />
+        <attr name="ease_press_color" format="color" />
+        <attr name="ease_radius" format="dimension" />
+        <attr name="ease_shape_type" format="enum">
+            <enum name="none" value="0" />
+            <enum name="round" value="1" />
+            <enum name="rectangle" value="2" />
+        </attr>
+    </declare-styleable>
+
     <declare-styleable name="EasePaperLayer">
         <attr name="epl_empty_icon" format="reference" />
         <attr name="epl_empty_msg" format="string" />
@@ -16,36 +40,4 @@
         <attr name="numColumns" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="EaseToolbar">
-        <!--标题-->
-        <attr name="toolbar_title" format="string" />
-        <attr name="toolbar_title_textColor" format="color" />
-        <attr name="toolbar_title_textSize" format="dimension" />
-        <!--副标题-->
-        <attr name="toolbar_subtitle" format="string" />
-        <attr name="toolbar_subtitle_textColor" format="color" />
-        <attr name="toolbar_subtitle_textSize" format="dimension" />
-    </declare-styleable>
-
-    <declare-styleable name="EaseSwitchButton">
-        <attr name="switchOpenImage" format="reference" />
-        <attr name="switchCloseImage" format="reference" />
-        <attr name="switchStatus">
-            <enum name="open" value="0" />
-            <enum name="close" value="1" />
-        </attr>
-    </declare-styleable>
-
-    <declare-styleable name="EaseImageView">
-        <attr name="ease_border_color" format="color" />
-        <attr name="ease_border_width" format="dimension" />
-        <attr name="ease_press_alpha" format="integer" />
-        <attr name="ease_press_color" format="color" />
-        <attr name="ease_radius" format="dimension" />
-        <attr name="ease_shape_type" format="enum">
-            <enum name="none" value="0" />
-            <enum name="round" value="1" />
-            <enum name="rectangle" value="2" />
-        </attr>
-    </declare-styleable>
 </resources>
