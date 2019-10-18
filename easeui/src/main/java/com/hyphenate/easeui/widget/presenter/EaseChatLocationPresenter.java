@@ -11,7 +11,7 @@ import com.hyphenate.easeui.widget.chatrow.EaseChatRowLocation;
 import com.hyphenate.exceptions.HyphenateException;
 
 /**
- * Created by zhangsong on 17-10-12.
+ * 定位
  */
 public class EaseChatLocationPresenter extends EaseChatRowPresenter {
 
@@ -25,6 +25,7 @@ public class EaseChatLocationPresenter extends EaseChatRowPresenter {
         if (!message.isAcked() && message.getChatType() == EMMessage.ChatType.Chat) {
             try {
                 EMClient.getInstance().chatManager().ackMessageRead(message.getFrom(), message.getMsgId());
+
             } catch (HyphenateException e) {
                 e.printStackTrace();
             }

@@ -10,6 +10,9 @@ import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRowText;
 import com.hyphenate.exceptions.HyphenateException;
 
+/**
+ * 普通文字
+ */
 public class EaseChatTextPresenter extends EaseChatRowPresenter {
 
     @Override

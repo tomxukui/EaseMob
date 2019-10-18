@@ -6,23 +6,26 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.widget.presenter.EaseChatRowPresenter;
 
 /**
- * 自定义chat row提供者
+ * 自定义消息行的提供者
  */
 public interface EaseCustomChatRowProvider {
 
     /**
-     * 获取多少种类型的自定义chatrow
-     * 注意，每一种chatrow至少有两种type：发送type和接收type
+     * 获取自定义消息类型的数量
+     * <p>
+     * ps:每一种自定义消息类型, 都必须有发送和接收两种类型, 所以数量是偶数
      */
     int getCustomChatRowTypeCount();
 
     /**
-     * 获取chatrow type，必须大于0, 从1开始有序排列
+     * 根据消息获取自定义消息类型
+     * <p>
+     * ps:返回值必须大于0, 从1开始有序排列
      */
     int getCustomChatRowType(EMMessage message);
 
     /**
-     * 根据给定message返回chat row
+     * 根据消息返回自定义消息行
      */
     EaseChatRowPresenter getCustomChatRow(EMMessage message, int position, BaseAdapter adapter);
 

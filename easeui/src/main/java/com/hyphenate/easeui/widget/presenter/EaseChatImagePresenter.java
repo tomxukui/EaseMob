@@ -14,10 +14,10 @@ import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRowImage;
 
 /**
- * Created by zhangsong on 17-10-12.
+ * 图片
  */
-
 public class EaseChatImagePresenter extends EaseChatFilePresenter {
+
     @Override
     protected EaseChatRow onCreateChatRow(Context cxt, EMMessage message, int position, BaseAdapter adapter) {
         return new EaseChatRowImage(cxt, message, position, adapter);
@@ -26,10 +26,10 @@ public class EaseChatImagePresenter extends EaseChatFilePresenter {
     @Override
     protected void handleReceiveMessage(final EMMessage message) {
         super.handleReceiveMessage(message);
-
         getChatRow().updateView(message);
 
         message.setMessageStatusCallback(new EMCallBack() {
+
             @Override
             public void onSuccess() {
                 getChatRow().updateView(message);
@@ -44,6 +44,7 @@ public class EaseChatImagePresenter extends EaseChatFilePresenter {
             public void onProgress(int progress, String status) {
                 getChatRow().updateView(message);
             }
+
         });
     }
 
@@ -54,7 +55,6 @@ public class EaseChatImagePresenter extends EaseChatFilePresenter {
         if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
             if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
                 getChatRow().updateView(message);
-                // retry download with click event of user
                 EMClient.getInstance().chatManager().downloadThumbnail(message);
             }
 
@@ -62,7 +62,6 @@ public class EaseChatImagePresenter extends EaseChatFilePresenter {
             if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING ||
                     imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING ||
                     imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
-                // retry download with click event of user
                 EMClient.getInstance().chatManager().downloadThumbnail(message);
                 getChatRow().updateView(message);
                 return;

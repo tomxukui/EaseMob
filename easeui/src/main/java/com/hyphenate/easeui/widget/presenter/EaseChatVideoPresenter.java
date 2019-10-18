@@ -13,9 +13,8 @@ import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRowVideo;
 
 /**
- * Created by zhangsong on 17-10-12.
+ * 视频
  */
-
 public class EaseChatVideoPresenter extends EaseChatFilePresenter {
 
     @Override
@@ -26,26 +25,31 @@ public class EaseChatVideoPresenter extends EaseChatFilePresenter {
     @Override
     public void onBubbleClick(EMMessage message) {
         EMVideoMessageBody videoBody = (EMVideoMessageBody) message.getBody();
-        if(EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
-        }else{
-            if(videoBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING ||
+
+        if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
+
+        } else {
+            if (videoBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING ||
                     videoBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING ||
-                        videoBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED){
-                // retry download with click event of user
+                    videoBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
                 EMClient.getInstance().chatManager().downloadThumbnail(message);
                 return;
             }
         }
+
         Intent intent = new Intent(getContext(), EaseShowVideoActivity.class);
         intent.putExtra("msg", message);
-        if (message != null && message.direct() == EMMessage.Direct.RECEIVE && !message.isAcked()
-                && message.getChatType() == EMMessage.ChatType.Chat) {
+
+        if (message != null && message.direct() == EMMessage.Direct.RECEIVE && !message.isAcked() && message.getChatType() == EMMessage.ChatType.Chat) {
             try {
                 EMClient.getInstance().chatManager().ackMessageRead(message.getFrom(), message.getMsgId());
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
         getContext().startActivity(intent);
     }
+
 }

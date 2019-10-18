@@ -17,12 +17,9 @@ import com.hyphenate.exceptions.HyphenateException;
 import java.io.File;
 
 /**
- * Created by zhangsong on 17-10-12.
+ * 语音
  */
-
 public class EaseChatVoicePresenter extends EaseChatFilePresenter {
-
-    private static final String TAG = "EaseChatVoicePresenter";
 
     private EaseChatRowVoicePlayer voicePlayer;
 
@@ -49,33 +46,51 @@ public class EaseChatVoicePresenter extends EaseChatFilePresenter {
         if (message.direct() == EMMessage.Direct.SEND) {
             String localPath = ((EMVoiceMessageBody) message.getBody()).getLocalUrl();
             File file = new File(localPath);
+
             if (file.exists() && file.isFile()) {
                 playVoice(message);
                 ((EaseChatRowVoice) getChatRow()).startVoicePlayAnimation();
+
             } else {
                 asyncDownloadVoice(message);
             }
+
         } else {
             final String st = getContext().getResources().getString(R.string.Is_download_voice_click_later);
+
             if (message.status() == EMMessage.Status.SUCCESS) {
                 if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
                     play(message);
+
                 } else {
                     EMVoiceMessageBody voiceBody = (EMVoiceMessageBody) message.getBody();
+
                     switch (voiceBody.downloadStatus()) {
+
                         case PENDING:// Download not begin
                         case FAILED:// Download failed
+                        {
                             getChatRow().updateView(getMessage());
                             asyncDownloadVoice(message);
-                            break;
-                        case DOWNLOADING:// During downloading
+                        }
+                        break;
+
+                        case DOWNLOADING: {// During downloading
                             EaseToastUtil.show(st);
-                            break;
-                        case SUCCESSED:// Download success
+                        }
+                        break;
+
+                        case SUCCESSED: {// Download success
                             play(message);
+                        }
+                        break;
+
+                        default:
                             break;
+
                     }
                 }
+
             } else if (message.status() == EMMessage.Status.INPROGRESS) {
                 EaseToastUtil.show(st);
 
@@ -97,6 +112,7 @@ public class EaseChatVoicePresenter extends EaseChatFilePresenter {
 
     private void asyncDownloadVoice(final EMMessage message) {
         new AsyncTask<Void, Void, Void>() {
+
             @Override
             protected Void doInBackground(Void... params) {
                 EMClient.getInstance().chatManager().downloadAttachment(message);
@@ -108,6 +124,7 @@ public class EaseChatVoicePresenter extends EaseChatFilePresenter {
                 super.onPostExecute(result);
                 getChatRow().updateView(getMessage());
             }
+
         }.execute();
     }
 
@@ -123,13 +140,16 @@ public class EaseChatVoicePresenter extends EaseChatFilePresenter {
 
     private void ackMessage(EMMessage message) {
         EMMessage.ChatType chatType = message.getChatType();
+
         if (!message.isAcked() && chatType == EMMessage.ChatType.Chat) {
             try {
                 EMClient.getInstance().chatManager().ackMessageRead(message.getFrom(), message.getMsgId());
+
             } catch (HyphenateException e) {
                 e.printStackTrace();
             }
         }
+
         if (!message.isListened()) {
             EMClient.getInstance().chatManager().setVoiceMessageListened(message);
         }
@@ -140,5 +160,5 @@ public class EaseChatVoicePresenter extends EaseChatFilePresenter {
             ((EaseChatRowVoice) getChatRow()).stopVoicePlayAnimation();
         });
     }
-    
+
 }

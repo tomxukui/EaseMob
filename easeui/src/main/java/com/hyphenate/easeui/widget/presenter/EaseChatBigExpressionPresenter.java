@@ -8,16 +8,17 @@ import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRowBigExpression;
 
 /**
- * Created by zhangsong on 17-10-12.
+ * 表情
  */
-
 public class EaseChatBigExpressionPresenter extends EaseChatTextPresenter {
+
     @Override
-    protected EaseChatRow onCreateChatRow(Context cxt, EMMessage message, int position, BaseAdapter adapter) {
-        return new EaseChatRowBigExpression(cxt, message, position, adapter);
+    protected EaseChatRow onCreateChatRow(Context context, EMMessage message, int position, BaseAdapter adapter) {
+        return new EaseChatRowBigExpression(context, message, position, adapter);
     }
 
     @Override
     protected void handleReceiveMessage(EMMessage message) {
     }
+
 }

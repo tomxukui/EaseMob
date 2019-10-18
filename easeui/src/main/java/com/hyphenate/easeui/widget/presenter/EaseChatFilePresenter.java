@@ -17,9 +17,8 @@ import com.hyphenate.exceptions.HyphenateException;
 import java.io.File;
 
 /**
- * Created by zhangsong on 17-10-12.
+ * 文件
  */
-
 public class EaseChatFilePresenter extends EaseChatRowPresenter {
 
     @Override
@@ -30,22 +29,24 @@ public class EaseChatFilePresenter extends EaseChatRowPresenter {
     @Override
     public void onBubbleClick(EMMessage message) {
         EMNormalFileMessageBody fileMessageBody = (EMNormalFileMessageBody) message.getBody();
-        String filePath = fileMessageBody.getLocalUrl();
-        File file = new File(filePath);
+        File file = new File(fileMessageBody.getLocalUrl());
+
         if (file.exists()) {
-            // open files if it exist
             EaseCompat.openFile(file, (Activity) getContext());
+
         } else {
-            // download the file
-            getContext().startActivity(new Intent(getContext(), EaseShowNormalFileActivity.class).putExtra("msg", message));
+            Intent intent = EaseShowNormalFileActivity.buildIntent(getContext(), message);
+            getContext().startActivity(intent);
         }
+
         if (message.direct() == EMMessage.Direct.RECEIVE && !message.isAcked() && message.getChatType() == EMMessage.ChatType.Chat) {
             try {
                 EMClient.getInstance().chatManager().ackMessageRead(message.getFrom(), message.getMsgId());
+
             } catch (HyphenateException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
     }
+
 }

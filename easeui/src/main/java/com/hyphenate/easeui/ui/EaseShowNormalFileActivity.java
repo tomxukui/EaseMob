@@ -1,5 +1,7 @@
 package com.hyphenate.easeui.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
@@ -17,7 +19,9 @@ import java.io.File;
 
 public class EaseShowNormalFileActivity extends EaseBaseActivity {
 
-	private ProgressBar progressBar;
+    private static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
+
+    private ProgressBar progressBar;
 
     @Override
     protected int getLayoutResID() {
@@ -31,55 +35,58 @@ public class EaseShowNormalFileActivity extends EaseBaseActivity {
     }
 
     @Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		final EMMessage message = getIntent().getParcelableExtra("msg");
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        final EMMessage message = getIntent().getParcelableExtra(EXTRA_MESSAGE);
+
         if (!(message.getBody() instanceof EMFileMessageBody)) {
             EaseToastUtil.show("Unsupported message body");
             finish();
             return;
         }
-        final File file = new File(((EMFileMessageBody)message.getBody()).getLocalUrl());
+
+        final File file = new File(((EMFileMessageBody) message.getBody()).getLocalUrl());
 
         message.setMessageStatusCallback(new EMCallBack() {
             @Override
             public void onSuccess() {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        EaseCompat.openFile(file, EaseShowNormalFileActivity.this);
-                        finish();
-                    }
+                runOnUiThread(() -> {
+                    EaseCompat.openFile(file, EaseShowNormalFileActivity.this);
+                    finish();
                 });
 
             }
 
             @Override
             public void onError(final int code, final String error) {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        if(file != null && file.exists()&&file.isFile())
-                            file.delete();
-                        String str4 = getResources().getString(R.string.Failed_to_download_file);
-                        if (code == EMError.FILE_NOT_FOUND) {
-                            str4 = getResources().getString(R.string.File_expired);
-                        }
-                        EaseToastUtil.show(str4+message);
-                        finish();
+                runOnUiThread(() -> {
+                    if (file != null && file.exists() && file.isFile()) {
+                        file.delete();
                     }
+
+                    String str4 = getResources().getString(R.string.Failed_to_download_file);
+                    if (code == EMError.FILE_NOT_FOUND) {
+                        str4 = getResources().getString(R.string.File_expired);
+                    }
+
+                    EaseToastUtil.show(str4 + message);
+                    finish();
                 });
             }
 
             @Override
             public void onProgress(final int progress, String status) {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        progressBar.setProgress(progress);
-                    }
-                });
+                runOnUiThread(() -> progressBar.setProgress(progress));
             }
         });
-        EMClient.getInstance().chatManager().downloadAttachment(message);
-	}
 
+        EMClient.getInstance().chatManager().downloadAttachment(message);
+    }
+
+    public static Intent buildIntent(Context context, EMMessage message) {
+        Intent intent = new Intent(context, EaseShowNormalFileActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, message);
+        return intent;
+    }
 
 }
