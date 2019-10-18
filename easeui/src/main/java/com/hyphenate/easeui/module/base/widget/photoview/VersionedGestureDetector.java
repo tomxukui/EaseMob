@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget.photoview;
+package com.hyphenate.easeui.module.base.widget.photoview;
 
 import android.annotation.TargetApi;
 import android.content.Context;

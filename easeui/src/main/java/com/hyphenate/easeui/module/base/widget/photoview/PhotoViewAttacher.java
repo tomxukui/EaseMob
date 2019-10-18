@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget.photoview;
+package com.hyphenate.easeui.module.base.widget.photoview;
 
 import java.lang.ref.WeakReference;
 

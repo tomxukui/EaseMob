@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget.emojicon;
+package com.hyphenate.easeui.module.base.widget.emojicon;
 
 import android.content.Context;
 import android.support.v4.view.ViewCompat;

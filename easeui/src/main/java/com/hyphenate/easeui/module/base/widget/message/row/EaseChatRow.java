@@ -20,7 +20,7 @@ import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseUserUtil;
 import com.hyphenate.easeui.module.base.widget.message.EaseMessageListView.OnItemClickListener;
-import com.hyphenate.easeui.widget.EaseImageView;
+import com.hyphenate.easeui.module.base.widget.EaseImageView;
 import com.hyphenate.util.DateUtils;
 
 import java.util.Date;

@@ -36,7 +36,7 @@ import com.hyphenate.easeui.module.inquiry.widget.EaseInquiryEndedMenu;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
-import com.hyphenate.easeui.widget.EaseAlertDialog;
+import com.hyphenate.easeui.dialog.EaseAlertDialog;
 import com.hyphenate.easeui.widget.EaseChatInputMenu;
 import com.hyphenate.easeui.widget.EaseChatInputMenu.ChatInputMenuListener;
 import com.hyphenate.easeui.module.base.widget.message.EaseMessageListView;

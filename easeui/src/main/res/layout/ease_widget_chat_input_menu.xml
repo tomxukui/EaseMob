@@ -23,7 +23,7 @@
             android:visibility="gone"
             app:numColumns="4" />
 
-        <com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenu
+        <com.hyphenate.easeui.module.base.widget.emojicon.EaseEmojiconMenu
             android:id="@+id/menu_emoji"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget;
+package com.hyphenate.easeui.module.base.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -14,6 +14,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
@@ -22,14 +23,9 @@ import com.hyphenate.easeui.utils.DensityUtil;
 
 import java.lang.reflect.Method;
 
-
-/**
- * Canvas#save(int) has been removed from sdk-28, see detail from:
- * https://issuetracker.google.com/issues/110856542
- * so this helper classes uses reflection to access the API on older devices.
- */
 @SuppressWarnings("JavaReflectionMemberAccess")
 class CanvasLegacy {
+
     static final int MATRIX_SAVE_FLAG;
     static final int CLIP_SAVE_FLAG;
     static final int HAS_ALPHA_LAYER_SAVE_FLAG;
@@ -47,6 +43,7 @@ class CanvasLegacy {
             CLIP_TO_LAYER_SAVE_FLAG = (int) Canvas.class.getField("CLIP_TO_LAYER_SAVE_FLAG").get(null);
 
             SAVE = Canvas.class.getMethod("saveLayer", float.class, float.class, float.class, float.class, Paint.class, int.class);
+
         } catch (Throwable e) {
             throw sneakyThrow(e);
         }
@@ -69,13 +66,11 @@ class CanvasLegacy {
     private static <T extends Throwable> T sneakyThrow0(Throwable t) throws T {
         throw (T) t;
     }
+
 }
 
-/**
- * Created by lzan13 on 2015/4/30.
- * customized ImageView，Rounded Rectangle and border is implemented, and change color when you press
- */
-public class EaseImageView extends android.support.v7.widget.AppCompatImageView {
+public class EaseImageView extends AppCompatImageView {
+
     // paint when user press
     private Paint pressPaint;
     private int width;
@@ -83,7 +78,6 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
 
     // default bitmap config
     private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
-    private static final int COLORDRAWABLE_DIMENSION = 1;
 
     // border color
     private int borderColor;
@@ -224,7 +218,6 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
      * @param canvas
      */
     private void drawPress(Canvas canvas) {
-        // check is rectangle or circle
         if (shapeType == 1) {
             canvas.drawCircle(width / 2, height / 2, width / 2 - 1, pressPaint);
 
@@ -236,8 +229,6 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
 
     /**
      * draw customized border
-     *
-     * @param canvas
      */
     private void drawBorder(Canvas canvas) {
         if (borderWidth > 0) {
@@ -246,9 +237,10 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
             paint.setStyle(Paint.Style.STROKE);
             paint.setColor(borderColor);
             paint.setAntiAlias(true);
-            // // check is rectangle or circle
+
             if (shapeType == 1) {
                 canvas.drawCircle(width / 2, height / 2, (width - borderWidth) / 2, paint);
+
             } else if (shapeType == 2) {
                 RectF rectf = new RectF(borderWidth / 2, borderWidth / 2, getWidth() - borderWidth / 2,
                         getHeight() - borderWidth / 2);
@@ -281,29 +273,30 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
+
+            case MotionEvent.ACTION_DOWN: {
                 pressPaint.setAlpha(pressAlpha);
                 invalidate();
-                break;
-            case MotionEvent.ACTION_UP:
-                pressPaint.setAlpha(0);
-                invalidate();
-                break;
-            case MotionEvent.ACTION_MOVE:
+            }
+            break;
 
-                break;
-            default:
+            case MotionEvent.ACTION_UP: {
                 pressPaint.setAlpha(0);
                 invalidate();
-                break;
+            }
+            break;
+
+            default: {
+                pressPaint.setAlpha(0);
+                invalidate();
+            }
+            break;
+
         }
+
         return super.onTouchEvent(event);
     }
 
-    /**
-     * @param drawable
-     * @return
-     */
     private Bitmap getBitmapFromDrawable(Drawable drawable) {
         if (drawable == null) {
             return null;
@@ -321,6 +314,7 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
             Canvas canvas = new Canvas(bitmap);
             drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
             drawable.draw(canvas);
+
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             bitmap = null;
@@ -330,8 +324,6 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
 
     /**
      * set border color
-     *
-     * @param borderColor
      */
     public void setBorderColor(int borderColor) {
         this.borderColor = borderColor;
@@ -340,8 +332,6 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
 
     /**
      * set border width
-     *
-     * @param borderWidth
      */
     public void setBorderWidth(int borderWidth) {
         this.borderWidth = borderWidth;
@@ -349,8 +339,6 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
 
     /**
      * set alpha when pressed
-     *
-     * @param pressAlpha
      */
     public void setPressAlpha(int pressAlpha) {
         this.pressAlpha = pressAlpha;
@@ -358,8 +346,6 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
 
     /**
      * set color when pressed
-     *
-     * @param pressColor
      */
     public void setPressColor(int pressColor) {
         this.pressColor = pressColor;
@@ -367,8 +353,6 @@ public class EaseImageView extends android.support.v7.widget.AppCompatImageView 
 
     /**
      * set radius
-     *
-     * @param radius
      */
     public void setRadius(int radius) {
         this.radius = radius;

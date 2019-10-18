@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_chat_activity">
 
-        <com.hyphenate.easeui.widget.EaseImageView
+        <com.hyphenate.easeui.module.base.widget.EaseImageView
             android:id="@+id/iv_userhead"
             android:layout_width="@dimen/chat_avatar_size"
             android:layout_height="@dimen/chat_avatar_size"

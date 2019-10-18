@@ -10,7 +10,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
 import com.hyphenate.easeui.utils.AndroidLifecycleUtil;
-import com.hyphenate.easeui.widget.photoview.EasePhotoView;
+import com.hyphenate.easeui.module.base.widget.photoview.EasePhotoView;
 
 import android.content.Context;
 import android.content.Intent;

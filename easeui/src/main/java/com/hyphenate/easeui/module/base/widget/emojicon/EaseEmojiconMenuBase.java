@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget.emojicon;
+package com.hyphenate.easeui.module.base.widget.emojicon;
 
 import com.hyphenate.easeui.bean.EaseEmojicon;
 

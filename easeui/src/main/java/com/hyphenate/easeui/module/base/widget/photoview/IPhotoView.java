@@ -26,7 +26,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.hyphenate.easeui.widget.photoview;
+package com.hyphenate.easeui.module.base.widget.photoview;
 
 import android.graphics.RectF;
 import android.view.View;

@@ -19,8 +19,8 @@ import com.hyphenate.easeui.bean.EaseEmojiconGroupEntity;
 import com.hyphenate.easeui.model.EaseDefaultEmojiconDatas;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
 import com.hyphenate.easeui.widget.EaseChatPrimaryMenuBase.EaseChatPrimaryMenuListener;
-import com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenu;
-import com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenuBase.EaseEmojiconMenuListener;
+import com.hyphenate.easeui.module.base.widget.emojicon.EaseEmojiconMenu;
+import com.hyphenate.easeui.module.base.widget.emojicon.EaseEmojiconMenuBase.EaseEmojiconMenuListener;
 
 /**
  * 聊天输入菜单
