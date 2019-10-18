@@ -20,7 +20,6 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.bean.EaseAvatarOptions;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseSmileUtil;
 import com.hyphenate.easeui.utils.EaseUserUtil;
@@ -147,7 +146,7 @@ public class EaseConversationsListAdapter extends ArrayAdapter<EMConversation> {
         if (conversation.getAllMsgCount() > 0) {
             EMMessage lastMessage = conversation.getLastMessage();
 
-            mHolder.tv_message.setText(EaseSmileUtil.getSmiledText(getContext(), EaseCommonUtils.getMessageDigest(lastMessage)), BufferType.SPANNABLE);
+            mHolder.tv_message.setText(EaseSmileUtil.getSmiledText(getContext(), EaseMessageUtil.getMessageDigest(lastMessage)), BufferType.SPANNABLE);
             mHolder.tv_time.setText(DateUtils.getTimestampString(new Date(lastMessage.getMsgTime())));
 
             if (lastMessage.direct() == EMMessage.Direct.SEND && lastMessage.status() == EMMessage.Status.FAIL) {

@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.hyphenate.EMError;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.model.EaseVoiceRecorder;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseFileUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowVoicePlayer;

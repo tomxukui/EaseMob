@@ -33,7 +33,6 @@ import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryMoreMenuItem;
 import com.hyphenate.easeui.module.inquiry.widget.EaseInquiryEndedMenu;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseFileUtil;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
@@ -394,7 +393,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
      * 发送大表情消息
      */
     protected void sendBigExpressionMessage(String name, String identityCode) {
-        EMMessage message = EaseCommonUtils.createExpressionMessage(mToUser.getUsername(), name, identityCode);
+        EMMessage message = EaseMessageUtil.createExpressionMessage(mToUser.getUsername(), name, identityCode);
         sendMessage(message);
     }
 

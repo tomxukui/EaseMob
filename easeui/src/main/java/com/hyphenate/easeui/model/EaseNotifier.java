@@ -1,14 +1,3 @@
-/************************************************************
- *  * Hyphenate CONFIDENTIAL 
- * __________________ 
- * Copyright (C) 2016 Hyphenate Inc. All rights reserved. 
- *
- * NOTICE: All information contained herein is, and remains 
- * the property of Hyphenate Inc.
- * Dissemination of this information or reproduction of this material 
- * is strictly forbidden unless prior written permission is obtained
- * from Hyphenate Inc.
- */
 package com.hyphenate.easeui.model;
 
 import android.app.Activity;
@@ -31,7 +20,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.EaseUI.EaseSettingsProvider;
 import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.util.EasyUtils;
 
 import java.util.HashSet;
@@ -122,7 +111,7 @@ public class EaseNotifier {
      * @param message
      */
     public synchronized void notify(EMMessage message) {
-        if (EaseCommonUtils.isSilentMessage(message)) {
+        if (EaseMessageUtil.isSilentMessage(message)) {
             return;
         }
 
@@ -139,7 +128,7 @@ public class EaseNotifier {
     }
 
     public synchronized void notify(List<EMMessage> messages) {
-        if (EaseCommonUtils.isSilentMessage(messages.get(messages.size() - 1))) {
+        if (EaseMessageUtil.isSilentMessage(messages.get(messages.size() - 1))) {
             return;
         }
 
@@ -275,7 +264,7 @@ public class EaseNotifier {
      */
     public void vibrateAndPlayTone(EMMessage message) {
         if (message != null) {
-            if (EaseCommonUtils.isSilentMessage(message)) {
+            if (EaseMessageUtil.isSilentMessage(message)) {
                 return;
             }
         }
