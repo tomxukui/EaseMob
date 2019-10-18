@@ -1,9 +1,9 @@
-package com.hyphenate.easeui.widget.chatrow;
+package com.hyphenate.easeui.module.base.widget.message.row;
 
 import android.widget.BaseAdapter;
 
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.easeui.widget.presenter.EaseChatRowPresenter;
+import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatRowPresenter;
 
 /**
  * 自定义消息行的提供者

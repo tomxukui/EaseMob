@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget.chatrow;
+package com.hyphenate.easeui.module.base.widget.message.row;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,7 +19,7 @@ import com.hyphenate.easeui.bean.EaseAvatarOptions;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseUserUtil;
-import com.hyphenate.easeui.module.base.widget.messagelist.EaseMessageListView.OnItemClickListener;
+import com.hyphenate.easeui.module.base.widget.message.EaseMessageListView.OnItemClickListener;
 import com.hyphenate.easeui.widget.EaseImageView;
 import com.hyphenate.util.DateUtils;
 

@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.module.base.widget.messagelist;
+package com.hyphenate.easeui.module.base.widget.message;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -14,21 +14,21 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
-import com.hyphenate.easeui.module.base.widget.messagelist.EaseMessageListView.OnItemClickListener;
-import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
-import com.hyphenate.easeui.widget.presenter.EaseChatBigExpressionPresenter;
-import com.hyphenate.easeui.widget.presenter.EaseChatFilePresenter;
-import com.hyphenate.easeui.widget.presenter.EaseChatFinishInquiryPresenter;
-import com.hyphenate.easeui.widget.presenter.EaseChatImagePresenter;
-import com.hyphenate.easeui.widget.presenter.EaseChatLocationPresenter;
-import com.hyphenate.easeui.widget.presenter.EaseChatRowPresenter;
-import com.hyphenate.easeui.widget.presenter.EaseChatTextPresenter;
-import com.hyphenate.easeui.widget.presenter.EaseChatVideoPresenter;
-import com.hyphenate.easeui.widget.presenter.EaseChatVoicePresenter;
+import com.hyphenate.easeui.module.base.widget.message.EaseMessageListView.OnItemClickListener;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseCustomChatRowProvider;
+import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatBigExpressionPresenter;
+import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatFilePresenter;
+import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatFinishInquiryPresenter;
+import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatImagePresenter;
+import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatLocationPresenter;
+import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatRowPresenter;
+import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatTextPresenter;
+import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatVideoPresenter;
+import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatVoicePresenter;
 
 import java.util.List;
 
-public class EaseMessageAdapter extends BaseAdapter {
+public class EaseMessageListAdapter extends BaseAdapter {
 
     private static final int HANDLER_MESSAGE_REFRESH_LIST = 0;
     private static final int HANDLER_MESSAGE_SELECT_LAST = 1;
@@ -60,7 +60,7 @@ public class EaseMessageAdapter extends BaseAdapter {
     private EaseCustomChatRowProvider mCustomRowProvider;
     private OnItemClickListener mOnItemClickListener;
 
-    public EaseMessageAdapter(String username, EMConversation.EMConversationType conversationType, ListView listView) {
+    public EaseMessageListAdapter(String username, EMConversation.EMConversationType conversationType, ListView listView) {
         this.listView = listView;
         mConversation = EMClient.getInstance().chatManager().getConversation(username, conversationType, true);
     }

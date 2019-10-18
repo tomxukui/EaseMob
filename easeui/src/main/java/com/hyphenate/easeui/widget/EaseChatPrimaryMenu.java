@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.module.base.widget.EaseVoiceRecorderView;
 import com.hyphenate.easeui.utils.SoftInputUtil;
 
 public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {

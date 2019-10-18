@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget.presenter;
+package com.hyphenate.easeui.module.base.widget.message.presenter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +9,8 @@ import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMVideoMessageBody;
 import com.hyphenate.easeui.ui.EaseShowVideoActivity;
-import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
-import com.hyphenate.easeui.widget.chatrow.EaseChatRowVideo;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRow;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowVideo;
 
 /**
  * 视频

@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.module.base.widget.messagelist;
+package com.hyphenate.easeui.module.base.widget.message;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -15,7 +15,7 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
-import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseCustomChatRowProvider;
 
 public class EaseMessageListView extends FrameLayout {
 
@@ -23,7 +23,7 @@ public class EaseMessageListView extends FrameLayout {
     protected ListView listView;
 
     protected EMConversation conversation;
-    protected EaseMessageAdapter messageAdapter;
+    protected EaseMessageListAdapter messageAdapter;
 
     public EaseMessageListView(@NonNull Context context) {
         super(context);
@@ -50,7 +50,7 @@ public class EaseMessageListView extends FrameLayout {
     public void init(String toChatUsername, EMConversation.EMConversationType conversationType, @Nullable EaseMessageListItemStyle listItemStyle, @Nullable EaseCustomChatRowProvider customChatRowProvider) {
         conversation = EMClient.getInstance().chatManager().getConversation(toChatUsername, conversationType, true);
 
-        messageAdapter = new EaseMessageAdapter(toChatUsername, conversationType, listView);
+        messageAdapter = new EaseMessageListAdapter(toChatUsername, conversationType, listView);
         messageAdapter.setItemStyle(listItemStyle);
         messageAdapter.setCustomChatRowProvider(customChatRowProvider);
 

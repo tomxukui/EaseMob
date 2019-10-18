@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget;
+package com.hyphenate.easeui.module.base.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -19,7 +19,7 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.model.EaseVoiceRecorder;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseToastUtil;
-import com.hyphenate.easeui.widget.chatrow.EaseChatRowVoicePlayer;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowVoicePlayer;
 
 /**
  * Voice recorder view

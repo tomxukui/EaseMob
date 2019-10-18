@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget.presenter;
+package com.hyphenate.easeui.module.base.widget.message.presenter;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -9,9 +9,9 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMVoiceMessageBody;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.utils.EaseToastUtil;
-import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
-import com.hyphenate.easeui.widget.chatrow.EaseChatRowVoice;
-import com.hyphenate.easeui.widget.chatrow.EaseChatRowVoicePlayer;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRow;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowVoice;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowVoicePlayer;
 import com.hyphenate.exceptions.HyphenateException;
 
 import java.io.File;

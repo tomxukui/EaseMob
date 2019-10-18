@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget.presenter;
+package com.hyphenate.easeui.module.base.widget.message.presenter;
 
 import android.content.Context;
 import android.widget.BaseAdapter;
@@ -7,8 +7,8 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
-import com.hyphenate.easeui.module.base.widget.messagelist.EaseMessageListView;
-import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
+import com.hyphenate.easeui.module.base.widget.message.EaseMessageListView;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRow;
 
 public abstract class EaseChatRowPresenter implements EaseChatRow.EaseChatRowActionCallback {
 

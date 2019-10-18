@@ -39,10 +39,10 @@ import com.hyphenate.easeui.utils.EaseToastUtil;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.easeui.widget.EaseChatInputMenu;
 import com.hyphenate.easeui.widget.EaseChatInputMenu.ChatInputMenuListener;
-import com.hyphenate.easeui.module.base.widget.messagelist.EaseMessageListView;
+import com.hyphenate.easeui.module.base.widget.message.EaseMessageListView;
 import com.hyphenate.easeui.module.base.widget.EaseToolbar;
-import com.hyphenate.easeui.widget.EaseVoiceRecorderView;
-import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
+import com.hyphenate.easeui.module.base.widget.EaseVoiceRecorderView;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseCustomChatRowProvider;
 import com.hyphenate.util.PathUtil;
 import com.yanzhenjie.permission.Permission;
 

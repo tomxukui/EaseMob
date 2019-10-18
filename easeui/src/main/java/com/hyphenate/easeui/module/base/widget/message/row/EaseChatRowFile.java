@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget.chatrow;
+package com.hyphenate.easeui.module.base.widget.message.row;
 
 import android.content.Context;
 import android.view.View;

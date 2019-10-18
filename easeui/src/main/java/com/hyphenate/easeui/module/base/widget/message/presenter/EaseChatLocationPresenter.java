@@ -1,31 +1,23 @@
-package com.hyphenate.easeui.widget.presenter;
+package com.hyphenate.easeui.module.base.widget.message.presenter;
 
 import android.content.Context;
 import android.widget.BaseAdapter;
 
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMLocationMessageBody;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.easeui.model.EaseDingMessageHelper;
-import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
-import com.hyphenate.easeui.widget.chatrow.EaseChatRowText;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRow;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowLocation;
 import com.hyphenate.exceptions.HyphenateException;
 
 /**
- * 普通文字
+ * 定位
  */
-public class EaseChatTextPresenter extends EaseChatRowPresenter {
+public class EaseChatLocationPresenter extends EaseChatRowPresenter {
 
     @Override
     protected EaseChatRow onCreateChatRow(Context cxt, EMMessage message, int position, BaseAdapter adapter) {
-        return new EaseChatRowText(cxt, message, position, adapter);
-    }
-
-    @Override
-    public void onBubbleClick(EMMessage message) {
-        super.onBubbleClick(message);
-        if (!EaseDingMessageHelper.get().isDingMessage(message)) {
-            return;
-        }
+        return new EaseChatRowLocation(cxt, message, position, adapter);
     }
 
     @Override
@@ -37,10 +29,13 @@ public class EaseChatTextPresenter extends EaseChatRowPresenter {
             } catch (HyphenateException e) {
                 e.printStackTrace();
             }
-            return;
         }
+    }
 
-        EaseDingMessageHelper.get().sendAckMessage(message);
+    @Override
+    public void onBubbleClick(EMMessage message) {
+        EMLocationMessageBody locBody = (EMLocationMessageBody) message.getBody();
+//        getContext().startActivity(EaseBaiduMapActivity.buildIntent(getContext(), locBody.getLatitude(), locBody.getLongitude()));
     }
 
 }

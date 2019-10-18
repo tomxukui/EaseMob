@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.widget.presenter;
+package com.hyphenate.easeui.module.base.widget.message.presenter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,8 +10,8 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMNormalFileMessageBody;
 import com.hyphenate.easeui.model.EaseCompat;
 import com.hyphenate.easeui.ui.EaseShowNormalFileActivity;
-import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
-import com.hyphenate.easeui.widget.chatrow.EaseChatRowFile;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRow;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowFile;
 import com.hyphenate.exceptions.HyphenateException;
 
 import java.io.File;
