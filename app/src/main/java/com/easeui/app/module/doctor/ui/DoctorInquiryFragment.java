@@ -8,7 +8,6 @@ import com.easeui.app.R;
 import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
-import com.hyphenate.easeui.utils.EaseToastUtil;
 
 public class DoctorInquiryFragment extends EaseInquiryFragment {
 
