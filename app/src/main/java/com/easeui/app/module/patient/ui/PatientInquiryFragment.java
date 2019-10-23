@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.ListPopupWindow;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +14,7 @@ import com.easeui.app.module.patient.adapter.PatientInquiryMenuListAdapter;
 import com.easeui.app.module.patient.model.PatientInquiryMenuItem;
 import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.base.model.EaseUser;
+import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
 import com.hyphenate.easeui.utils.EaseContextCompatUtil;
@@ -69,6 +71,20 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
         menu.findItem(R.id.action_more).setOnMenuItemClickListener(item -> {
             showPopupMenu();
             return true;
+        });
+    }
+
+    @Override
+    protected void setView(Bundle savedInstanceState) {
+        super.setView(savedInstanceState);
+        setOnInquiryListener(new EaseOnInquiryListener() {
+
+            @Override
+            public void onCloseInquiry() {
+                Log.e("ddd", "问诊已结束");
+                EaseToastUtil.show("问诊已结束");
+            }
+
         });
     }
 

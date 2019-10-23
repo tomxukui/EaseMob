@@ -30,6 +30,7 @@ import com.hyphenate.easeui.model.EaseCompat;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
+import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryMoreMenuItem;
 import com.hyphenate.easeui.module.inquiry.widget.EaseInquiryEndedMenu;
@@ -78,11 +79,15 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     protected EaseUser mToUser;
     @EaseType.ChatMode
     protected String mChatMode;//问诊模式
-    protected boolean mIsFinished;//问诊是否已结束
-    protected boolean mIsMessagesInited;//消息列表是否已初始化
+    protected boolean mIsMessageInit;//消息是否已加载
+    protected boolean mIsClosed;//问诊是否已关闭
+
     protected int mPageSize = 20;//消息分页一页最多数量
     protected boolean mHaveMoreData = true;//是否有更多消息
     protected File mCameraFile;//相机拍照照片文件
+
+    @Nullable
+    private EaseOnInquiryListener mOnInquiryListener;
 
     public static EaseInquiryFragment newInstance(EaseUser fromUser, EaseUser toUser, @EaseType.ChatMode String chatMode) {
         EaseInquiryFragment fragment = new EaseInquiryFragment();
@@ -214,11 +219,9 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         menu_ended.setData(getEndedMenuItems());
 
         //设置问诊模式
-        if (EaseType.BROWSE.equals(mChatMode)) {//浏览模式
-            setBrowseView();
-
-        } else {//聊天模式
-            setChatView();
+        if (EaseType.BROWSE.equals(mChatMode)) {//问诊模式
+            tv_availableCount.setVisibility(View.GONE);
+            menu_input.setVisibility(View.GONE);
         }
     }
 
@@ -231,7 +234,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (mIsMessagesInited) {
+        if (mIsMessageInit) {
             list_message.refresh();
         }
     }
@@ -239,6 +242,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        setOnInquiryListener(null);
         EMClient.getInstance().chatManager().removeMessageListener(mMessageListener);
     }
 
@@ -306,7 +310,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             return false;
         });
 
-        mIsMessagesInited = true;
+        mIsMessageInit = true;
     }
 
     /**
@@ -382,6 +386,28 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     }
 
     /**
+     * 设置关闭问诊
+     */
+    protected void setInquiryClosed() {
+        if (mIsClosed) {
+            return;
+        }
+
+        mIsClosed = true;
+
+        if (mOnInquiryListener != null) {
+            mOnInquiryListener.onCloseInquiry();
+        }
+    }
+
+    /**
+     * 设置问诊的监听事件
+     */
+    protected void setOnInquiryListener(@Nullable EaseOnInquiryListener listener) {
+        mOnInquiryListener = listener;
+    }
+
+    /**
      * 发送文字消息
      */
     protected void sendTextMessage(String content) {
@@ -441,7 +467,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         EMClient.getInstance().chatManager().sendMessage(message);
 
         //refresh ui
-        if (mIsMessagesInited) {
+        if (mIsMessageInit) {
             list_message.refreshSelectLast();
         }
     }
@@ -450,21 +476,21 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
         @Override
         public void onSuccess() {
-            if (mIsMessagesInited) {
+            if (mIsMessageInit) {
                 list_message.refresh();
             }
         }
 
         @Override
         public void onError(int code, String error) {
-            if (mIsMessagesInited) {
+            if (mIsMessageInit) {
                 list_message.refresh();
             }
         }
 
         @Override
         public void onProgress(int progress, String status) {
-            if (mIsMessagesInited) {
+            if (mIsMessageInit) {
                 list_message.refresh();
             }
         }
@@ -570,38 +596,9 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     }
 
     /**
-     * 设置浏览控件
-     */
-    private void setBrowseView() {
-        tv_availableCount.setVisibility(View.GONE);
-        menu_input.setVisibility(View.GONE);
-        menu_ended.setVisibility(View.GONE);
-    }
-
-    /**
-     * 设置聊天控件
-     */
-    private void setChatView() {
-        if (mIsFinished) {
-            tv_availableCount.setVisibility(View.GONE);
-            menu_input.setVisibility(View.GONE);
-            menu_ended.setVisibility(menu_ended.isEmpty() ? View.GONE : View.VISIBLE);
-
-        } else {
-            tv_availableCount.setVisibility(View.VISIBLE);
-            menu_input.setVisibility(View.VISIBLE);
-            menu_ended.setVisibility(View.GONE);
-        }
-    }
-
-    /**
      * 结束问诊
      */
-    protected void finishInquiry() {
-        if (mIsFinished) {
-            return;
-        }
-
+    protected void closeInquiry() {
         //透传发送结束聊天的消息
         EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
         message.addBody(new EMCmdMessageBody(ACTION_CLOSE_INQUIRY));
@@ -616,15 +613,23 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         }
 
         //刷新消息列表
-        if (mIsMessagesInited) {
+        if (mIsMessageInit) {
             list_message.refreshSelectLast();
         }
 
         //结束问诊
-        mIsFinished = true;
-
-        setChatView();
+        setInquiryClosed();
+        setCloseInquiryView();
         hideSoftKeyboard();
+    }
+
+    /**
+     * 设置问诊关闭的控件
+     */
+    protected void setCloseInquiryView() {
+        tv_availableCount.setVisibility(View.GONE);
+        menu_input.setVisibility(View.GONE);
+        menu_ended.setVisibility(menu_ended.isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     /**
@@ -653,9 +658,8 @@ public class EaseInquiryFragment extends EaseBaseFragment {
                     EMCmdMessageBody body = (EMCmdMessageBody) msg.getBody();
 
                     if (ACTION_CLOSE_INQUIRY.equals(body.action()) && msg.getFrom().equals(mToUser.getUsername())) {
-                        mIsFinished = true;
-
-                        setChatView();
+                        setInquiryClosed();
+                        setCloseInquiryView();
                         hideSoftKeyboard();
                     }
                 }
@@ -664,28 +668,28 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
         @Override
         public void onMessageRead(List<EMMessage> list) {
-            if (mIsMessagesInited) {
+            if (mIsMessageInit) {
                 getHandler().post(() -> list_message.refresh());
             }
         }
 
         @Override
         public void onMessageDelivered(List<EMMessage> list) {
-            if (mIsMessagesInited) {
+            if (mIsMessageInit) {
                 getHandler().post(() -> list_message.refresh());
             }
         }
 
         @Override
         public void onMessageRecalled(List<EMMessage> list) {
-            if (mIsMessagesInited) {
+            if (mIsMessageInit) {
                 getHandler().post(() -> list_message.refresh());
             }
         }
 
         @Override
         public void onMessageChanged(EMMessage emMessage, Object o) {
-            if (mIsMessagesInited) {
+            if (mIsMessageInit) {
                 getHandler().post(() -> list_message.refresh());
             }
         }

@@ -49,7 +49,7 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
         inflater.inflate(R.menu.menu_doctor_inquiry, menu);
 
         menu.findItem(R.id.action_finishInquiry).setOnMenuItemClickListener(item -> {
-            finishInquiry();
+            closeInquiry();
             return true;
         });
     }
