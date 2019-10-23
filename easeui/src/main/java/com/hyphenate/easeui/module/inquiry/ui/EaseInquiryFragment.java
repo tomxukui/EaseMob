@@ -604,8 +604,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
         //透传发送结束聊天的消息
         EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
-        EMCmdMessageBody body = new EMCmdMessageBody(ACTION_CLOSE_CONVERSATION);
-        message.addBody(body);
+        message.addBody(new EMCmdMessageBody(ACTION_CLOSE_CONVERSATION));
         message.setTo(mToUser.getUsername());
         EMClient.getInstance().chatManager().sendMessage(message);
 
@@ -623,7 +622,9 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
         //结束问诊
         mIsFinished = true;
+
         setChatView();
+        hideSoftKeyboard();
     }
 
     /**
@@ -653,7 +654,9 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
                     if (ACTION_CLOSE_CONVERSATION.equals(body.action()) && msg.getFrom().equals(mToUser.getUsername())) {
                         mIsFinished = true;
+
                         setChatView();
+                        hideSoftKeyboard();
                     }
                 }
             });
