@@ -63,7 +63,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     private static final int REQUEST_ALBUM = 2;
 
     //透传类型
-    private static final String ACTION_CLOSE_CONVERSATION = "cmd_close_conversation";//结束问诊
+    private static final String ACTION_CLOSE_INQUIRY = "cmd_close_conversation";//结束问诊
 
     protected LinearLayout linear_container;
     protected EaseToolbar toolbar;
@@ -604,7 +604,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
         //透传发送结束聊天的消息
         EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
-        message.addBody(new EMCmdMessageBody(ACTION_CLOSE_CONVERSATION));
+        message.addBody(new EMCmdMessageBody(ACTION_CLOSE_INQUIRY));
         message.setTo(mToUser.getUsername());
         EMClient.getInstance().chatManager().sendMessage(message);
 
@@ -652,7 +652,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
                 for (EMMessage msg : messages) {
                     EMCmdMessageBody body = (EMCmdMessageBody) msg.getBody();
 
-                    if (ACTION_CLOSE_CONVERSATION.equals(body.action()) && msg.getFrom().equals(mToUser.getUsername())) {
+                    if (ACTION_CLOSE_INQUIRY.equals(body.action()) && msg.getFrom().equals(mToUser.getUsername())) {
                         mIsFinished = true;
 
                         setChatView();
