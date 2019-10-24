@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -68,11 +69,13 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
     protected LinearLayout linear_container;
     protected EaseToolbar toolbar;
+    protected FrameLayout frame_main;
     protected EaseMessageListView list_message;
-    protected EaseChatInputMenu menu_input;
-    protected EaseInquiryEndedMenu menu_ended;
     protected EaseVoiceRecorderView voice_recorder;
     protected TextView tv_availableCount;
+    protected FrameLayout frame_footer;
+    protected EaseChatInputMenu menu_input;
+    protected EaseInquiryEndedMenu menu_ended;
 
     protected EMConversation mConversation;//会话
     protected EaseUser mFromUser;
@@ -120,10 +123,12 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         super.initView(view, savedInstanceState);
         linear_container = view.findViewById(R.id.linear_container);
         toolbar = view.findViewById(R.id.toolbar);
-        voice_recorder = view.findViewById(R.id.voice_recorder);
+        frame_main = view.findViewById(R.id.frame_main);
         list_message = view.findViewById(R.id.list_message);
-        menu_input = view.findViewById(R.id.menu_input);
+        voice_recorder = view.findViewById(R.id.voice_recorder);
         tv_availableCount = view.findViewById(R.id.tv_availableCount);
+        frame_footer = view.findViewById(R.id.frame_footer);
+        menu_input = view.findViewById(R.id.menu_input);
         menu_ended = view.findViewById(R.id.menu_ended);
     }
 
