@@ -5,16 +5,16 @@ import android.widget.BaseAdapter;
 
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRow;
-import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowFinishInquiry;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowCloseInquiry;
 
 /**
  * 问诊结束
  */
-public class EaseChatFinishInquiryPresenter extends EaseChatRowPresenter {
+public class EaseChatCloseInquiryPresenter extends EaseChatRowPresenter {
 
     @Override
     protected EaseChatRow onCreateChatRow(Context context, EMMessage message, int position, BaseAdapter adapter) {
-        return new EaseChatRowFinishInquiry(context, message, position, adapter);
+        return new EaseChatRowCloseInquiry(context, message, position, adapter);
     }
 
     @Override

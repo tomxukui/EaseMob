@@ -3,6 +3,7 @@ package com.easeui.app.module.doctor.ui;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.easeui.app.R;
 import com.hyphenate.easeui.constants.EaseType;
@@ -12,6 +13,8 @@ import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
 public class DoctorInquiryFragment extends EaseInquiryFragment {
 
     private static final String EXTRA_TO_USER_MOBILE = "EXTRA_TO_USER_MOBILE";
+
+    private MenuItem closeInquiryMenuItem;
 
     private String mToUserMobile;
 
@@ -44,11 +47,22 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
     }
 
     @Override
+    protected void setView(Bundle savedInstanceState) {
+        super.setView(savedInstanceState);
+        setOnInquiryListener(() -> {
+            if (closeInquiryMenuItem != null) {
+                closeInquiryMenuItem.setVisible(false);
+            }
+        });
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_doctor_inquiry, menu);
 
-        menu.findItem(R.id.action_finishInquiry).setOnMenuItemClickListener(item -> {
+        closeInquiryMenuItem = menu.findItem(R.id.action_closeInquiry);
+        closeInquiryMenuItem.setOnMenuItemClickListener(item -> {
             closeInquiry();
             return true;
         });

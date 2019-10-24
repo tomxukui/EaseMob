@@ -8,17 +8,17 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.R;
 
-public class EaseChatRowFinishInquiry extends EaseChatRow {
+public class EaseChatRowCloseInquiry extends EaseChatRow {
 
     private TextView tv_content;
 
-    public EaseChatRowFinishInquiry(Context context, EMMessage message, int position, BaseAdapter adapter) {
+    public EaseChatRowCloseInquiry(Context context, EMMessage message, int position, BaseAdapter adapter) {
         super(context, message, position, adapter);
     }
 
     @Override
     protected void onInflateView() {
-        inflater.inflate(R.layout.ease_row_finish_inquiry, this);
+        inflater.inflate(R.layout.ease_row_close_inquiry, this);
     }
 
     @Override

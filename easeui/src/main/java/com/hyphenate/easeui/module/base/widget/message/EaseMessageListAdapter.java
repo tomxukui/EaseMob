@@ -18,7 +18,7 @@ import com.hyphenate.easeui.module.base.widget.message.EaseMessageListView.OnIte
 import com.hyphenate.easeui.module.base.widget.message.row.EaseCustomChatRowProvider;
 import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatBigExpressionPresenter;
 import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatFilePresenter;
-import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatFinishInquiryPresenter;
+import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatCloseInquiryPresenter;
 import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatImagePresenter;
 import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatLocationPresenter;
 import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatRowPresenter;
@@ -142,7 +142,7 @@ public class EaseMessageListAdapter extends BaseAdapter {
 
             case TXT: {
                 if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, false)) {//结束问诊
-                    presenter = new EaseChatFinishInquiryPresenter();
+                    presenter = new EaseChatCloseInquiryPresenter();
 
                 } else if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)) {//表情
                     presenter = new EaseChatBigExpressionPresenter();
