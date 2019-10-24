@@ -34,7 +34,7 @@ import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
 import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryMoreMenuItem;
-import com.hyphenate.easeui.module.inquiry.widget.EaseInquiryEndedMenu;
+import com.hyphenate.easeui.module.inquiry.widget.EaseInquiryGridMenu;
 import com.hyphenate.easeui.utils.EaseFileUtil;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
@@ -75,7 +75,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     protected TextView tv_availableCount;
     protected FrameLayout frame_footer;
     protected EaseChatInputMenu menu_input;
-    protected EaseInquiryEndedMenu menu_ended;
+    protected EaseInquiryGridMenu menu_ended;
 
     protected EMConversation mConversation;//会话
     protected EaseUser mFromUser;

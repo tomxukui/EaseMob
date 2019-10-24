@@ -19,7 +19,7 @@ import com.hyphenate.easeui.utils.EaseDensityUtil;
 
 import java.util.List;
 
-public class EaseInquiryEndedMenu extends LinearLayoutCompat {
+public class EaseInquiryGridMenu extends LinearLayoutCompat {
 
     private RecyclerView recycler_menu;
 
@@ -28,21 +28,21 @@ public class EaseInquiryEndedMenu extends LinearLayoutCompat {
 
     private int mSpaceCount;
 
-    public EaseInquiryEndedMenu(Context context) {
+    public EaseInquiryGridMenu(Context context) {
         super(context);
         initData(context);
         initView(context);
         setView();
     }
 
-    public EaseInquiryEndedMenu(Context context, AttributeSet attrs) {
+    public EaseInquiryGridMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
         initData(context);
         initView(context);
         setView();
     }
 
-    public EaseInquiryEndedMenu(Context context, AttributeSet attrs, int defStyleAttr) {
+    public EaseInquiryGridMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initData(context);
         initView(context);
@@ -58,7 +58,7 @@ public class EaseInquiryEndedMenu extends LinearLayoutCompat {
     private void initView(Context context) {
         setOrientation(VERTICAL);
 
-        View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_inquiry_ended_menu, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_inquiry_grid_menu, this);
         recycler_menu = view.findViewById(R.id.recycler_menu);
     }
 

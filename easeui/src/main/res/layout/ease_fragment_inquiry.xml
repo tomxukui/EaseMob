@@ -59,7 +59,7 @@
             android:layout_height="wrap_content" />
 
         <!--聊天已结束的菜单-->
-        <com.hyphenate.easeui.module.inquiry.widget.EaseInquiryEndedMenu
+        <com.hyphenate.easeui.module.inquiry.widget.EaseInquiryGridMenu
             android:id="@+id/menu_ended"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
