@@ -389,10 +389,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
      * 设置关闭问诊
      */
     protected void setInquiryClosed() {
-        if (mIsClosed) {
-            return;
-        }
-
         mIsClosed = true;
 
         if (mOnInquiryListener != null) {
