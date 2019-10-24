@@ -83,7 +83,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     protected String mChatMode;//问诊模式
     protected boolean mIsMessageInit;//消息是否已加载
     protected boolean mIsClosed;//问诊是否已关闭
-
     protected int mPageSize = 20;//消息分页一页最多数量
     protected boolean mHaveMoreData = true;//是否有更多消息
     protected File mCameraFile;//相机拍照照片文件
