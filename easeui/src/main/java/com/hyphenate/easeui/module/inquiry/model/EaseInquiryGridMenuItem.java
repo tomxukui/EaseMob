@@ -4,18 +4,18 @@ import android.support.annotation.Nullable;
 
 import java.io.Serializable;
 
-public class EaseInquiryEndedMenuItem implements Serializable {
+public class EaseInquiryGridMenuItem implements Serializable {
 
     private String name;
     @Nullable
     private OnItemClickListener onItemClickListener;
 
-    public EaseInquiryEndedMenuItem(String name, @Nullable OnItemClickListener listener) {
+    public EaseInquiryGridMenuItem(String name, @Nullable OnItemClickListener listener) {
         this.name = name;
         this.onItemClickListener = listener;
     }
 
-    public EaseInquiryEndedMenuItem() {
+    public EaseInquiryGridMenuItem() {
     }
 
     public String getName() {
@@ -37,7 +37,7 @@ public class EaseInquiryEndedMenuItem implements Serializable {
 
     public interface OnItemClickListener {
 
-        void onItemClick(EaseInquiryEndedMenuItem menuItem, int position);
+        void onItemClick(EaseInquiryGridMenuItem menuItem, int position);
 
     }
 

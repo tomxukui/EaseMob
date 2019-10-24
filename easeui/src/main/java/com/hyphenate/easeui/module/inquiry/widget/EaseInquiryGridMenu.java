@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.module.inquiry.adapter.EaseInquiryEndedMenuRecyclerAdapter;
-import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
+import com.hyphenate.easeui.module.inquiry.model.EaseInquiryGridMenuItem;
 import com.hyphenate.easeui.utils.EaseContextCompatUtil;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
 
@@ -68,7 +68,11 @@ public class EaseInquiryGridMenu extends LinearLayoutCompat {
         recycler_menu.setAdapter(mRecyclerAdapter);
     }
 
-    public void setData(List<EaseInquiryEndedMenuItem> menuItems) {
+    public void setSpaceCount(int count) {
+        mSpaceCount = count;
+    }
+
+    public void setData(List<EaseInquiryGridMenuItem> menuItems) {
         int count = (menuItems == null ? 0 : menuItems.size());
         mSpaceCount = count == 1 ? 1 : 2;
 

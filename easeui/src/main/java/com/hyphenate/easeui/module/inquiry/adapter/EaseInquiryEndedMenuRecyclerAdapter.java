@@ -7,13 +7,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
+import com.hyphenate.easeui.module.inquiry.model.EaseInquiryGridMenuItem;
 
 import java.util.List;
 
 public class EaseInquiryEndedMenuRecyclerAdapter extends RecyclerView.Adapter<EaseInquiryEndedMenuRecyclerAdapter.ViewHolder> {
 
-    private List<EaseInquiryEndedMenuItem> mMenuItems;
+    private List<EaseInquiryGridMenuItem> mMenuItems;
 
     public EaseInquiryEndedMenuRecyclerAdapter() {
     }
@@ -31,11 +31,11 @@ public class EaseInquiryEndedMenuRecyclerAdapter extends RecyclerView.Adapter<Ea
 
     @Override
     public void onBindViewHolder(ViewHolder vh, int position) {
-        EaseInquiryEndedMenuItem menuItem = mMenuItems.get(position);
+        EaseInquiryGridMenuItem menuItem = mMenuItems.get(position);
 
         vh.tv_name.setText(menuItem.getName());
         vh.tv_name.setOnClickListener(v -> {
-            EaseInquiryEndedMenuItem.OnItemClickListener listener = menuItem.getOnItemClickListener();
+            EaseInquiryGridMenuItem.OnItemClickListener listener = menuItem.getOnItemClickListener();
 
             if (listener != null) {
                 listener.onItemClick(menuItem, position);
@@ -58,7 +58,7 @@ public class EaseInquiryEndedMenuRecyclerAdapter extends RecyclerView.Adapter<Ea
 
     }
 
-    public void setData(List<EaseInquiryEndedMenuItem> menuItems) {
+    public void setData(List<EaseInquiryGridMenuItem> menuItems) {
         mMenuItems = menuItems;
         notifyDataSetChanged();
     }

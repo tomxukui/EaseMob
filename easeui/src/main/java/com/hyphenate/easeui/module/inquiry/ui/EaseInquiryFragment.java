@@ -32,9 +32,7 @@ import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
 import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
-import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryMoreMenuItem;
-import com.hyphenate.easeui.module.inquiry.widget.EaseInquiryGridMenu;
 import com.hyphenate.easeui.utils.EaseFileUtil;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
@@ -71,11 +69,12 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     protected EaseToolbar toolbar;
     protected FrameLayout frame_main;
     protected EaseMessageListView list_message;
+    protected FrameLayout frame_main_custom;
     protected EaseVoiceRecorderView voice_recorder;
     protected TextView tv_availableCount;
     protected FrameLayout frame_footer;
+    protected FrameLayout frame_footer_custom;
     protected EaseChatInputMenu menu_input;
-    protected EaseInquiryGridMenu menu_ended;
 
     protected EMConversation mConversation;//会话
     protected EaseUser mFromUser;
@@ -125,11 +124,12 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         toolbar = view.findViewById(R.id.toolbar);
         frame_main = view.findViewById(R.id.frame_main);
         list_message = view.findViewById(R.id.list_message);
+        frame_main_custom = view.findViewById(R.id.frame_main_custom);
         voice_recorder = view.findViewById(R.id.voice_recorder);
         tv_availableCount = view.findViewById(R.id.tv_availableCount);
         frame_footer = view.findViewById(R.id.frame_footer);
+        frame_footer_custom = view.findViewById(R.id.frame_footer_custom);
         menu_input = view.findViewById(R.id.menu_input);
-        menu_ended = view.findViewById(R.id.menu_ended);
     }
 
     @Override
@@ -219,9 +219,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             }
 
         });
-
-        //设置问诊结束后的底部菜单
-        menu_ended.setData(getEndedMenuItems());
 
         //设置问诊模式
         if (EaseType.BROWSE.equals(mChatMode)) {//问诊模式
@@ -630,7 +627,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     protected void setCloseInquiryView() {
         tv_availableCount.setVisibility(View.GONE);
         menu_input.setVisibility(View.GONE);
-        menu_ended.setVisibility(menu_ended.isEmpty() ? View.GONE : View.VISIBLE);
     }
 
     /**
@@ -696,14 +692,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         }
 
     };
-
-    /**
-     * 获取结束问诊后的底部菜单子项集合, 如果为空, 则隐藏
-     */
-    @Nullable
-    protected List<EaseInquiryEndedMenuItem> getEndedMenuItems() {
-        return null;
-    }
 
     /**
      * 获取输入框的更多菜单子项集合

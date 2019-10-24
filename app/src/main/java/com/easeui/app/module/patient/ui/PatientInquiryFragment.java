@@ -2,12 +2,11 @@ package com.easeui.app.module.patient.ui;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.ListPopupWindow;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 
 import com.easeui.app.R;
 import com.easeui.app.module.patient.adapter.PatientInquiryMenuListAdapter;
@@ -15,8 +14,9 @@ import com.easeui.app.module.patient.model.PatientInquiryMenuItem;
 import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
-import com.hyphenate.easeui.module.inquiry.model.EaseInquiryEndedMenuItem;
+import com.hyphenate.easeui.module.inquiry.model.EaseInquiryGridMenuItem;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
+import com.hyphenate.easeui.module.inquiry.widget.EaseInquiryGridMenu;
 import com.hyphenate.easeui.utils.EaseContextCompatUtil;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatientInquiryFragment extends EaseInquiryFragment {
+
+    //问诊结束后的菜单
+    private EaseInquiryGridMenu mFooterMenu;
 
     //标题栏菜单
     private ListPopupWindow mPopupMenu;
@@ -75,17 +78,36 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
     }
 
     @Override
+    protected void initView(View view, Bundle savedInstanceState) {
+        super.initView(view, savedInstanceState);
+        frame_footer_custom.removeAllViews();
+        mFooterMenu = new EaseInquiryGridMenu(getContext());
+        mFooterMenu.setVisibility(View.GONE);
+        frame_footer_custom.addView(mFooterMenu);
+    }
+
+    @Override
     protected void setView(Bundle savedInstanceState) {
         super.setView(savedInstanceState);
+        List<EaseInquiryGridMenuItem> footerMenuItems = new ArrayList<>();
+        footerMenuItems.add(new EaseInquiryGridMenuItem("送心意", (menuItem, position) -> EaseToastUtil.show("送心意")));
+        footerMenuItems.add(new EaseInquiryGridMenuItem("再次咨询", (menuItem, position) -> EaseToastUtil.show("再次咨询")));
+        mFooterMenu.setData(footerMenuItems);
+
         setOnInquiryListener(new EaseOnInquiryListener() {
 
             @Override
             public void onCloseInquiry() {
-                Log.e("ddd", "问诊已结束");
                 EaseToastUtil.show("问诊已结束");
             }
 
         });
+    }
+
+    @Override
+    protected void setCloseInquiryView() {
+        super.setCloseInquiryView();
+        mFooterMenu.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -114,15 +136,6 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
         if (!mPopupMenu.isShowing()) {
             mPopupMenu.show();
         }
-    }
-
-    @Nullable
-    @Override
-    protected List<EaseInquiryEndedMenuItem> getEndedMenuItems() {
-        List<EaseInquiryEndedMenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new EaseInquiryEndedMenuItem("送心意", (menuItem, position) -> EaseToastUtil.show("送心意")));
-        menuItems.add(new EaseInquiryEndedMenuItem("再次咨询", (menuItem, position) -> EaseToastUtil.show("再次咨询")));
-        return menuItems;
     }
 
 }
