@@ -313,6 +313,8 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         });
 
         mIsMessageInit = true;
+
+        setInquiryStarted();
     }
 
     /**
@@ -384,6 +386,17 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     public void onBackPressed() {
         if (menu_input.onBackPressed()) {
             finish();
+        }
+    }
+
+    /**
+     * 设置开始问诊
+     */
+    protected void setInquiryStarted() {
+        mIsClosed = false;
+
+        if (mOnInquiryListener != null) {
+            mOnInquiryListener.onStartInquiry();
         }
     }
 
@@ -594,6 +607,14 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     }
 
     /**
+     * 开始问诊
+     */
+    protected void startInquiry() {
+        setInquiryStarted();
+        setStartInquiryView();
+    }
+
+    /**
      * 结束问诊
      */
     protected void closeInquiry() {
@@ -619,6 +640,14 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         setInquiryClosed();
         setCloseInquiryView();
         hideSoftKeyboard();
+    }
+
+    /**
+     * 设置问诊开始的控件
+     */
+    protected void setStartInquiryView() {
+        tv_availableCount.setVisibility(View.VISIBLE);
+        menu_input.setVisibility(View.VISIBLE);
     }
 
     /**

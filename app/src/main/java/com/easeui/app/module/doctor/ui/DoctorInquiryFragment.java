@@ -8,12 +8,14 @@ import android.view.MenuItem;
 import com.easeui.app.R;
 import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.base.model.EaseUser;
+import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
 
 public class DoctorInquiryFragment extends EaseInquiryFragment {
 
     private static final String EXTRA_TO_USER_MOBILE = "EXTRA_TO_USER_MOBILE";
 
+    private MenuItem startInquiryMenuItem;
     private MenuItem closeInquiryMenuItem;
 
     private String mToUserMobile;
@@ -49,10 +51,16 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
     @Override
     protected void setView(Bundle savedInstanceState) {
         super.setView(savedInstanceState);
-        setOnInquiryListener(() -> {
-            if (closeInquiryMenuItem != null) {
-                closeInquiryMenuItem.setVisible(false);
+        setOnInquiryListener(new EaseOnInquiryListener() {
+
+            @Override
+            public void onStartInquiry() {
             }
+
+            @Override
+            public void onCloseInquiry() {
+            }
+
         });
     }
 
@@ -61,11 +69,41 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_doctor_inquiry, menu);
 
+        startInquiryMenuItem = menu.findItem(R.id.action_startInquiry);
+        startInquiryMenuItem.setVisible(false);
+        startInquiryMenuItem.setOnMenuItemClickListener(item -> {
+            startInquiry();
+            return true;
+        });
+
         closeInquiryMenuItem = menu.findItem(R.id.action_closeInquiry);
+        startInquiryMenuItem.setVisible(false);
         closeInquiryMenuItem.setOnMenuItemClickListener(item -> {
             closeInquiry();
             return true;
         });
+    }
+
+    @Override
+    protected void setInquiryStarted() {
+        super.setInquiryStarted();
+        if (startInquiryMenuItem != null) {
+            startInquiryMenuItem.setVisible(false);
+        }
+        if (closeInquiryMenuItem != null) {
+            closeInquiryMenuItem.setVisible(true);
+        }
+    }
+
+    @Override
+    protected void setInquiryClosed() {
+        super.setInquiryClosed();
+        if (startInquiryMenuItem != null) {
+            startInquiryMenuItem.setVisible(true);
+        }
+        if (closeInquiryMenuItem != null) {
+            closeInquiryMenuItem.setVisible(false);
+        }
     }
 
 }

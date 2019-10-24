@@ -97,11 +97,22 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
         setOnInquiryListener(new EaseOnInquiryListener() {
 
             @Override
+            public void onStartInquiry() {
+                EaseToastUtil.show("问诊开始");
+            }
+
+            @Override
             public void onCloseInquiry() {
                 EaseToastUtil.show("问诊已结束");
             }
 
         });
+    }
+
+    @Override
+    protected void setStartInquiryView() {
+        super.setStartInquiryView();
+        mFooterMenu.setVisibility(View.GONE);
     }
 
     @Override
