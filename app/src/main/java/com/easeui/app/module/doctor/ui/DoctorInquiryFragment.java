@@ -15,8 +15,7 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
 
     private static final String EXTRA_TO_USER_MOBILE = "EXTRA_TO_USER_MOBILE";
 
-    private MenuItem startInquiryMenuItem;
-    private MenuItem closeInquiryMenuItem;
+    private MenuItem inquiryMenuItem;
 
     private String mToUserMobile;
 
@@ -69,40 +68,33 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_doctor_inquiry, menu);
 
-        startInquiryMenuItem = menu.findItem(R.id.action_startInquiry);
-        startInquiryMenuItem.setVisible(false);
-        startInquiryMenuItem.setOnMenuItemClickListener(item -> {
-            startInquiry();
-            return true;
-        });
-
-        closeInquiryMenuItem = menu.findItem(R.id.action_closeInquiry);
-        startInquiryMenuItem.setVisible(false);
-        closeInquiryMenuItem.setOnMenuItemClickListener(item -> {
-            closeInquiry();
-            return true;
-        });
+        inquiryMenuItem = menu.findItem(R.id.action_inquiry);
+        inquiryMenuItem.setVisible(false);
     }
 
     @Override
     protected void setInquiryStarted() {
         super.setInquiryStarted();
-        if (startInquiryMenuItem != null) {
-            startInquiryMenuItem.setVisible(false);
-        }
-        if (closeInquiryMenuItem != null) {
-            closeInquiryMenuItem.setVisible(true);
+        if (inquiryMenuItem != null) {
+            inquiryMenuItem.setVisible(true);
+            inquiryMenuItem.setTitle("结束问诊");
+            inquiryMenuItem.setOnMenuItemClickListener(item -> {
+                closeInquiry();
+                return true;
+            });
         }
     }
 
     @Override
     protected void setInquiryClosed() {
         super.setInquiryClosed();
-        if (startInquiryMenuItem != null) {
-            startInquiryMenuItem.setVisible(true);
-        }
-        if (closeInquiryMenuItem != null) {
-            closeInquiryMenuItem.setVisible(false);
+        if (inquiryMenuItem != null) {
+            inquiryMenuItem.setVisible(true);
+            inquiryMenuItem.setTitle("开始问诊");
+            inquiryMenuItem.setOnMenuItemClickListener(item -> {
+                startInquiry();
+                return true;
+            });
         }
     }
 

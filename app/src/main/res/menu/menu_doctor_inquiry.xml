@@ -2,15 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_startInquiry"
+        android:id="@+id/action_inquiry"
         android:orderInCategory="100"
-        android:title="开始问诊"
-        app:showAsAction="always" />
-
-    <item
-        android:id="@+id/action_closeInquiry"
-        android:orderInCategory="100"
-        android:title="结束问诊"
+        android:title="菜单"
         app:showAsAction="always" />
 
 </menu>
