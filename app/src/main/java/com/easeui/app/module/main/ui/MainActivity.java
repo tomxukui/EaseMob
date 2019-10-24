@@ -15,7 +15,6 @@ import com.easeui.app.module.patient.ui.PatientInquiryActivity;
 import com.easeui.app.module.converstaion.ui.ConverstationsActivity;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 
 public class MainActivity extends AppCompatActivity {
@@ -257,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
             EaseUser fromUser = new EaseUser(username, nickname, avatar, null);
             EaseUser toUser = new EaseUser(toUsername, toNickname, toAvatar);
 
-            Intent intent = PatientInquiryActivity.buildIntent(MainActivity.this, fromUser, pwd, toUser, EaseType.CHAT);
+            Intent intent = PatientInquiryActivity.buildIntent(MainActivity.this, fromUser, pwd, toUser);
             startActivity(intent);
         });
 
@@ -293,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
             EaseUser fromUser = new EaseUser(username, nickname, avatar, null);
             EaseUser toUser = new EaseUser(toUsername, toNickname, toAvatar);
 
-            Intent intent = DoctorInquiryActivity.buildIntent(MainActivity.this, fromUser, pwd, toUser, EaseType.CHAT);
+            Intent intent = DoctorInquiryActivity.buildIntent(MainActivity.this, fromUser, pwd, toUser);
             startActivity(intent);
         });
 

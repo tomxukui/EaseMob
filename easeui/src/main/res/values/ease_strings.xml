@@ -43,4 +43,7 @@
     <string name="no_more_messages">没有更多的消息了</string>
     <string name="group_ack_read_count">%1$d 已读</string>
 
+    <string name="ease_inquiry_start">您好，感谢您的信任和咨询！请耐心等待医生回复，如正逢医生在坐诊或手术，可能稍迟一些回复。如病情特别紧急或严重，请及时前往医院。</string>
+    <string name="ease_inquiry_close">本次咨询已结束，请您对我的服务进行评价！</string>
+
 </resources>

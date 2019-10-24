@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_inquiry"
         android:orderInCategory="100"
-        android:title="菜单"
+        android:title="加载中"
         app:showAsAction="always" />
 
 </menu>

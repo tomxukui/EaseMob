@@ -11,7 +11,6 @@ import android.view.View;
 import com.easeui.app.R;
 import com.easeui.app.module.patient.adapter.PatientInquiryMenuListAdapter;
 import com.easeui.app.module.patient.model.PatientInquiryMenuItem;
-import com.hyphenate.easeui.constants.EaseType;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryGridMenuItem;
@@ -26,19 +25,18 @@ import java.util.List;
 
 public class PatientInquiryFragment extends EaseInquiryFragment {
 
-    //问诊结束后的菜单
+    //底部菜单
     private EaseInquiryGridMenu mFooterMenu;
 
     //标题栏菜单
     private ListPopupWindow mPopupMenu;
     private PatientInquiryMenuListAdapter mMenuListAdapter;
 
-    public static PatientInquiryFragment newInstance(EaseUser fromUser, EaseUser toUser, @EaseType.ChatMode String chatMode) {
+    public static PatientInquiryFragment newInstance(EaseUser fromUser, EaseUser toUser) {
         PatientInquiryFragment fragment = new PatientInquiryFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(EXTRA_FROM_USER, fromUser);
         bundle.putSerializable(EXTRA_TO_USER, toUser);
-        bundle.putString(EXTRA_CHAT_MODE, chatMode);
         fragment.setArguments(bundle);
         return fragment;
     }
