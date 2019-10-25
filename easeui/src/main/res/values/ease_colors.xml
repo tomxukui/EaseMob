@@ -46,4 +46,7 @@
     <color name="ease_converstation_list_message">#AAAAAA</color>
     <color name="ease_converstation_list_time">#CACACA</color>
 
+    <!--分隔线-->
+    <color name="ease_common_divider">#E5E5E5</color>
+
 </resources>
