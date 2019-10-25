@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.easeui.app.R;
 import com.easeui.app.module.patient.adapter.PatientInquiryMenuListAdapter;
-import com.easeui.app.module.patient.model.PatientInquiryMenuItem;
+import com.easeui.app.module.patient.model.PatientInquiryToolbarMenuItem;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryGridMenuItem;
@@ -29,7 +29,7 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
     private EaseInquiryGridMenu mFooterMenu;
 
     //标题栏菜单
-    private ListPopupWindow mPopupMenu;
+    private ListPopupWindow mToolbarMenu;
     private PatientInquiryMenuListAdapter mMenuListAdapter;
 
     public static PatientInquiryFragment newInstance(EaseUser fromUser, EaseUser toUser) {
@@ -44,14 +44,14 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        List<PatientInquiryMenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new PatientInquiryMenuItem(R.mipmap.ic_menu_doctor, "医生介绍", (itemModel, position) -> {
+        List<PatientInquiryToolbarMenuItem> menuItems = new ArrayList<>();
+        menuItems.add(new PatientInquiryToolbarMenuItem(R.mipmap.ic_menu_doctor, "医生介绍", (itemModel, position) -> {
             EaseToastUtil.show("医生介绍");
         }));
-        menuItems.add(new PatientInquiryMenuItem(R.mipmap.ic_menu_appoint, "去挂号", (itemModel, position) -> {
+        menuItems.add(new PatientInquiryToolbarMenuItem(R.mipmap.ic_menu_appoint, "去挂号", (itemModel, position) -> {
             EaseToastUtil.show("去挂号");
         }));
-        menuItems.add(new PatientInquiryMenuItem(R.mipmap.ic_menu_inquiry_info, "问诊信息", (itemModel, position) -> {
+        menuItems.add(new PatientInquiryToolbarMenuItem(R.mipmap.ic_menu_inquiry_info, "问诊信息", (itemModel, position) -> {
             EaseToastUtil.show("问诊信息");
         }));
         mMenuListAdapter = new PatientInquiryMenuListAdapter(menuItems);
@@ -70,7 +70,12 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
         inflater.inflate(R.menu.menu_patient_inquiry, menu);
 
         menu.findItem(R.id.action_more).setOnMenuItemClickListener(item -> {
-            showPopupMenu();
+            if (mToolbarMenu != null && mToolbarMenu.isShowing()) {
+                mToolbarMenu.dismiss();
+
+            } else {
+                showToolbarMenu();
+            }
             return true;
         });
     }
@@ -132,28 +137,37 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
     /**
      * 显示标题栏菜单
      */
-    private void showPopupMenu() {
-        if (mPopupMenu == null) {
-            mPopupMenu = new ListPopupWindow(getContext());
-            mPopupMenu.setContentWidth(EaseDensityUtil.dp2px(138));
-            mPopupMenu.setBackgroundDrawable(EaseContextCompatUtil.getDrawable(R.drawable.ease_bg_menu));
-            mPopupMenu.setDropDownGravity(Gravity.RIGHT);
-            mPopupMenu.setHorizontalOffset(EaseDensityUtil.dp2px(-5));
-            mPopupMenu.setVerticalOffset(EaseDensityUtil.dp2px(4));
-            mPopupMenu.setAdapter(mMenuListAdapter);
-            mPopupMenu.setOnItemClickListener((parent, view, position, id) -> {
-                PatientInquiryMenuItem menuItem = mMenuListAdapter.getItem(position);
+    private void showToolbarMenu() {
+        if (mToolbarMenu == null) {
+            mToolbarMenu = new ListPopupWindow(getContext());
+            mToolbarMenu.setContentWidth(EaseDensityUtil.dp2px(138));
+            mToolbarMenu.setBackgroundDrawable(EaseContextCompatUtil.getDrawable(R.drawable.ease_bg_menu));
+            mToolbarMenu.setDropDownGravity(Gravity.RIGHT);
+            mToolbarMenu.setHorizontalOffset(EaseDensityUtil.dp2px(-5));
+            mToolbarMenu.setVerticalOffset(EaseDensityUtil.dp2px(4));
+            mToolbarMenu.setAdapter(mMenuListAdapter);
+            mToolbarMenu.setOnItemClickListener((parent, view, position, id) -> {
+                PatientInquiryToolbarMenuItem menuItem = mMenuListAdapter.getItem(position);
 
-                PatientInquiryMenuItem.OnItemClickListener listener = menuItem.getOnItemClickListener();
+                PatientInquiryToolbarMenuItem.OnItemClickListener listener = menuItem.getOnItemClickListener();
                 if (listener != null) {
                     listener.onItemClick(menuItem, position);
                 }
             });
-            mPopupMenu.setAnchorView(toolbar);
+            mToolbarMenu.setAnchorView(toolbar);
         }
 
-        if (!mPopupMenu.isShowing()) {
-            mPopupMenu.show();
+        if (!mToolbarMenu.isShowing()) {
+            mToolbarMenu.show();
+        }
+    }
+
+    /**
+     * 关闭标题栏菜单
+     */
+    private void dismissToolbarMenu() {
+        if (mToolbarMenu != null && mToolbarMenu.isShowing()) {
+            mToolbarMenu.dismiss();
         }
     }
 

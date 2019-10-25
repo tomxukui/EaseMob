@@ -4,20 +4,20 @@ import android.support.annotation.Nullable;
 
 import java.io.Serializable;
 
-public class PatientInquiryMenuItem implements Serializable {
+public class PatientInquiryToolbarMenuItem implements Serializable {
 
     private int resId;
     private String name;
     @Nullable
     private OnItemClickListener onItemClickListener;
 
-    public PatientInquiryMenuItem(int resId, String name, @Nullable OnItemClickListener listener) {
+    public PatientInquiryToolbarMenuItem(int resId, String name, @Nullable OnItemClickListener listener) {
         this.resId = resId;
         this.name = name;
         this.onItemClickListener = listener;
     }
 
-    public PatientInquiryMenuItem() {
+    public PatientInquiryToolbarMenuItem() {
     }
 
     public int getResId() {
@@ -47,7 +47,7 @@ public class PatientInquiryMenuItem implements Serializable {
 
     public interface OnItemClickListener {
 
-        void onItemClick(PatientInquiryMenuItem itemModel, int position);
+        void onItemClick(PatientInquiryToolbarMenuItem itemModel, int position);
 
     }
 

@@ -8,17 +8,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.easeui.app.R;
-import com.easeui.app.module.patient.model.PatientInquiryMenuItem;
+import com.easeui.app.module.patient.model.PatientInquiryToolbarMenuItem;
 
 import java.util.List;
 
 public class PatientInquiryMenuListAdapter extends BaseAdapter {
 
-    private List<PatientInquiryMenuItem> mMenuItems;
+    private List<PatientInquiryToolbarMenuItem> mMenuItems;
 
     private ViewHolder mViewHolder;
 
-    public PatientInquiryMenuListAdapter(List<PatientInquiryMenuItem> menuItems) {
+    public PatientInquiryMenuListAdapter(List<PatientInquiryToolbarMenuItem> menuItems) {
         this.mMenuItems = menuItems;
     }
 
@@ -28,7 +28,7 @@ public class PatientInquiryMenuListAdapter extends BaseAdapter {
     }
 
     @Override
-    public PatientInquiryMenuItem getItem(int position) {
+    public PatientInquiryToolbarMenuItem getItem(int position) {
         return mMenuItems.get(position);
     }
 
@@ -52,7 +52,7 @@ public class PatientInquiryMenuListAdapter extends BaseAdapter {
             mViewHolder = (ViewHolder) convertView.getTag();
         }
 
-        PatientInquiryMenuItem menuItem = getItem(position);
+        PatientInquiryToolbarMenuItem menuItem = getItem(position);
 
         mViewHolder.iv_icon.setImageResource(menuItem.getResId());
         mViewHolder.tv_name.setText(menuItem.getName());
