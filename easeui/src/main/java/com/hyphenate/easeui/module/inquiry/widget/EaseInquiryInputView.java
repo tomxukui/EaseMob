@@ -42,11 +42,11 @@ public class EaseInquiryInputView extends EaseInputLayout {
         addControlView(button2);
 
         View view1 = new View(context);
-        view1.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, EaseDensityUtil.dp2px(100)));
+        view1.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
         view1.setBackgroundColor(Color.parseColor("#214332"));
 
         View view2 = new View(context);
-        view2.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, EaseDensityUtil.dp2px(100)));
+        view2.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
         view2.setBackgroundColor(Color.parseColor("#213432"));
 
         addPanelView(view1);
