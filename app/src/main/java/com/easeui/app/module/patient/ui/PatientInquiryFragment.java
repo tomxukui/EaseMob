@@ -96,12 +96,22 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
 
             @Override
             public void onStartInquiry() {
-                EaseToastUtil.show("问诊开始");
+                EaseToastUtil.show("开始问诊");
             }
 
             @Override
             public void onCloseInquiry() {
-                EaseToastUtil.show("问诊已结束");
+                EaseToastUtil.show("结束问诊");
+            }
+
+            @Override
+            public void onStartVisit() {
+                EaseToastUtil.show("开始随访");
+            }
+
+            @Override
+            public void onCloseVisit() {
+                EaseToastUtil.show("结束随访");
             }
 
         });
@@ -126,7 +136,7 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
         if (mPopupMenu == null) {
             mPopupMenu = new ListPopupWindow(getContext());
             mPopupMenu.setContentWidth(EaseDensityUtil.dp2px(138));
-            mPopupMenu.setBackgroundDrawable(EaseContextCompatUtil.getDrawable(com.hyphenate.easeui.R.drawable.ease_bg_menu));
+            mPopupMenu.setBackgroundDrawable(EaseContextCompatUtil.getDrawable(R.drawable.ease_bg_menu));
             mPopupMenu.setDropDownGravity(Gravity.RIGHT);
             mPopupMenu.setHorizontalOffset(EaseDensityUtil.dp2px(-5));
             mPopupMenu.setVerticalOffset(EaseDensityUtil.dp2px(4));

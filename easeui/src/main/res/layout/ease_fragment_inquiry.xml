@@ -62,8 +62,7 @@
         <com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatInputMenu
             android:id="@+id/menu_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:layout_height="wrap_content" />
 
         <!--底部的自定义内容-->
         <FrameLayout

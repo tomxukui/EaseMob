@@ -82,6 +82,14 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
             public void onCloseInquiry() {
             }
 
+            @Override
+            public void onStartVisit() {
+            }
+
+            @Override
+            public void onCloseVisit() {
+            }
+
         });
     }
 
