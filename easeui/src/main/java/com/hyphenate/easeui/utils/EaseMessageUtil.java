@@ -1,6 +1,7 @@
 package com.hyphenate.easeui.utils;
 
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.text.TextUtils;
 
 import com.hyphenate.chat.EMMessage;
@@ -8,6 +9,9 @@ import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.module.base.model.EaseUser;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 public class EaseMessageUtil {
 
@@ -17,6 +21,15 @@ public class EaseMessageUtil {
     private static final String TO_NICKNAME = "to_nickname";//被发送方的昵称
     private static final String TO_AVATAR = "to_avatar";//被发送方的头像
     private static final String TO_MEMBER_ID = "to_memberid";//被发送方的成员id
+    private static final String ACTION = "ACTION";//动作
+
+    public static final String ACTION_START_INQUIRY = "start_inquiry";//开始问诊
+    public static final String ACTION_CLOSE_INQUIRY = "close_inquiry";//结束问诊
+
+    @StringDef({ACTION_START_INQUIRY, ACTION_CLOSE_INQUIRY})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface MessageAction {
+    }
 
     /**
      * 获取发送者的头像
@@ -100,6 +113,23 @@ public class EaseMessageUtil {
      */
     public static void setToMemberId(EMMessage message, String memberId) {
         message.setAttribute(TO_MEMBER_ID, memberId);
+    }
+
+    /**
+     * 获取动作
+     */
+    @MessageAction
+    public static String getAction(EMMessage message) {
+        return message.getStringAttribute(ACTION, null);
+    }
+
+    /**
+     * 设置类型
+     */
+    public static void setAction(EMMessage message, @MessageAction String action) {
+        if (action != null) {
+            message.setAttribute(ACTION, action);
+        }
     }
 
     /**
