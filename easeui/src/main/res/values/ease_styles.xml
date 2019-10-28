@@ -45,7 +45,8 @@
         <item name="android:background">#bfbfbf</item>
     </style>
 
-    <style name="chat_text_name_style">
+    <!--聊天姓名样式-->
+    <style name="ease_chat_text_name_style">
         <item name="android:textColor">#818181</item>
         <item name="android:textSize">15sp</item>
         <item name="android:gravity">center</item>
