@@ -5,11 +5,11 @@
 
     <!--语音模式按钮-->
     <Button
-        android:id="@+id/btn_switchVoiceMode"
+        android:id="@+id/btn_voice"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/ease_btn_switch_voice_mode" />
+        android:background="@drawable/ease_btn_voice" />
 
     <!--语音发送的按钮-->
     <TextView
@@ -68,11 +68,11 @@
 
     <!--表情按钮-->
     <Button
-        android:id="@+id/btn_switchFaceMode"
+        android:id="@+id/btn_face"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/ease_btn_switch_face_mode" />
+        android:background="@drawable/ease_btn_chat_face" />
 
     <!--更多按钮-->
     <Button
@@ -86,11 +86,17 @@
     <Button
         android:id="@+id/btn_send"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
         android:background="@drawable/ease_btn_chat_send"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="5dp"
         android:text="@string/button_send"
-        android:textColor="#666666"
+        android:textColor="#ffffff"
         android:textSize="15sp"
         android:visibility="gone" />
 

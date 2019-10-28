@@ -22,12 +22,12 @@ import com.hyphenate.easeui.utils.EaseSoftInputUtil;
 
 public class EaseInputControlMenu extends EaseInputControlMenuBase {
 
-    private Button btn_switchVoiceMode;
+    private Button btn_voice;
     private TextView tv_sendVoice;
     private FrameLayout frame_text;
     private EditText et_text;
     private TextView tv_text;
-    private Button btn_switchFaceMode;
+    private Button btn_face;
     private Button btn_more;
     private Button btn_send;
 
@@ -58,18 +58,18 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
 
         View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_input_control_menu, this);
 
-        btn_switchVoiceMode = view.findViewById(R.id.btn_switchVoiceMode);
+        btn_voice = view.findViewById(R.id.btn_voice);
         tv_sendVoice = view.findViewById(R.id.tv_sendVoice);
         frame_text = view.findViewById(R.id.frame_text);
         et_text = view.findViewById(R.id.et_text);
         tv_text = view.findViewById(R.id.tv_text);
-        btn_switchFaceMode = view.findViewById(R.id.btn_switchFaceMode);
+        btn_face = view.findViewById(R.id.btn_face);
         btn_more = view.findViewById(R.id.btn_more);
         btn_send = view.findViewById(R.id.btn_send);
     }
 
     private void setView() {
-        btn_switchVoiceMode.setOnClickListener(v -> {
+        btn_voice.setOnClickListener(v -> {
             v.setSelected(!v.isSelected());
 
             if (v.isSelected()) {
@@ -77,7 +77,7 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
 
                 setTextEditView(false, false, false);
 
-                btn_switchFaceMode.setSelected(false);
+                btn_face.setSelected(false);
 
                 setSendBtn(false);
 
@@ -86,7 +86,7 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
 
                 setTextEditView(true, true, true);
 
-                btn_switchFaceMode.setSelected(false);
+                btn_face.setSelected(false);
 
                 setSendBtn(et_text.getText().toString());
             }
@@ -104,7 +104,7 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
         });
 
         et_text.setOnClickListener(v -> {
-            btn_switchFaceMode.setSelected(false);
+            btn_face.setSelected(false);
             btn_more.setSelected(false);
 
             if (listener != null) {
@@ -156,7 +156,7 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
         });
 
         tv_text.setOnClickListener(v -> {
-            btn_switchFaceMode.setSelected(false);
+            btn_face.setSelected(false);
             btn_more.setSelected(false);
 
             setTextEditView(true, true, true);
@@ -166,10 +166,10 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
             }
         });
 
-        btn_switchFaceMode.setOnClickListener(v -> {
+        btn_face.setOnClickListener(v -> {
             v.setSelected(!v.isSelected());
 
-            btn_switchVoiceMode.setSelected(false);
+            btn_voice.setSelected(false);
             tv_sendVoice.setVisibility(View.GONE);
 
             setTextEditView(true, true, !v.isSelected());
@@ -184,12 +184,12 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
         btn_more.setOnClickListener(v -> {
             v.setSelected(!v.isSelected());
 
-            btn_switchVoiceMode.setSelected(false);
+            btn_voice.setSelected(false);
             tv_sendVoice.setVisibility(View.GONE);
 
             setTextEditView(true, !v.isSelected(), !v.isSelected());
 
-            btn_switchFaceMode.setSelected(false);
+            btn_face.setSelected(false);
 
             if (listener != null) {
                 listener.onToggleExtendClick();
@@ -294,7 +294,7 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
 
     @Override
     public void onExtendMenuContainerHide() {
-        btn_switchFaceMode.setSelected(false);
+        btn_face.setSelected(false);
         btn_more.setSelected(false);
     }
 
@@ -304,12 +304,12 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
         Editable editable = et_text.getEditableText();
         editable.insert(start, text);
 
-        btn_switchVoiceMode.setSelected(false);
+        btn_voice.setSelected(false);
         tv_sendVoice.setVisibility(View.GONE);
 
         setTextEditView(true, true, true);
 
-        btn_switchFaceMode.setSelected(false);
+        btn_face.setSelected(false);
 
         setSendBtn(et_text.getText().toString());
     }
