@@ -139,10 +139,17 @@ public class EaseInputMenu extends LinearLayoutCompat {
     }
 
     /**
-     * 添加网格菜单
+     * 添加更多菜单选项
      */
-    public void addExtendMenuItem(int icon, String name, OnClickListener listener) {
-        menu_more.addMenuItem(icon, name, listener);
+    public void addMoreMenuItem(EaseMenuItem menuItem) {
+        menu_more.addMenuItem(menuItem);
+    }
+
+    /**
+     * 添加更多菜单选项列表
+     */
+    public void addMoreMenuItems(List<EaseMenuItem> menuItems) {
+        menu_more.addMenuItems(menuItems);
     }
 
     /**

@@ -25,7 +25,7 @@ import java.util.List;
 public class EaseInputMoreMenu extends GridView {
 
     private int mNumColumns;
-    private List<ChatMenuItemModel> mItemModels;
+    private List<EaseMenuItem> mMenuItems;
 
     private ItemAdapter mItemAdapter;
 
@@ -70,11 +70,29 @@ public class EaseInputMoreMenu extends GridView {
         setAdapter(mItemAdapter);
     }
 
-    public void addMenuItem(int icon, String name, OnClickListener listener) {
-        if (mItemModels == null) {
-            mItemModels = new ArrayList<>();
+    public void addMenuItem(EaseMenuItem menuItem) {
+        if (menuItem == null) {
+            return;
         }
-        mItemModels.add(new ChatMenuItemModel(icon, name, listener));
+
+        if (mMenuItems == null) {
+            mMenuItems = new ArrayList<>();
+        }
+
+        mMenuItems.add(menuItem);
+        mItemAdapter.notifyDataSetChanged();
+    }
+
+    public void addMenuItems(List<EaseMenuItem> menuItems) {
+        if (menuItems == null || menuItems.isEmpty()) {
+            return;
+        }
+
+        if (mMenuItems == null) {
+            mMenuItems = new ArrayList<>();
+        }
+
+        mMenuItems.addAll(menuItems);
         mItemAdapter.notifyDataSetChanged();
     }
 
@@ -84,12 +102,12 @@ public class EaseInputMoreMenu extends GridView {
 
         @Override
         public int getCount() {
-            return mItemModels == null ? 0 : mItemModels.size();
+            return mMenuItems == null ? 0 : mMenuItems.size();
         }
 
         @Override
-        public ChatMenuItemModel getItem(int position) {
-            return mItemModels.get(position);
+        public EaseMenuItem getItem(int position) {
+            return mMenuItems.get(position);
         }
 
         @Override
@@ -113,11 +131,11 @@ public class EaseInputMoreMenu extends GridView {
                 vh = (ViewHolder) convertView.getTag();
             }
 
-            ChatMenuItemModel model = getItem(position);
+            EaseMenuItem menuItem = getItem(position);
 
-            vh.linear_menu.setOnClickListener(model.clickListener);
-            vh.iv_icon.setImageResource(model.icon);
-            vh.tv_name.setText(model.name);
+            vh.linear_menu.setOnClickListener(menuItem.getOnClickListener());
+            vh.iv_icon.setImageResource(menuItem.getIcon());
+            vh.tv_name.setText(menuItem.getName());
 
             return convertView;
         }
@@ -129,20 +147,6 @@ public class EaseInputMoreMenu extends GridView {
             TextView tv_name;
 
         }
-    }
-
-    class ChatMenuItemModel {
-
-        int icon;
-        String name;
-        OnClickListener clickListener;
-
-        public ChatMenuItemModel(int icon, String name, OnClickListener clickListener) {
-            this.icon = icon;
-            this.name = name;
-            this.clickListener = clickListener;
-        }
-
     }
 
 }
