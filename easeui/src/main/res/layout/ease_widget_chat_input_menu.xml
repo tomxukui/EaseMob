@@ -17,12 +17,10 @@
         android:layout_height="wrap_content"
         android:background="@color/ease_chat_input_panel_menu_bg">
 
-        <com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatExtendMenu
+        <com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatInputMoreMenu
             android:id="@+id/menu_more"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:visibility="gone"
             app:numColumns="4" />
 

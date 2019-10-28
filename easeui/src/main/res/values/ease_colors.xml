@@ -35,6 +35,7 @@
     <!--聊天输入框-->
     <color name="ease_chat_input_control_menu_bg">#FCFCFC</color>
     <color name="ease_chat_input_panel_menu_bg">#FCFCFC</color>
+    <color name="ease_chat_input_more_item_text">#888888</color>
 
     <!--消息列表-->
     <color name="ease_message_list_bg">#F5F5F5</color>

@@ -1,8 +1,5 @@
 package com.hyphenate.easeui.module.base.widget.inputmenu;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -18,30 +15,34 @@ import android.widget.TextView;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * 网格功能菜单
+ * 更多菜单
  */
-public class EaseChatExtendMenu extends GridView {
+public class EaseChatInputMoreMenu extends GridView {
 
     private int mNumColumns;
     private List<ChatMenuItemModel> itemModels = new ArrayList<>();
+
     private ItemAdapter mItemAdapter;
 
     private LayoutInflater mInflater;
 
-    public EaseChatExtendMenu(Context context) {
+    public EaseChatInputMoreMenu(Context context) {
         super(context);
         initData(context, null, 0);
         initView();
     }
 
-    public EaseChatExtendMenu(Context context, AttributeSet attrs) {
+    public EaseChatInputMoreMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
         initData(context, attrs, 0);
         initView();
     }
 
-    public EaseChatExtendMenu(Context context, AttributeSet attrs, int defStyleAttr) {
+    public EaseChatInputMoreMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initData(context, attrs, defStyleAttr);
         initView();
@@ -52,8 +53,8 @@ public class EaseChatExtendMenu extends GridView {
         mNumColumns = 4;
 
         if (attrs != null) {
-            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.EaseChatExtendMenu, defStyle, 0);
-            mNumColumns = ta.getInt(R.styleable.EaseChatExtendMenu_numColumns, mNumColumns);
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.EaseChatInputMoreMenu, defStyle, 0);
+            mNumColumns = ta.getInt(R.styleable.EaseChatInputMoreMenu_numColumns, mNumColumns);
             ta.recycle();
         }
 
@@ -64,7 +65,7 @@ public class EaseChatExtendMenu extends GridView {
         setNumColumns(mNumColumns);
         setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
         setGravity(Gravity.CENTER_VERTICAL);
-        setVerticalSpacing(EaseDensityUtil.dp2px(8));
+        setVerticalSpacing(EaseDensityUtil.dp2px(6));
         setAdapter(mItemAdapter);
     }
 
@@ -95,7 +96,7 @@ public class EaseChatExtendMenu extends GridView {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.ease_chat_menu_item, parent, false);
+                convertView = mInflater.inflate(R.layout.ease_item_chat_input_more_menu, parent, false);
 
                 vh = new ViewHolder();
                 vh.iv_icon = convertView.findViewById(R.id.iv_icon);
@@ -111,6 +112,7 @@ public class EaseChatExtendMenu extends GridView {
 
             vh.iv_icon.setImageResource(model.icon);
             vh.iv_icon.setOnClickListener(model.clickListener);
+
             vh.tv_name.setText(model.name);
 
             return convertView;

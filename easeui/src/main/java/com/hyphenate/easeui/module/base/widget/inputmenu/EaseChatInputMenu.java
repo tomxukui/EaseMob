@@ -28,7 +28,7 @@ import com.hyphenate.easeui.module.base.widget.emojicon.EaseEmojiconMenuBase.Eas
 public class EaseChatInputMenu extends LinearLayoutCompat {
 
     private EaseChatInputControlMenuBase menu_primary;
-    private EaseChatExtendMenu menu_more;
+    private EaseChatInputMoreMenu menu_more;
     private EaseEmojiconMenu menu_emoji;
 
     private ChatInputMenuListener mChatInputMenuListener;
