@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hyphenate.easeui.R;
@@ -24,7 +25,7 @@ import java.util.List;
 public class EaseInputMoreMenu extends GridView {
 
     private int mNumColumns;
-    private List<ChatMenuItemModel> itemModels = new ArrayList<>();
+    private List<ChatMenuItemModel> mItemModels;
 
     private ItemAdapter mItemAdapter;
 
@@ -70,7 +71,10 @@ public class EaseInputMoreMenu extends GridView {
     }
 
     public void addMenuItem(int icon, String name, OnClickListener listener) {
-        itemModels.add(new ChatMenuItemModel(icon, name, listener));
+        if (mItemModels == null) {
+            mItemModels = new ArrayList<>();
+        }
+        mItemModels.add(new ChatMenuItemModel(icon, name, listener));
         mItemAdapter.notifyDataSetChanged();
     }
 
@@ -80,12 +84,12 @@ public class EaseInputMoreMenu extends GridView {
 
         @Override
         public int getCount() {
-            return itemModels == null ? 0 : itemModels.size();
+            return mItemModels == null ? 0 : mItemModels.size();
         }
 
         @Override
         public ChatMenuItemModel getItem(int position) {
-            return itemModels.get(position);
+            return mItemModels.get(position);
         }
 
         @Override
@@ -99,6 +103,7 @@ public class EaseInputMoreMenu extends GridView {
                 convertView = mInflater.inflate(R.layout.ease_item_input_more_menu, parent, false);
 
                 vh = new ViewHolder();
+                vh.linear_menu = convertView.findViewById(R.id.linear_menu);
                 vh.iv_icon = convertView.findViewById(R.id.iv_icon);
                 vh.tv_name = convertView.findViewById(R.id.tv_name);
 
@@ -110,9 +115,8 @@ public class EaseInputMoreMenu extends GridView {
 
             ChatMenuItemModel model = getItem(position);
 
+            vh.linear_menu.setOnClickListener(model.clickListener);
             vh.iv_icon.setImageResource(model.icon);
-            vh.iv_icon.setOnClickListener(model.clickListener);
-
             vh.tv_name.setText(model.name);
 
             return convertView;
@@ -120,6 +124,7 @@ public class EaseInputMoreMenu extends GridView {
 
         class ViewHolder {
 
+            LinearLayout linear_menu;
             ImageView iv_icon;
             TextView tv_name;
 
