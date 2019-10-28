@@ -6,7 +6,7 @@
 
     <!--控制层菜单-->
     <com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatInputControlMenu
-        android:id="@+id/menu_primary"
+        android:id="@+id/menu_control"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/ease_chat_input_control_menu_bg" />

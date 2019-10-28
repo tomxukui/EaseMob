@@ -27,7 +27,7 @@ import com.hyphenate.easeui.module.base.widget.emojicon.EaseEmojiconMenuBase.Eas
  */
 public class EaseChatInputMenu extends LinearLayoutCompat {
 
-    private EaseChatInputControlMenuBase menu_primary;
+    private EaseChatInputControlMenuBase menu_control;
     private EaseChatInputMoreMenu menu_more;
     private EaseEmojiconMenu menu_emoji;
 
@@ -58,13 +58,13 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
 
         View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_chat_input_menu, this);
 
-        menu_primary = view.findViewById(R.id.menu_primary);
+        menu_control = view.findViewById(R.id.menu_control);
         menu_more = view.findViewById(R.id.menu_more);
         menu_emoji = view.findViewById(R.id.menu_emoji);
     }
 
     private void setView() {
-        menu_primary.setOnItemClickListener(new EaseChatInputControlMenuBase.OnItemClickListener() {
+        menu_control.setOnItemClickListener(new EaseChatInputControlMenuBase.OnItemClickListener() {
 
             @Override
             public void onTyping(CharSequence s, int start, int before, int count) {
@@ -120,7 +120,7 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
             public void onExpressionClicked(EaseEmojicon emojicon) {
                 if (emojicon.getType() != EaseEmojicon.Type.BIG_EXPRESSION) {
                     if (emojicon.getEmojiText() != null) {
-                        menu_primary.onEmojiconInputEvent(EaseSmileUtil.getSmiledText(getContext(), emojicon.getEmojiText()));
+                        menu_control.onEmojiconInputEvent(EaseSmileUtil.getSmiledText(getContext(), emojicon.getEmojiText()));
                     }
 
                 } else {
@@ -132,7 +132,7 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
 
             @Override
             public void onDeleteImageClicked() {
-                menu_primary.onEmojiconDeleteEvent();
+                menu_control.onEmojiconDeleteEvent();
             }
 
         });
@@ -149,7 +149,7 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
      * 插入文字
      */
     public void insertText(String text) {
-        menu_primary.onTextInsert(text);
+        menu_control.onTextInsert(text);
     }
 
     /**
@@ -179,7 +179,7 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
         animShowView(menu_more, false);
         animShowView(menu_emoji, false);
 
-        menu_primary.onExtendMenuContainerHide();
+        menu_control.onExtendMenuContainerHide();
     }
 
     private void animShowView(View view, boolean show) {
