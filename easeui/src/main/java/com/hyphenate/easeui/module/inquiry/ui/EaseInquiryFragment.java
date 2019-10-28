@@ -162,8 +162,8 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
         //设置输入框的更多菜单
         List<EaseInquiryMoreMenuItem> moreMenuItems = new ArrayList<>();
-        moreMenuItems.add(new EaseInquiryMoreMenuItem(R.mipmap.ease_ic_camera, "拍照", (itemModel, position) -> requestPermission(data -> pickPhotoFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE)));
         moreMenuItems.add(new EaseInquiryMoreMenuItem(R.mipmap.ease_ic_album, "相册", (itemModel, position) -> requestPermission(data -> pickPhotoFromAlbum(), Permission.Group.CAMERA, Permission.Group.STORAGE)));
+        moreMenuItems.add(new EaseInquiryMoreMenuItem(R.mipmap.ease_ic_camera, "拍摄", (itemModel, position) -> requestPermission(data -> pickPhotoFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE)));
         List<EaseInquiryMoreMenuItem> otherMoreMenuItems = getMoreMenuItems();
         if (otherMoreMenuItems != null) {
             moreMenuItems.addAll(otherMoreMenuItems);
