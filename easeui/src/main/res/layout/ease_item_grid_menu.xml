@@ -3,8 +3,8 @@
     android:id="@+id/tv_name"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/ease_btn_click_gray"
+    android:background="@drawable/ease_btn_click_grid_menu_item"
     android:gravity="center"
     android:minHeight="50dp"
-    android:textColor="#1A1A1A"
+    android:textColor="@color/ease_grid_menu_item_text"
     android:textSize="15sp" />

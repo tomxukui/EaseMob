@@ -37,6 +37,9 @@
     <color name="ease_chat_input_panel_menu_bg">#FCFCFC</color>
     <color name="ease_chat_input_more_item_text">#888888</color>
 
+    <color name="ease_grid_menu_bg">#FCFCFC</color>
+    <color name="ease_grid_menu_item_text">#1A1A1A</color>
+
     <!--消息列表-->
     <color name="ease_message_list_bg">#F5F5F5</color>
 

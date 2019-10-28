@@ -3,6 +3,6 @@
 
     <item android:drawable="@color/ease_press" android:state_pressed="true" />
     <item android:drawable="@color/ease_press" android:state_focused="true" />
-    <item android:drawable="@color/ease_gray" />
+    <item android:drawable="@color/ease_grid_menu_bg" />
 
 </selector>
