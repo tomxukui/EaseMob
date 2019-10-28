@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -68,7 +69,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     protected FrameLayout frame_main_custom;
     protected EaseVoiceRecorderView voice_recorder;
     protected TextView tv_availableCount;
-    protected FrameLayout frame_footer;
+    protected LinearLayoutCompat linear_footer;
     protected FrameLayout frame_footer_custom;
     protected EaseInputMenu menu_input;
 
@@ -118,7 +119,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         frame_main_custom = view.findViewById(R.id.frame_main_custom);
         voice_recorder = view.findViewById(R.id.voice_recorder);
         tv_availableCount = view.findViewById(R.id.tv_availableCount);
-        frame_footer = view.findViewById(R.id.frame_footer);
+        linear_footer = view.findViewById(R.id.linear_footer);
         frame_footer_custom = view.findViewById(R.id.frame_footer_custom);
         menu_input = view.findViewById(R.id.menu_input);
     }

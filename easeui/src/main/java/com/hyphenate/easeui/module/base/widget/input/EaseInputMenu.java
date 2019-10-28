@@ -53,7 +53,7 @@ public class EaseInputMenu extends LinearLayoutCompat {
 
     private void initView(Context context) {
         setOrientation(VERTICAL);
-        setShowDividers(SHOW_DIVIDER_BEGINNING | SHOW_DIVIDER_MIDDLE);
+        setShowDividers(SHOW_DIVIDER_MIDDLE);
         setDividerDrawable(EaseContextCompatUtil.getDrawable(R.drawable.ease_divider_horizontal_1));
 
         View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_input_menu, this);
