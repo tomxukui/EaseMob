@@ -19,7 +19,6 @@ import com.hyphenate.easeui.bean.EaseEmojiconGroupEntity;
 import com.hyphenate.easeui.model.EaseDefaultEmojiconDatas;
 import com.hyphenate.easeui.utils.EaseContextCompatUtil;
 import com.hyphenate.easeui.utils.EaseSmileUtil;
-import com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatPrimaryMenuBase.EaseChatPrimaryMenuListener;
 import com.hyphenate.easeui.module.base.widget.emojicon.EaseEmojiconMenu;
 import com.hyphenate.easeui.module.base.widget.emojicon.EaseEmojiconMenuBase.EaseEmojiconMenuListener;
 
@@ -28,7 +27,7 @@ import com.hyphenate.easeui.module.base.widget.emojicon.EaseEmojiconMenuBase.Eas
  */
 public class EaseChatInputMenu extends LinearLayoutCompat {
 
-    private EaseChatPrimaryMenuBase menu_primary;
+    private EaseChatInputControlMenuBase menu_primary;
     private EaseChatExtendMenu menu_more;
     private EaseEmojiconMenu menu_emoji;
 
@@ -65,7 +64,7 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
     }
 
     private void setView() {
-        menu_primary.setChatPrimaryMenuListener(new EaseChatPrimaryMenuListener() {
+        menu_primary.setOnItemClickListener(new EaseChatInputControlMenuBase.OnItemClickListener() {
 
             @Override
             public void onTyping(CharSequence s, int start, int before, int count) {
@@ -75,7 +74,7 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
             }
 
             @Override
-            public void onSendBtnClicked(String content) {
+            public void onSendBtnClick(String content) {
                 if (mChatInputMenuListener != null) {
                     mChatInputMenuListener.onSendMessage(content);
                 }
@@ -87,12 +86,12 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
             }
 
             @Override
-            public void onToggleExtendClicked() {
+            public void onToggleExtendClick() {
                 toggleMore();
             }
 
             @Override
-            public void onToggleEmojiconClicked() {
+            public void onToggleEmojiconClick() {
                 toggleEmojicon();
             }
 

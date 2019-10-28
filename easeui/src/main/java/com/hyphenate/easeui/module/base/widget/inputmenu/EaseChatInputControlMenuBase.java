@@ -8,24 +8,24 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
-public abstract class EaseChatPrimaryMenuBase extends LinearLayoutCompat {
+public abstract class EaseChatInputControlMenuBase extends LinearLayoutCompat {
 
     @Nullable
-    protected EaseChatPrimaryMenuListener listener;
+    protected OnItemClickListener listener;
 
-    public EaseChatPrimaryMenuBase(Context context) {
+    public EaseChatInputControlMenuBase(Context context) {
         super(context);
     }
 
-    public EaseChatPrimaryMenuBase(Context context, AttributeSet attrs) {
+    public EaseChatInputControlMenuBase(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public EaseChatPrimaryMenuBase(Context context, AttributeSet attrs, int defStyleAttr) {
+    public EaseChatInputControlMenuBase(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public void setChatPrimaryMenuListener(EaseChatPrimaryMenuListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -51,40 +51,40 @@ public abstract class EaseChatPrimaryMenuBase extends LinearLayoutCompat {
 
     public abstract EditText getEditText();
 
-    public interface EaseChatPrimaryMenuListener {
+    public interface OnItemClickListener {
 
         /**
-         * when send button clicked
+         * 点击发送按钮
          */
-        void onSendBtnClicked(String content);
+        void onSendBtnClick(String content);
 
         /**
-         * when typing on the edit-text layout.
+         * 正在回复
          */
         void onTyping(CharSequence s, int start, int before, int count);
 
         /**
-         * when speak button is touched
+         * 按压语音按键
          */
         boolean onPressToSpeakBtnTouch(View v, MotionEvent event);
 
         /**
-         * toggle on/off voice button
+         * 点击切换语音按钮
          */
         void onToggleVoiceBtnClicked();
 
         /**
-         * toggle on/off extend menu
+         * 点击切换扩展按钮
          */
-        void onToggleExtendClicked();
+        void onToggleExtendClick();
 
         /**
-         * toggle on/off emoji icon
+         * 点击切换表情按钮
          */
-        void onToggleEmojiconClicked();
+        void onToggleEmojiconClick();
 
         /**
-         * on text input is clicked
+         * 点击输入框
          */
         void onEditTextClicked();
 

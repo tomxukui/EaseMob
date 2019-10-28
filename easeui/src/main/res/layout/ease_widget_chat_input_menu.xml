@@ -4,16 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatPrimaryMenu
+    <!--控制层菜单-->
+    <com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatInputControlMenu
         android:id="@+id/menu_primary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/ease_chat_input_primary_bg" />
+        android:background="@color/ease_chat_input_control_menu_bg" />
 
+    <!--面板层菜单-->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/ease_chat_input_extend_bg">
+        android:background="@color/ease_chat_input_panel_menu_bg">
 
         <com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatExtendMenu
             android:id="@+id/menu_more"

@@ -20,7 +20,7 @@ import com.hyphenate.easeui.module.base.widget.EaseVoiceRecorderView;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
 import com.hyphenate.easeui.utils.EaseSoftInputUtil;
 
-public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
+public class EaseChatInputControlMenu extends EaseChatInputControlMenuBase {
 
     private Button btn_switchVoiceMode;
     private TextView tv_sendVoice;
@@ -33,19 +33,19 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
 
     private boolean mCtrlPress = false;
 
-    public EaseChatPrimaryMenu(Context context) {
+    public EaseChatInputControlMenu(Context context) {
         super(context);
         initView(context);
         setView();
     }
 
-    public EaseChatPrimaryMenu(Context context, AttributeSet attrs) {
+    public EaseChatInputControlMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context);
         setView();
     }
 
-    public EaseChatPrimaryMenu(Context context, AttributeSet attrs, int defStyleAttr) {
+    public EaseChatInputControlMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context);
         setView();
@@ -56,7 +56,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         setGravity(Gravity.CENTER_VERTICAL);
         setPadding(0, EaseDensityUtil.dp2px(10), 0, EaseDensityUtil.dp2px(10));
 
-        View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_chat_primary_menu, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_chat_input_control_menu, this);
 
         btn_switchVoiceMode = view.findViewById(R.id.btn_switchVoiceMode);
         tv_sendVoice = view.findViewById(R.id.tv_sendVoice);
@@ -146,7 +146,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
         });
         et_text.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN && mCtrlPress)) {
-                listener.onSendBtnClicked(et_text.getText().toString());
+                listener.onSendBtnClick(et_text.getText().toString());
                 et_text.setText("");
                 return true;
 
@@ -177,7 +177,7 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
             btn_more.setSelected(false);
 
             if (listener != null) {
-                listener.onToggleEmojiconClicked();
+                listener.onToggleEmojiconClick();
             }
         });
 
@@ -192,13 +192,13 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
             btn_switchFaceMode.setSelected(false);
 
             if (listener != null) {
-                listener.onToggleExtendClicked();
+                listener.onToggleExtendClick();
             }
         });
 
         btn_send.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onSendBtnClicked(et_text.getText().toString());
+                listener.onSendBtnClick(et_text.getText().toString());
                 et_text.setText("");
             }
         });
