@@ -25,7 +25,7 @@ public class EaseGridItemDecoration extends RecyclerView.ItemDecoration {
         mPadding = EaseDensityUtil.dp2px(10);
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(EaseContextCompatUtil.getColor(R.color.ease_bg));
+        mPaint.setColor(EaseContextCompatUtil.getColor(R.color.ease_common_divider));
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setStrokeWidth(mSpace);
     }

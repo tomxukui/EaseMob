@@ -20,8 +20,6 @@
 
     <color name="ease_press">#bbbbbb</color>
     <color name="ease_white">#ffffff</color>
-    <color name="ease_gray">#FCFCFC</color>
-    <color name="ease_bg">#F5F5F5</color>
 
     <!--标题栏-->
     <color name="ease_toolbar_background">#0089e1</color>
@@ -53,6 +51,7 @@
     <color name="ease_show_video_bg">#F5F5F5</color>
 
     <!--会话-->
+    <color name="ease_converstation_bg">#F5F5F5</color>
     <color name="ease_converstation_list_name">#1A1A1A</color>
     <color name="ease_converstation_list_message">#AAAAAA</color>
     <color name="ease_converstation_list_time">#CACACA</color>
