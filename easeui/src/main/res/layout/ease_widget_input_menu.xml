@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <!--控制层菜单-->
-    <com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatInputControlMenu
+    <com.hyphenate.easeui.module.base.widget.input.EaseInputControlMenu
         android:id="@+id/menu_control"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:background="@color/ease_chat_input_panel_menu_bg">
 
-        <com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatInputMoreMenu
+        <com.hyphenate.easeui.module.base.widget.input.EaseInputMoreMenu
             android:id="@+id/menu_more"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -28,7 +28,7 @@ import com.hyphenate.easeui.model.EaseCompat;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
-import com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatInputMenu;
+import com.hyphenate.easeui.module.base.widget.input.EaseInputMenu;
 import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
 import com.hyphenate.easeui.module.inquiry.model.EaseInquiryMoreMenuItem;
 import com.hyphenate.easeui.utils.EaseContextCompatUtil;
@@ -36,7 +36,6 @@ import com.hyphenate.easeui.utils.EaseFileUtil;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 import com.hyphenate.easeui.dialog.EaseAlertDialog;
-import com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatInputControlMenu;
 import com.hyphenate.easeui.module.base.widget.message.EaseMessageListView;
 import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 import com.hyphenate.easeui.module.base.widget.EaseVoiceRecorderView;
@@ -72,7 +71,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     protected TextView tv_availableCount;
     protected FrameLayout frame_footer;
     protected FrameLayout frame_footer_custom;
-    protected EaseChatInputMenu menu_input;
+    protected EaseInputMenu menu_input;
 
     protected EMConversation mConversation;//会话
     protected EaseUser mFromUser;
@@ -182,7 +181,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         }
 
         //监听输入框的输入
-        menu_input.setChatInputMenuListener(new EaseChatInputMenu.ChatInputMenuListener() {
+        menu_input.setChatInputMenuListener(new EaseInputMenu.ChatInputMenuListener() {
 
             @Override
             public void onTyping(CharSequence s, int start, int before, int count) {

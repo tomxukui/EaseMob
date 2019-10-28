@@ -1,8 +1,4 @@
-package com.hyphenate.easeui.module.base.widget.inputmenu;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+package com.hyphenate.easeui.module.base.widget.input;
 
 import android.content.Context;
 import android.support.v4.view.ViewCompat;
@@ -17,35 +13,39 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.bean.EaseEmojicon;
 import com.hyphenate.easeui.bean.EaseEmojiconGroupEntity;
 import com.hyphenate.easeui.model.EaseDefaultEmojiconDatas;
-import com.hyphenate.easeui.utils.EaseContextCompatUtil;
-import com.hyphenate.easeui.utils.EaseSmileUtil;
 import com.hyphenate.easeui.module.base.widget.emojicon.EaseEmojiconMenu;
 import com.hyphenate.easeui.module.base.widget.emojicon.EaseEmojiconMenuBase.EaseEmojiconMenuListener;
+import com.hyphenate.easeui.utils.EaseContextCompatUtil;
+import com.hyphenate.easeui.utils.EaseSmileUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 聊天输入菜单
  */
-public class EaseChatInputMenu extends LinearLayoutCompat {
+public class EaseInputMenu extends LinearLayoutCompat {
 
-    private EaseChatInputControlMenuBase menu_control;
-    private EaseChatInputMoreMenu menu_more;
+    private EaseInputControlMenuBase menu_control;
+    private EaseInputMoreMenu menu_more;
     private EaseEmojiconMenu menu_emoji;
 
     private ChatInputMenuListener mChatInputMenuListener;
 
-    public EaseChatInputMenu(Context context) {
+    public EaseInputMenu(Context context) {
         super(context);
         initView(context);
         setView();
     }
 
-    public EaseChatInputMenu(Context context, AttributeSet attrs) {
+    public EaseInputMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context);
         setView();
     }
 
-    public EaseChatInputMenu(Context context, AttributeSet attrs, int defStyleAttr) {
+    public EaseInputMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context);
         setView();
@@ -56,7 +56,7 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
         setShowDividers(SHOW_DIVIDER_BEGINNING | SHOW_DIVIDER_MIDDLE);
         setDividerDrawable(EaseContextCompatUtil.getDrawable(R.drawable.ease_divider_horizontal_1));
 
-        View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_chat_input_menu, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_input_menu, this);
 
         menu_control = view.findViewById(R.id.menu_control);
         menu_more = view.findViewById(R.id.menu_more);
@@ -64,7 +64,7 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
     }
 
     private void setView() {
-        menu_control.setOnItemClickListener(new EaseChatInputControlMenuBase.OnItemClickListener() {
+        menu_control.setOnItemClickListener(new EaseInputControlMenuBase.OnItemClickListener() {
 
             @Override
             public void onTyping(CharSequence s, int start, int before, int count) {

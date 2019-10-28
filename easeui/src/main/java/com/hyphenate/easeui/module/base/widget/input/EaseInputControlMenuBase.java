@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.module.base.widget.inputmenu;
+package com.hyphenate.easeui.module.base.widget.input;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -8,20 +8,20 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
-public abstract class EaseChatInputControlMenuBase extends LinearLayoutCompat {
+public abstract class EaseInputControlMenuBase extends LinearLayoutCompat {
 
     @Nullable
     protected OnItemClickListener listener;
 
-    public EaseChatInputControlMenuBase(Context context) {
+    public EaseInputControlMenuBase(Context context) {
         super(context);
     }
 
-    public EaseChatInputControlMenuBase(Context context, AttributeSet attrs) {
+    public EaseInputControlMenuBase(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public EaseChatInputControlMenuBase(Context context, AttributeSet attrs, int defStyleAttr) {
+    public EaseInputControlMenuBase(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

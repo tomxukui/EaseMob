@@ -59,7 +59,7 @@
         android:layout_height="wrap_content">
 
         <!--聊天输入菜单-->
-        <com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatInputMenu
+        <com.hyphenate.easeui.module.base.widget.input.EaseInputMenu
             android:id="@+id/menu_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

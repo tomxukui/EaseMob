@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.module.base.widget.inputmenu;
+package com.hyphenate.easeui.module.base.widget.input;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 更多菜单
  */
-public class EaseChatInputMoreMenu extends GridView {
+public class EaseInputMoreMenu extends GridView {
 
     private int mNumColumns;
     private List<ChatMenuItemModel> itemModels = new ArrayList<>();
@@ -30,19 +30,19 @@ public class EaseChatInputMoreMenu extends GridView {
 
     private LayoutInflater mInflater;
 
-    public EaseChatInputMoreMenu(Context context) {
+    public EaseInputMoreMenu(Context context) {
         super(context);
         initData(context, null, 0);
         initView();
     }
 
-    public EaseChatInputMoreMenu(Context context, AttributeSet attrs) {
+    public EaseInputMoreMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
         initData(context, attrs, 0);
         initView();
     }
 
-    public EaseChatInputMoreMenu(Context context, AttributeSet attrs, int defStyleAttr) {
+    public EaseInputMoreMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initData(context, attrs, defStyleAttr);
         initView();
@@ -53,8 +53,8 @@ public class EaseChatInputMoreMenu extends GridView {
         mNumColumns = 4;
 
         if (attrs != null) {
-            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.EaseChatInputMoreMenu, defStyle, 0);
-            mNumColumns = ta.getInt(R.styleable.EaseChatInputMoreMenu_numColumns, mNumColumns);
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.EaseInputMoreMenu, defStyle, 0);
+            mNumColumns = ta.getInt(R.styleable.EaseInputMoreMenu_numColumns, mNumColumns);
             ta.recycle();
         }
 
@@ -96,7 +96,7 @@ public class EaseChatInputMoreMenu extends GridView {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.ease_item_chat_input_more_menu, parent, false);
+                convertView = mInflater.inflate(R.layout.ease_item_input_more_menu, parent, false);
 
                 vh = new ViewHolder();
                 vh.iv_icon = convertView.findViewById(R.id.iv_icon);

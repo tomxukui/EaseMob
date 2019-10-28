@@ -36,7 +36,7 @@
         <attr name="emojiconColumns" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="EaseChatInputMoreMenu">
+    <declare-styleable name="EaseInputMoreMenu">
         <attr name="numColumns" format="integer" />
     </declare-styleable>
 

@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.module.base.widget.inputmenu;
+package com.hyphenate.easeui.module.base.widget.input;
 
 import android.content.Context;
 import android.text.Editable;
@@ -20,7 +20,7 @@ import com.hyphenate.easeui.module.base.widget.EaseVoiceRecorderView;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
 import com.hyphenate.easeui.utils.EaseSoftInputUtil;
 
-public class EaseChatInputControlMenu extends EaseChatInputControlMenuBase {
+public class EaseInputControlMenu extends EaseInputControlMenuBase {
 
     private Button btn_switchVoiceMode;
     private TextView tv_sendVoice;
@@ -33,19 +33,19 @@ public class EaseChatInputControlMenu extends EaseChatInputControlMenuBase {
 
     private boolean mCtrlPress = false;
 
-    public EaseChatInputControlMenu(Context context) {
+    public EaseInputControlMenu(Context context) {
         super(context);
         initView(context);
         setView();
     }
 
-    public EaseChatInputControlMenu(Context context, AttributeSet attrs) {
+    public EaseInputControlMenu(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context);
         setView();
     }
 
-    public EaseChatInputControlMenu(Context context, AttributeSet attrs, int defStyleAttr) {
+    public EaseInputControlMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context);
         setView();
@@ -56,7 +56,7 @@ public class EaseChatInputControlMenu extends EaseChatInputControlMenuBase {
         setGravity(Gravity.CENTER_VERTICAL);
         setPadding(0, EaseDensityUtil.dp2px(10), 0, EaseDensityUtil.dp2px(10));
 
-        View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_chat_input_control_menu, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_input_control_menu, this);
 
         btn_switchVoiceMode = view.findViewById(R.id.btn_switchVoiceMode);
         tv_sendVoice = view.findViewById(R.id.tv_sendVoice);
