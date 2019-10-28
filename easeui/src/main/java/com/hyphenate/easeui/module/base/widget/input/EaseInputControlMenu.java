@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.module.base.widget.EaseVoiceRecorderView;
+import com.hyphenate.easeui.utils.EaseContextCompatUtil;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
 import com.hyphenate.easeui.utils.EaseSoftInputUtil;
 
@@ -129,6 +130,14 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
             @Override
             public void afterTextChanged(Editable s) {
                 tv_text.setText(s);
+
+                if (TextUtils.isEmpty(tv_text.getText().toString())) {
+                    tv_text.setText(EaseContextCompatUtil.getString(R.string.ease_chat_input_hint));
+                    tv_text.setTextColor(EaseContextCompatUtil.getColor(R.color.ease_chat_edit_hint));
+
+                } else {
+                    tv_text.setTextColor(EaseContextCompatUtil.getColor(R.color.ease_chat_edit_text));
+                }
             }
 
         });

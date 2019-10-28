@@ -42,12 +42,14 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ease_chat_edit_bg"
             android:gravity="left|center_vertical"
+            android:hint="@string/ease_chat_input_hint"
             android:imeOptions="actionSend"
             android:maxLines="5"
             android:minHeight="30dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:textColor="#1A1A1A"
+            android:textColor="@color/ease_chat_edit_text"
+            android:textColorHint="@color/ease_chat_edit_hint"
             android:textSize="15sp" />
 
         <TextView
@@ -60,7 +62,7 @@
             android:minHeight="30dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:textColor="#1A1A1A"
+            android:textColor="@color/ease_chat_edit_text"
             android:textSize="15sp"
             android:visibility="gone" />
 
