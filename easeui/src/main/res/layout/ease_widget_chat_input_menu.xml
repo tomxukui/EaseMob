@@ -7,12 +7,13 @@
     <com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatPrimaryMenu
         android:id="@+id/menu_primary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@color/ease_chat_input_primary_bg" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff">
+        android:background="@color/ease_chat_input_extend_bg">
 
         <com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatExtendMenu
             android:id="@+id/menu_more"

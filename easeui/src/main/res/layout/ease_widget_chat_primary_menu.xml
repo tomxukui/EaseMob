@@ -3,112 +3,95 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!--分隔线-->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#ECECEC" />
+    <!--语音模式按钮-->
+    <Button
+        android:id="@+id/btn_switchVoiceMode"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/ease_btn_switch_voice_mode" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!--语音发送的按钮-->
+    <TextView
+        android:id="@+id/tv_sendVoice"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#FCFCFC"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1.0"
+        android:background="@drawable/ease_chat_voice_bg"
+        android:gravity="center"
+        android:minHeight="30dp"
+        android:text="@string/button_pushtotalk"
+        android:textColor="#1A1A1A"
+        android:textSize="16sp"
+        android:visibility="gone" />
 
-        <!--语音模式按钮-->
-        <Button
-            android:id="@+id/btn_switchVoiceMode"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/ease_btn_switch_voice_mode" />
+    <!--文字输入-->
+    <FrameLayout
+        android:id="@+id/frame_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1.0">
 
-        <!--语音发送的按钮-->
-        <TextView
-            android:id="@+id/tv_sendVoice"
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/et_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1.0"
-            android:background="@drawable/ease_chat_voice_bg"
-            android:gravity="center"
+            android:background="@drawable/ease_chat_edit_bg"
+            android:gravity="left|center_vertical"
+            android:imeOptions="actionSend"
+            android:maxLines="5"
             android:minHeight="30dp"
-            android:text="@string/button_pushtotalk"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:textColor="#1A1A1A"
-            android:textSize="16sp"
-            android:visibility="gone" />
+            android:textSize="15sp" />
 
-        <!--文字输入-->
-        <FrameLayout
-            android:id="@+id/frame_text"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tv_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1.0">
-
-            <EditText
-                android:id="@+id/et_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ease_chat_edit_bg"
-                android:gravity="left|center_vertical"
-                android:imeOptions="actionSend"
-                android:maxLines="5"
-                android:minHeight="30dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textColor="#1A1A1A"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/tv_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ease_chat_edit_bg"
-                android:gravity="left|center_vertical"
-                android:maxLines="5"
-                android:minHeight="30dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textColor="#1A1A1A"
-                android:textSize="15sp"
-                android:visibility="gone" />
-
-        </FrameLayout>
-
-        <!--表情按钮-->
-        <Button
-            android:id="@+id/btn_switchFaceMode"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/ease_btn_switch_face_mode" />
-
-        <!--更多按钮-->
-        <Button
-            android:id="@+id/btn_more"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/ease_btn_chat_more" />
-
-        <!--发送按钮-->
-        <Button
-            android:id="@+id/btn_send"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/ease_chat_send_btn_selector"
-            android:text="@string/button_send"
-            android:textColor="#666666"
+            android:background="@drawable/ease_chat_edit_bg"
+            android:gravity="left|center_vertical"
+            android:maxLines="5"
+            android:minHeight="30dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="#1A1A1A"
             android:textSize="15sp"
             android:visibility="gone" />
 
-    </LinearLayout>
+    </FrameLayout>
+
+    <!--表情按钮-->
+    <Button
+        android:id="@+id/btn_switchFaceMode"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/ease_btn_switch_face_mode" />
+
+    <!--更多按钮-->
+    <Button
+        android:id="@+id/btn_more"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/ease_btn_chat_more" />
+
+    <!--发送按钮-->
+    <Button
+        android:id="@+id/btn_send"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/ease_chat_send_btn_selector"
+        android:text="@string/button_send"
+        android:textColor="#666666"
+        android:textSize="15sp"
+        android:visibility="gone" />
 
 </merge>

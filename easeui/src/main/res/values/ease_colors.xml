@@ -32,6 +32,10 @@
     <!--问诊页面-->
     <color name="ease_inquiry_bg">#F5F5F5</color>
 
+    <!--聊天输入框-->
+    <color name="ease_chat_input_primary_bg">#FCFCFC</color>
+    <color name="ease_chat_input_extend_bg">#FCFCFC</color>
+
     <!--消息列表-->
     <color name="ease_message_list_bg">#F5F5F5</color>
 

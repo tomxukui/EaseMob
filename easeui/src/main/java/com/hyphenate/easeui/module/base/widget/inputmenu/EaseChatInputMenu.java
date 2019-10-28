@@ -17,6 +17,7 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.bean.EaseEmojicon;
 import com.hyphenate.easeui.bean.EaseEmojiconGroupEntity;
 import com.hyphenate.easeui.model.EaseDefaultEmojiconDatas;
+import com.hyphenate.easeui.utils.EaseContextCompatUtil;
 import com.hyphenate.easeui.utils.EaseSmileUtil;
 import com.hyphenate.easeui.module.base.widget.inputmenu.EaseChatPrimaryMenuBase.EaseChatPrimaryMenuListener;
 import com.hyphenate.easeui.module.base.widget.emojicon.EaseEmojiconMenu;
@@ -53,6 +54,8 @@ public class EaseChatInputMenu extends LinearLayoutCompat {
 
     private void initView(Context context) {
         setOrientation(VERTICAL);
+        setShowDividers(SHOW_DIVIDER_BEGINNING | SHOW_DIVIDER_MIDDLE);
+        setDividerDrawable(EaseContextCompatUtil.getDrawable(R.drawable.ease_divider_horizontal_1));
 
         View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_chat_input_menu, this);
 

@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.module.base.widget.EaseVoiceRecorderView;
+import com.hyphenate.easeui.utils.EaseDensityUtil;
 import com.hyphenate.easeui.utils.EaseSoftInputUtil;
 
 public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
@@ -50,7 +52,9 @@ public class EaseChatPrimaryMenu extends EaseChatPrimaryMenuBase {
     }
 
     private void initView(Context context) {
-        setOrientation(VERTICAL);
+        setOrientation(HORIZONTAL);
+        setGravity(Gravity.CENTER_VERTICAL);
+        setPadding(0, EaseDensityUtil.dp2px(10), 0, EaseDensityUtil.dp2px(10));
 
         View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_chat_primary_menu, this);
 
