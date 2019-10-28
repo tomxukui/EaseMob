@@ -3,7 +3,6 @@ package com.hyphenate.easeui.module.base.widget.message.row;
 import android.content.Context;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -32,10 +31,9 @@ public class EaseChatRowBigExpression extends EaseChatRowText {
 
     @Override
     protected void onFindViewById() {
-        percentageView = (TextView) findViewById(R.id.percentage);
-        imageView = (ImageView) findViewById(R.id.image);
+        percentageView = findViewById(R.id.percentage);
+        imageView = findViewById(R.id.image);
     }
-
 
     @Override
     public void onSetUpView() {

@@ -51,15 +51,18 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="chat_text_date_style">
-        <item name="android:padding">2dp</item>
-        <item name="android:paddingTop">2dip</item>
-        <item name="android:paddingBottom">2dip</item>
-        <item name="android:paddingLeft">12dip</item>
-        <item name="android:paddingRight">12dip</item>
-        <item name="android:textColor">@color/btn_gray_normal</item>
+    <!--聊天时间样式-->
+    <style name="ease_chat_text_date_style">
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:minWidth">50dp</item>
+        <item name="android:minHeight">21dp</item>
+        <item name="android:paddingLeft">9dp</item>
+        <item name="android:paddingRight">9dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:background">@drawable/ease_timestampe_bg</item>
+        <item name="android:background">@drawable/ease_bg_chat_text_date</item>
     </style>
 
 </resources>
