@@ -16,10 +16,14 @@ import android.widget.TextView;
 
 import com.easeui.app.R;
 import com.hyphenate.easeui.module.base.model.EaseUser;
+import com.hyphenate.easeui.module.base.widget.input.EaseMenuItem;
 import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DoctorInquiryFragment extends EaseInquiryFragment {
 
@@ -155,6 +159,14 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
                 });
             }
         }
+    }
+
+    @Nullable
+    @Override
+    protected List<EaseMenuItem> getMoreMenuItems() {
+        List<EaseMenuItem> menuItems = new ArrayList<>();
+        menuItems.add(new EaseMenuItem(R.mipmap.ic_write_case, "写病例", v -> EaseToastUtil.show("写病例")));
+        return menuItems;
     }
 
 }
