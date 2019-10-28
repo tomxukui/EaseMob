@@ -181,7 +181,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         }
 
         //监听输入框的输入
-        menu_input.setChatInputMenuListener(new EaseInputMenu.ChatInputMenuListener() {
+        menu_input.setOnInputMenuListener(new EaseInputMenu.OnInputMenuListener() {
 
             @Override
             public void onTyping(CharSequence s, int start, int before, int count) {

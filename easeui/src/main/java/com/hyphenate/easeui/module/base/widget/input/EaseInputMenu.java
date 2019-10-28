@@ -31,7 +31,7 @@ public class EaseInputMenu extends LinearLayoutCompat {
     private EaseInputMoreMenu menu_more;
     private EaseEmojiconMenu menu_emoji;
 
-    private ChatInputMenuListener mChatInputMenuListener;
+    private OnInputMenuListener mOnInputMenuListener;
 
     public EaseInputMenu(Context context) {
         super(context);
@@ -68,15 +68,15 @@ public class EaseInputMenu extends LinearLayoutCompat {
 
             @Override
             public void onTyping(CharSequence s, int start, int before, int count) {
-                if (mChatInputMenuListener != null) {
-                    mChatInputMenuListener.onTyping(s, start, before, count);
+                if (mOnInputMenuListener != null) {
+                    mOnInputMenuListener.onTyping(s, start, before, count);
                 }
             }
 
             @Override
             public void onSendBtnClick(String content) {
-                if (mChatInputMenuListener != null) {
-                    mChatInputMenuListener.onSendMessage(content);
+                if (mOnInputMenuListener != null) {
+                    mOnInputMenuListener.onSendMessage(content);
                 }
             }
 
@@ -102,8 +102,8 @@ public class EaseInputMenu extends LinearLayoutCompat {
 
             @Override
             public boolean onPressToSpeakBtnTouch(View v, MotionEvent event) {
-                if (mChatInputMenuListener != null) {
-                    return mChatInputMenuListener.onPressToSpeakBtnTouch(v, event);
+                if (mOnInputMenuListener != null) {
+                    return mOnInputMenuListener.onPressToSpeakBtnTouch(v, event);
                 }
 
                 return false;
@@ -124,8 +124,8 @@ public class EaseInputMenu extends LinearLayoutCompat {
                     }
 
                 } else {
-                    if (mChatInputMenuListener != null) {
-                        mChatInputMenuListener.onBigExpressionClicked(emojicon);
+                    if (mOnInputMenuListener != null) {
+                        mOnInputMenuListener.onBigExpressionClicked(emojicon);
                     }
                 }
             }
@@ -220,11 +220,11 @@ public class EaseInputMenu extends LinearLayoutCompat {
         }
     }
 
-    public void setChatInputMenuListener(ChatInputMenuListener listener) {
-        mChatInputMenuListener = listener;
+    public void setOnInputMenuListener(OnInputMenuListener listener) {
+        mOnInputMenuListener = listener;
     }
 
-    public interface ChatInputMenuListener {
+    public interface OnInputMenuListener {
 
         /**
          * 正在输入文字
