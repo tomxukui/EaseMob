@@ -211,12 +211,6 @@ public class EaseInputMenu extends LinearLayoutCompat {
         }
     }
 
-    /**
-     * when back key pressed
-     *
-     * @return false--extend menu is on, will hide it first
-     * true --extend menu is off
-     */
     public boolean onBackPressed() {
         if (menu_more.getVisibility() == View.VISIBLE || menu_emoji.getVisibility() == View.VISIBLE) {
             hideExtendMenuContainer();
