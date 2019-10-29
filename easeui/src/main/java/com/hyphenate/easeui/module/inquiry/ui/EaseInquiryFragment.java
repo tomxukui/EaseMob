@@ -20,6 +20,7 @@ import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.base.ui.EaseBaseChatFragment;
 import com.hyphenate.easeui.module.base.widget.input.EaseInputMenu;
+import com.hyphenate.easeui.module.base.widget.input.OnInputMenuListener;
 import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
 import com.hyphenate.easeui.utils.EaseContextCompatUtil;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
@@ -245,8 +246,7 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
 
         });
         list_message.getListView().setOnTouchListener((v, event) -> {
-            hideSoftKeyboard();
-            menu_input.hideExtendMenuContainer();
+            menu_input.shrink();
             return false;
         });
 
@@ -269,7 +269,7 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
         addMoreMenu(menu_input, 4, getDefaultMoreMenuItems());
 
         //监听输入菜单
-        menu_input.setOnInputMenuListener(new EaseInputMenu.OnInputMenuListener() {
+        menu_input.setOnInputMenuListener(new OnInputMenuListener() {
 
             @Override
             public void onTyping(CharSequence s, int start, int before, int count) {
@@ -279,7 +279,7 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
             }
 
             @Override
-            public void onSendMessage(String content) {
+            public void onSendBtnClick(String content) {
                 sendTextMessage(content);
             }
 

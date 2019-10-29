@@ -260,7 +260,7 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
         faceButton.setLayoutParams(layoutParams);
         faceButton.setBackgroundResource(R.drawable.ease_btn_chat_face);
         faceButton.setInputEnable(true);
-        faceButton.setTargetPanel(facePanel);
+        faceButton.setPanel(facePanel);
 
         inputMenu.addView(faceButton, facePanel, position, layoutParams);
 
@@ -284,7 +284,7 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
         moreButton.setLayoutParams(layoutParams);
         moreButton.setBackgroundResource(R.drawable.ease_btn_chat_more);
         moreButton.setInputEnable(false);
-        moreButton.setTargetPanel(morePanel);
+        moreButton.setPanel(morePanel);
 
         inputMenu.addView(moreButton, morePanel, position, layoutParams);
 

@@ -15,7 +15,7 @@ import java.util.List;
 public class EaseInputControlButton extends AppCompatButton {
 
     @Nullable
-    private View mTargetPanel;
+    private View mPanel;
 
     private boolean mInputEnable;
 
@@ -42,17 +42,36 @@ public class EaseInputControlButton extends AppCompatButton {
     }
 
     /**
-     * 获取目标面板
+     * 获取关联的面板
      */
-    public View getTargetPanel() {
-        return mTargetPanel;
+    @Nullable
+    public View getPanel() {
+        return mPanel;
     }
 
     /**
-     * 设置目标面板
+     * 设置关联的面板
      */
-    public void setTargetPanel(@Nullable View view) {
-        mTargetPanel = view;
+    public void setPanel(@Nullable View view) {
+        mPanel = view;
+    }
+
+    /**
+     * 显示关联的面板
+     */
+    public void showPanel() {
+        if (mPanel != null) {
+            mPanel.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * 隐藏关联的面板
+     */
+    public void hidePanel() {
+        if (mPanel != null) {
+            mPanel.setVisibility(View.GONE);
+        }
     }
 
     /**

@@ -52,7 +52,7 @@ public class EaseInputMenu extends LinearLayoutCompat implements EaseInputContro
     }
 
     private void setView() {
-        menu_control.setOnControlListener(new EaseInputControlMenuBase.OnControlListener() {
+        menu_control.setOnInputMenuListener(new OnInputMenuListener() {
 
             @Override
             public void onToggleVoice(boolean show) {
@@ -91,7 +91,7 @@ public class EaseInputMenu extends LinearLayoutCompat implements EaseInputContro
             @Override
             public void onSendBtnClick(String content) {
                 if (mOnInputMenuListener != null) {
-                    mOnInputMenuListener.onSendMessage(content);
+                    mOnInputMenuListener.onSendBtnClick(content);
                 }
             }
 
@@ -133,25 +133,6 @@ public class EaseInputMenu extends LinearLayoutCompat implements EaseInputContro
         menu_control.insertText(text);
     }
 
-    /**
-     * 隐藏菜单
-     */
-    public void hideExtendMenuContainer() {
-        layout_panel.close();
-
-        menu_control.hideExtendMenuContainer();
-    }
-
-    public boolean onBackPressed() {
-        if (layout_panel.isOpen()) {
-            hideExtendMenuContainer();
-            return false;
-
-        } else {
-            return true;
-        }
-    }
-
     @Override
     public void onToggle(EaseInputControlButton button, boolean on) {
         //设置控制按钮
@@ -171,7 +152,7 @@ public class EaseInputMenu extends LinearLayoutCompat implements EaseInputContro
         }
 
         //设置面板
-        View panel = button.getTargetPanel();
+        View panel = button.getPanel();
 
         if (panel != null) {
             for (int i = 0; i < layout_panel.getChildCount(); i++) {
@@ -187,31 +168,52 @@ public class EaseInputMenu extends LinearLayoutCompat implements EaseInputContro
         }
     }
 
-    public void setOnInputMenuListener(@Nullable OnInputMenuListener listener) {
-        mOnInputMenuListener = listener;
+    /**
+     * 收缩输入菜单
+     * 触发场景:用户点击消息列表, 原本弹起的输入菜单降到最低
+     * 1.如果是文字模式, 聚焦文字输入框;如果是语音模式, 则不对文字输入框操作, 因为输入框是隐藏的
+     * 2.关闭控制按钮
+     * 3.隐藏所有的面板
+     * 4.关闭键盘
+     */
+    public void shrink() {
+        if (!menu_control.isVoiceMode()) {
+            menu_control.setTextEditView(true, true, false);
+        }
+
+        //关闭所有的控制按钮
+        for (int i = 0; i < menu_control.getChildCount(); i++) {
+            View view = menu_control.getChildAt(i);
+
+            if (view instanceof EaseInputControlButton) {
+                view.setSelected(false);
+            }
+        }
+
+        //隐藏所有的面板
+        for (int i = 0; i < layout_panel.getChildCount(); i++) {
+            View view = layout_panel.getChildAt(i);
+            view.setVisibility(View.GONE);
+        }
     }
 
-    public interface OnInputMenuListener {
+    /**
+     * 判断是否可以返回
+     * 1.如果面版正在显示, 则先隐藏所有的面板
+     * 2.如果面板都隐藏着, 则可以返回
+     */
+    public boolean onBackPressed() {
+        if (layout_panel.isOpen()) {
+            shrink();
+            return false;
 
-        /**
-         * 正在输入
-         */
-        void onTyping(CharSequence s, int start, int before, int count);
+        } else {
+            return true;
+        }
+    }
 
-        /**
-         * 发送文字
-         */
-        void onSendMessage(String content);
-
-        /**
-         * 按压语音按键事件
-         */
-        boolean onPressToSpeakBtnTouch(View v, MotionEvent event);
-
-        void onEditTextClicked();
-
-        void onToggleVoice(boolean show);
-
+    public void setOnInputMenuListener(@Nullable OnInputMenuListener listener) {
+        mOnInputMenuListener = listener;
     }
 
 }
