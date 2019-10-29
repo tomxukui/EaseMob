@@ -302,7 +302,7 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
                 }
 
                 if (mMoreButton != null) {
-                    mMoreButton.setVisibility(TextUtils.isEmpty(menu_input.getControl().getEditText().getText().toString()) ? View.VISIBLE : View.GONE);
+                    mMoreButton.setVisibility(menu_input.getControl().isTextEmpty() ? View.VISIBLE : View.GONE);
                     mMoreButton.setSelected(false);
                 }
             }
@@ -320,7 +320,7 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
                         mMoreButton.setVisibility(View.VISIBLE);
 
                     } else {
-                        mMoreButton.setVisibility(TextUtils.isEmpty(menu_input.getControl().getEditText().getText().toString()) ? View.VISIBLE : View.GONE);
+                        mMoreButton.setVisibility(menu_input.getControl().isTextEmpty() ? View.VISIBLE : View.GONE);
                     }
                 }
             }

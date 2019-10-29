@@ -145,6 +145,7 @@ public class EaseInputMenu extends LinearLayoutCompat implements EaseInputContro
         }
 
         if (on) {
+            menu_control.closeVoice();
             menu_control.setTextEditView(true, button.isInputEnable(), false);
 
         } else {

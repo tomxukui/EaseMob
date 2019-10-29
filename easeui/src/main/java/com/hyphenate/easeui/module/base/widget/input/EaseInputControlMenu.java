@@ -288,8 +288,19 @@ public class EaseInputControlMenu extends LinearLayoutCompat {
         setTextEditView(true, true, true);
     }
 
-    public EditText getEditText() {
-        return et_text;
+    /**
+     * 判断输入框是否没有文字
+     */
+    public boolean isTextEmpty() {
+        return TextUtils.isEmpty(et_text.getText().toString());
+    }
+
+    /**
+     * 关闭语音模式
+     */
+    public void closeVoice() {
+        btn_voice.setSelected(false);
+        tv_sendVoice.setVisibility(View.GONE);
     }
 
     /**
@@ -297,37 +308,6 @@ public class EaseInputControlMenu extends LinearLayoutCompat {
      */
     public boolean isVoiceMode() {
         return tv_sendVoice.getVisibility() == View.VISIBLE;
-    }
-
-    /**
-     * 收缩输入菜单
-     * 触发场景:用户点击消息列表, 原本弹起的输入菜单降到最低
-     * 1.如果是语音模式, 则关闭键盘
-     * 2.如果是文字模式, 则
-     * 3.关闭键盘
-     * 4.关闭面板
-     * 5.聚焦文字输入框
-     */
-    public void shrinkInputMenu() {
-        if (isVoiceMode()) {
-            showSoftInput(false);
-
-        } else {
-            setTextEditView(true, true, false);
-        }
-    }
-
-    /**
-     * 回复默认状态:
-     * <p>
-     * 1.关闭语音
-     * 2.开启文字输入
-     */
-    public void recovery() {
-        btn_voice.setSelected(false);
-        tv_sendVoice.setVisibility(View.GONE);
-        setTextEditView(true, true, false);
-        setSendBtn(et_text.getText().toString());
     }
 
     public void setOnInputMenuListener(@Nullable OnInputMenuListener listener) {
