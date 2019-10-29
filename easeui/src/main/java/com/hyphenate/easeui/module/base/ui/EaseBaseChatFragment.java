@@ -44,8 +44,8 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
     protected static final int REQUEST_CAMERA = 100;
     protected static final int REQUEST_ALBUM = 101;
 
-    protected EaseInputControlButton mFaceButton;
-    protected EaseInputControlButton mMoreButton;
+    private EaseInputControlButton mFaceButton;
+    private EaseInputControlButton mMoreButton;
 
     private File mCameraFile;//相机拍照照片文件
 
@@ -301,6 +301,16 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
         menuItems.add(new EaseMenuItem(R.mipmap.ease_ic_album, "相册", v -> requestPermission(data -> pickPhotoFromAlbum(), Permission.Group.CAMERA, Permission.Group.STORAGE)));
         menuItems.add(new EaseMenuItem(R.mipmap.ease_ic_camera, "拍摄", v -> requestPermission(data -> pickPhotoFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE)));
         return menuItems;
+    }
+
+    @Nullable
+    public EaseInputControlButton getFaceButton() {
+        return mFaceButton;
+    }
+
+    @Nullable
+    public EaseInputControlButton getMoreButton() {
+        return mMoreButton;
     }
 
     /**

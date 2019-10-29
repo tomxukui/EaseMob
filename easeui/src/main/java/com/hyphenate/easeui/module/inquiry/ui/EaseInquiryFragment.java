@@ -273,8 +273,8 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
 
             @Override
             public void onTyping(CharSequence s, int start, int before, int count) {
-                if (mMoreButton != null) {
-                    mMoreButton.setVisibility(TextUtils.isEmpty(s.toString()) ? View.VISIBLE : View.GONE);
+                if (getMoreButton() != null) {
+                    getMoreButton().setVisibility(TextUtils.isEmpty(s.toString()) ? View.VISIBLE : View.GONE);
                 }
             }
 
@@ -297,30 +297,30 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
 
             @Override
             public void onEditTextClicked() {
-                if (mFaceButton != null) {
-                    mFaceButton.setSelected(false);
+                if (getFaceButton() != null) {
+                    getFaceButton().setSelected(false);
                 }
 
-                if (mMoreButton != null) {
-                    mMoreButton.setVisibility(menu_input.getControl().isTextEmpty() ? View.VISIBLE : View.GONE);
-                    mMoreButton.setSelected(false);
+                if (getMoreButton() != null) {
+                    getMoreButton().setVisibility(menu_input.getControl().isTextEmpty() ? View.VISIBLE : View.GONE);
+                    getMoreButton().setSelected(false);
                 }
             }
 
             @Override
             public void onToggleVoice(boolean show) {
-                if (mFaceButton != null) {
-                    mFaceButton.setSelected(false);
+                if (getFaceButton() != null) {
+                    getFaceButton().setSelected(false);
                 }
 
-                if (mMoreButton != null) {
-                    mMoreButton.setSelected(false);
+                if (getMoreButton() != null) {
+                    getMoreButton().setSelected(false);
 
                     if (show) {
-                        mMoreButton.setVisibility(View.VISIBLE);
+                        getMoreButton().setVisibility(View.VISIBLE);
 
                     } else {
-                        mMoreButton.setVisibility(menu_input.getControl().isTextEmpty() ? View.VISIBLE : View.GONE);
+                        getMoreButton().setVisibility(menu_input.getControl().isTextEmpty() ? View.VISIBLE : View.GONE);
                     }
                 }
             }
