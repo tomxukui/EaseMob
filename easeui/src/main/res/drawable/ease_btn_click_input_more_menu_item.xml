@@ -3,6 +3,6 @@
 
     <item android:drawable="@color/ease_press" android:state_pressed="true" />
     <item android:drawable="@color/ease_press" android:state_focused="true" />
-    <item android:drawable="@color/ease_chat_input_panel_menu_bg" />
+    <item android:drawable="@color/ease_chat_input_panel_layout_bg" />
 
 </selector>

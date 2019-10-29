@@ -22,7 +22,7 @@ import com.hyphenate.easeui.utils.EaseContextCompatUtil;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
 import com.hyphenate.easeui.utils.EaseSoftInputUtil;
 
-public class EaseInputControlMenu extends LinearLayoutCompat {
+public class EaseInputControlLayout extends LinearLayoutCompat {
 
     private Button btn_voice;
     private TextView tv_sendVoice;
@@ -35,19 +35,19 @@ public class EaseInputControlMenu extends LinearLayoutCompat {
 
     private boolean mCtrlPress = false;
 
-    public EaseInputControlMenu(Context context) {
+    public EaseInputControlLayout(Context context) {
         super(context);
         initView(context);
         setView();
     }
 
-    public EaseInputControlMenu(Context context, AttributeSet attrs) {
+    public EaseInputControlLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context);
         setView();
     }
 
-    public EaseInputControlMenu(Context context, AttributeSet attrs, int defStyleAttr) {
+    public EaseInputControlLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context);
         setView();
@@ -58,7 +58,7 @@ public class EaseInputControlMenu extends LinearLayoutCompat {
         setGravity(Gravity.CENTER_VERTICAL);
         setPadding(0, EaseDensityUtil.dp2px(10), 0, EaseDensityUtil.dp2px(10));
 
-        View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_input_control_menu, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_input_control_layout, this);
 
         btn_voice = view.findViewById(R.id.btn_voice);
         tv_sendVoice = view.findViewById(R.id.tv_sendVoice);

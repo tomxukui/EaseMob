@@ -17,7 +17,7 @@ import com.hyphenate.easeui.utils.EaseContextCompatUtil;
  */
 public class EaseInputMenu extends LinearLayoutCompat implements EaseInputControlButton.OnToggleListener {
 
-    private EaseInputControlMenu menu_control;
+    private EaseInputControlLayout layout_control;
     private EaseInputPanelLayout layout_panel;
 
     private OnInputMenuListener mOnInputMenuListener;
@@ -47,12 +47,12 @@ public class EaseInputMenu extends LinearLayoutCompat implements EaseInputContro
 
         View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_input_menu, this);
 
-        menu_control = view.findViewById(R.id.menu_control);
+        layout_control = view.findViewById(R.id.layout_control);
         layout_panel = view.findViewById(R.id.layout_panel);
     }
 
     private void setView() {
-        menu_control.setOnInputMenuListener(new OnInputMenuListener() {
+        layout_control.setOnInputMenuListener(new OnInputMenuListener() {
 
             @Override
             public void onToggleVoice(boolean show) {
@@ -107,7 +107,7 @@ public class EaseInputMenu extends LinearLayoutCompat implements EaseInputContro
      */
     public void addView(EaseInputControlButton button, @Nullable View targetPanel, int position, LinearLayout.LayoutParams params) {
         //添加控制按钮
-        menu_control.addView(button, position);
+        layout_control.addView(button, position);
         button.addOnToggleListener(this);
 
         //添加面板
@@ -122,22 +122,22 @@ public class EaseInputMenu extends LinearLayoutCompat implements EaseInputContro
         }
     }
 
-    public EaseInputControlMenu getControl() {
-        return menu_control;
+    public EaseInputControlLayout getControl() {
+        return layout_control;
     }
 
     /**
      * 插入文字
      */
     public void insertText(String text) {
-        menu_control.insertText(text);
+        layout_control.insertText(text);
     }
 
     @Override
     public void onToggle(EaseInputControlButton button, boolean on) {
         //设置控制按钮
-        for (int i = 0; i < menu_control.getChildCount(); i++) {
-            View view = menu_control.getChildAt(i);
+        for (int i = 0; i < layout_control.getChildCount(); i++) {
+            View view = layout_control.getChildAt(i);
 
             if (view instanceof EaseInputControlButton && (view != button)) {
                 view.setSelected(false);
@@ -145,11 +145,11 @@ public class EaseInputMenu extends LinearLayoutCompat implements EaseInputContro
         }
 
         if (on) {
-            menu_control.closeVoice();
-            menu_control.setTextEditView(true, button.isInputEnable(), false);
+            layout_control.closeVoice();
+            layout_control.setTextEditView(true, button.isInputEnable(), false);
 
         } else {
-            menu_control.setTextEditView(true, true, true);
+            layout_control.setTextEditView(true, true, true);
         }
 
         //设置面板
@@ -178,13 +178,13 @@ public class EaseInputMenu extends LinearLayoutCompat implements EaseInputContro
      * 4.关闭键盘
      */
     public void shrink() {
-        if (!menu_control.isVoiceMode()) {
-            menu_control.setTextEditView(true, true, false);
+        if (!layout_control.isVoiceMode()) {
+            layout_control.setTextEditView(true, true, false);
         }
 
         //关闭所有的控制按钮
-        for (int i = 0; i < menu_control.getChildCount(); i++) {
-            View view = menu_control.getChildAt(i);
+        for (int i = 0; i < layout_control.getChildCount(); i++) {
+            View view = layout_control.getChildAt(i);
 
             if (view instanceof EaseInputControlButton) {
                 view.setSelected(false);

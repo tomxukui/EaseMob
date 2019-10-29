@@ -2,6 +2,6 @@
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="@color/ease_press">
 
-    <item android:drawable="@color/ease_chat_input_panel_menu_bg" />
+    <item android:drawable="@color/ease_chat_input_panel_layout_bg" />
 
 </ripple>
