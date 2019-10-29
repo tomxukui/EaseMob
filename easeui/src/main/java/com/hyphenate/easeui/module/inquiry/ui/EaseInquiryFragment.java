@@ -1,16 +1,9 @@
 package com.hyphenate.easeui.module.inquiry.ui;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -20,20 +13,15 @@ import android.widget.TextView;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.bean.EaseEmojicon;
-import com.hyphenate.easeui.model.EaseCompat;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.module.base.model.EaseUser;
-import com.hyphenate.easeui.module.base.ui.EaseBaseFragment;
+import com.hyphenate.easeui.module.base.ui.EaseBaseChatFragment;
 import com.hyphenate.easeui.module.base.widget.input.EaseInputMenu;
-import com.hyphenate.easeui.module.base.widget.input.EaseMenuItem;
 import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
 import com.hyphenate.easeui.utils.EaseContextCompatUtil;
-import com.hyphenate.easeui.utils.EaseFileUtil;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 import com.hyphenate.easeui.dialog.EaseAlertDialog;
@@ -41,22 +29,18 @@ import com.hyphenate.easeui.module.base.widget.message.EaseMessageListView;
 import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 import com.hyphenate.easeui.module.base.widget.EaseVoiceRecorderView;
 import com.hyphenate.easeui.module.base.widget.message.row.EaseCustomChatRowProvider;
-import com.hyphenate.util.PathUtil;
 import com.yanzhenjie.permission.Permission;
 
-import java.io.File;
 import java.util.List;
 
 /**
  * 问诊页面-单聊
  */
-public class EaseInquiryFragment extends EaseBaseFragment {
+public class EaseInquiryFragment extends EaseBaseChatFragment {
 
     protected static final String EXTRA_FROM_USER = "EXTRA_FROM_USER";
     protected static final String EXTRA_TO_USER = "EXTRA_TO_USER";
 
-    private static final int REQUEST_CAMERA = 1;
-    private static final int REQUEST_ALBUM = 2;
 
     //透传类型
 //    private static final String CMD_START_INQUIRY = "cmd_start_conversation";//开始问诊
@@ -80,7 +64,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     protected boolean mIsClosed;//问诊是否已关闭
     protected int mPageSize = 20;//消息分页一页最多数量
     protected boolean mHaveMoreData = true;//是否有更多消息
-    protected File mCameraFile;//相机拍照照片文件
 
     @Nullable
     private EaseOnInquiryListener mOnInquiryListener;
@@ -107,6 +90,11 @@ public class EaseInquiryFragment extends EaseBaseFragment {
             mFromUser = (EaseUser) bundle.getSerializable(EXTRA_FROM_USER);
             mToUser = (EaseUser) bundle.getSerializable(EXTRA_TO_USER);
         }
+    }
+
+    @Override
+    public String getToUsername() {
+        return mToUser == null ? null : mToUser.getUsername();
     }
 
     @Override
@@ -160,41 +148,8 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         //设置消息列表控件
         setMessageList();
 
-        //设置输入框的更多菜单
-        menu_input.addMoreMenuItem(new EaseMenuItem(R.mipmap.ease_ic_album, "相册", v -> requestPermission(data -> pickPhotoFromAlbum(), Permission.Group.CAMERA, Permission.Group.STORAGE)));
-        menu_input.addMoreMenuItem(new EaseMenuItem(R.mipmap.ease_ic_camera, "拍摄", v -> requestPermission(data -> pickPhotoFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE)));
-        menu_input.addMoreMenuItems(getMoreMenuItems());
-
-        //监听输入框的输入
-        menu_input.setOnInputMenuListener(new EaseInputMenu.OnInputMenuListener() {
-
-            @Override
-            public void onTyping(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void onSendMessage(String content) {
-                sendTextMessage(content);
-            }
-
-            @Override
-            public boolean onPressToSpeakBtnTouch(View v, MotionEvent event) {
-                if (MotionEvent.ACTION_DOWN == event.getAction()) {
-                    if (!hasPermissions(Permission.Group.STORAGE, Permission.Group.MICROPHONE)) {
-                        requestPermission(null, Permission.Group.STORAGE, Permission.Group.MICROPHONE);
-                        return true;
-                    }
-                }
-
-                return voice_recorder.onPressToSpeakBtnTouch(v, event, (voiceFilePath, voiceTimeLength) -> sendVoiceMessage(voiceFilePath, voiceTimeLength));
-            }
-
-            @Override
-            public void onBigExpressionClicked(EaseEmojicon emojicon) {
-                sendBigExpressionMessage(emojicon.getName(), emojicon.getIdentityCode());
-            }
-
-        });
+        //设置输入菜单
+        setInputMenu();
     }
 
     @Override
@@ -304,6 +259,76 @@ public class EaseInquiryFragment extends EaseBaseFragment {
     }
 
     /**
+     * 设置输入菜单
+     */
+    protected void setInputMenu() {
+        //添加表情菜单
+        addFaceMenu(menu_input, 3);
+
+        //添加更多菜单
+        addMoreMenu(menu_input, 4, getDefaultMoreMenuItems());
+
+        //监听输入菜单
+        menu_input.setOnInputMenuListener(new EaseInputMenu.OnInputMenuListener() {
+
+            @Override
+            public void onTyping(CharSequence s, int start, int before, int count) {
+                if (mMoreButton != null) {
+                    mMoreButton.setVisibility(TextUtils.isEmpty(s.toString()) ? View.VISIBLE : View.GONE);
+                }
+            }
+
+            @Override
+            public void onSendMessage(String content) {
+                sendTextMessage(content);
+            }
+
+            @Override
+            public boolean onPressToSpeakBtnTouch(View v, MotionEvent event) {
+                if (MotionEvent.ACTION_DOWN == event.getAction()) {
+                    if (!hasPermissions(Permission.Group.STORAGE, Permission.Group.MICROPHONE)) {
+                        requestPermission(null, Permission.Group.STORAGE, Permission.Group.MICROPHONE);
+                        return true;
+                    }
+                }
+
+                return voice_recorder.onPressToSpeakBtnTouch(v, event, (voiceFilePath, voiceTimeLength) -> sendVoiceMessage(voiceFilePath, voiceTimeLength));
+            }
+
+            @Override
+            public void onEditTextClicked() {
+                if (mFaceButton != null) {
+                    mFaceButton.setSelected(false);
+                }
+
+                if (mMoreButton != null) {
+                    mMoreButton.setVisibility(TextUtils.isEmpty(menu_input.getControl().getEditText().getText().toString()) ? View.VISIBLE : View.GONE);
+                    mMoreButton.setSelected(false);
+                }
+            }
+
+            @Override
+            public void onToggleVoice(boolean show) {
+                if (mFaceButton != null) {
+                    mFaceButton.setSelected(false);
+                }
+
+                if (mMoreButton != null) {
+                    mMoreButton.setSelected(false);
+
+                    if (show) {
+                        mMoreButton.setVisibility(View.VISIBLE);
+
+                    } else {
+                        mMoreButton.setVisibility(TextUtils.isEmpty(menu_input.getControl().getEditText().getText().toString()) ? View.VISIBLE : View.GONE);
+                    }
+                }
+            }
+
+        });
+    }
+
+    /**
      * 加载本地更多消息列表
      */
     private void loadMoreLocalMessages() {
@@ -334,39 +359,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         }
 
         list_message.getSwipeRefreshLayout().setRefreshing(false);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-
-            case REQUEST_CAMERA: {
-                if (resultCode == Activity.RESULT_OK) {
-                    if (mCameraFile != null && mCameraFile.exists()) {
-                        sendImageMessage(mCameraFile.getAbsolutePath());
-                    }
-                }
-            }
-            break;
-
-            case REQUEST_ALBUM: {
-                if (resultCode == Activity.RESULT_OK) {
-                    if (data != null) {
-                        Uri uri = data.getData();
-
-                        if (uri != null) {
-                            sendPicByUri(uri);
-                        }
-                    }
-                }
-            }
-            break;
-
-            default:
-                break;
-
-        }
     }
 
     /**
@@ -407,59 +399,7 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         mOnInquiryListener = listener;
     }
 
-    /**
-     * 发送透传消息
-     */
-    protected void sendCmdMessage(String cmd) {
-        EMMessage message = EMMessage.createSendMessage(EMMessage.Type.CMD);
-        message.addBody(new EMCmdMessageBody(cmd));
-        message.setTo(mToUser.getUsername());
-        EMClient.getInstance().chatManager().sendMessage(message);
-    }
-
-    /**
-     * 发送文字消息
-     */
-    protected void sendTextMessage(String content) {
-        EMMessage message = EMMessage.createTxtSendMessage(content, mToUser.getUsername());
-        sendMessage(message);
-    }
-
-    /**
-     * 发送大表情消息
-     */
-    protected void sendBigExpressionMessage(String name, String identityCode) {
-        EMMessage message = EaseMessageUtil.createExpressionMessage(mToUser.getUsername(), name, identityCode);
-        sendMessage(message);
-    }
-
-    /**
-     * 发送语音消息
-     */
-    protected void sendVoiceMessage(String filePath, int length) {
-        EMMessage message = EMMessage.createVoiceSendMessage(filePath, length, mToUser.getUsername());
-        sendMessage(message);
-    }
-
-    /**
-     * 发送图片消息
-     */
-    protected void sendImageMessage(String imagePath) {
-        EMMessage message = EMMessage.createImageSendMessage(imagePath, false, mToUser.getUsername());
-        sendMessage(message);
-    }
-
-    /**
-     * 发送文件消息
-     */
-    protected void sendFileMessage(String filePath) {
-        EMMessage message = EMMessage.createFileSendMessage(filePath, mToUser.getUsername());
-        sendMessage(message);
-    }
-
-    /**
-     * 发送消息
-     */
+    @Override
     protected void sendMessage(EMMessage message) {
         if (message == null) {
             return;
@@ -514,86 +454,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
 
     };
 
-    /**
-     * 发送图片
-     */
-    protected void sendPicByUri(Uri selectedImage) {
-        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-            cursor = null;
-
-            if (picturePath == null || picturePath.equals("null")) {
-                EaseToastUtil.show(R.string.cant_find_pictures, Gravity.CENTER);
-                return;
-            }
-            sendImageMessage(picturePath);
-
-        } else {
-            File file = new File(selectedImage.getPath());
-            if (!file.exists()) {
-                EaseToastUtil.show(R.string.cant_find_pictures, Gravity.CENTER);
-                return;
-
-            }
-            sendImageMessage(file.getAbsolutePath());
-        }
-    }
-
-    /**
-     * 发送文件
-     */
-    protected void sendFileByUri(Uri uri) {
-        String filePath = EaseCompat.getPath(getActivity(), uri);
-        if (filePath == null) {
-            return;
-        }
-
-        File file = new File(filePath);
-        if (!file.exists()) {
-            EaseToastUtil.show(R.string.File_does_not_exist);
-            return;
-        }
-
-        sendFileMessage(filePath);
-    }
-
-    /**
-     * 拍照获取照片
-     */
-    private void pickPhotoFromCamera() {
-        if (!EaseFileUtil.isSdcardExist()) {
-            EaseToastUtil.show(R.string.sd_card_does_not_exist);
-            return;
-        }
-
-        mCameraFile = new File(PathUtil.getInstance().getImagePath(), EMClient.getInstance().getCurrentUser() + System.currentTimeMillis() + ".jpg");
-        mCameraFile.getParentFile().mkdirs();
-
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, EaseCompat.getUriForFile(getContext(), mCameraFile));
-        startActivityForResult(intent, REQUEST_CAMERA);
-    }
-
-    /**
-     * 从相册中选择照片
-     */
-    private void pickPhotoFromAlbum() {
-        Intent intent;
-        if (Build.VERSION.SDK_INT < 19) {
-            intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
-
-        } else {
-            intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        }
-
-        startActivityForResult(intent, REQUEST_ALBUM);
-    }
 
     /**
      * 清空所有聊天消息
@@ -781,14 +641,6 @@ public class EaseInquiryFragment extends EaseBaseFragment {
         }
 
     };
-
-    /**
-     * 获取输入框的更多菜单子项集合
-     */
-    @Nullable
-    protected List<EaseMenuItem> getMoreMenuItems() {
-        return null;
-    }
 
     /**
      * 添加自定义消息

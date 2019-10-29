@@ -16,7 +16,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.module.base.widget.EaseVoiceRecorderView;
 import com.hyphenate.easeui.utils.EaseContextCompatUtil;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
 import com.hyphenate.easeui.utils.EaseSoftInputUtil;
@@ -28,8 +27,6 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
     private FrameLayout frame_text;
     private EditText et_text;
     private TextView tv_text;
-    private Button btn_face;
-    private Button btn_more;
     private Button btn_send;
 
     private boolean mCtrlPress = false;
@@ -64,8 +61,6 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
         frame_text = view.findViewById(R.id.frame_text);
         et_text = view.findViewById(R.id.et_text);
         tv_text = view.findViewById(R.id.tv_text);
-        btn_face = view.findViewById(R.id.btn_face);
-        btn_more = view.findViewById(R.id.btn_more);
         btn_send = view.findViewById(R.id.btn_send);
     }
 
@@ -74,52 +69,61 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
             v.setSelected(!v.isSelected());
 
             if (v.isSelected()) {
+                //显示发送语音按钮
                 tv_sendVoice.setVisibility(View.VISIBLE);
 
-                setTextEditView(false, false, false);
-
-                btn_face.setSelected(false);
-
+                //隐藏文字发送按钮
                 setSendBtn(false);
 
+                //关闭键盘
+                setTextEditView(false, false, false);
+
             } else {
+                //隐藏发送语音按钮
                 tv_sendVoice.setVisibility(View.GONE);
 
-                setTextEditView(true, true, true);
-
-                btn_face.setSelected(false);
-
+                //文字输入不为空, 则显示发送文字按钮, 否则隐藏按钮
                 setSendBtn(et_text.getText().toString());
+
+                //显示键盘
+                setTextEditView(true, true, true);
             }
 
-            if (listener != null) {
-                listener.onToggleVoiceBtnClicked();
+            if (getOnControlListener() != null) {
+                getOnControlListener().onToggleVoice(v.isSelected());
             }
         });
 
         tv_sendVoice.setOnTouchListener((v, event) -> {
-            if (listener != null) {
-                return listener.onPressToSpeakBtnTouch(v, event);
+            if (getOnControlListener() != null) {
+                return getOnControlListener().onPressToSpeakBtnTouch(v, event);
             }
             return false;
         });
 
         et_text.setOnClickListener(v -> {
-            btn_face.setSelected(false);
-            btn_more.setSelected(false);
+            //关闭语音
+            btn_voice.setSelected(false);
+            tv_sendVoice.setVisibility(View.GONE);
 
-            if (listener != null) {
-                listener.onEditTextClicked();
+            //开启输入框
+            setTextEditView(true, true, true);
+
+            //设置文字发送按钮
+            setSendBtn(et_text.getText().toString());
+
+            if (getOnControlListener() != null) {
+                getOnControlListener().onEditTextClicked();
             }
         });
         et_text.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                setSendBtn(!TextUtils.isEmpty(s));
+                setSendBtn(s.toString());
 
-                if (listener != null) {
-                    listener.onTyping(s, start, before, count);
+                if (getOnControlListener() != null) {
+                    getOnControlListener().onTyping(s, start, before, count);
                 }
             }
 
@@ -155,7 +159,10 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
         });
         et_text.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEND || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN && mCtrlPress)) {
-                listener.onSendBtnClick(et_text.getText().toString());
+                if (getOnControlListener() != null) {
+                    getOnControlListener().onSendBtnClick(et_text.getText().toString());
+                }
+
                 et_text.setText("");
                 return true;
 
@@ -165,51 +172,19 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
         });
 
         tv_text.setOnClickListener(v -> {
-            btn_face.setSelected(false);
-            btn_more.setSelected(false);
-
             setTextEditView(true, true, true);
 
-            if (listener != null) {
-                listener.onEditTextClicked();
-            }
-        });
-
-        btn_face.setOnClickListener(v -> {
-            v.setSelected(!v.isSelected());
-
-            btn_voice.setSelected(false);
-            tv_sendVoice.setVisibility(View.GONE);
-
-            setTextEditView(true, true, !v.isSelected());
-
-            btn_more.setSelected(false);
-
-            if (listener != null) {
-                listener.onToggleEmojiconClick();
-            }
-        });
-
-        btn_more.setOnClickListener(v -> {
-            v.setSelected(!v.isSelected());
-
-            btn_voice.setSelected(false);
-            tv_sendVoice.setVisibility(View.GONE);
-
-            setTextEditView(true, !v.isSelected(), !v.isSelected());
-
-            btn_face.setSelected(false);
-
-            if (listener != null) {
-                listener.onToggleExtendClick();
+            if (getOnControlListener() != null) {
+                getOnControlListener().onEditTextClicked();
             }
         });
 
         btn_send.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onSendBtnClick(et_text.getText().toString());
-                et_text.setText("");
+            if (getOnControlListener() != null) {
+                getOnControlListener().onSendBtnClick(et_text.getText().toString());
             }
+
+            et_text.setText("");
         });
     }
 
@@ -220,7 +195,8 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
      * @param fource    是否聚焦
      * @param softInput 是否显示键盘
      */
-    private void setTextEditView(boolean show, boolean fource, boolean softInput) {
+    @Override
+    public void setTextEditView(boolean show, boolean fource, boolean softInput) {
         if (show) {
             frame_text.setVisibility(View.VISIBLE);
 
@@ -230,24 +206,29 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
                 et_text.setVisibility(View.VISIBLE);
                 et_text.requestFocus();
 
-                if (softInput) {
-                    EaseSoftInputUtil.show(et_text);
-
-                } else {
-                    EaseSoftInputUtil.hide(et_text);
-                }
+                showSoftInput(softInput);
 
             } else {
                 tv_text.setVisibility(View.VISIBLE);
 
                 et_text.setVisibility(View.GONE);
 
-                EaseSoftInputUtil.hide(et_text);
+                showSoftInput(false);
             }
 
         } else {
             frame_text.setVisibility(View.GONE);
 
+            showSoftInput(false);
+        }
+    }
+
+    @Override
+    public void showSoftInput(boolean show) {
+        if (show) {
+            EaseSoftInputUtil.show(et_text);
+
+        } else {
             EaseSoftInputUtil.hide(et_text);
         }
     }
@@ -258,43 +239,20 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
      * @param show 是否显示发送按钮
      */
     private void setSendBtn(boolean show) {
-        btn_more.setSelected(false);
-
-        if (show) {
-            btn_more.setVisibility(View.GONE);
-            btn_send.setVisibility(View.VISIBLE);
-
-        } else {
-            btn_more.setVisibility(View.VISIBLE);
-            btn_send.setVisibility(View.GONE);
-        }
+        btn_send.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     private void setSendBtn(String content) {
         setSendBtn(!TextUtils.isEmpty(content));
     }
 
-    /**
-     * set recorder view when speak icon is touched
-     *
-     * @param voiceRecorderView
-     */
-    public void setPressToSpeakRecorderView(EaseVoiceRecorderView voiceRecorderView) {
-    }
-
-    /**
-     * append emoji icon to editText
-     *
-     * @param emojiContent
-     */
-    public void onEmojiconInputEvent(CharSequence emojiContent) {
+    @Override
+    public void appendEmojiconInput(CharSequence emojiContent) {
         et_text.append(emojiContent);
     }
 
-    /**
-     * delete emojicon
-     */
-    public void onEmojiconDeleteEvent() {
+    @Override
+    public void deleteEmojiconInput() {
         if (!TextUtils.isEmpty(et_text.getText())) {
             KeyEvent event = new KeyEvent(0, 0, 0, KeyEvent.KEYCODE_DEL, 0, 0, 0, 0, KeyEvent.KEYCODE_ENDCALL);
             et_text.dispatchKeyEvent(event);
@@ -302,13 +260,7 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
     }
 
     @Override
-    public void onExtendMenuContainerHide() {
-        btn_face.setSelected(false);
-        btn_more.setSelected(false);
-    }
-
-    @Override
-    public void onTextInsert(CharSequence text) {
+    public void insertText(CharSequence text) {
         int start = et_text.getSelectionStart();
         Editable editable = et_text.getEditableText();
         editable.insert(start, text);
@@ -317,15 +269,19 @@ public class EaseInputControlMenu extends EaseInputControlMenuBase {
         tv_sendVoice.setVisibility(View.GONE);
 
         setTextEditView(true, true, true);
-
-        btn_face.setSelected(false);
-
-        setSendBtn(et_text.getText().toString());
     }
 
     @Override
     public EditText getEditText() {
         return et_text;
+    }
+
+    @Override
+    public void hideExtendMenuContainer() {
+        btn_voice.setSelected(false);
+        tv_sendVoice.setVisibility(View.GONE);
+        setTextEditView(true, true, true);
+        setSendBtn(et_text.getText().toString());
     }
 
 }

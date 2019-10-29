@@ -11,7 +11,7 @@ import android.widget.EditText;
 public abstract class EaseInputControlMenuBase extends LinearLayoutCompat {
 
     @Nullable
-    protected OnItemClickListener listener;
+    protected OnControlListener mOnControlListener;
 
     public EaseInputControlMenuBase(Context context) {
         super(context);
@@ -25,68 +25,74 @@ public abstract class EaseInputControlMenuBase extends LinearLayoutCompat {
         super(context, attrs, defStyleAttr);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
+    /**
+     * 设置文字输入控件
+     *
+     * @param show      是否显示
+     * @param fource    是否聚焦
+     * @param softInput 是否显示键盘
+     */
+    public abstract void setTextEditView(boolean show, boolean fource, boolean softInput);
 
     /**
-     * emoji icon input event
+     * 设置键盘的显示和隐藏
      */
-    public abstract void onEmojiconInputEvent(CharSequence emojiContent);
+    public abstract void showSoftInput(boolean show);
 
     /**
-     * emoji icon delete event
+     * 在输入框中追加一个表情
      */
-    public abstract void onEmojiconDeleteEvent();
+    public abstract void appendEmojiconInput(CharSequence emojiContent);
 
     /**
-     * hide extend menu
+     * 删除输入框的一个表情
      */
-    public abstract void onExtendMenuContainerHide();
+    public abstract void deleteEmojiconInput();
 
     /**
-     * insert text
+     * 插入文字
      */
-    public abstract void onTextInsert(CharSequence text);
+    public abstract void insertText(CharSequence text);
 
     public abstract EditText getEditText();
 
-    public interface OnItemClickListener {
+    public abstract void hideExtendMenuContainer();
+
+    @Nullable
+    public OnControlListener getOnControlListener() {
+        return mOnControlListener;
+    }
+
+    public void setOnControlListener(@Nullable OnControlListener listener) {
+        mOnControlListener = listener;
+    }
+
+    public interface OnControlListener {
 
         /**
-         * 点击发送按钮
+         * 语音切换事件
          */
-        void onSendBtnClick(String content);
+        void onToggleVoice(boolean show);
 
         /**
-         * 正在回复
+         * 正在回复事件
          */
         void onTyping(CharSequence s, int start, int before, int count);
 
         /**
-         * 按压语音按键
+         * 点击发送按钮事件
          */
-        boolean onPressToSpeakBtnTouch(View v, MotionEvent event);
+        void onSendBtnClick(String content);
 
         /**
-         * 点击切换语音按钮
-         */
-        void onToggleVoiceBtnClicked();
-
-        /**
-         * 点击切换扩展按钮
-         */
-        void onToggleExtendClick();
-
-        /**
-         * 点击切换表情按钮
-         */
-        void onToggleEmojiconClick();
-
-        /**
-         * 点击输入框
+         * 点击输入框事件
          */
         void onEditTextClicked();
+
+        /**
+         * 按压语音按键事件
+         */
+        boolean onPressToSpeakBtnTouch(View v, MotionEvent event);
 
     }
 

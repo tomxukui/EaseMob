@@ -161,12 +161,12 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
         }
     }
 
-    @Nullable
-    @Override
-    protected List<EaseMenuItem> getMoreMenuItems() {
-        List<EaseMenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new EaseMenuItem(R.mipmap.ic_write_case, "写病例", v -> EaseToastUtil.show("写病例")));
-        return menuItems;
-    }
+//    @Nullable
+//    @Override
+//    protected List<EaseMenuItem> getMoreMenuItems() {
+//        List<EaseMenuItem> menuItems = new ArrayList<>();
+//        menuItems.add(new EaseMenuItem(R.mipmap.ic_write_case, "写病例", v -> EaseToastUtil.show("写病例")));
+//        return menuItems;
+//    }
 
 }

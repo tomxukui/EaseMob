@@ -1,35 +1,24 @@
 package com.hyphenate.easeui.module.base.widget.input;
 
 import android.content.Context;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.bean.EaseEmojicon;
-import com.hyphenate.easeui.bean.EaseEmojiconGroupEntity;
-import com.hyphenate.easeui.model.EaseDefaultEmojiconDatas;
-import com.hyphenate.easeui.module.base.widget.emojicon.EaseEmojiconMenu;
-import com.hyphenate.easeui.module.base.widget.emojicon.EaseEmojiconMenuBase.EaseEmojiconMenuListener;
 import com.hyphenate.easeui.utils.EaseContextCompatUtil;
-import com.hyphenate.easeui.utils.EaseSmileUtil;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * 聊天输入菜单
  */
-public class EaseInputMenu extends LinearLayoutCompat {
+public class EaseInputMenu extends LinearLayoutCompat implements EaseInputControlButton.OnToggleListener {
 
-    private EaseInputControlMenuBase menu_control;
-    private EaseInputMoreMenu menu_more;
-    private EaseEmojiconMenu menu_emoji;
+    private EaseInputControlMenu menu_control;
+    private EaseInputPanelLayout layout_panel;
 
     private OnInputMenuListener mOnInputMenuListener;
 
@@ -59,12 +48,38 @@ public class EaseInputMenu extends LinearLayoutCompat {
         View view = LayoutInflater.from(context).inflate(R.layout.ease_widget_input_menu, this);
 
         menu_control = view.findViewById(R.id.menu_control);
-        menu_more = view.findViewById(R.id.menu_more);
-        menu_emoji = view.findViewById(R.id.menu_emoji);
+        layout_panel = view.findViewById(R.id.layout_panel);
     }
 
     private void setView() {
-        menu_control.setOnItemClickListener(new EaseInputControlMenuBase.OnItemClickListener() {
+        menu_control.setOnControlListener(new EaseInputControlMenuBase.OnControlListener() {
+
+            @Override
+            public void onToggleVoice(boolean show) {
+                layout_panel.close();
+
+                if (mOnInputMenuListener != null) {
+                    mOnInputMenuListener.onToggleVoice(show);
+                }
+            }
+
+            @Override
+            public void onEditTextClicked() {
+                layout_panel.close();
+
+                if (mOnInputMenuListener != null) {
+                    mOnInputMenuListener.onEditTextClicked();
+                }
+            }
+
+            @Override
+            public boolean onPressToSpeakBtnTouch(View v, MotionEvent event) {
+                if (mOnInputMenuListener != null) {
+                    return mOnInputMenuListener.onPressToSpeakBtnTouch(v, event);
+                }
+
+                return false;
+            }
 
             @Override
             public void onTyping(CharSequence s, int start, int before, int count) {
@@ -80,139 +95,55 @@ public class EaseInputMenu extends LinearLayoutCompat {
                 }
             }
 
-            @Override
-            public void onToggleVoiceBtnClicked() {
-                hideExtendMenuContainer();
-            }
-
-            @Override
-            public void onToggleExtendClick() {
-                toggleMore();
-            }
-
-            @Override
-            public void onToggleEmojiconClick() {
-                toggleEmojicon();
-            }
-
-            @Override
-            public void onEditTextClicked() {
-                hideExtendMenuContainer();
-            }
-
-            @Override
-            public boolean onPressToSpeakBtnTouch(View v, MotionEvent event) {
-                if (mOnInputMenuListener != null) {
-                    return mOnInputMenuListener.onPressToSpeakBtnTouch(v, event);
-                }
-
-                return false;
-            }
-
-        });
-
-        List<EaseEmojiconGroupEntity> emojiconGroupList = new ArrayList<>();
-        emojiconGroupList.add(new EaseEmojiconGroupEntity(R.drawable.ee_1, Arrays.asList(EaseDefaultEmojiconDatas.getData())));
-        menu_emoji.init(emojiconGroupList);
-        menu_emoji.setEmojiconMenuListener(new EaseEmojiconMenuListener() {
-
-            @Override
-            public void onExpressionClicked(EaseEmojicon emojicon) {
-                if (emojicon.getType() != EaseEmojicon.Type.BIG_EXPRESSION) {
-                    if (emojicon.getEmojiText() != null) {
-                        menu_control.onEmojiconInputEvent(EaseSmileUtil.getSmiledText(getContext(), emojicon.getEmojiText()));
-                    }
-
-                } else {
-                    if (mOnInputMenuListener != null) {
-                        mOnInputMenuListener.onBigExpressionClicked(emojicon);
-                    }
-                }
-            }
-
-            @Override
-            public void onDeleteImageClicked() {
-                menu_control.onEmojiconDeleteEvent();
-            }
-
         });
     }
 
     /**
-     * 添加更多菜单选项
+     * 添加控制按钮和面板
+     *
+     * @param button      控制按钮
+     * @param targetPanel 面板
+     * @param position    控制按钮所在的位置
      */
-    public void addMoreMenuItem(EaseMenuItem menuItem) {
-        menu_more.addMenuItem(menuItem);
+    public void addView(EaseInputControlButton button, @Nullable View targetPanel, int position, LinearLayout.LayoutParams params) {
+        //添加控制按钮
+        menu_control.addView(button, position);
+        button.addOnToggleListener(this);
+
+        //添加面板
+        layout_panel.addPanel(targetPanel);
+
+        //必须重设边距, 不然不起效果
+        if (params != null) {
+            LayoutParams layoutParams = (LayoutParams) button.getLayoutParams();
+            layoutParams.setMargins(params.leftMargin, params.topMargin, params.rightMargin, params.bottomMargin);
+            button.setLayoutParams(layoutParams);
+            button.requestLayout();
+        }
     }
 
-    /**
-     * 添加更多菜单选项列表
-     */
-    public void addMoreMenuItems(List<EaseMenuItem> menuItems) {
-        menu_more.addMenuItems(menuItems);
+    public EaseInputControlMenu getControl() {
+        return menu_control;
     }
 
     /**
      * 插入文字
      */
     public void insertText(String text) {
-        menu_control.onTextInsert(text);
-    }
-
-    /**
-     * 显示或隐藏更多按钮
-     */
-    protected void toggleMore() {
-        boolean show = menu_more.getVisibility() == VISIBLE;
-
-        animShowView(menu_more, !show);
-        animShowView(menu_emoji, false);
-    }
-
-    /**
-     * 显示或隐藏表情
-     */
-    protected void toggleEmojicon() {
-        boolean show = menu_emoji.getVisibility() == VISIBLE;
-
-        animShowView(menu_emoji, !show);
-        animShowView(menu_more, false);
+        menu_control.insertText(text);
     }
 
     /**
      * 隐藏菜单
      */
     public void hideExtendMenuContainer() {
-        animShowView(menu_more, false);
-        animShowView(menu_emoji, false);
+        layout_panel.close();
 
-        menu_control.onExtendMenuContainerHide();
-    }
-
-    private void animShowView(View view, boolean show) {
-        if (show && view.getVisibility() != View.VISIBLE) {
-            ViewCompat.animate(view)
-                    .alpha(1f)
-                    .setDuration(50)
-                    .setListener(new ViewPropertyAnimatorListenerAdapter() {
-
-                        @Override
-                        public void onAnimationStart(View view) {
-                            super.onAnimationStart(view);
-                            view.setVisibility(View.VISIBLE);
-                            view.setAlpha(0f);
-                        }
-                    })
-                    .start();
-
-        } else if (!show && view.getVisibility() == View.VISIBLE) {
-            view.setAlpha(0f);
-            view.setVisibility(View.GONE);
-        }
+        menu_control.hideExtendMenuContainer();
     }
 
     public boolean onBackPressed() {
-        if (menu_more.getVisibility() == View.VISIBLE || menu_emoji.getVisibility() == View.VISIBLE) {
+        if (layout_panel.isOpen()) {
             hideExtendMenuContainer();
             return false;
 
@@ -221,31 +152,65 @@ public class EaseInputMenu extends LinearLayoutCompat {
         }
     }
 
-    public void setOnInputMenuListener(OnInputMenuListener listener) {
+    @Override
+    public void onToggle(EaseInputControlButton button, boolean on) {
+        //设置控制按钮
+        for (int i = 0; i < menu_control.getChildCount(); i++) {
+            View view = menu_control.getChildAt(i);
+
+            if (view instanceof EaseInputControlButton && (view != button)) {
+                view.setSelected(false);
+            }
+        }
+
+        if (on) {
+            menu_control.setTextEditView(true, button.isInputEnable(), false);
+
+        } else {
+            menu_control.setTextEditView(true, true, true);
+        }
+
+        //设置面板
+        View panel = button.getTargetPanel();
+
+        if (panel != null) {
+            for (int i = 0; i < layout_panel.getChildCount(); i++) {
+                View view = layout_panel.getChildAt(i);
+
+                if (on && view == panel) {
+                    view.setVisibility(View.VISIBLE);
+
+                } else {
+                    view.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
+    public void setOnInputMenuListener(@Nullable OnInputMenuListener listener) {
         mOnInputMenuListener = listener;
     }
 
     public interface OnInputMenuListener {
 
         /**
-         * 正在输入文字
+         * 正在输入
          */
         void onTyping(CharSequence s, int start, int before, int count);
 
         /**
-         * 文字输入
+         * 发送文字
          */
         void onSendMessage(String content);
 
         /**
-         * 表情输入
-         */
-        void onBigExpressionClicked(EaseEmojicon emojicon);
-
-        /**
-         * 语音输入
+         * 按压语音按键事件
          */
         boolean onPressToSpeakBtnTouch(View v, MotionEvent event);
+
+        void onEditTextClicked();
+
+        void onToggleVoice(boolean show);
 
     }
 
