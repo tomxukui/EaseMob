@@ -76,21 +76,21 @@ public class EaseInputControlLayout extends LinearLayoutCompat {
                 //显示发送语音按钮
                 tv_sendVoice.setVisibility(View.VISIBLE);
 
-                //隐藏文字发送按钮
-                setSendBtn(false);
-
                 //关闭键盘
                 setTextEditView(false, false, false);
+
+                //隐藏文字发送按钮
+                setSendBtn(false);
 
             } else {
                 //隐藏发送语音按钮
                 tv_sendVoice.setVisibility(View.GONE);
 
-                //文字输入不为空, 则显示发送文字按钮, 否则隐藏按钮
-                setSendBtn(et_text.getText().toString());
-
                 //显示键盘
                 setTextEditView(true, true, true);
+
+                //文字输入不为空, 则显示发送文字按钮, 否则隐藏按钮
+                setSendBtn(et_text.getText().toString());
             }
 
             if (mOnInputMenuListener != null) {
