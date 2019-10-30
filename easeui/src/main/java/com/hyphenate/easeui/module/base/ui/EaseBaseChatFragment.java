@@ -44,7 +44,9 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
     protected static final int REQUEST_CAMERA = 100;
     protected static final int REQUEST_ALBUM = 101;
 
+    @Nullable
     private EaseInputControlButton mFaceButton;
+    @Nullable
     private EaseInputControlButton mMoreButton;
 
     private File mCameraFile;//相机拍照照片文件
@@ -55,7 +57,7 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
     /**
      * 获取对方username
      */
-    public abstract String getToUsername();
+    protected abstract String getToUsername();
 
     /**
      * 发送透传消息
@@ -222,7 +224,7 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
     /**
      * 添加表情菜单
      */
-    public void addFaceMenu(EaseInputMenu inputMenu, int position) {
+    protected void addFaceMenu(EaseInputMenu inputMenu, int position) {
         if (mFaceButton != null) {
             return;
         }
@@ -270,7 +272,7 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
     /**
      * 添加更多菜单
      */
-    public void addMoreMenu(EaseInputMenu inputMenu, int position, List<EaseMenuItem> menuItems) {
+    protected void addMoreMenu(EaseInputMenu inputMenu, int position, List<EaseMenuItem> menuItems) {
         if (mMoreButton != null) {
             return;
         }
@@ -292,31 +294,58 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
     }
 
     /**
-     * 获取更多菜单的默认功能
+     * 获取更多菜单的功能
      * <p>
-     * 功能是相册和拍摄
+     * 默认功能是相册和拍摄
      */
-    public List<EaseMenuItem> getDefaultMoreMenuItems() {
+    protected List<EaseMenuItem> getMoreMenuItems() {
         List<EaseMenuItem> menuItems = new ArrayList<>();
         menuItems.add(new EaseMenuItem(R.mipmap.ease_ic_album, "相册", v -> requestPermission(data -> pickPhotoFromAlbum(), Permission.Group.CAMERA, Permission.Group.STORAGE)));
         menuItems.add(new EaseMenuItem(R.mipmap.ease_ic_camera, "拍摄", v -> requestPermission(data -> pickPhotoFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE)));
         return menuItems;
     }
 
+    /**
+     * 是否开启语音
+     */
+    protected boolean voiceEnable() {
+        return false;
+    }
+
+    /**
+     * 是否开启表情
+     */
+    protected boolean faceEnable() {
+        return false;
+    }
+
+    /**
+     * 是否开启更多菜单
+     */
+    protected boolean moreEnable() {
+        return true;
+    }
+
+    /**
+     * 获取人脸控制按钮
+     */
     @Nullable
-    public EaseInputControlButton getFaceButton() {
+    protected EaseInputControlButton getFaceButton() {
         return mFaceButton;
     }
 
+    /**
+     * 获取更多控制按钮
+     */
     @Nullable
-    public EaseInputControlButton getMoreButton() {
+    protected EaseInputControlButton getMoreButton() {
         return mMoreButton;
     }
 
     /**
      * 从相册中选择照片
      */
-    private void pickPhotoFromAlbum() {
+    protected void pickPhotoFromAlbum() {
         Intent intent;
         if (Build.VERSION.SDK_INT < 19) {
             intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -332,7 +361,7 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
     /**
      * 拍照获取照片
      */
-    private void pickPhotoFromCamera() {
+    protected void pickPhotoFromCamera() {
         if (!EaseFileUtil.isSdcardExist()) {
             EaseToastUtil.show(R.string.sd_card_does_not_exist);
             return;
@@ -349,21 +378,21 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
     /**
      * 获取输入事件
      */
-    public OnInputListener getOnInputListener() {
+    protected OnInputListener getOnInputListener() {
         return mOnInputListener;
     }
 
     /**
      * 设置监听输入事件
      */
-    public void setOnInputListener(@Nullable OnInputListener listener) {
+    protected void setOnInputListener(@Nullable OnInputListener listener) {
         mOnInputListener = listener;
     }
 
     /**
      * 输入事件
      */
-    public interface OnInputListener {
+    protected interface OnInputListener {
 
         /**
          * 正在输入文字

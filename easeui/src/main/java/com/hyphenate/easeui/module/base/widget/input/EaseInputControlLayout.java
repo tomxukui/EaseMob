@@ -310,6 +310,13 @@ public class EaseInputControlLayout extends LinearLayoutCompat {
         return tv_sendVoice.getVisibility() == View.VISIBLE;
     }
 
+    /**
+     * 设置语音是否显示
+     */
+    public void setVoiceVisibility(boolean show) {
+        btn_voice.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
     public void setOnInputMenuListener(@Nullable OnInputMenuListener listener) {
         mOnInputMenuListener = listener;
     }

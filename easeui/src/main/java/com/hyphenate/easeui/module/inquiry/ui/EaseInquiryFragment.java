@@ -266,7 +266,16 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
         addFaceMenu(menu_input, 3);
 
         //添加更多菜单
-        addMoreMenu(menu_input, 4, getDefaultMoreMenuItems());
+        addMoreMenu(menu_input, 4, getMoreMenuItems());
+
+        //设置是否开启语音菜单
+        menu_input.getControl().setVoiceVisibility(voiceEnable());
+
+        //设置是否开启表情菜单
+        getFaceButton().setVisibility(faceEnable() ? View.VISIBLE : View.GONE);
+
+        //设置是否开启更多菜单
+        getMoreButton().setVisibility(moreEnable() ? View.VISIBLE : View.GONE);
 
         //监听输入菜单
         menu_input.setOnInputMenuListener(new OnInputMenuListener() {
