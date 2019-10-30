@@ -22,7 +22,6 @@ import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DoctorInquiryFragment extends EaseInquiryFragment {
@@ -161,12 +160,11 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
         }
     }
 
-//    @Nullable
-//    @Override
-//    protected List<EaseMenuItem> getMoreMenuItems() {
-//        List<EaseMenuItem> menuItems = new ArrayList<>();
-//        menuItems.add(new EaseMenuItem(R.mipmap.ic_write_case, "写病例", v -> EaseToastUtil.show("写病例")));
-//        return menuItems;
-//    }
+    @Override
+    protected List<EaseMenuItem> getMoreMenuItems() {
+        List<EaseMenuItem> menuItems = super.getMoreMenuItems();
+        menuItems.add(new EaseMenuItem(R.mipmap.ic_write_case, "写病例", v -> EaseToastUtil.show("写病例")));
+        return menuItems;
+    }
 
 }
