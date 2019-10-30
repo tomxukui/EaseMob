@@ -270,7 +270,7 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
     /**
      * 添加更多菜单
      */
-    public void addMoreMenu(EaseInputMenu inputMenu, int position, @Nullable List<EaseMenuItem> menuItems) {
+    public void addMoreMenu(EaseInputMenu inputMenu, int position, List<EaseMenuItem> menuItems) {
         if (mMoreButton != null) {
             return;
         }
