@@ -49,7 +49,7 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
     @Nullable
     private EaseInputControlButton mMoreButton;
 
-    private File mCameraFile;//相机拍照照片文件
+    private File mCameraFile;//相机拍照的照片文件
 
     @Nullable
     private OnInputListener mOnInputListener;
