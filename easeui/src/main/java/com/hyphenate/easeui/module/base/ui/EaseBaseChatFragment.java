@@ -8,8 +8,6 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.hyphenate.chat.EMClient;
@@ -50,9 +48,6 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
     private EaseInputControlButton mMoreButton;
 
     private File mCameraFile;//相机拍照的照片文件
-
-    @Nullable
-    private OnInputListener mOnInputListener;
 
     /**
      * 获取对方username
@@ -241,11 +236,6 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
                     if (emojicon.getEmojiText() != null) {
                         inputMenu.getControl().appendEmojiconInput(EaseSmileUtil.getSmiledText(getContext(), emojicon.getEmojiText()));
                     }
-
-                } else {
-                    if (mOnInputListener != null) {
-                        mOnInputListener.onBigExpressionClicked(emojicon);
-                    }
                 }
             }
 
@@ -354,47 +344,6 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, EaseCompat.getUriForFile(getContext(), mCameraFile));
         startActivityForResult(intent, REQUEST_CAMERA);
-    }
-
-    /**
-     * 获取输入事件
-     */
-    protected OnInputListener getOnInputListener() {
-        return mOnInputListener;
-    }
-
-    /**
-     * 设置监听输入事件
-     */
-    protected void setOnInputListener(@Nullable OnInputListener listener) {
-        mOnInputListener = listener;
-    }
-
-    /**
-     * 输入事件
-     */
-    protected interface OnInputListener {
-
-        /**
-         * 正在输入文字
-         */
-        void onTyping(CharSequence s, int start, int before, int count);
-
-        /**
-         * 文字输入
-         */
-        void onSendMessage(String content);
-
-        /**
-         * 表情输入
-         */
-        void onBigExpressionClicked(EaseEmojicon emojicon);
-
-        /**
-         * 语音输入
-         */
-        boolean onPressToSpeakBtnTouch(View v, MotionEvent event);
-
     }
 
 }
