@@ -76,14 +76,14 @@ public class EaseInputControlLayout extends LinearLayoutCompat {
                 //显示发送语音按钮
                 tv_sendVoice.setVisibility(View.VISIBLE);
 
-                //关闭键盘
+                //关闭输入框
                 setTextEditView(false, false, false);
 
             } else {
                 //隐藏发送语音按钮
                 tv_sendVoice.setVisibility(View.GONE);
 
-                //显示键盘
+                //开启输入框
                 setTextEditView(true, true, true);
             }
 
@@ -102,8 +102,7 @@ public class EaseInputControlLayout extends LinearLayoutCompat {
 
         et_text.setOnClickListener(v -> {
             //关闭语音
-            btn_voice.setSelected(false);
-            tv_sendVoice.setVisibility(View.GONE);
+            closeVoice();
 
             //开启输入框
             setTextEditView(true, true, true);
@@ -180,6 +179,7 @@ public class EaseInputControlLayout extends LinearLayoutCompat {
         });
 
         tv_text.setOnClickListener(v -> {
+            //开启输入框
             setTextEditView(true, true, true);
 
             if (mOnInputMenuListener != null) {
@@ -269,9 +269,10 @@ public class EaseInputControlLayout extends LinearLayoutCompat {
         Editable editable = et_text.getEditableText();
         editable.insert(start, text);
 
-        btn_voice.setSelected(false);
-        tv_sendVoice.setVisibility(View.GONE);
+        //关闭语音
+        closeVoice();
 
+        //开启输入框
         setTextEditView(true, true, true);
     }
 
