@@ -82,6 +82,13 @@ public class EaseInputMenu extends LinearLayoutCompat implements EaseInputContro
             }
 
             @Override
+            public void onEditFocusChange(boolean hasFocus) {
+                if (mOnInputMenuListener != null) {
+                    mOnInputMenuListener.onEditFocusChange(hasFocus);
+                }
+            }
+
+            @Override
             public void onTyping(CharSequence s, int start, int before, int count) {
                 if (mOnInputMenuListener != null) {
                     mOnInputMenuListener.onTyping(s, start, before, count);

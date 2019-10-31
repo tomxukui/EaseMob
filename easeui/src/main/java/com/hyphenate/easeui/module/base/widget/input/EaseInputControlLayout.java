@@ -79,18 +79,12 @@ public class EaseInputControlLayout extends LinearLayoutCompat {
                 //关闭键盘
                 setTextEditView(false, false, false);
 
-                //隐藏文字发送按钮
-                setSendBtn(false);
-
             } else {
                 //隐藏发送语音按钮
                 tv_sendVoice.setVisibility(View.GONE);
 
                 //显示键盘
                 setTextEditView(true, true, true);
-
-                //文字输入不为空, 则显示发送文字按钮, 否则隐藏按钮
-                setSendBtn(et_text.getText().toString());
             }
 
             if (mOnInputMenuListener != null) {
@@ -114,18 +108,27 @@ public class EaseInputControlLayout extends LinearLayoutCompat {
             //开启输入框
             setTextEditView(true, true, true);
 
-            //设置文字发送按钮
-            setSendBtn(et_text.getText().toString());
-
             if (mOnInputMenuListener != null) {
                 mOnInputMenuListener.onEditTextClicked();
+            }
+        });
+        et_text.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                setSendBtnVisibility(!TextUtils.isEmpty(et_text.getText().toString()));
+
+            } else {
+                setSendBtnVisibility(false);
+            }
+
+            if (mOnInputMenuListener != null) {
+                mOnInputMenuListener.onEditFocusChange(hasFocus);
             }
         });
         et_text.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                setSendBtn(s.toString());
+                setSendBtnVisibility(!TextUtils.isEmpty(s.toString()));
 
                 if (mOnInputMenuListener != null) {
                     mOnInputMenuListener.onTyping(s, start, before, count);
@@ -242,22 +245,6 @@ public class EaseInputControlLayout extends LinearLayoutCompat {
     }
 
     /**
-     * 设置发送按钮
-     *
-     * @param show 是否显示发送按钮
-     */
-    private void setSendBtn(boolean show) {
-        btn_send.setVisibility(show ? View.VISIBLE : View.GONE);
-    }
-
-    /**
-     * 设置发送按钮
-     */
-    private void setSendBtn(String content) {
-        setSendBtn(!TextUtils.isEmpty(content));
-    }
-
-    /**
      * 在输入框中追加一个表情
      */
     public void appendEmojiconInput(CharSequence emojiContent) {
@@ -315,6 +302,13 @@ public class EaseInputControlLayout extends LinearLayoutCompat {
      */
     public void setVoiceVisibility(boolean show) {
         btn_voice.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    /**
+     * 设置发送按钮是否显示
+     */
+    public void setSendBtnVisibility(boolean show) {
+        btn_send.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     public void setOnInputMenuListener(@Nullable OnInputMenuListener listener) {

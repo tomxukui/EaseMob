@@ -318,6 +318,18 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
             }
 
             @Override
+            public void onEditFocusChange(boolean hasFocus) {
+                if (getMoreButton() != null) {
+                    if (hasFocus) {
+                        getMoreButton().setVisibility(menu_input.getControl().isTextEmpty() ? View.VISIBLE : View.GONE);
+
+                    } else {
+                        getMoreButton().setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
             public void onEditTextClicked() {
                 if (getFaceButton() != null) {
                     getFaceButton().setSelected(false);

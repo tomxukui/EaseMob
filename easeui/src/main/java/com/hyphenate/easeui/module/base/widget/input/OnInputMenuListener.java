@@ -30,4 +30,9 @@ public interface OnInputMenuListener {
      */
     boolean onPressToSpeakBtnTouch(View v, MotionEvent event);
 
+    /**
+     * 输入框焦点变化事件
+     */
+    void onEditFocusChange(boolean hasFocus);
+
 }
