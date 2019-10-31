@@ -169,8 +169,13 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
     protected EaseInquiryInputMenuProvider onSetInputMenu() {
         return new EaseInquiryInputMenuProvider() {
 
+            EaseInputControlButton quotationsButton = null;
+
             @Override
             public void onToggleVoice(boolean show) {
+                if (quotationsButton != null) {
+                    quotationsButton.setSelected(false);
+                }
             }
 
             @Override
@@ -179,6 +184,9 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
 
             @Override
             public void onEditTextClicked() {
+                if (quotationsButton != null) {
+                    quotationsButton.setSelected(false);
+                }
             }
 
             @Override
@@ -187,7 +195,7 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
                 quotationsPanel.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, EaseDensityUtil.dp2px(200)));
                 quotationsPanel.setBackgroundColor(Color.BLUE);
 
-                EaseInputControlButton quotationsButton = new EaseInputControlButton(getContext());
+                quotationsButton = new EaseInputControlButton(getContext());
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 layoutParams.setMargins(EaseDensityUtil.dp2px(10), 0, 0, 0);
                 quotationsButton.setLayoutParams(layoutParams);
