@@ -12,11 +12,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.easeui.app.R;
 import com.hyphenate.easeui.module.base.model.EaseUser;
+import com.hyphenate.easeui.module.base.widget.input.EaseInputControlButton;
+import com.hyphenate.easeui.module.base.widget.input.EaseInputMenu;
 import com.hyphenate.easeui.module.base.widget.input.EaseMenuItem;
+import com.hyphenate.easeui.module.inquiry.provider.EaseInquiryInputMenuProvider;
 import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
@@ -114,8 +118,8 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
     @Override
     protected void setStartInquiryView() {
         super.setStartInquiryView();
-        tv_startVisit.setVisibility(View.GONE);
-        setMenuItem();
+//        tv_startVisit.setVisibility(View.GONE);
+//        setMenuItem();
     }
 
     @Override
@@ -123,8 +127,8 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
         super.setCloseInquiryView();
         mIsVisit = true;
 
-        tv_startVisit.setVisibility(View.VISIBLE);
-        setMenuItem();
+//        tv_startVisit.setVisibility(View.VISIBLE);
+//        setMenuItem();
     }
 
     private void setMenuItem() {
@@ -165,6 +169,52 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
         List<EaseMenuItem> menuItems = super.getMoreMenuItems();
         menuItems.add(new EaseMenuItem(R.mipmap.ic_write_case, "写病例", v -> EaseToastUtil.show("写病例")));
         return menuItems;
+    }
+
+    @Override
+    protected EaseInquiryInputMenuProvider onSetInputMenu() {
+        return new EaseInquiryInputMenuProvider() {
+
+            @Override
+            public void onToggleVoice(boolean show) {
+
+            }
+
+            @Override
+            public void onTyping(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void onEditTextClicked() {
+
+            }
+
+            @Override
+            public void onExtendInputMenu(EaseInputMenu inputMenu) {
+                View quotationsPanel = new View(getContext());
+                quotationsPanel.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, EaseDensityUtil.dp2px(200)));
+                quotationsPanel.setBackgroundColor(Color.BLUE);
+
+                EaseInputControlButton quotationsButton = new EaseInputControlButton(getContext());
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(EaseDensityUtil.dp2px(10), 0, 0, 0);
+                quotationsButton.setLayoutParams(layoutParams);
+                quotationsButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                quotationsButton.setTextColor(Color.WHITE);
+                quotationsButton.setText("常用语");
+                quotationsButton.setPadding(EaseDensityUtil.dp2px(9), EaseDensityUtil.dp2px(5), EaseDensityUtil.dp2px(9), EaseDensityUtil.dp2px(5));
+                quotationsButton.setGravity(Gravity.CENTER);
+                quotationsButton.setMinWidth(EaseDensityUtil.dp2px(42));
+                quotationsButton.setMinHeight(EaseDensityUtil.dp2px(20));
+                quotationsButton.setBackgroundResource(R.drawable.btn_quotations);
+                quotationsButton.setInputEnable(false);
+                quotationsButton.setPanel(quotationsPanel);
+
+                inputMenu.addView(quotationsButton, quotationsPanel, 0, layoutParams);
+            }
+
+        };
     }
 
 }

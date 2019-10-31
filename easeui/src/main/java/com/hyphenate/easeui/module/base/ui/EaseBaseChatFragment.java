@@ -306,27 +306,6 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
     }
 
     /**
-     * 是否开启语音
-     */
-    protected boolean voiceEnable() {
-        return false;
-    }
-
-    /**
-     * 是否开启表情
-     */
-    protected boolean faceEnable() {
-        return false;
-    }
-
-    /**
-     * 是否开启更多菜单
-     */
-    protected boolean moreEnable() {
-        return true;
-    }
-
-    /**
      * 获取人脸控制按钮
      */
     @Nullable

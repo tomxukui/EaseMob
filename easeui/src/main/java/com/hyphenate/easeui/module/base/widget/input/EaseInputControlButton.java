@@ -2,7 +2,7 @@ package com.hyphenate.easeui.module.base.widget.input;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 控制器按钮
  */
-public class EaseInputControlButton extends AppCompatButton {
+public class EaseInputControlButton extends AppCompatTextView {
 
     @Nullable
     private View mPanel;
