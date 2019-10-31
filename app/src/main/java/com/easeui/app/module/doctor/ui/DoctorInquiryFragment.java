@@ -26,6 +26,7 @@ import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DoctorInquiryFragment extends EaseInquiryFragment {
@@ -165,13 +166,6 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
     }
 
     @Override
-    protected List<EaseMenuItem> getMoreMenuItems() {
-        List<EaseMenuItem> menuItems = super.getMoreMenuItems();
-        menuItems.add(new EaseMenuItem(R.mipmap.ic_write_case, "写病例", v -> EaseToastUtil.show("写病例")));
-        return menuItems;
-    }
-
-    @Override
     protected EaseInquiryInputMenuProvider onSetInputMenu() {
         return new EaseInquiryInputMenuProvider() {
 
@@ -212,6 +206,15 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
                 quotationsButton.setPanel(quotationsPanel);
 
                 inputMenu.addView(quotationsButton, quotationsPanel, 0, layoutParams);
+            }
+
+            @Override
+            public List<EaseMenuItem> onSetMoreMenuItems() {
+                List<EaseMenuItem> menuItems = new ArrayList<>();
+                menuItems.add(createAlbumMenuItem());
+                menuItems.add(createCameraMenuItem());
+                menuItems.add(new EaseMenuItem(R.mipmap.ic_write_case, "写病例", v -> EaseToastUtil.show("写病例")));
+                return menuItems;
             }
 
         };

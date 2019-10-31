@@ -43,7 +43,6 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
     protected static final String EXTRA_FROM_USER = "EXTRA_FROM_USER";
     protected static final String EXTRA_TO_USER = "EXTRA_TO_USER";
 
-
     //透传类型
 //    private static final String CMD_START_INQUIRY = "cmd_start_conversation";//开始问诊
 //    private static final String CMD_CLOSE_INQUIRY = "cmd_close_conversation";//结束问诊
@@ -275,7 +274,7 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
         addFaceMenu(menu_input, 3);
 
         //添加更多菜单
-        addMoreMenu(menu_input, 4, getMoreMenuItems());
+        addMoreMenu(menu_input, 4, mInputMenuAdapter.onSetMoreMenuItems());
 
         //设置是否开启语音菜单
         menu_input.getControl().setVoiceVisibility(mInputMenuAdapter.voiceEnable());

@@ -294,15 +294,17 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
     }
 
     /**
-     * 获取更多菜单的功能
-     * <p>
-     * 默认功能是相册和拍摄
+     * 创建更多菜单中的相册选项
      */
-    protected List<EaseMenuItem> getMoreMenuItems() {
-        List<EaseMenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new EaseMenuItem(R.mipmap.ease_ic_album, "相册", v -> requestPermission(data -> pickPhotoFromAlbum(), Permission.Group.CAMERA, Permission.Group.STORAGE)));
-        menuItems.add(new EaseMenuItem(R.mipmap.ease_ic_camera, "拍摄", v -> requestPermission(data -> pickPhotoFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE)));
-        return menuItems;
+    protected EaseMenuItem createAlbumMenuItem() {
+        return new EaseMenuItem(R.mipmap.ease_ic_album, "相册", v -> requestPermission(data -> pickPhotoFromAlbum(), Permission.Group.CAMERA, Permission.Group.STORAGE));
+    }
+
+    /**
+     * 创建更多菜单中的拍摄选项
+     */
+    protected EaseMenuItem createCameraMenuItem() {
+        return new EaseMenuItem(R.mipmap.ease_ic_camera, "拍摄", v -> requestPermission(data -> pickPhotoFromCamera(), Permission.Group.CAMERA, Permission.Group.STORAGE));
     }
 
     /**

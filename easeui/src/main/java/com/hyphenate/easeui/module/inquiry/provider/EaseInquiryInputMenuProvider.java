@@ -1,6 +1,9 @@
 package com.hyphenate.easeui.module.inquiry.provider;
 
 import com.hyphenate.easeui.module.base.widget.input.EaseInputMenu;
+import com.hyphenate.easeui.module.base.widget.input.EaseMenuItem;
+
+import java.util.List;
 
 public class EaseInquiryInputMenuProvider {
 
@@ -47,6 +50,13 @@ public class EaseInquiryInputMenuProvider {
      */
     public boolean moreEnable() {
         return true;
+    }
+
+    /**
+     * 设置更多菜单的选项
+     */
+    public List<EaseMenuItem> onSetMoreMenuItems() {
+        return null;
     }
 
 }
