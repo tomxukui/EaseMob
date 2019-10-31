@@ -171,17 +171,14 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
 
             @Override
             public void onToggleVoice(boolean show) {
-
             }
 
             @Override
             public void onTyping(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
             public void onEditTextClicked() {
-
             }
 
             @Override
