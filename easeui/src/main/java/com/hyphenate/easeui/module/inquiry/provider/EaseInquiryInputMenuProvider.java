@@ -35,14 +35,14 @@ public class EaseInquiryInputMenuProvider {
      * 是否开启语音
      */
     public boolean voiceEnable() {
-        return true;
+        return false;
     }
 
     /**
      * 是否开启表情
      */
     public boolean faceEnable() {
-        return true;
+        return false;
     }
 
     /**
