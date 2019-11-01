@@ -496,7 +496,6 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
 
     };
 
-
     /**
      * 清空所有聊天消息
      */
@@ -607,6 +606,13 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
             setCloseInquiryView();
             hideSoftKeyboard();
         }
+    }
+
+    /**
+     * 插入文字
+     */
+    protected void insertText(String text) {
+        menu_input.insertText(text);
     }
 
     /**
