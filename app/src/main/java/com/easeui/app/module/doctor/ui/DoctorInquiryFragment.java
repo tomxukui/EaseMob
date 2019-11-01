@@ -113,7 +113,7 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
         inflater.inflate(R.menu.menu_doctor_inquiry, menu);
 
         inquiryMenuItem = menu.findItem(R.id.action_inquiry);
-        setMenuItem();
+        setToolbarMenuItem();
     }
 
     @Override
@@ -132,7 +132,7 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
 //        setMenuItem();
     }
 
-    private void setMenuItem() {
+    private void setToolbarMenuItem() {
         if (inquiryMenuItem == null) {
             return;
         }
