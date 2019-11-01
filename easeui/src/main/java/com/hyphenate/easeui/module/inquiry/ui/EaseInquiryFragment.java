@@ -168,7 +168,7 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        EMClient.getInstance().chatManager().addMessageListener(mMessageListener);
+        addMessageListener(mMessageListener);
     }
 
     @Override
@@ -183,7 +183,7 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
     public void onDestroy() {
         super.onDestroy();
         setOnInquiryListener(null);
-        EMClient.getInstance().chatManager().removeMessageListener(mMessageListener);
+        removeMessageListener(mMessageListener);
     }
 
     /**

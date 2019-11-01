@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 
+import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMMessage;
@@ -344,6 +345,20 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, EaseCompat.getUriForFile(getContext(), mCameraFile));
         startActivityForResult(intent, REQUEST_CAMERA);
+    }
+
+    /**
+     * 添加消息监听事件
+     */
+    protected void addMessageListener(EMMessageListener listener) {
+        EMClient.getInstance().chatManager().addMessageListener(listener);
+    }
+
+    /**
+     * 移除消息监听事件
+     */
+    protected void removeMessageListener(EMMessageListener listener) {
+        EMClient.getInstance().chatManager().removeMessageListener(listener);
     }
 
 }
