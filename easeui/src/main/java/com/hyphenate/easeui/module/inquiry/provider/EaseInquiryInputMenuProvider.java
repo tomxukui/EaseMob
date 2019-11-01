@@ -5,7 +5,7 @@ import com.hyphenate.easeui.module.base.widget.input.EaseMenuItem;
 
 import java.util.List;
 
-public class EaseInquiryInputMenuProvider {
+public abstract class EaseInquiryInputMenuProvider {
 
     /**
      * 语音切换事件
@@ -55,8 +55,6 @@ public class EaseInquiryInputMenuProvider {
     /**
      * 设置更多菜单的选项
      */
-    public List<EaseMenuItem> onSetMoreMenuItems() {
-        return null;
-    }
+    public abstract List<EaseMenuItem> onSetMoreMenuItems();
 
 }

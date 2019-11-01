@@ -19,6 +19,7 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.base.ui.EaseBaseChatFragment;
 import com.hyphenate.easeui.module.base.widget.input.EaseInputMenu;
+import com.hyphenate.easeui.module.base.widget.input.EaseMenuItem;
 import com.hyphenate.easeui.module.base.widget.input.OnInputMenuListener;
 import com.hyphenate.easeui.module.inquiry.provider.EaseInquiryInputMenuProvider;
 import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
@@ -32,6 +33,7 @@ import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 import com.hyphenate.easeui.module.base.widget.EaseVoiceRecorderView;
 import com.yanzhenjie.permission.Permission;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -101,7 +103,17 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
 
         mInputMenuProvider = onSetInputMenu();
         if (mInputMenuProvider == null) {
-            mInputMenuProvider = new EaseInquiryInputMenuProvider();
+            mInputMenuProvider = new EaseInquiryInputMenuProvider() {
+
+                @Override
+                public List<EaseMenuItem> onSetMoreMenuItems() {
+                    List<EaseMenuItem> menuItems = new ArrayList<>();
+                    menuItems.add(createAlbumMenuItem());
+                    menuItems.add(createCameraMenuItem());
+                    return menuItems;
+                }
+
+            };
         }
     }
 
