@@ -43,7 +43,7 @@ public abstract class EaseChatRow extends LinearLayout {
     protected EMMessage message;
     protected int position;
 
-    protected TextView timeStampView;
+    protected TextView tv_timestamp;
     protected ImageView userAvatarView;
     protected View bubbleLayout;
     protected TextView usernickView;
@@ -85,7 +85,7 @@ public abstract class EaseChatRow extends LinearLayout {
 
     private void initView() {
         onInflateView();
-        timeStampView = findViewById(R.id.timestamp);
+        tv_timestamp = findViewById(R.id.tv_timestamp);
         userAvatarView = findViewById(R.id.iv_userhead);
         bubbleLayout = findViewById(R.id.bubble);
         usernickView = findViewById(R.id.tv_userid);
@@ -119,20 +119,20 @@ public abstract class EaseChatRow extends LinearLayout {
     }
 
     private void setUpBaseView() {
-        if (timeStampView != null) {
+        if (tv_timestamp != null) {
             if (position == 0) {
-                timeStampView.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
-                timeStampView.setVisibility(View.VISIBLE);
+                tv_timestamp.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
+                tv_timestamp.setVisibility(View.VISIBLE);
 
             } else {
                 // show time stamp if interval with last message is > 30 seconds
                 EMMessage prevMessage = (EMMessage) adapter.getItem(position - 1);
                 if (prevMessage != null && DateUtils.isCloseEnough(message.getMsgTime(), prevMessage.getMsgTime())) {
-                    timeStampView.setVisibility(View.GONE);
+                    tv_timestamp.setVisibility(View.GONE);
 
                 } else {
-                    timeStampView.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
-                    timeStampView.setVisibility(View.VISIBLE);
+                    tv_timestamp.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
+                    tv_timestamp.setVisibility(View.VISIBLE);
                 }
             }
         }
@@ -245,15 +245,18 @@ public abstract class EaseChatRow extends LinearLayout {
                 if (itemClickListener != null) {
                     if (message.direct() == Direct.SEND) {
                         itemClickListener.onUserAvatarClick(EMClient.getInstance().getCurrentUser());
+
                     } else {
                         itemClickListener.onUserAvatarClick(message.getFrom());
                     }
                 }
             });
+
             userAvatarView.setOnLongClickListener(v -> {
                 if (itemClickListener != null) {
                     if (message.direct() == Direct.SEND) {
                         itemClickListener.onUserAvatarLongClick(EMClient.getInstance().getCurrentUser());
+
                     } else {
                         itemClickListener.onUserAvatarLongClick(message.getFrom());
                     }

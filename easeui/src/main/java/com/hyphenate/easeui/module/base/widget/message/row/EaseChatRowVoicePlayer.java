@@ -10,12 +10,7 @@ import com.hyphenate.easeui.EaseUI;
 
 import java.io.IOException;
 
-/**
- * Created by zhangsong on 17-10-20.
- */
-
 public class EaseChatRowVoicePlayer {
-    private static final String TAG = "ConcurrentMediaPlayer";
 
     private static EaseChatRowVoicePlayer instance = null;
 
@@ -68,14 +63,11 @@ public class EaseChatRowVoicePlayer {
             EMVoiceMessageBody voiceBody = (EMVoiceMessageBody) msg.getBody();
             mediaPlayer.setDataSource(voiceBody.getLocalUrl());
             mediaPlayer.prepare();
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    stop();
+            mediaPlayer.setOnCompletionListener(mp -> {
+                stop();
 
-                    playingId = null;
-                    onCompletionListener = null;
-                }
+                playingId = null;
+                onCompletionListener = null;
             });
             mediaPlayer.start();
         } catch (IOException e) {
@@ -119,4 +111,5 @@ public class EaseChatRowVoicePlayer {
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
         }
     }
+
 }

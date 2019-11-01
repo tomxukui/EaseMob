@@ -20,4 +20,8 @@
     <dimen name="ease_converstation_list_message">14sp</dimen>
     <dimen name="ease_converstation_list_time">13sp</dimen>
 
+    <!--消息-->
+    <dimen name="ease_message_time_margin_top">13dp</dimen>
+    <dimen name="ease_message_row_margin_top">15dp</dimen>
+
 </resources>

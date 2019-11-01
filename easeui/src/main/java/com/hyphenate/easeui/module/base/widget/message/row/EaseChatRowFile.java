@@ -13,7 +13,6 @@ import com.hyphenate.util.TextFormater;
 import java.io.File;
 
 public class EaseChatRowFile extends EaseChatRow{
-    private static final String TAG = "EaseChatRowFile";
 
     protected TextView fileNameView;
 	protected TextView fileSizeView;
@@ -33,12 +32,11 @@ public class EaseChatRowFile extends EaseChatRow{
 
 	@Override
 	protected void onFindViewById() {
-	    fileNameView = (TextView) findViewById(R.id.tv_file_name);
-        fileSizeView = (TextView) findViewById(R.id.tv_file_size);
-        fileStateView = (TextView) findViewById(R.id.tv_file_state);
-        percentageView = (TextView) findViewById(R.id.percentage);
+	    fileNameView = findViewById(R.id.tv_file_name);
+        fileSizeView = findViewById(R.id.tv_file_size);
+        fileStateView = findViewById(R.id.tv_file_state);
+        percentageView = findViewById(R.id.percentage);
 	}
-
 
 	@Override
 	protected void onSetUpView() {
@@ -108,4 +106,5 @@ public class EaseChatRowFile extends EaseChatRow{
         if (statusView != null)
             statusView.setVisibility(View.INVISIBLE);
     }
+
 }
