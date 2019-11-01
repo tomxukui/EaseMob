@@ -31,7 +31,7 @@
             android:id="@+id/bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_userid"
+            android:layout_below="@+id/tv_username"
             android:layout_marginLeft="@dimen/chat_bubble_margin_left"
             android:layout_toRightOf="@id/iv_userhead">
 
@@ -46,7 +46,7 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/tv_userid"
+            android:id="@id/tv_username"
             style="@style/ease_chat_text_name_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -46,7 +46,7 @@ public abstract class EaseChatRow extends LinearLayout {
     protected TextView tv_timestamp;
     protected ImageView userAvatarView;
     protected View bubbleLayout;
-    protected TextView usernickView;
+    protected TextView tv_username;
 
     protected TextView percentageView;
     protected ProgressBar progressBar;
@@ -88,7 +88,7 @@ public abstract class EaseChatRow extends LinearLayout {
         tv_timestamp = findViewById(R.id.tv_timestamp);
         userAvatarView = findViewById(R.id.iv_userhead);
         bubbleLayout = findViewById(R.id.bubble);
-        usernickView = findViewById(R.id.tv_userid);
+        tv_username = findViewById(R.id.tv_username);
         progressBar = findViewById(R.id.progress_bar);
         statusView = findViewById(R.id.msg_status);
         ackedView = findViewById(R.id.tv_ack);
@@ -145,10 +145,10 @@ public abstract class EaseChatRow extends LinearLayout {
         }
 
         //设置昵称
-        if (usernickView != null) {
+        if (tv_username != null) {
             String nickname = EaseMessageUtil.getFromNickname(message, message.getFrom());
 
-            usernickView.setText(nickname);
+            tv_username.setText(nickname);
         }
 
         if (EMClient.getInstance().getOptions().getRequireDeliveryAck()) {
@@ -199,12 +199,12 @@ public abstract class EaseChatRow extends LinearLayout {
                 }
             }
 
-            if (usernickView != null) {
+            if (tv_username != null) {
                 if (message.direct() == Direct.SEND) {
-                    usernickView.setVisibility(itemStyle.isShowFromUserNickname() ? View.VISIBLE : View.GONE);
+                    tv_username.setVisibility(itemStyle.isShowFromUserNickname() ? View.VISIBLE : View.GONE);
 
                 } else {
-                    usernickView.setVisibility(itemStyle.isShowToUserNickname() ? View.VISIBLE : View.GONE);
+                    tv_username.setVisibility(itemStyle.isShowToUserNickname() ? View.VISIBLE : View.GONE);
                 }
             }
         }
