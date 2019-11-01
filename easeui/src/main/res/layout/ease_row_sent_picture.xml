@@ -21,7 +21,7 @@
         android:layout_marginTop="@dimen/ease_message_row_margin_top">
 
         <com.hyphenate.easeui.module.base.widget.EaseImageView
-            android:id="@+id/iv_userhead"
+            android:id="@id/iv_avatar"
             android:layout_width="@dimen/ease_message_avatar_size"
             android:layout_height="@dimen/ease_message_avatar_size"
             android:layout_alignParentTop="true"
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/chat_bubble_margin_left"
-            android:layout_toLeftOf="@id/iv_userhead">
+            android:layout_toLeftOf="@id/iv_avatar">
 
             <ImageView
                 android:id="@+id/image"

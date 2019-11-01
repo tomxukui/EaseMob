@@ -25,7 +25,7 @@ public class EaseChatRowText extends EaseChatRow {
 
     @Override
     protected void onInflateView() {
-        inflater.inflate(message.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_message : R.layout.ease_row_sent_message, this);
+        mInflater.inflate(message.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_message : R.layout.ease_row_sent_message, this);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class EaseChatRowText extends EaseChatRow {
     @Override
     public void onSetUpView() {
         EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
-        Spannable span = EaseSmileUtil.getSmiledText(context, txtBody.getMessage());
+        Spannable span = EaseSmileUtil.getSmiledText(getContext(), txtBody.getMessage());
         contentView.setText(span, BufferType.SPANNABLE);
     }
 

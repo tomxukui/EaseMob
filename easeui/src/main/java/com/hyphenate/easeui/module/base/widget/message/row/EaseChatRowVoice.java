@@ -15,8 +15,6 @@ import com.hyphenate.easeui.R;
 
 public class EaseChatRowVoice extends EaseChatRowFile {
 
-    private static final String TAG = "EaseChatRowVoice";
-
     private ImageView voiceImageView;
     private TextView voiceLengthView;
     private ImageView readStatusView;
@@ -29,15 +27,15 @@ public class EaseChatRowVoice extends EaseChatRowFile {
 
     @Override
     protected void onInflateView() {
-        inflater.inflate(message.direct() == EMMessage.Direct.RECEIVE ?
+        mInflater.inflate(message.direct() == EMMessage.Direct.RECEIVE ?
                 R.layout.ease_row_received_voice : R.layout.ease_row_sent_voice, this);
     }
 
     @Override
     protected void onFindViewById() {
-        voiceImageView = ((ImageView) findViewById(R.id.iv_voice));
-        voiceLengthView = (TextView) findViewById(R.id.tv_length);
-        readStatusView = (ImageView) findViewById(R.id.iv_unread_voice);
+        voiceImageView = findViewById(R.id.iv_voice);
+        voiceLengthView = findViewById(R.id.tv_length);
+        readStatusView = findViewById(R.id.iv_unread_voice);
     }
 
     @Override

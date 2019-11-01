@@ -27,24 +27,13 @@ import java.util.Date;
 
 public abstract class EaseChatRow extends LinearLayout {
 
-    public interface EaseChatRowActionCallback {
-
-        void onResendClick(EMMessage message);
-
-        void onBubbleClick(EMMessage message);
-
-        void onDetachedFromWindow();
-
-    }
-
-    protected LayoutInflater inflater;
-    protected Context context;
+    protected LayoutInflater mInflater;
     protected BaseAdapter adapter;
     protected EMMessage message;
     protected int position;
 
     protected TextView tv_timestamp;
-    protected ImageView userAvatarView;
+    protected ImageView iv_avatar;
     protected View bubbleLayout;
     protected TextView tv_username;
 
@@ -63,12 +52,11 @@ public abstract class EaseChatRow extends LinearLayout {
 
     public EaseChatRow(Context context, EMMessage message, int position, BaseAdapter adapter) {
         super(context);
-        this.context = context;
         this.message = message;
         this.position = position;
         this.adapter = adapter;
         this.activity = (Activity) context;
-        inflater = LayoutInflater.from(context);
+        mInflater = LayoutInflater.from(context);
 
         initView();
     }
@@ -86,7 +74,7 @@ public abstract class EaseChatRow extends LinearLayout {
     private void initView() {
         onInflateView();
         tv_timestamp = findViewById(R.id.tv_timestamp);
-        userAvatarView = findViewById(R.id.iv_userhead);
+        iv_avatar = findViewById(R.id.iv_avatar);
         bubbleLayout = findViewById(R.id.bubble);
         tv_username = findViewById(R.id.tv_username);
         progressBar = findViewById(R.id.progress_bar);
@@ -138,10 +126,10 @@ public abstract class EaseChatRow extends LinearLayout {
         }
 
         //设置头像
-        if (userAvatarView != null) {
+        if (iv_avatar != null) {
             String avatar = EaseMessageUtil.getFromAvatar(message, null);
 
-            EaseUserUtil.setUserAvatar(userAvatarView, avatar, message.direct() == Direct.SEND ? R.mipmap.ease_ic_chatfrom_portrait : R.mipmap.ease_ic_chatto_portrait);
+            EaseUserUtil.setUserAvatar(iv_avatar, avatar, message.direct() == Direct.SEND ? R.mipmap.ease_ic_chatfrom_portrait : R.mipmap.ease_ic_chatto_portrait);
         }
 
         //设置昵称
@@ -178,11 +166,11 @@ public abstract class EaseChatRow extends LinearLayout {
         }
 
         if (itemStyle != null) {
-            if (userAvatarView != null) {
+            if (iv_avatar != null) {
                 EaseAvatarOptions avatarOptions = EaseUI.getInstance().getAvatarOptions();
 
-                if (avatarOptions != null && userAvatarView instanceof EaseImageView) {
-                    EaseImageView avatarView = ((EaseImageView) userAvatarView);
+                if (avatarOptions != null && iv_avatar instanceof EaseImageView) {
+                    EaseImageView avatarView = ((EaseImageView) iv_avatar);
 
                     if (avatarOptions.getAvatarShape() != 0) {
                         avatarView.setShapeType(avatarOptions.getAvatarShape());
@@ -240,8 +228,8 @@ public abstract class EaseChatRow extends LinearLayout {
             });
         }
 
-        if (userAvatarView != null) {
-            userAvatarView.setOnClickListener(v -> {
+        if (iv_avatar != null) {
+            iv_avatar.setOnClickListener(v -> {
                 if (itemClickListener != null) {
                     if (message.direct() == Direct.SEND) {
                         itemClickListener.onUserAvatarClick(EMClient.getInstance().getCurrentUser());
@@ -252,7 +240,7 @@ public abstract class EaseChatRow extends LinearLayout {
                 }
             });
 
-            userAvatarView.setOnLongClickListener(v -> {
+            iv_avatar.setOnLongClickListener(v -> {
                 if (itemClickListener != null) {
                     if (message.direct() == Direct.SEND) {
                         itemClickListener.onUserAvatarLongClick(EMClient.getInstance().getCurrentUser());
@@ -283,5 +271,15 @@ public abstract class EaseChatRow extends LinearLayout {
      * setup view
      */
     protected abstract void onSetUpView();
+
+    public interface EaseChatRowActionCallback {
+
+        void onResendClick(EMMessage message);
+
+        void onBubbleClick(EMMessage message);
+
+        void onDetachedFromWindow();
+
+    }
 
 }
