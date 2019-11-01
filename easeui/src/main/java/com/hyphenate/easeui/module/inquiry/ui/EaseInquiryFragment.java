@@ -471,7 +471,7 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
     /**
      * 消息状态回调
      */
-    protected EMCallBack mMessageStatusCallback = new EMCallBack() {
+    private EMCallBack mMessageStatusCallback = new EMCallBack() {
 
         @Override
         public void onSuccess() {
@@ -502,7 +502,7 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
      */
     protected void clearAllMessages() {
         String msg = getResources().getString(R.string.Whether_to_empty_all_chats);
-        new EaseAlertDialog(getActivity(), null, msg, null, (confirmed, bundle) -> {
+        new EaseAlertDialog(getContext(), null, msg, null, (confirmed, bundle) -> {
             if (confirmed) {
                 if (mConversation != null) {
                     mConversation.clearAllMessages();
