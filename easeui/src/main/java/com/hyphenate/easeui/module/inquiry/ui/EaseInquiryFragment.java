@@ -8,7 +8,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMMessageListener;
@@ -54,7 +53,6 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
     protected EaseMessageListView list_message;
     protected FrameLayout frame_main_custom;
     protected EaseVoiceRecorderView voice_recorder;
-    protected TextView tv_availableCount;
     protected LinearLayoutCompat linear_footer;
     protected FrameLayout frame_footer_custom;
     protected EaseInputMenu menu_input;
@@ -131,7 +129,6 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
         list_message = view.findViewById(R.id.list_message);
         frame_main_custom = view.findViewById(R.id.frame_main_custom);
         voice_recorder = view.findViewById(R.id.voice_recorder);
-        tv_availableCount = view.findViewById(R.id.tv_availableCount);
         linear_footer = view.findViewById(R.id.linear_footer);
         frame_footer_custom = view.findViewById(R.id.frame_footer_custom);
         menu_input = view.findViewById(R.id.menu_input);
@@ -583,7 +580,6 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
      * 设置问诊开始的控件
      */
     protected void setStartInquiryView() {
-        tv_availableCount.setVisibility(View.VISIBLE);
         menu_input.setVisibility(View.VISIBLE);
     }
 
@@ -591,7 +587,6 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
      * 设置问诊关闭的控件
      */
     protected void setCloseInquiryView() {
-        tv_availableCount.setVisibility(View.GONE);
         menu_input.setVisibility(View.GONE);
     }
 
