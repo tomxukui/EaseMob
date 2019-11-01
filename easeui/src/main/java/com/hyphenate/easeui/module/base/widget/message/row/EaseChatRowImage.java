@@ -13,6 +13,7 @@ import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.utils.EaseAndroidLifecycleUtil;
+import com.hyphenate.easeui.utils.EaseDensityUtil;
 import com.hyphenate.easeui.utils.EaseImageUtil;
 import com.hyphenate.easeui.utils.EaseFileUtil;
 
@@ -119,7 +120,7 @@ public class EaseChatRowImage extends EaseChatRowFile {
 
             Glide.with(this)
                     .load(imgPath)
-                    .apply(new RequestOptions().placeholder(R.drawable.ease_default_image).error(R.drawable.ease_default_image).override(160))
+                    .apply(new RequestOptions().placeholder(R.drawable.ease_default_image).error(R.drawable.ease_default_image).override(EaseDensityUtil.dp2px(146)))
                     .into(imageView);
         }
     }
