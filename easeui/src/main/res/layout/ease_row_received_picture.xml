@@ -16,15 +16,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ease_message_row_margin_left"
+        android:layout_marginRight="@dimen/ease_message_row_margin_right"
         android:layout_marginTop="@dimen/ease_message_row_margin_top">
 
         <com.hyphenate.easeui.module.base.widget.EaseImageView
             android:id="@+id/iv_userhead"
-            android:layout_width="@dimen/chat_avatar_size"
-            android:layout_height="@dimen/chat_avatar_size"
+            android:layout_width="@dimen/ease_message_avatar_size"
+            android:layout_height="@dimen/ease_message_avatar_size"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/chat_avatar_margin_left"
             android:scaleType="fitXY"
             android:src="@mipmap/ease_ic_portrait" />
 

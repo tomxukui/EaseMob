@@ -1,7 +1,4 @@
 <resources>
-    <dimen name="chat_avatar_size">40dp</dimen>
-    <dimen name="chat_avatar_margin_left">15dp</dimen>
-
     <dimen name="chat_bubble_margin_left">10dp</dimen>
     <dimen name="chat_bubble_text_size">15sp</dimen>
 
@@ -21,5 +18,8 @@
     <!--消息-->
     <dimen name="ease_message_time_margin_top">13dp</dimen>
     <dimen name="ease_message_row_margin_top">15dp</dimen>
+    <dimen name="ease_message_avatar_size">40dp</dimen>
+    <dimen name="ease_message_row_margin_left">15dp</dimen>
+    <dimen name="ease_message_row_margin_right">15dp</dimen>
 
 </resources>
