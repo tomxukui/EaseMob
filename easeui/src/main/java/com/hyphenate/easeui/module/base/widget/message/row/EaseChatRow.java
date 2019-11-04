@@ -40,7 +40,7 @@ public abstract class EaseChatRow extends LinearLayout {
 
     protected TextView percentageView;
     protected ProgressBar progressBar;
-    protected ImageView statusView;
+    protected ImageView iv_status;
     protected Activity activity;
 
     protected TextView ackedView;
@@ -79,7 +79,7 @@ public abstract class EaseChatRow extends LinearLayout {
         group_bubble = findViewById(R.id.group_bubble);
         tv_username = findViewById(R.id.tv_username);
         progressBar = findViewById(R.id.progress_bar);
-        statusView = findViewById(R.id.msg_status);
+        iv_status = findViewById(R.id.iv_status);
         ackedView = findViewById(R.id.tv_ack);
         deliveredView = findViewById(R.id.tv_delivered);
 
@@ -225,8 +225,8 @@ public abstract class EaseChatRow extends LinearLayout {
             });
         }
 
-        if (statusView != null) {
-            statusView.setOnClickListener(v -> {
+        if (iv_status != null) {
+            iv_status.setOnClickListener(v -> {
                 if (itemClickListener != null && itemClickListener.onResendClick(message)) {
                     return;
                 }
