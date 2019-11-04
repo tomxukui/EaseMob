@@ -70,15 +70,18 @@
 
                     <ProgressBar
                         android:id="@+id/progress_bar"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp" />
+                        style="?android:attr/progressBarStyleSmall"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:indeterminateTint="@color/ease_white" />
 
                     <TextView
                         android:id="@+id/percentage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0%"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/ease_white"
+                        android:textSize="12sp"
                         tools:ignore="HardcodedText" />
 
                 </LinearLayout>
