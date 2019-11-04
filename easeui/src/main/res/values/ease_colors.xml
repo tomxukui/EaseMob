@@ -18,8 +18,10 @@
     <color name="colorPrimaryDark">#3D8CFF</color>
     <color name="colorAccent">#3D8CFF</color>
 
-    <color name="ease_press">#bbbbbb</color>
     <color name="ease_white">#ffffff</color>
+    <color name="ease_black">#000000</color>
+    <color name="ease_gray">#797878</color>
+    <color name="ease_press">#bbbbbb</color>
 
     <!--标题栏-->
     <color name="ease_toolbar_background">#0089e1</color>
