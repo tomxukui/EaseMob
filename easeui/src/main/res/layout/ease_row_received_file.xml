@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_username"
-            android:layout_marginLeft="@dimen/chat_bubble_margin_left"
+            android:layout_marginLeft="@dimen/ease_message_bubble_margin_left"
             android:layout_toLeftOf="@+id/progress_bar"
             android:layout_toRightOf="@id/iv_avatar"
             android:background="@drawable/ease_bg_chatfrom">

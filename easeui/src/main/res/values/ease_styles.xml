@@ -66,4 +66,15 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <!--聊天文字内容样式-->
+    <style name="ease_message_bubble_style">
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:autoLink">web</item>
+        <item name="android:lineSpacingExtra">2dp</item>
+        <item name="android:maxWidth">225dp</item>
+        <item name="android:minHeight">38dp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
 </resources>

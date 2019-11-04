@@ -32,7 +32,7 @@
             android:id="@+id/bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/chat_bubble_margin_left"
+            android:layout_marginRight="@dimen/ease_message_bubble_margin_left"
             android:layout_toLeftOf="@id/iv_avatar">
 
             <ImageView

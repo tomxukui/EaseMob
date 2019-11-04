@@ -14,10 +14,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_marginLeft="@dimen/ease_message_row_margin_left"
-        android:layout_marginRight="@dimen/ease_message_row_margin_right"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ease_message_row_margin_top">
+        android:layout_marginLeft="@dimen/ease_message_row_margin_left"
+        android:layout_marginTop="@dimen/ease_message_row_margin_top"
+        android:layout_marginRight="@dimen/ease_message_row_margin_right">
 
         <com.hyphenate.easeui.module.base.widget.EaseImageView
             android:id="@id/iv_avatar"
@@ -33,23 +33,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_username"
-            android:layout_marginLeft="@dimen/chat_bubble_margin_left"
+            android:layout_marginLeft="@dimen/ease_message_bubble_margin_left"
             android:layout_toRightOf="@id/iv_avatar"
             android:background="@drawable/ease_bg_chatfrom">
 
             <TextView
                 android:id="@+id/tv_chatcontent"
+                style="@style/ease_message_bubble_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:autoLink="web"
-                android:gravity="center|left"
-                android:lineSpacingExtra="2dp"
-                android:maxWidth="225dp"
-                android:minHeight="38dp"
-                android:padding="10dp"
-                android:textColor="#1A1A1A"
-                android:textSize="@dimen/chat_bubble_text_size" />
+                android:textColor="#1A1A1A" />
 
         </RelativeLayout>
 

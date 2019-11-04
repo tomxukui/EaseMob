@@ -33,7 +33,7 @@
             android:id="@+id/bubble"
             android:layout_width="130dp"
             android:layout_height="145dp"
-            android:layout_marginRight="@dimen/chat_bubble_margin_left"
+            android:layout_marginRight="@dimen/ease_message_bubble_margin_left"
             android:layout_toLeftOf="@id/iv_avatar"
             android:background="@drawable/ease_bg_chatto">
 
