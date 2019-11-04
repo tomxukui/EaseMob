@@ -47,7 +47,7 @@
                 android:visibility="invisible" />
 
             <TextView
-                android:id="@+id/tv_delivered"
+                android:id="@id/tv_delivered"
                 style="@style/ease_message_bubble_status_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

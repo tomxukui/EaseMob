@@ -44,7 +44,7 @@ public abstract class EaseChatRow extends LinearLayout {
     protected Activity activity;
 
     protected TextView tv_ack;
-    protected TextView deliveredView;
+    protected TextView tv_delivered;
 
     protected OnItemClickListener itemClickListener;
     protected EaseMessageListItemStyle itemStyle;
@@ -81,7 +81,7 @@ public abstract class EaseChatRow extends LinearLayout {
         progressBar = findViewById(R.id.progress_bar);
         iv_status = findViewById(R.id.iv_status);
         tv_ack = findViewById(R.id.tv_ack);
-        deliveredView = findViewById(R.id.tv_delivered);
+        tv_delivered = findViewById(R.id.tv_delivered);
 
         onFindViewById();
     }
@@ -141,12 +141,12 @@ public abstract class EaseChatRow extends LinearLayout {
         }
 
         if (EMClient.getInstance().getOptions().getRequireDeliveryAck()) {
-            if (deliveredView != null) {
+            if (tv_delivered != null) {
                 if (message.isDelivered()) {
-                    deliveredView.setVisibility(View.VISIBLE);
+                    tv_delivered.setVisibility(View.VISIBLE);
 
                 } else {
-                    deliveredView.setVisibility(View.INVISIBLE);
+                    tv_delivered.setVisibility(View.INVISIBLE);
                 }
             }
         }
@@ -154,8 +154,8 @@ public abstract class EaseChatRow extends LinearLayout {
         if (EMClient.getInstance().getOptions().getRequireAck()) {
             if (tv_ack != null) {
                 if (message.isAcked()) {
-                    if (deliveredView != null) {
-                        deliveredView.setVisibility(View.INVISIBLE);
+                    if (tv_delivered != null) {
+                        tv_delivered.setVisibility(View.INVISIBLE);
                     }
 
                     tv_ack.setVisibility(View.VISIBLE);

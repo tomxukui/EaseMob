@@ -9,5 +9,6 @@
     <item name="iv_image" type="id" />
     <item name="iv_status" type="id" />
     <item name="tv_ack" type="id" />
+    <item name="tv_delivered" type="id" />
 
 </resources>
