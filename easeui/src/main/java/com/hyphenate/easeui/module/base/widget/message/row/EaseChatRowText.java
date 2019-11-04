@@ -17,7 +17,7 @@ import java.util.List;
 
 public class EaseChatRowText extends EaseChatRow {
 
-    private TextView contentView;
+    private TextView tv_bubble_text;
 
     public EaseChatRowText(Context context, EMMessage message, int position, BaseAdapter adapter) {
         super(context, message, position, adapter);
@@ -30,14 +30,14 @@ public class EaseChatRowText extends EaseChatRow {
 
     @Override
     protected void onFindViewById() {
-        contentView = findViewById(R.id.tv_chatcontent);
+        tv_bubble_text = findViewById(R.id.tv_bubble_text);
     }
 
     @Override
     public void onSetUpView() {
         EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
         Spannable span = EaseSmileUtil.getSmiledText(getContext(), txtBody.getMessage());
-        contentView.setText(span, BufferType.SPANNABLE);
+        tv_bubble_text.setText(span, BufferType.SPANNABLE);
     }
 
     @Override

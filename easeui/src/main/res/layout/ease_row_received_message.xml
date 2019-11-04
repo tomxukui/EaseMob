@@ -38,7 +38,7 @@
             android:background="@drawable/ease_bg_chatfrom">
 
             <TextView
-                android:id="@+id/tv_chatcontent"
+                android:id="@id/tv_bubble_text"
                 style="@style/ease_message_bubble_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
