@@ -2,6 +2,7 @@ package com.hyphenate.easeui.module.inquiry.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -26,7 +27,6 @@ import com.hyphenate.easeui.module.inquiry.provider.EaseInquiryMessageProvider;
 import com.hyphenate.easeui.utils.EaseContextCompatUtil;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
-import com.hyphenate.easeui.dialog.EaseAlertDialog;
 import com.hyphenate.easeui.module.base.widget.message.EaseMessageListView;
 import com.hyphenate.easeui.module.base.widget.EaseToolbar;
 import com.hyphenate.easeui.module.base.widget.EaseVoiceRecorderView;
@@ -234,14 +234,16 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
 
             @Override
             public boolean onResendClick(final EMMessage message) {
-                new EaseAlertDialog(getContext(), R.string.resend, R.string.confirm_resend, null, (confirmed, bundle) -> {
-                    if (!confirmed) {
-                        return;
-                    }
-
-                    message.setStatus(EMMessage.Status.CREATE);
-                    sendMessage(message);
-                }, true).show();
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.resend)
+                        .setMessage(R.string.confirm_resend)
+                        .setNegativeButton("取消", null)
+                        .setPositiveButton("确定", (dialog, which) -> {
+                            message.setStatus(EMMessage.Status.CREATE);
+                            sendMessage(message);
+                        })
+                        .create()
+                        .show();
                 return true;
             }
 
@@ -509,17 +511,19 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
      * 清空所有聊天消息
      */
     protected void clearAllMessages() {
-        String msg = getResources().getString(R.string.Whether_to_empty_all_chats);
-        new EaseAlertDialog(getContext(), null, msg, null, (confirmed, bundle) -> {
-            if (confirmed) {
-                if (mConversation != null) {
-                    mConversation.clearAllMessages();
-                }
+        new AlertDialog.Builder(getContext())
+                .setMessage(R.string.Whether_to_empty_all_chats)
+                .setNegativeButton("取消", null)
+                .setPositiveButton("确定", (dialog, which) -> {
+                    if (mConversation != null) {
+                        mConversation.clearAllMessages();
+                    }
 
-                list_message.refresh();
-                mHaveMoreData = true;
-            }
-        }, true).show();
+                    list_message.refresh();
+                    mHaveMoreData = true;
+                })
+                .create()
+                .show();
     }
 
     /**

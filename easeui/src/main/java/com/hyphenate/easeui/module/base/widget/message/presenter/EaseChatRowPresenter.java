@@ -1,12 +1,12 @@
 package com.hyphenate.easeui.module.base.widget.message.presenter;
 
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.widget.BaseAdapter;
 
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
-import com.hyphenate.easeui.dialog.EaseAlertDialog;
 import com.hyphenate.easeui.module.base.widget.message.EaseMessageListView;
 import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRow;
 
@@ -23,13 +23,16 @@ public abstract class EaseChatRowPresenter implements EaseChatRow.EaseChatRowAct
 
     @Override
     public void onResendClick(final EMMessage message) {
-        new EaseAlertDialog(getContext(), R.string.resend, R.string.confirm_resend, null, (confirmed, bundle) -> {
-            if (!confirmed) {
-                return;
-            }
-            message.setStatus(EMMessage.Status.CREATE);
-            handleSendMessage(message);
-        }, true).show();
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.resend)
+                .setMessage(R.string.confirm_resend)
+                .setNegativeButton("取消", null)
+                .setPositiveButton("确定", (dialog, which) -> {
+                    message.setStatus(EMMessage.Status.CREATE);
+                    handleSendMessage(message);
+                })
+                .create()
+                .show();
     }
 
     @Override
@@ -100,4 +103,5 @@ public abstract class EaseChatRowPresenter implements EaseChatRow.EaseChatRowAct
             handleReceiveMessage(message);
         }
     }
+
 }
