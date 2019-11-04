@@ -38,13 +38,12 @@
                 android:visibility="gone" />
 
             <TextView
-                android:id="@+id/tv_ack"
-                style="@style/ease_message_username_style"
+                android:id="@id/tv_ack"
+                style="@style/ease_message_bubble_status_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/text_ack_msg"
-                android:textSize="12sp"
                 android:visibility="invisible" />
 
             <TextView

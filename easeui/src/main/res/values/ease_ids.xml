@@ -8,5 +8,6 @@
     <item name="tv_bubble_text" type="id" />
     <item name="iv_image" type="id" />
     <item name="iv_status" type="id" />
+    <item name="tv_ack" type="id" />
 
 </resources>

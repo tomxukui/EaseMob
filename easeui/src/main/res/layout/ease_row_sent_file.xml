@@ -102,14 +102,12 @@
             android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/tv_ack"
-            style="@style/ease_message_username_style"
+            android:id="@id/tv_ack"
+            style="@style/ease_message_bubble_status_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/tv_bubble_text"
             android:text="@string/text_ack_msg"
-            android:textSize="12sp"
             android:visibility="invisible" />
 
         <TextView
@@ -118,7 +116,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/tv_bubble_text"
             android:text="@string/text_delivered_msg"
             android:textSize="12sp"
             android:visibility="invisible" />
