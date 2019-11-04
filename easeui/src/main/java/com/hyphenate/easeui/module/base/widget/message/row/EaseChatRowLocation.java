@@ -55,22 +55,22 @@ public class EaseChatRowLocation extends EaseChatRow {
 
     private void onMessageCreate() {
         progressBar.setVisibility(View.VISIBLE);
-        statusView.setVisibility(View.GONE);
+        iv_status.setVisibility(View.GONE);
     }
 
     private void onMessageSuccess() {
         progressBar.setVisibility(View.GONE);
-        statusView.setVisibility(View.GONE);
+        iv_status.setVisibility(View.GONE);
     }
 
     private void onMessageError() {
         progressBar.setVisibility(View.GONE);
-        statusView.setVisibility(View.VISIBLE);
+        iv_status.setVisibility(View.VISIBLE);
     }
 
     private void onMessageInProgress() {
         progressBar.setVisibility(View.VISIBLE);
-        statusView.setVisibility(View.GONE);
+        iv_status.setVisibility(View.GONE);
     }
 
 }
