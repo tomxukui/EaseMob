@@ -3,38 +3,91 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
+    <!--时间-->
     <TextView
         android:id="@id/tv_timestamp"
         style="@style/ease_chat_text_date_style"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/ease_message_time_margin_top"
-        android:layout_height="wrap_content" />
+        android:layout_marginTop="@dimen/ease_message_time_margin_top" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ease_message_row_margin_left"
+        android:layout_marginTop="@dimen/ease_message_row_margin_top"
         android:layout_marginRight="@dimen/ease_message_row_margin_right"
-        android:layout_marginTop="@dimen/ease_message_row_margin_top">
+        android:gravity="right|top"
+        android:orientation="horizontal">
 
-        <com.hyphenate.easeui.module.base.widget.EaseImageView
-            android:id="@id/iv_avatar"
-            android:layout_width="@dimen/ease_message_avatar_size"
-            android:layout_height="@dimen/ease_message_avatar_size"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:scaleType="fitXY"
-            android:src="@mipmap/ease_ic_portrait" />
+        <!--状态-->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
 
+            <ImageView
+                android:id="@+id/msg_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@drawable/ease_msg_state_failed_resend"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_ack"
+                style="@style/ease_chat_text_name_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_ack_msg"
+                android:textSize="12sp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tv_delivered"
+                style="@style/ease_chat_text_name_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_delivered_msg"
+                android:textSize="12sp"
+                android:visibility="invisible" />
+
+        </FrameLayout>
+
+        <!--进度-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100%"
+                android:textColor="@android:color/black"
+                android:visibility="visible"
+                tools:ignore="HardcodedText" />
+
+        </LinearLayout>
+
+        <!--视频-->
         <RelativeLayout
             android:id="@id/group_bubble"
             android:layout_width="130dp"
             android:layout_height="145dp"
             android:layout_marginRight="@dimen/ease_message_bubble_margin_left"
-            android:layout_toLeftOf="@id/iv_avatar"
             android:background="@drawable/ease_bg_chatto">
 
             <ImageView
@@ -79,65 +132,14 @@
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toLeftOf="@id/group_bubble"
-            android:gravity="center"
-            android:orientation="vertical">
+        <!--头像-->
+        <com.hyphenate.easeui.module.base.widget.EaseImageView
+            android:id="@id/iv_avatar"
+            android:layout_width="@dimen/ease_message_avatar_size"
+            android:layout_height="@dimen/ease_message_avatar_size"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ease_ic_portrait" />
 
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:visibility="visible" />
-
-            <TextView
-                android:id="@+id/percentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="100%"
-                android:textColor="@android:color/black"
-                android:visibility="visible"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/msg_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/group_bubble"
-            android:clickable="true"
-            android:src="@drawable/ease_msg_state_failed_resend"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/tv_ack"
-            style="@style/ease_chat_text_name_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/group_bubble"
-            android:text="@string/text_ack_msg"
-            android:textSize="12sp"
-            android:visibility="invisible" />
-
-        <TextView
-            android:id="@+id/tv_delivered"
-            style="@style/ease_chat_text_name_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/tv_bubble_text"
-            android:text="@string/text_delivered_msg"
-            android:textSize="12sp"
-            android:visibility="invisible" />
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>
