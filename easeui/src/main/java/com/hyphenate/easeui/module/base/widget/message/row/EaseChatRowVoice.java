@@ -27,8 +27,7 @@ public class EaseChatRowVoice extends EaseChatRowFile {
 
     @Override
     protected void onInflateView() {
-        mInflater.inflate(message.direct() == EMMessage.Direct.RECEIVE ?
-                R.layout.ease_row_received_voice : R.layout.ease_row_sent_voice, this);
+        mInflater.inflate(message.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_voice : R.layout.ease_row_sent_voice, this);
     }
 
     @Override
@@ -41,15 +40,18 @@ public class EaseChatRowVoice extends EaseChatRowFile {
     @Override
     protected void onSetUpView() {
         EMVoiceMessageBody voiceBody = (EMVoiceMessageBody) message.getBody();
-        int len = voiceBody.getLength();
-        if (len > 0) {
+
+        if (voiceBody.getLength() > 0) {
             voiceLengthView.setText(voiceBody.getLength() + "\"");
             voiceLengthView.setVisibility(View.VISIBLE);
+
         } else {
             voiceLengthView.setVisibility(View.INVISIBLE);
         }
+
         if (message.direct() == EMMessage.Direct.RECEIVE) {
             voiceImageView.setImageResource(R.drawable.ease_chatfrom_voice_playing);
+
         } else {
             voiceImageView.setImageResource(R.drawable.ease_chatto_voice_playing);
         }
@@ -58,13 +60,15 @@ public class EaseChatRowVoice extends EaseChatRowFile {
             if (message.isListened()) {
                 // hide the unread icon
                 readStatusView.setVisibility(View.INVISIBLE);
+
             } else {
                 readStatusView.setVisibility(View.VISIBLE);
             }
-            if (voiceBody.downloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING ||
-                    voiceBody.downloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING) {
+
+            if (voiceBody.downloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING || voiceBody.downloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING) {
                 if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
                     progressBar.setVisibility(View.VISIBLE);
+
                 } else {
                     progressBar.setVisibility(View.INVISIBLE);
                 }
@@ -84,16 +88,15 @@ public class EaseChatRowVoice extends EaseChatRowFile {
     @Override
     protected void onViewUpdate(EMMessage msg) {
         super.onViewUpdate(msg);
-
         // Only the received message has the attachment download status.
         if (message.direct() == EMMessage.Direct.SEND) {
             return;
         }
 
         EMVoiceMessageBody voiceBody = (EMVoiceMessageBody) msg.getBody();
-        if (voiceBody.downloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING ||
-                voiceBody.downloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING) {
+        if (voiceBody.downloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING || voiceBody.downloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING) {
             progressBar.setVisibility(View.VISIBLE);
+
         } else {
             progressBar.setVisibility(View.INVISIBLE);
         }
@@ -102,6 +105,7 @@ public class EaseChatRowVoice extends EaseChatRowFile {
     public void startVoicePlayAnimation() {
         if (message.direct() == EMMessage.Direct.RECEIVE) {
             voiceImageView.setImageResource(R.drawable.voice_from_icon);
+
         } else {
             voiceImageView.setImageResource(R.drawable.voice_to_icon);
         }
@@ -121,8 +125,10 @@ public class EaseChatRowVoice extends EaseChatRowFile {
 
         if (message.direct() == EMMessage.Direct.RECEIVE) {
             voiceImageView.setImageResource(R.drawable.ease_chatfrom_voice_playing);
+
         } else {
             voiceImageView.setImageResource(R.drawable.ease_chatto_voice_playing);
         }
     }
+
 }
