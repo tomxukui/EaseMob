@@ -2,6 +2,7 @@ package com.hyphenate.easeui.module.base.widget.message.row;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,10 +39,14 @@ public abstract class EaseChatRow extends LinearLayout {
     protected TextView tv_ack;
     protected TextView tv_delivered;
 
-    protected OnItemClickListener itemClickListener;
-    protected EaseMessageListItemStyle itemStyle;
+    @Nullable
+    protected OnItemClickListener mOnItemClickListener;
 
-    private EaseChatRowActionCallback itemActionCallback;
+    @Nullable
+    protected EaseMessageListItemStyle mListItemStyle;
+
+    @Nullable
+    private EaseChatRowActionCallback mActionCallback;
 
     protected EMMessage mMessage;
     protected int mPosition;
@@ -63,7 +68,9 @@ public abstract class EaseChatRow extends LinearLayout {
 
     @Override
     protected void onDetachedFromWindow() {
-        itemActionCallback.onDetachedFromWindow();
+        if (mActionCallback != null) {
+            mActionCallback.onDetachedFromWindow();
+        }
         super.onDetachedFromWindow();
     }
 
@@ -88,15 +95,16 @@ public abstract class EaseChatRow extends LinearLayout {
     /**
      * set property according message and postion
      */
-    public void setUpView(EMMessage message, int position,
-                          OnItemClickListener itemClickListener,
-                          EaseChatRowActionCallback itemActionCallback,
-                          EaseMessageListItemStyle itemStyle) {
+    public void setUpView(EMMessage message,
+                          int position,
+                          @Nullable OnItemClickListener listener,
+                          @Nullable EaseChatRowActionCallback actionCallback,
+                          @Nullable EaseMessageListItemStyle itemStyle) {
         mMessage = message;
         mPosition = position;
-        this.itemClickListener = itemClickListener;
-        this.itemActionCallback = itemActionCallback;
-        this.itemStyle = itemStyle;
+        mOnItemClickListener = listener;
+        mActionCallback = actionCallback;
+        mListItemStyle = itemStyle;
 
         setUpBaseView();
         onSetUpView();
@@ -162,7 +170,7 @@ public abstract class EaseChatRow extends LinearLayout {
             }
         }
 
-        if (itemStyle != null) {
+        if (mListItemStyle != null) {
             if (iv_avatar != null) {
                 EaseAvatarOptions avatarOptions = EaseUI.getInstance().getAvatarOptions();
 
@@ -186,10 +194,10 @@ public abstract class EaseChatRow extends LinearLayout {
 
             if (tv_username != null) {
                 if (mMessage.direct() == Direct.SEND) {
-                    tv_username.setVisibility(itemStyle.isShowFromUserNickname() ? View.VISIBLE : View.GONE);
+                    tv_username.setVisibility(mListItemStyle.isShowFromUserNickname() ? View.VISIBLE : View.GONE);
 
                 } else {
-                    tv_username.setVisibility(itemStyle.isShowToUserNickname() ? View.VISIBLE : View.GONE);
+                    tv_username.setVisibility(mListItemStyle.isShowToUserNickname() ? View.VISIBLE : View.GONE);
                 }
             }
         }
@@ -205,17 +213,17 @@ public abstract class EaseChatRow extends LinearLayout {
     private void setClickListener() {
         if (group_bubble != null) {
             group_bubble.setOnClickListener(v -> {
-                if (itemClickListener != null && itemClickListener.onBubbleClick(mMessage)) {
+                if (mOnItemClickListener != null && mOnItemClickListener.onBubbleClick(mMessage)) {
                     return;
                 }
-                if (itemActionCallback != null) {
-                    itemActionCallback.onBubbleClick(mMessage);
+                if (mActionCallback != null) {
+                    mActionCallback.onBubbleClick(mMessage);
                 }
             });
 
             group_bubble.setOnLongClickListener(v -> {
-                if (itemClickListener != null) {
-                    itemClickListener.onBubbleLongClick(mMessage);
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.onBubbleLongClick(mMessage);
                 }
                 return true;
             });
@@ -223,34 +231,34 @@ public abstract class EaseChatRow extends LinearLayout {
 
         if (iv_status != null) {
             iv_status.setOnClickListener(v -> {
-                if (itemClickListener != null && itemClickListener.onResendClick(mMessage)) {
+                if (mOnItemClickListener != null && mOnItemClickListener.onResendClick(mMessage)) {
                     return;
                 }
-                if (itemActionCallback != null) {
-                    itemActionCallback.onResendClick(mMessage);
+                if (mActionCallback != null) {
+                    mActionCallback.onResendClick(mMessage);
                 }
             });
         }
 
         if (iv_avatar != null) {
             iv_avatar.setOnClickListener(v -> {
-                if (itemClickListener != null) {
+                if (mOnItemClickListener != null) {
                     if (mMessage.direct() == Direct.SEND) {
-                        itemClickListener.onUserAvatarClick(EMClient.getInstance().getCurrentUser());
+                        mOnItemClickListener.onUserAvatarClick(EMClient.getInstance().getCurrentUser());
 
                     } else {
-                        itemClickListener.onUserAvatarClick(mMessage.getFrom());
+                        mOnItemClickListener.onUserAvatarClick(mMessage.getFrom());
                     }
                 }
             });
 
             iv_avatar.setOnLongClickListener(v -> {
-                if (itemClickListener != null) {
+                if (mOnItemClickListener != null) {
                     if (mMessage.direct() == Direct.SEND) {
-                        itemClickListener.onUserAvatarLongClick(EMClient.getInstance().getCurrentUser());
+                        mOnItemClickListener.onUserAvatarLongClick(EMClient.getInstance().getCurrentUser());
 
                     } else {
-                        itemClickListener.onUserAvatarLongClick(mMessage.getFrom());
+                        mOnItemClickListener.onUserAvatarLongClick(mMessage.getFrom());
                     }
                     return true;
                 }
