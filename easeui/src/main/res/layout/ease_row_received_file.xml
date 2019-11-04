@@ -16,8 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ease_message_row_margin_left"
-        android:layout_marginRight="@dimen/ease_message_row_margin_right"
-        android:layout_marginTop="@dimen/ease_message_row_margin_top" >
+        android:layout_marginTop="@dimen/ease_message_row_margin_top"
+        android:layout_marginRight="@dimen/ease_message_row_margin_right">
 
         <com.hyphenate.easeui.module.base.widget.EaseImageView
             android:id="@id/iv_avatar"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_username"
             android:layout_marginLeft="@dimen/ease_message_bubble_margin_left"
-            android:layout_toLeftOf="@+id/progress_bar"
+            android:layout_toLeftOf="@id/bar_progress"
             android:layout_toRightOf="@id/iv_avatar"
             android:background="@drawable/ease_bg_chatfrom">
 
@@ -101,8 +101,7 @@
         </LinearLayout>
 
         <ProgressBar
-            android:id="@+id/progress_bar"
-            style="?android:attr/progressBarStyleSmall"
+            android:id="@id/bar_progress"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"

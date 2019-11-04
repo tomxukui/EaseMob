@@ -63,11 +63,9 @@
             android:orientation="vertical">
 
             <ProgressBar
-                android:id="@+id/progress_bar"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:visibility="visible" />
+                android:id="@id/bar_progress"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
 
             <TextView
                 android:id="@+id/percentage"

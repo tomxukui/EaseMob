@@ -67,14 +67,14 @@ public class EaseChatRowVoice extends EaseChatRowFile {
 
             if (voiceBody.downloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING || voiceBody.downloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING) {
                 if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
-                    progressBar.setVisibility(View.VISIBLE);
+                    bar_progress.setVisibility(View.VISIBLE);
 
                 } else {
-                    progressBar.setVisibility(View.INVISIBLE);
+                    bar_progress.setVisibility(View.INVISIBLE);
                 }
 
             } else {
-                progressBar.setVisibility(View.INVISIBLE);
+                bar_progress.setVisibility(View.INVISIBLE);
             }
         }
 
@@ -95,10 +95,10 @@ public class EaseChatRowVoice extends EaseChatRowFile {
 
         EMVoiceMessageBody voiceBody = (EMVoiceMessageBody) msg.getBody();
         if (voiceBody.downloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING || voiceBody.downloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING) {
-            progressBar.setVisibility(View.VISIBLE);
+            bar_progress.setVisibility(View.VISIBLE);
 
         } else {
-            progressBar.setVisibility(View.INVISIBLE);
+            bar_progress.setVisibility(View.INVISIBLE);
         }
     }
 

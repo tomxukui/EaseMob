@@ -76,12 +76,12 @@ public class EaseChatRowText extends EaseChatRow {
     }
 
     private void onMessageCreate() {
-        progressBar.setVisibility(View.VISIBLE);
+        bar_progress.setVisibility(View.VISIBLE);
         iv_status.setVisibility(View.GONE);
     }
 
     private void onMessageSuccess() {
-        progressBar.setVisibility(View.GONE);
+        bar_progress.setVisibility(View.GONE);
         iv_status.setVisibility(View.GONE);
 
         if (EaseDingMessageHelper.get().isDingMessage(message) && tv_ack != null) {
@@ -95,12 +95,12 @@ public class EaseChatRowText extends EaseChatRow {
     }
 
     private void onMessageError() {
-        progressBar.setVisibility(View.GONE);
+        bar_progress.setVisibility(View.GONE);
         iv_status.setVisibility(View.VISIBLE);
     }
 
     private void onMessageInProgress() {
-        progressBar.setVisibility(View.VISIBLE);
+        bar_progress.setVisibility(View.VISIBLE);
         iv_status.setVisibility(View.GONE);
     }
 

@@ -58,12 +58,12 @@ public class EaseChatRowImage extends EaseChatRowFile {
 
             } else {
                 if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING || imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING || imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
-                    progressBar.setVisibility(View.INVISIBLE);
+                    bar_progress.setVisibility(View.INVISIBLE);
                     percentageView.setVisibility(View.INVISIBLE);
                     iv_image.setImageResource(R.drawable.ease_default_image);
 
                 } else {
-                    progressBar.setVisibility(View.GONE);
+                    bar_progress.setVisibility(View.GONE);
                     percentageView.setVisibility(View.GONE);
                     iv_image.setImageResource(R.drawable.ease_default_image);
 
@@ -81,23 +81,23 @@ public class EaseChatRowImage extends EaseChatRowFile {
                     iv_image.setImageResource(R.drawable.ease_default_image);
 
                 } else {
-                    progressBar.setVisibility(View.INVISIBLE);
+                    bar_progress.setVisibility(View.INVISIBLE);
                     percentageView.setVisibility(View.INVISIBLE);
                     iv_image.setImageResource(R.drawable.ease_default_image);
                 }
 
             } else if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
                 if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
-                    progressBar.setVisibility(View.VISIBLE);
+                    bar_progress.setVisibility(View.VISIBLE);
                     percentageView.setVisibility(View.VISIBLE);
 
                 } else {
-                    progressBar.setVisibility(View.INVISIBLE);
+                    bar_progress.setVisibility(View.INVISIBLE);
                     percentageView.setVisibility(View.INVISIBLE);
                 }
 
             } else {
-                progressBar.setVisibility(View.GONE);
+                bar_progress.setVisibility(View.GONE);
                 percentageView.setVisibility(View.GONE);
                 iv_image.setImageResource(R.drawable.ease_default_image);
 

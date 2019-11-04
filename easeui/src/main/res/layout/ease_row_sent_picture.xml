@@ -80,7 +80,7 @@
                 android:orientation="vertical">
 
                 <ProgressBar
-                    android:id="@+id/progress_bar"
+                    android:id="@id/bar_progress"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:indeterminateTint="@color/ease_white" />

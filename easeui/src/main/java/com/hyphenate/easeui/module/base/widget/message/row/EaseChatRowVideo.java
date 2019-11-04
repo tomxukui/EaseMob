@@ -84,12 +84,12 @@ public class EaseChatRowVideo extends EaseChatRowFile {
 
         } else {
             if (videoBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING || videoBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING || videoBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
-                progressBar.setVisibility(View.INVISIBLE);
+                bar_progress.setVisibility(View.INVISIBLE);
                 percentageView.setVisibility(View.INVISIBLE);
                 imageView.setImageResource(R.drawable.ease_default_image);
 
             } else {
-                progressBar.setVisibility(View.GONE);
+                bar_progress.setVisibility(View.GONE);
                 percentageView.setVisibility(View.GONE);
                 imageView.setImageResource(R.drawable.ease_default_image);
                 showVideoThumbView(localThumb, videoBody.getThumbnailUrl(), message);
