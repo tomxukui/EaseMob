@@ -39,7 +39,7 @@
 
             <TextView
                 android:id="@+id/tv_location"
-                style="@style/ease_message_location_style"
+                style="@style/ease_message_bubble_location_text_style"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ease_location_msg"

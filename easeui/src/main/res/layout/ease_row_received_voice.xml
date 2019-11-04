@@ -48,33 +48,31 @@
                 android:visibility="gone" />
 
             <!--语音-->
-            <RelativeLayout
+            <LinearLayout
                 android:id="@id/group_bubble"
+                style="@style/ease_message_bubble_voice_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/ease_message_bubble_margin_left"
-                android:background="@drawable/ease_bg_chatfrom">
+                android:background="@drawable/ease_bg_chatfrom"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/iv_voice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="12dp"
                     android:src="@drawable/ease_chatfrom_voice_playing" />
 
-            </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_length"
+                    style="@style/ease_message_bubble_voice_length_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="3&apos;&apos;"
+                    tools:ignore="HardcodedText" />
 
-            <TextView
-                android:id="@+id/tv_length"
-                style="@style/ease_message_username_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:gravity="center"
-                android:text="3&apos;&apos;"
-                tools:ignore="HardcodedText" />
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/iv_unread_voice"
@@ -87,7 +85,7 @@
                 android:id="@+id/progress_bar"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
                 android:visibility="invisible" />
 
         </LinearLayout>
