@@ -20,8 +20,7 @@ public class EaseChatRowLocation extends EaseChatRow {
 
     @Override
     protected void onInflateView() {
-        mInflater.inflate(message.direct() == EMMessage.Direct.RECEIVE ?
-                R.layout.ease_row_received_location : R.layout.ease_row_sent_location, this);
+        mInflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_location : R.layout.ease_row_sent_location, this);
     }
 
     @Override
@@ -31,25 +30,30 @@ public class EaseChatRowLocation extends EaseChatRow {
 
     @Override
     protected void onSetUpView() {
-        locBody = (EMLocationMessageBody) message.getBody();
+        locBody = (EMLocationMessageBody) mMessage.getBody();
         locationView.setText(locBody.getAddress());
     }
 
     @Override
     protected void onViewUpdate(EMMessage msg) {
         switch (msg.status()) {
+
             case CREATE:
                 onMessageCreate();
                 break;
+
             case SUCCESS:
                 onMessageSuccess();
                 break;
+
             case FAIL:
                 onMessageError();
                 break;
+
             case INPROGRESS:
                 onMessageInProgress();
                 break;
+
         }
     }
 

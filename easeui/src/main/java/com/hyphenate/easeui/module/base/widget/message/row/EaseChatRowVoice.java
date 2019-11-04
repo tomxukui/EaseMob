@@ -27,7 +27,7 @@ public class EaseChatRowVoice extends EaseChatRowFile {
 
     @Override
     protected void onInflateView() {
-        mInflater.inflate(message.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_voice : R.layout.ease_row_sent_voice, this);
+        mInflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_voice : R.layout.ease_row_sent_voice, this);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class EaseChatRowVoice extends EaseChatRowFile {
 
     @Override
     protected void onSetUpView() {
-        EMVoiceMessageBody voiceBody = (EMVoiceMessageBody) message.getBody();
+        EMVoiceMessageBody voiceBody = (EMVoiceMessageBody) mMessage.getBody();
 
         if (voiceBody.getLength() > 0) {
             voiceLengthView.setText(voiceBody.getLength() + "\"");
@@ -49,15 +49,15 @@ public class EaseChatRowVoice extends EaseChatRowFile {
             voiceLengthView.setVisibility(View.INVISIBLE);
         }
 
-        if (message.direct() == EMMessage.Direct.RECEIVE) {
+        if (mMessage.direct() == EMMessage.Direct.RECEIVE) {
             voiceImageView.setImageResource(R.drawable.ease_chatfrom_voice_playing);
 
         } else {
             voiceImageView.setImageResource(R.drawable.ease_chatto_voice_playing);
         }
 
-        if (message.direct() == EMMessage.Direct.RECEIVE) {
-            if (message.isListened()) {
+        if (mMessage.direct() == EMMessage.Direct.RECEIVE) {
+            if (mMessage.isListened()) {
                 // hide the unread icon
                 readStatusView.setVisibility(View.INVISIBLE);
 
@@ -80,7 +80,7 @@ public class EaseChatRowVoice extends EaseChatRowFile {
 
         // To avoid the item is recycled by listview and slide to this item again but the animation is stopped.
         EaseChatRowVoicePlayer voicePlayer = EaseChatRowVoicePlayer.getInstance(getContext());
-        if (voicePlayer.isPlaying() && message.getMsgId().equals(voicePlayer.getCurrentPlayingId())) {
+        if (voicePlayer.isPlaying() && mMessage.getMsgId().equals(voicePlayer.getCurrentPlayingId())) {
             startVoicePlayAnimation();
         }
     }
@@ -89,7 +89,7 @@ public class EaseChatRowVoice extends EaseChatRowFile {
     protected void onViewUpdate(EMMessage msg) {
         super.onViewUpdate(msg);
         // Only the received message has the attachment download status.
-        if (message.direct() == EMMessage.Direct.SEND) {
+        if (mMessage.direct() == EMMessage.Direct.SEND) {
             return;
         }
 
@@ -103,7 +103,7 @@ public class EaseChatRowVoice extends EaseChatRowFile {
     }
 
     public void startVoicePlayAnimation() {
-        if (message.direct() == EMMessage.Direct.RECEIVE) {
+        if (mMessage.direct() == EMMessage.Direct.RECEIVE) {
             voiceImageView.setImageResource(R.drawable.voice_from_icon);
 
         } else {
@@ -113,7 +113,7 @@ public class EaseChatRowVoice extends EaseChatRowFile {
         voiceAnimation.start();
 
         // Hide the voice item not listened status view.
-        if (message.direct() == EMMessage.Direct.RECEIVE) {
+        if (mMessage.direct() == EMMessage.Direct.RECEIVE) {
             readStatusView.setVisibility(View.INVISIBLE);
         }
     }
@@ -123,7 +123,7 @@ public class EaseChatRowVoice extends EaseChatRowFile {
             voiceAnimation.stop();
         }
 
-        if (message.direct() == EMMessage.Direct.RECEIVE) {
+        if (mMessage.direct() == EMMessage.Direct.RECEIVE) {
             voiceImageView.setImageResource(R.drawable.ease_chatfrom_voice_playing);
 
         } else {

@@ -25,7 +25,7 @@ public class EaseChatRowText extends EaseChatRow {
 
     @Override
     protected void onInflateView() {
-        mInflater.inflate(message.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_message : R.layout.ease_row_sent_message, this);
+        mInflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_message : R.layout.ease_row_sent_message, this);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class EaseChatRowText extends EaseChatRow {
 
     @Override
     public void onSetUpView() {
-        EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
+        EMTextMessageBody txtBody = (EMTextMessageBody) mMessage.getBody();
         Spannable span = EaseSmileUtil.getSmiledText(getContext(), txtBody.getMessage());
         tv_bubble_text.setText(span, BufferType.SPANNABLE);
     }
@@ -84,14 +84,14 @@ public class EaseChatRowText extends EaseChatRow {
         bar_progress.setVisibility(View.GONE);
         iv_status.setVisibility(View.GONE);
 
-        if (EaseDingMessageHelper.get().isDingMessage(message) && tv_ack != null) {
+        if (EaseDingMessageHelper.get().isDingMessage(mMessage) && tv_ack != null) {
             tv_ack.setVisibility(VISIBLE);
-            List<String> userList = EaseDingMessageHelper.get().getAckUsers(message);
+            List<String> userList = EaseDingMessageHelper.get().getAckUsers(mMessage);
             int count = userList == null ? 0 : userList.size();
             tv_ack.setText(String.format(getContext().getString(R.string.group_ack_read_count), count));
         }
 
-        EaseDingMessageHelper.get().setUserUpdateListener(message, userUpdateListener);
+        EaseDingMessageHelper.get().setUserUpdateListener(mMessage, userUpdateListener);
     }
 
     private void onMessageError() {

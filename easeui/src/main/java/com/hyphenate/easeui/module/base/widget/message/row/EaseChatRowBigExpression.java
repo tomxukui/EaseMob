@@ -25,7 +25,7 @@ public class EaseChatRowBigExpression extends EaseChatRowText {
 
     @Override
     protected void onInflateView() {
-        mInflater.inflate(message.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_bigexpression : R.layout.ease_row_sent_bigexpression, this);
+        mInflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_bigexpression : R.layout.ease_row_sent_bigexpression, this);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class EaseChatRowBigExpression extends EaseChatRowText {
 
     @Override
     public void onSetUpView() {
-        String emojiconId = message.getStringAttribute(EaseConstant.MESSAGE_ATTR_EXPRESSION_ID, null);
+        String emojiconId = mMessage.getStringAttribute(EaseConstant.MESSAGE_ATTR_EXPRESSION_ID, null);
         EaseEmojicon emojicon = null;
         if (EaseUI.getInstance().getEmojiconInfoProvider() != null) {
             emojicon = EaseUI.getInstance().getEmojiconInfoProvider().getEmojiconInfo(emojiconId);
@@ -44,13 +44,13 @@ public class EaseChatRowBigExpression extends EaseChatRowText {
 
         if (emojicon != null) {
             if (emojicon.getBigIcon() != 0) {
-                Glide.with(activity)
+                Glide.with(getContext())
                         .load(emojicon.getBigIcon())
                         .apply(RequestOptions.placeholderOf(R.drawable.ease_default_expression))
                         .into(iv_image);
 
             } else if (emojicon.getBigIconPath() != null) {
-                Glide.with(activity)
+                Glide.with(getContext())
                         .load(emojicon.getBigIconPath())
                         .apply(RequestOptions.placeholderOf(R.drawable.ease_default_expression))
                         .into(iv_image);

@@ -32,7 +32,7 @@ public class EaseChatRowCloseInquiry extends EaseChatRow {
 
     @Override
     protected void onSetUpView() {
-        EMTextMessageBody body = (EMTextMessageBody) message.getBody();
+        EMTextMessageBody body = (EMTextMessageBody) mMessage.getBody();
         tv_content.setText(body.getMessage());
     }
 

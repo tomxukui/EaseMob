@@ -26,7 +26,7 @@ public class EaseChatRowFile extends EaseChatRow {
 
     @Override
     protected void onInflateView() {
-        mInflater.inflate(message.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_file : R.layout.ease_row_sent_file, this);
+        mInflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_file : R.layout.ease_row_sent_file, this);
     }
 
     @Override
@@ -39,11 +39,11 @@ public class EaseChatRowFile extends EaseChatRow {
 
     @Override
     protected void onSetUpView() {
-        fileMessageBody = (EMNormalFileMessageBody) message.getBody();
+        fileMessageBody = (EMNormalFileMessageBody) mMessage.getBody();
         String filePath = fileMessageBody.getLocalUrl();
         fileNameView.setText(fileMessageBody.getFileName());
         fileSizeView.setText(TextFormater.getDataSize(fileMessageBody.getFileSize()));
-        if (message.direct() == EMMessage.Direct.RECEIVE) {
+        if (mMessage.direct() == EMMessage.Direct.RECEIVE) {
             File file = new File(filePath);
 
             if (file.exists()) {
@@ -123,7 +123,7 @@ public class EaseChatRowFile extends EaseChatRow {
 
         if (tv_percentage != null) {
             tv_percentage.setVisibility(View.VISIBLE);
-            tv_percentage.setText(message.progress() + "%");
+            tv_percentage.setText(mMessage.progress() + "%");
         }
 
         if (iv_status != null) {

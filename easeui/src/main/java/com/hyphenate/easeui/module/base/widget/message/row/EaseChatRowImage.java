@@ -31,7 +31,7 @@ public class EaseChatRowImage extends EaseChatRowFile {
 
     @Override
     protected void onInflateView() {
-        mInflater.inflate(message.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_picture : R.layout.ease_row_sent_picture, this);
+        mInflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_picture : R.layout.ease_row_sent_picture, this);
     }
 
     @Override
@@ -42,9 +42,9 @@ public class EaseChatRowImage extends EaseChatRowFile {
 
     @Override
     protected void onSetUpView() {
-        imgBody = (EMImageMessageBody) message.getBody();
+        imgBody = (EMImageMessageBody) mMessage.getBody();
 
-        if (message.direct() == EMMessage.Direct.SEND) {//已发送的消息
+        if (mMessage.direct() == EMMessage.Direct.SEND) {//已发送的消息
             String filePath = imgBody.getLocalUrl();
             String thumbPath = EaseImageUtil.getThumbnailImagePath(filePath);
             showImageView(thumbPath, filePath);
