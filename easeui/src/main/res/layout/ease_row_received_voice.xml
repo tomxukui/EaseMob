@@ -30,7 +30,7 @@
             android:src="@mipmap/ease_ic_portrait" />
 
         <RelativeLayout
-            android:id="@id/relative_bubble"
+            android:id="@id/group_bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_username"
@@ -54,9 +54,9 @@
             style="@style/ease_chat_text_name_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/relative_bubble"
+            android:layout_alignTop="@id/group_bubble"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/relative_bubble"
+            android:layout_toRightOf="@id/group_bubble"
             android:gravity="center"
             android:text="3&apos;&apos;"
             tools:ignore="HardcodedText" />
@@ -65,7 +65,7 @@
             android:id="@+id/iv_unread_voice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/relative_bubble"
+            android:layout_alignTop="@id/group_bubble"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/tv_length"
             android:src="@drawable/ease_voice_unread" />

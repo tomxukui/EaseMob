@@ -38,7 +38,7 @@
             android:visibility="gone" />
 
         <RelativeLayout
-            android:id="@id/relative_bubble"
+            android:id="@id/group_bubble"
             android:layout_width="130dp"
             android:layout_height="145dp"
             android:layout_below="@+id/tv_username"

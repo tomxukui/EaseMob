@@ -29,7 +29,7 @@
             android:src="@mipmap/ease_ic_portrait" />
 
         <RelativeLayout
-            android:id="@id/relative_bubble"
+            android:id="@id/group_bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/ease_message_bubble_margin_left"
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_toLeftOf="@id/relative_bubble"
+            android:layout_toLeftOf="@id/group_bubble"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/relative_bubble"
+            android:layout_toLeftOf="@id/group_bubble"
             android:clickable="true"
             android:src="@drawable/ease_msg_state_failed_resend"
             android:visibility="gone" />
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/relative_bubble"
+            android:layout_toLeftOf="@id/group_bubble"
             android:text="@string/text_ack_msg"
             android:textSize="12sp"
             android:visibility="invisible" />

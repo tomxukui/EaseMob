@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,7 +35,7 @@ public abstract class EaseChatRow extends LinearLayout {
 
     protected TextView tv_timestamp;
     protected ImageView iv_avatar;
-    protected View relative_bubble;
+    protected ViewGroup group_bubble;
     protected TextView tv_username;
 
     protected TextView percentageView;
@@ -75,7 +76,7 @@ public abstract class EaseChatRow extends LinearLayout {
         onInflateView();
         tv_timestamp = findViewById(R.id.tv_timestamp);
         iv_avatar = findViewById(R.id.iv_avatar);
-        relative_bubble = findViewById(R.id.relative_bubble);
+        group_bubble = findViewById(R.id.group_bubble);
         tv_username = findViewById(R.id.tv_username);
         progressBar = findViewById(R.id.progress_bar);
         statusView = findViewById(R.id.msg_status);
@@ -199,8 +200,8 @@ public abstract class EaseChatRow extends LinearLayout {
     }
 
     private void setClickListener() {
-        if (relative_bubble != null) {
-            relative_bubble.setOnClickListener(v -> {
+        if (group_bubble != null) {
+            group_bubble.setOnClickListener(v -> {
                 if (itemClickListener != null && itemClickListener.onBubbleClick(message)) {
                     return;
                 }
@@ -209,7 +210,7 @@ public abstract class EaseChatRow extends LinearLayout {
                 }
             });
 
-            relative_bubble.setOnLongClickListener(v -> {
+            group_bubble.setOnLongClickListener(v -> {
                 if (itemClickListener != null) {
                     itemClickListener.onBubbleLongClick(message);
                 }
