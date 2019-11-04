@@ -67,10 +67,10 @@ public class EaseChatRowText extends EaseChatRow {
     }
 
     public void onAckUserUpdate(final int count) {
-        if (ackedView != null) {
-            ackedView.post(() -> {
-                ackedView.setVisibility(VISIBLE);
-                ackedView.setText(String.format(getContext().getString(R.string.group_ack_read_count), count));
+        if (tv_ack != null) {
+            tv_ack.post(() -> {
+                tv_ack.setVisibility(VISIBLE);
+                tv_ack.setText(String.format(getContext().getString(R.string.group_ack_read_count), count));
             });
         }
     }
@@ -84,11 +84,11 @@ public class EaseChatRowText extends EaseChatRow {
         progressBar.setVisibility(View.GONE);
         iv_status.setVisibility(View.GONE);
 
-        if (EaseDingMessageHelper.get().isDingMessage(message) && ackedView != null) {
-            ackedView.setVisibility(VISIBLE);
+        if (EaseDingMessageHelper.get().isDingMessage(message) && tv_ack != null) {
+            tv_ack.setVisibility(VISIBLE);
             List<String> userList = EaseDingMessageHelper.get().getAckUsers(message);
             int count = userList == null ? 0 : userList.size();
-            ackedView.setText(String.format(getContext().getString(R.string.group_ack_read_count), count));
+            tv_ack.setText(String.format(getContext().getString(R.string.group_ack_read_count), count));
         }
 
         EaseDingMessageHelper.get().setUserUpdateListener(message, userUpdateListener);
