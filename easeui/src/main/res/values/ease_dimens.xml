@@ -2,9 +2,6 @@
     <dimen name="chat_bubble_margin_left">10dp</dimen>
     <dimen name="chat_bubble_text_size">15sp</dimen>
 
-    <dimen name="chat_nick_margin_left">10dp</dimen>
-    <dimen name="chat_nick_text_size">13sp</dimen>
-
     <!--标题栏-->
     <dimen name="ease_toolbar_minHeight">50dp</dimen>
     <dimen name="ease_toolbar_title_textSize">18sp</dimen>
@@ -21,5 +18,6 @@
     <dimen name="ease_message_avatar_size">40dp</dimen>
     <dimen name="ease_message_row_margin_left">15dp</dimen>
     <dimen name="ease_message_row_margin_right">15dp</dimen>
+    <dimen name="ease_message_username_margin_left">10dp</dimen>
 
 </resources>
