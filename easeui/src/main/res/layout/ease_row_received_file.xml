@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@id/tv_timestamp"
-        style="@style/ease_chat_text_date_style"
+        style="@style/ease_message_date_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@id/tv_username"
-            style="@style/ease_chat_text_name_style"
+            style="@style/ease_message_username_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/ease_message_username_margin_left"
