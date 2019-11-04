@@ -58,12 +58,14 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
     protected EaseInputMenu menu_input;
 
     protected EMConversation mConversation;//会话
-    protected EaseUser mFromUser;
-    protected EaseUser mToUser;
+
     protected boolean mIsMessageInit;//消息是否已加载
     protected boolean mIsClosed;//问诊是否已关闭
     protected int mPageSize = 20;//消息分页一页最多数量
     protected boolean mHaveMoreData = true;//是否有更多消息
+
+    protected EaseUser mFromUser;
+    protected EaseUser mToUser;
 
     @Nullable
     private EaseOnInquiryListener mOnInquiryListener;
