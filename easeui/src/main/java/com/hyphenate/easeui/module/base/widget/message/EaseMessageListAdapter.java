@@ -128,7 +128,12 @@ public class EaseMessageListAdapter extends BaseAdapter {
      * refresh and seek to the position
      */
     public void refreshSeekTo(int position) {
-        mHandler.sendMessage(mHandler.obtainMessage(HANDLER_MESSAGE_REFRESH_LIST));
+        mHandler.sendEmptyMessage(HANDLER_MESSAGE_REFRESH_LIST);
+
+        Message message = new Message();
+        message.what = HANDLER_MESSAGE_SEEK_TO;
+        message.arg1 = position;
+        mHandler.sendMessage(message);
     }
 
     protected EaseChatRowPresenter createChatRowPresenter(EMMessage message, int position) {
