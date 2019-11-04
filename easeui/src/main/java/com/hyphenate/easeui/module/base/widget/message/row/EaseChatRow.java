@@ -197,6 +197,13 @@ public abstract class EaseChatRow extends LinearLayout {
                 }
             }
         }
+
+
+        //test
+        if(tv_username != null) {
+            tv_username.setVisibility(View.VISIBLE);
+        }
+        //end
     }
 
     private void setClickListener() {
