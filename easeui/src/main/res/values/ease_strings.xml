@@ -8,9 +8,6 @@
     <string name="release_to_cancel">松开手指，取消发送</string>
     <string name="resend">重发</string>
     <string name="confirm_resend">确认重发该信息？</string>
-    <string name="ok">确定</string>
-    <string name="cancel">取消</string>
-    <string name="prompt">提示</string>
     <string name="location_recv">[%1$s的位置]</string>
     <string name="location_prefix">[我的位置]</string>
     <string name="picture">[图片]</string>
