@@ -22,6 +22,7 @@ import java.io.File;
 public class EaseChatRowImage extends EaseChatRowFile {
 
     protected ImageView iv_image;
+
     private EMImageMessageBody imgBody;
 
     public EaseChatRowImage(Context context, EMMessage message, int position, BaseAdapter adapter) {

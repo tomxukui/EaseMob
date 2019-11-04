@@ -17,7 +17,7 @@ import com.hyphenate.easeui.bean.EaseEmojicon;
  */
 public class EaseChatRowBigExpression extends EaseChatRowText {
 
-    private ImageView imageView;
+    private ImageView iv_image;
 
     public EaseChatRowBigExpression(Context context, EMMessage message, int position, BaseAdapter adapter) {
         super(context, message, position, adapter);
@@ -31,7 +31,7 @@ public class EaseChatRowBigExpression extends EaseChatRowText {
     @Override
     protected void onFindViewById() {
         tv_percentage = findViewById(R.id.tv_percentage);
-        imageView = findViewById(R.id.image);
+        iv_image = findViewById(R.id.iv_image);
     }
 
     @Override
@@ -41,20 +41,22 @@ public class EaseChatRowBigExpression extends EaseChatRowText {
         if (EaseUI.getInstance().getEmojiconInfoProvider() != null) {
             emojicon = EaseUI.getInstance().getEmojiconInfoProvider().getEmojiconInfo(emojiconId);
         }
+
         if (emojicon != null) {
             if (emojicon.getBigIcon() != 0) {
-                Glide.with(activity).load(emojicon.getBigIcon())
+                Glide.with(activity)
+                        .load(emojicon.getBigIcon())
                         .apply(RequestOptions.placeholderOf(R.drawable.ease_default_expression))
-                        .into(imageView);
+                        .into(iv_image);
 
             } else if (emojicon.getBigIconPath() != null) {
                 Glide.with(activity)
                         .load(emojicon.getBigIconPath())
                         .apply(RequestOptions.placeholderOf(R.drawable.ease_default_expression))
-                        .into(imageView);
+                        .into(iv_image);
 
             } else {
-                imageView.setImageResource(R.drawable.ease_default_expression);
+                iv_image.setImageResource(R.drawable.ease_default_expression);
             }
         }
     }
