@@ -43,7 +43,7 @@ public abstract class EaseChatRow extends LinearLayout {
     protected ImageView iv_status;
     protected Activity activity;
 
-    protected TextView ackedView;
+    protected TextView tv_ack;
     protected TextView deliveredView;
 
     protected OnItemClickListener itemClickListener;
@@ -80,7 +80,7 @@ public abstract class EaseChatRow extends LinearLayout {
         tv_username = findViewById(R.id.tv_username);
         progressBar = findViewById(R.id.progress_bar);
         iv_status = findViewById(R.id.iv_status);
-        ackedView = findViewById(R.id.tv_ack);
+        tv_ack = findViewById(R.id.tv_ack);
         deliveredView = findViewById(R.id.tv_delivered);
 
         onFindViewById();
@@ -152,16 +152,16 @@ public abstract class EaseChatRow extends LinearLayout {
         }
 
         if (EMClient.getInstance().getOptions().getRequireAck()) {
-            if (ackedView != null) {
+            if (tv_ack != null) {
                 if (message.isAcked()) {
                     if (deliveredView != null) {
                         deliveredView.setVisibility(View.INVISIBLE);
                     }
 
-                    ackedView.setVisibility(View.VISIBLE);
+                    tv_ack.setVisibility(View.VISIBLE);
 
                 } else {
-                    ackedView.setVisibility(View.INVISIBLE);
+                    tv_ack.setVisibility(View.INVISIBLE);
                 }
             }
         }
@@ -200,7 +200,7 @@ public abstract class EaseChatRow extends LinearLayout {
 
 
         //test
-        if(tv_username != null) {
+        if (tv_username != null) {
             tv_username.setVisibility(View.VISIBLE);
         }
         //end
