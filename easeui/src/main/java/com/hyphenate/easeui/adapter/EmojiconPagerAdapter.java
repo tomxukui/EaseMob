@@ -33,7 +33,6 @@ public class EmojiconPagerAdapter extends PagerAdapter{
     @Override
     public void destroyItem(View arg0, int arg1, Object arg2) {
         ((ViewPager) arg0).removeView(views.get(arg1));
-
     }
     
 }

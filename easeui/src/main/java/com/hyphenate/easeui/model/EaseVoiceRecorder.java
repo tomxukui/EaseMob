@@ -15,6 +15,7 @@ import android.os.SystemClock;
 import android.text.format.Time;
 
 public class EaseVoiceRecorder {
+
     MediaRecorder recorder;
 
     static final String PREFIX = "voice";
@@ -34,7 +35,7 @@ public class EaseVoiceRecorder {
     /**
      * start recording to the file
      */
-    public String startRecording(Context appContext) {
+    public String startRecording() {
         file = null;
         try {
             // need to create recorder every time, otherwise, will got exception

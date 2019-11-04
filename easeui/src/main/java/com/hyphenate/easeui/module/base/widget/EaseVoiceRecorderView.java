@@ -27,7 +27,6 @@ import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowVoicePlaye
 public class EaseVoiceRecorderView extends RelativeLayout {
 
     protected Context context;
-    protected LayoutInflater inflater;
     protected Drawable[] micImages;
     protected EaseVoiceRecorder voiceRecorder;
 
@@ -181,7 +180,7 @@ public class EaseVoiceRecorderView extends RelativeLayout {
             this.setVisibility(View.VISIBLE);
             recordingHint.setText(context.getString(R.string.move_up_to_cancel));
             recordingHint.setBackgroundColor(Color.TRANSPARENT);
-            voiceRecorder.startRecording(context);
+            voiceRecorder.startRecording();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -222,8 +221,9 @@ public class EaseVoiceRecorderView extends RelativeLayout {
 
     public int stopRecoding() {
         this.setVisibility(View.INVISIBLE);
-        if (wakeLock.isHeld())
+        if (wakeLock.isHeld()) {
             wakeLock.release();
+        }
         return voiceRecorder.stopRecoding();
     }
 
