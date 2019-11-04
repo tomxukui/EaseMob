@@ -31,7 +31,7 @@
             android:src="@mipmap/ease_ic_portrait" />
 
         <LinearLayout
-            android:id="@+id/bubble"
+            android:id="@id/relative_bubble"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/ease_message_bubble_margin_left"
@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/bubble"
+            android:layout_toLeftOf="@id/relative_bubble"
             android:clickable="true"
             android:src="@drawable/ease_msg_state_failed_resend"
             android:visibility="invisible" />

@@ -38,7 +38,7 @@
             android:visibility="gone" />
 
         <LinearLayout
-            android:id="@+id/bubble"
+            android:id="@id/relative_bubble"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_username"

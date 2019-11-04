@@ -29,7 +29,7 @@
             android:src="@mipmap/ease_ic_portrait" />
 
         <RelativeLayout
-            android:id="@+id/bubble"
+            android:id="@id/relative_bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/ease_message_bubble_margin_left"
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@id/bubble"
+            android:layout_toLeftOf="@id/relative_bubble"
             android:gravity="center" />
 
         <ImageView
