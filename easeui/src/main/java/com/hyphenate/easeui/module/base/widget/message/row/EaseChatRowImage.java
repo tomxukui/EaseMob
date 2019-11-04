@@ -21,7 +21,7 @@ import java.io.File;
 
 public class EaseChatRowImage extends EaseChatRowFile {
 
-    protected ImageView imageView;
+    protected ImageView iv_image;
     private EMImageMessageBody imgBody;
 
     public EaseChatRowImage(Context context, EMMessage message, int position, BaseAdapter adapter) {
@@ -36,7 +36,7 @@ public class EaseChatRowImage extends EaseChatRowFile {
     @Override
     protected void onFindViewById() {
         percentageView = findViewById(R.id.percentage);
-        imageView = findViewById(R.id.image);
+        iv_image = findViewById(R.id.iv_image);
     }
 
     @Override
@@ -60,12 +60,12 @@ public class EaseChatRowImage extends EaseChatRowFile {
                 if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING || imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING || imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
                     progressBar.setVisibility(View.INVISIBLE);
                     percentageView.setVisibility(View.INVISIBLE);
-                    imageView.setImageResource(R.drawable.ease_default_image);
+                    iv_image.setImageResource(R.drawable.ease_default_image);
 
                 } else {
                     progressBar.setVisibility(View.GONE);
                     percentageView.setVisibility(View.GONE);
-                    imageView.setImageResource(R.drawable.ease_default_image);
+                    iv_image.setImageResource(R.drawable.ease_default_image);
 
                     String thumbPath = imgBody.thumbnailLocalPath();
                     if (!new File(thumbPath).exists()) {
@@ -78,12 +78,12 @@ public class EaseChatRowImage extends EaseChatRowFile {
         } else {//已接收的消息
             if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING || imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING) {
                 if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
-                    imageView.setImageResource(R.drawable.ease_default_image);
+                    iv_image.setImageResource(R.drawable.ease_default_image);
 
                 } else {
                     progressBar.setVisibility(View.INVISIBLE);
                     percentageView.setVisibility(View.INVISIBLE);
-                    imageView.setImageResource(R.drawable.ease_default_image);
+                    iv_image.setImageResource(R.drawable.ease_default_image);
                 }
 
             } else if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
@@ -99,7 +99,7 @@ public class EaseChatRowImage extends EaseChatRowFile {
             } else {
                 progressBar.setVisibility(View.GONE);
                 percentageView.setVisibility(View.GONE);
-                imageView.setImageResource(R.drawable.ease_default_image);
+                iv_image.setImageResource(R.drawable.ease_default_image);
 
                 String thumbPath = imgBody.thumbnailLocalPath();
                 if (!new File(thumbPath).exists()) {
@@ -121,7 +121,7 @@ public class EaseChatRowImage extends EaseChatRowFile {
             Glide.with(this)
                     .load(imgPath)
                     .apply(new RequestOptions().placeholder(R.drawable.ease_default_image).error(R.drawable.ease_default_image).override(EaseDensityUtil.dp2px(146)))
-                    .into(imageView);
+                    .into(iv_image);
         }
     }
 
