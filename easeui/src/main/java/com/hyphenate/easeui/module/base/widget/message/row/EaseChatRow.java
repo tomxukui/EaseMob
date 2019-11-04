@@ -38,7 +38,7 @@ public abstract class EaseChatRow extends LinearLayout {
     protected ViewGroup group_bubble;
     protected TextView tv_username;
 
-    protected TextView percentageView;
+    protected TextView tv_percentage;
     protected ProgressBar bar_progress;
     protected ImageView iv_status;
     protected Activity activity;

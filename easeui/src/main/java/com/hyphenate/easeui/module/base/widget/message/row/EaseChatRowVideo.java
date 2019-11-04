@@ -41,7 +41,7 @@ public class EaseChatRowVideo extends EaseChatRowFile {
         imageView = findViewById(R.id.chatting_content_iv);
         sizeView = findViewById(R.id.chatting_size_iv);
         timeLengthView = findViewById(R.id.chatting_length_iv);
-        percentageView = findViewById(R.id.percentage);
+        tv_percentage = findViewById(R.id.tv_percentage);
     }
 
     @Override
@@ -85,12 +85,12 @@ public class EaseChatRowVideo extends EaseChatRowFile {
         } else {
             if (videoBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING || videoBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING || videoBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
                 bar_progress.setVisibility(View.INVISIBLE);
-                percentageView.setVisibility(View.INVISIBLE);
+                tv_percentage.setVisibility(View.INVISIBLE);
                 imageView.setImageResource(R.drawable.ease_default_image);
 
             } else {
                 bar_progress.setVisibility(View.GONE);
-                percentageView.setVisibility(View.GONE);
+                tv_percentage.setVisibility(View.GONE);
                 imageView.setImageResource(R.drawable.ease_default_image);
                 showVideoThumbView(localThumb, videoBody.getThumbnailUrl(), message);
             }

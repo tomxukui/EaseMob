@@ -11,5 +11,6 @@
     <item name="tv_ack" type="id" />
     <item name="tv_delivered" type="id" />
     <item name="bar_progress" type="id" />
+    <item name="tv_percentage" type="id" />
 
 </resources>

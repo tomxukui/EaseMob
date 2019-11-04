@@ -35,7 +35,7 @@ public class EaseChatRowImage extends EaseChatRowFile {
 
     @Override
     protected void onFindViewById() {
-        percentageView = findViewById(R.id.percentage);
+        tv_percentage = findViewById(R.id.tv_percentage);
         iv_image = findViewById(R.id.iv_image);
     }
 
@@ -59,12 +59,12 @@ public class EaseChatRowImage extends EaseChatRowFile {
             } else {
                 if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING || imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING || imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
                     bar_progress.setVisibility(View.INVISIBLE);
-                    percentageView.setVisibility(View.INVISIBLE);
+                    tv_percentage.setVisibility(View.INVISIBLE);
                     iv_image.setImageResource(R.drawable.ease_default_image);
 
                 } else {
                     bar_progress.setVisibility(View.GONE);
-                    percentageView.setVisibility(View.GONE);
+                    tv_percentage.setVisibility(View.GONE);
                     iv_image.setImageResource(R.drawable.ease_default_image);
 
                     String thumbPath = imgBody.thumbnailLocalPath();
@@ -82,23 +82,23 @@ public class EaseChatRowImage extends EaseChatRowFile {
 
                 } else {
                     bar_progress.setVisibility(View.INVISIBLE);
-                    percentageView.setVisibility(View.INVISIBLE);
+                    tv_percentage.setVisibility(View.INVISIBLE);
                     iv_image.setImageResource(R.drawable.ease_default_image);
                 }
 
             } else if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
                 if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
                     bar_progress.setVisibility(View.VISIBLE);
-                    percentageView.setVisibility(View.VISIBLE);
+                    tv_percentage.setVisibility(View.VISIBLE);
 
                 } else {
                     bar_progress.setVisibility(View.INVISIBLE);
-                    percentageView.setVisibility(View.INVISIBLE);
+                    tv_percentage.setVisibility(View.INVISIBLE);
                 }
 
             } else {
                 bar_progress.setVisibility(View.GONE);
-                percentageView.setVisibility(View.GONE);
+                tv_percentage.setVisibility(View.GONE);
                 iv_image.setImageResource(R.drawable.ease_default_image);
 
                 String thumbPath = imgBody.thumbnailLocalPath();

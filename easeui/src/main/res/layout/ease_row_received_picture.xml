@@ -75,7 +75,7 @@
                         android:indeterminateTint="@color/ease_white" />
 
                     <TextView
-                        android:id="@+id/percentage"
+                        android:id="@id/tv_percentage"
                         style="@style/ease_message_bubble_progress_text_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

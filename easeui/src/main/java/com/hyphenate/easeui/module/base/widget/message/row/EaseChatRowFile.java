@@ -34,7 +34,7 @@ public class EaseChatRowFile extends EaseChatRow {
         fileNameView = findViewById(R.id.tv_file_name);
         fileSizeView = findViewById(R.id.tv_file_size);
         fileStateView = findViewById(R.id.tv_file_state);
-        percentageView = findViewById(R.id.percentage);
+        tv_percentage = findViewById(R.id.tv_percentage);
     }
 
     @Override
@@ -85,8 +85,8 @@ public class EaseChatRowFile extends EaseChatRow {
     private void onMessageCreate() {
         bar_progress.setVisibility(View.VISIBLE);
 
-        if (percentageView != null) {
-            percentageView.setVisibility(View.INVISIBLE);
+        if (tv_percentage != null) {
+            tv_percentage.setVisibility(View.INVISIBLE);
         }
 
         if (iv_status != null) {
@@ -97,8 +97,8 @@ public class EaseChatRowFile extends EaseChatRow {
     private void onMessageSuccess() {
         bar_progress.setVisibility(View.INVISIBLE);
 
-        if (percentageView != null) {
-            percentageView.setVisibility(View.INVISIBLE);
+        if (tv_percentage != null) {
+            tv_percentage.setVisibility(View.INVISIBLE);
         }
 
         if (iv_status != null) {
@@ -109,8 +109,8 @@ public class EaseChatRowFile extends EaseChatRow {
     private void onMessageError() {
         bar_progress.setVisibility(View.INVISIBLE);
 
-        if (percentageView != null) {
-            percentageView.setVisibility(View.INVISIBLE);
+        if (tv_percentage != null) {
+            tv_percentage.setVisibility(View.INVISIBLE);
         }
 
         if (iv_status != null) {
@@ -121,9 +121,9 @@ public class EaseChatRowFile extends EaseChatRow {
     private void onMessageInProgress() {
         bar_progress.setVisibility(View.VISIBLE);
 
-        if (percentageView != null) {
-            percentageView.setVisibility(View.VISIBLE);
-            percentageView.setText(message.progress() + "%");
+        if (tv_percentage != null) {
+            tv_percentage.setVisibility(View.VISIBLE);
+            tv_percentage.setText(message.progress() + "%");
         }
 
         if (iv_status != null) {
