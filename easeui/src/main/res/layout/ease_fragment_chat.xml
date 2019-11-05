@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linear_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/ease_chat_bg"
+    android:orientation="vertical">
+
+    <!--标题栏-->
+    <com.hyphenate.easeui.module.base.widget.EaseToolbar
+        android:id="@+id/toolbar"
+        style="@style/EaseToolbar" />
+
+    <!--主内容-->
+    <FrameLayout
+        android:id="@+id/frame_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0"
+        android:background="@color/ease_message_list_bg">
+
+        <com.hyphenate.easeui.module.base.widget.message.EaseMessageListView
+            android:id="@+id/list_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!--主内容的自定义内容-->
+        <FrameLayout
+            android:id="@+id/frame_main_custom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!--录音-->
+        <com.hyphenate.easeui.module.base.widget.EaseVoiceRecorderView
+            android:id="@+id/voice_recorder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible" />
+
+    </FrameLayout>
+
+    <!--底部-->
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/linear_footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:divider="@drawable/ease_divider_horizontal_1"
+        app:showDividers="beginning">
+
+        <!--聊天输入菜单-->
+        <com.hyphenate.easeui.module.base.widget.input.EaseInputMenu
+            android:id="@+id/menu_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--底部的自定义内容-->
+        <FrameLayout
+            android:id="@+id/frame_footer_custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</LinearLayout>

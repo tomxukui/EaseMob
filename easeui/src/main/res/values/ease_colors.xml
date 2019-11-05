@@ -24,6 +24,9 @@
     <color name="ease_toolbar_subtitle">#FFFFFF</color>
     <color name="ease_toolbar_menu">#FFFFFF</color>
 
+    <!--聊天页面-->
+    <color name="ease_chat_bg">#F5F5F5</color>
+
     <!--问诊页面-->
     <color name="ease_inquiry_bg">#F5F5F5</color>
 

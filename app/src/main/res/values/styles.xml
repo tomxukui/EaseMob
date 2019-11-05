@@ -19,6 +19,10 @@
         <item name="colorPrimaryDark">#FFFFFF</item>
     </style>
 
+    <style name="AppTheme.NoActionBar.Chat">
+        <item name="colorPrimaryDark">#2693FF</item>
+    </style>
+
     <style name="MaskDialog" parent="@style/Base.V7.Theme.AppCompat.Light.Dialog">
         <!-- 半透明 -->
         <item name="android:windowIsTranslucent">true</item>

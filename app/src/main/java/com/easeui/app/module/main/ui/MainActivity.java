@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.easeui.app.R;
 import com.easeui.app.dialog.LoadingDialog;
+import com.easeui.app.module.chat.ui.ChatActivity;
 import com.easeui.app.module.doctor.ui.DoctorInquiryActivity;
 import com.easeui.app.module.patient.ui.PatientInquiryActivity;
 import com.easeui.app.module.converstaion.ui.ConverstationsActivity;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btn_patientInquiry;
     private Button btn_doctorInquiry;
     private Button btn_conversations;
+    private Button btn_singleChat;
 
     private LoadingDialog mLoadingDialog;
 
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         btn_patientInquiry = findViewById(R.id.btn_patientInquiry);
         btn_doctorInquiry = findViewById(R.id.btn_doctorInquiry);
         btn_conversations = findViewById(R.id.btn_conversations);
+        btn_singleChat = findViewById(R.id.btn_singleChat);
     }
 
     private void setView() {
@@ -317,6 +320,42 @@ public class MainActivity extends AppCompatActivity {
             EaseUser fromUser = new EaseUser(username, nickname, avatar, null);
 
             Intent intent = ConverstationsActivity.buildIntent(MainActivity.this, fromUser, pwd);
+            startActivity(intent);
+        });
+
+        btn_singleChat.setOnClickListener(v -> {
+            String username = et_username.getText().toString().trim();
+            String nickname = et_nickname.getText().toString().trim();
+            String avatar = et_avatar.getText().toString().trim();
+            String pwd = et_pwd.getText().toString().trim();
+            String toUsername = et_toUsername.getText().toString().trim();
+            String toNickname = et_toNickname.getText().toString().trim();
+            String toAvatar = et_toAvatar.getText().toString().trim();
+
+            if (TextUtils.isEmpty(username)) {
+                toast(et_username.getHint().toString());
+                return;
+            }
+            if (TextUtils.isEmpty(nickname)) {
+                toast(et_nickname.getHint().toString());
+                return;
+            }
+            if (TextUtils.isEmpty(pwd)) {
+                toast(et_pwd.getHint().toString());
+                return;
+            }
+            if (TextUtils.isEmpty(toUsername)) {
+                toast(et_toUsername.getHint().toString());
+                return;
+            }
+            if (TextUtils.isEmpty(toNickname)) {
+                toast(et_toNickname.getHint().toString());
+                return;
+            }
+            EaseUser fromUser = new EaseUser(username, nickname, avatar);
+            EaseUser toUser = new EaseUser(toUsername, toNickname, toAvatar);
+
+            Intent intent = ChatActivity.buildIntent(MainActivity.this, fromUser, pwd, toUser);
             startActivity(intent);
         });
     }

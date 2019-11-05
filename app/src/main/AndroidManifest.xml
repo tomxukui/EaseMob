@@ -43,6 +43,13 @@
             android:theme="@style/EaseAppTheme"
             android:windowSoftInputMode="adjustResize" />
 
+        <!--单人聊天页面-->
+        <activity
+            android:name=".module.chat.ui.ChatActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.Chat"
+            android:windowSoftInputMode="adjustResize" />
+
         <!--####################################环信#########################################-->
         <meta-data
             android:name="EASEMOB_APPKEY"
