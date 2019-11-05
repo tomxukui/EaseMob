@@ -158,6 +158,9 @@ public class EaseChatFragment extends EaseBaseChatFragment {
         //初始化会话
         initConversation();
 
+        //加载本地第一次消息列表
+        loadFirstLocalMessages();
+
         //设置消息列表控件
         setMessageList();
 
@@ -191,16 +194,6 @@ public class EaseChatFragment extends EaseBaseChatFragment {
     protected void initConversation() {
         mConversation = EMClient.getInstance().chatManager().getConversation(mToUser.getUsername(), EMConversation.EMConversationType.Chat, true);
         mConversation.markAllMessagesAsRead();
-
-        List<EMMessage> messages = mConversation.getAllMessages();
-        int msgCount = (messages == null ? 0 : messages.size());
-        if (msgCount < mConversation.getAllMsgCount() && msgCount < mPageSize) {
-            String msgId = null;
-            if (messages != null && messages.size() > 0) {
-                msgId = messages.get(0).getMsgId();
-            }
-            mConversation.loadMoreMsgFromDB(msgId, mPageSize - msgCount);
-        }
     }
 
     /**
@@ -365,9 +358,24 @@ public class EaseChatFragment extends EaseBaseChatFragment {
     }
 
     /**
+     * 加载本地第一次消息列表
+     */
+    protected void loadFirstLocalMessages() {
+        List<EMMessage> messages = mConversation.getAllMessages();
+        int msgCount = (messages == null ? 0 : messages.size());
+        if (msgCount < mConversation.getAllMsgCount() && msgCount < mPageSize) {
+            String msgId = null;
+            if (messages != null && messages.size() > 0) {
+                msgId = messages.get(0).getMsgId();
+            }
+            mConversation.loadMoreMsgFromDB(msgId, mPageSize - msgCount);
+        }
+    }
+
+    /**
      * 加载本地更多消息列表
      */
-    private void loadMoreLocalMessages() {
+    protected void loadMoreLocalMessages() {
         if (list_message.getListView().getFirstVisiblePosition() == 0 && mHaveMoreData) {
             List<EMMessage> messages;
 
