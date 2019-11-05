@@ -178,7 +178,10 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
 
             @Override
             public List<EaseMenuItem> onSetMoreMenuItems() {
-                return null;
+                List<EaseMenuItem> menuItems = new ArrayList<>();
+                menuItems.add(createAlbumMenuItem());
+                menuItems.add(createCameraMenuItem());
+                return menuItems;
             }
 
         };
