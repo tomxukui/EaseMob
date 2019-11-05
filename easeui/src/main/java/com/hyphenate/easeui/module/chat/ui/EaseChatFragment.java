@@ -23,8 +23,8 @@ import com.hyphenate.easeui.module.base.widget.input.EaseInputMenu;
 import com.hyphenate.easeui.module.base.widget.input.EaseMenuItem;
 import com.hyphenate.easeui.module.base.widget.input.OnInputMenuListener;
 import com.hyphenate.easeui.module.base.widget.message.EaseMessageListView;
-import com.hyphenate.easeui.module.inquiry.provider.EaseInquiryInputMenuProvider;
-import com.hyphenate.easeui.module.inquiry.provider.EaseInquiryMessageProvider;
+import com.hyphenate.easeui.module.chat.provider.EaseChatInputMenuProvider;
+import com.hyphenate.easeui.module.chat.provider.EaseChatMessageProvider;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 import com.yanzhenjie.permission.Permission;
@@ -59,8 +59,8 @@ public class EaseChatFragment extends EaseBaseChatFragment {
     protected EaseUser mFromUser;
     protected EaseUser mToUser;
 
-    private EaseInquiryMessageProvider mMessageProvider;
-    private EaseInquiryInputMenuProvider mInputMenuProvider;
+    private EaseChatMessageProvider mMessageProvider;
+    private EaseChatInputMenuProvider mInputMenuProvider;
 
     public static EaseChatFragment newInstance(EaseUser fromUser, EaseUser toUser) {
         EaseChatFragment fragment = new EaseChatFragment();
@@ -87,12 +87,12 @@ public class EaseChatFragment extends EaseBaseChatFragment {
 
         mMessageProvider = onSetMessageRow();
         if (mMessageProvider == null) {
-            mMessageProvider = new EaseInquiryMessageProvider();
+            mMessageProvider = new EaseChatMessageProvider();
         }
 
         mInputMenuProvider = onSetInputMenu();
         if (mInputMenuProvider == null) {
-            mInputMenuProvider = new EaseInquiryInputMenuProvider() {
+            mInputMenuProvider = new EaseChatInputMenuProvider() {
 
                 @Override
                 public List<EaseMenuItem> onSetMoreMenuItems() {
@@ -543,14 +543,14 @@ public class EaseChatFragment extends EaseBaseChatFragment {
     /**
      * 设置消息
      */
-    protected EaseInquiryMessageProvider onSetMessageRow() {
+    protected EaseChatMessageProvider onSetMessageRow() {
         return null;
     }
 
     /**
      * 设置输入菜单
      */
-    protected EaseInquiryInputMenuProvider onSetInputMenu() {
+    protected EaseChatInputMenuProvider onSetInputMenu() {
         return null;
     }
 
