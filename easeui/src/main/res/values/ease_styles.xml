@@ -36,6 +36,12 @@
         <item name="toolbar_subtitle_textSize">@dimen/ease_toolbar_subtitle_textSize</item>
     </style>
 
+    <!--pop动画-->
+    <style name="ease_pop" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/ease_pop_in</item>
+        <item name="android:windowExitAnimation">@anim/ease_pop_out</item>
+    </style>
+
     <!--聊天时间样式-->
     <style name="ease_message_date_style">
         <item name="android:paddingTop">2dp</item>

@@ -146,6 +146,7 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
             mToolbarMenu.setVerticalOffset(EaseDensityUtil.dp2px(4));
             mToolbarMenu.setModal(true);
             mToolbarMenu.setAdapter(mMenuListAdapter);
+            mToolbarMenu.setAnimationStyle(R.style.ease_pop);
             mToolbarMenu.setOnItemClickListener((parent, view, position, id) -> {
                 PatientInquiryToolbarMenuItem menuItem = mMenuListAdapter.getItem(position);
 
