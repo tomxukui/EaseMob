@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMMessageListener;
@@ -56,6 +57,9 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
     protected LinearLayoutCompat linear_footer;
     protected FrameLayout frame_footer_custom;
     protected EaseInputMenu menu_input;
+    protected LinearLayout linear_status;
+    protected TextView tv_statusName;
+    protected TextView tv_round;
 
     protected EMConversation mConversation;//会话
 
@@ -134,6 +138,9 @@ public class EaseInquiryFragment extends EaseBaseChatFragment {
         linear_footer = view.findViewById(R.id.linear_footer);
         frame_footer_custom = view.findViewById(R.id.frame_footer_custom);
         menu_input = view.findViewById(R.id.menu_input);
+        linear_status = view.findViewById(R.id.linear_status);
+        tv_statusName = view.findViewById(R.id.tv_statusName);
+        tv_round = view.findViewById(R.id.tv_round);
     }
 
     @Override
