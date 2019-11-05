@@ -22,7 +22,6 @@ import com.hyphenate.easeui.module.base.widget.input.EaseInputControlButton;
 import com.hyphenate.easeui.module.base.widget.input.EaseInputMenu;
 import com.hyphenate.easeui.module.base.widget.input.EaseMenuItem;
 import com.hyphenate.easeui.module.inquiry.provider.EaseInquiryInputMenuProvider;
-import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
@@ -98,30 +97,6 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
         tv_startVisit.setText("开启随访");
         tv_startVisit.setVisibility(View.GONE);
         frame_footer_custom.addView(tv_startVisit);
-    }
-
-    @Override
-    protected void setView(Bundle savedInstanceState) {
-        super.setView(savedInstanceState);
-        setOnInquiryListener(new EaseOnInquiryListener() {
-
-            @Override
-            public void onStartInquiry() {
-            }
-
-            @Override
-            public void onCloseInquiry() {
-            }
-
-            @Override
-            public void onStartVisit() {
-            }
-
-            @Override
-            public void onCloseVisit() {
-            }
-
-        });
     }
 
     @Override

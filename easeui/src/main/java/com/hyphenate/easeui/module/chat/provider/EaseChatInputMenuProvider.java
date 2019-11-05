@@ -35,14 +35,14 @@ public abstract class EaseChatInputMenuProvider {
      * 是否开启语音
      */
     public boolean voiceEnable() {
-        return false;
+        return true;
     }
 
     /**
      * 是否开启表情
      */
     public boolean faceEnable() {
-        return false;
+        return true;
     }
 
     /**

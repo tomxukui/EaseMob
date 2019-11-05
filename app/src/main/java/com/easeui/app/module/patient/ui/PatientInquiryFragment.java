@@ -17,7 +17,6 @@ import com.easeui.app.module.patient.model.PatientInquiryToolbarMenuItem;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.base.widget.gridmenu.EaseGridMenu;
 import com.hyphenate.easeui.module.base.widget.gridmenu.EaseGridMenuItem;
-import com.hyphenate.easeui.module.inquiry.callback.EaseOnInquiryListener;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
 import com.hyphenate.easeui.utils.EaseContextCompatUtil;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
@@ -117,30 +116,6 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
         footerMenuItems.add(new EaseGridMenuItem("送心意", v -> EaseToastUtil.show("送心意")));
         footerMenuItems.add(new EaseGridMenuItem("再次咨询", v -> EaseToastUtil.show("再次咨询")));
         mFooterMenu.setData(footerMenuItems);
-
-        setOnInquiryListener(new EaseOnInquiryListener() {
-
-            @Override
-            public void onStartInquiry() {
-                EaseToastUtil.show("开始问诊");
-            }
-
-            @Override
-            public void onCloseInquiry() {
-                EaseToastUtil.show("结束问诊");
-            }
-
-            @Override
-            public void onStartVisit() {
-                EaseToastUtil.show("开始随访");
-            }
-
-            @Override
-            public void onCloseVisit() {
-                EaseToastUtil.show("结束随访");
-            }
-
-        });
     }
 
     @Override
