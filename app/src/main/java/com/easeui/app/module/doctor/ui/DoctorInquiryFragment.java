@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -33,12 +34,19 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
 
     private static final String EXTRA_TO_USER_MOBILE = "EXTRA_TO_USER_MOBILE";
 
+    //聊天状态
+    private LinearLayout linear_status;
+    private TextView tv_statusName;
+    private TextView tv_round;
+
     private TextView tv_startVisit;
 
     private MenuItem inquiryMenuItem;
 
     private String mToUserMobile;
     private boolean mIsVisit;
+
+    private LayoutInflater mInflater;
 
     public static DoctorInquiryFragment newInstance(EaseUser fromUser, EaseUser toUser, String toUserMobile) {
         DoctorInquiryFragment fragment = new DoctorInquiryFragment();
@@ -53,6 +61,8 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        mInflater = LayoutInflater.from(getContext());
+
         Bundle bundle = getArguments();
         if (bundle != null) {
             mToUserMobile = bundle.getString(EXTRA_TO_USER_MOBILE);
@@ -68,8 +78,17 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
     }
 
     @Override
-    protected void setView(Bundle savedInstanceState) {
-        super.setView(savedInstanceState);
+    protected void initView(View view, Bundle savedInstanceState) {
+        super.initView(view, savedInstanceState);
+        //添加聊天状态
+        frame_main_custom.removeAllViews();
+        View statusView = mInflater.inflate(R.layout.widget_doctor_chat_status, frame_main_custom, false);
+        linear_status = statusView.findViewById(R.id.linear_status);
+        tv_statusName = statusView.findViewById(R.id.tv_statusName);
+        tv_round = statusView.findViewById(R.id.tv_round);
+        frame_main_custom.addView(statusView);
+
+        //添加开始随访
         tv_startVisit = new TextView(getContext());
         tv_startVisit.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         tv_startVisit.setMinHeight(EaseDensityUtil.dp2px(49));
@@ -79,7 +98,11 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
         tv_startVisit.setText("开启随访");
         tv_startVisit.setVisibility(View.GONE);
         frame_footer_custom.addView(tv_startVisit);
+    }
 
+    @Override
+    protected void setView(Bundle savedInstanceState) {
+        super.setView(savedInstanceState);
         setOnInquiryListener(new EaseOnInquiryListener() {
 
             @Override

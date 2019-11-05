@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?><!--状态-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_status"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#D0F1F8"
+    android:gravity="center_vertical"
+    android:minHeight="42dp"
+    android:orientation="horizontal"
+    android:paddingLeft="15dp"
+    android:paddingTop="12dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="12dp">
+
+    <!--状态名称-->
+    <TextView
+        android:id="@+id/tv_statusName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#00B8C1"
+        android:textSize="13sp" />
+
+    <!--回合-->
+    <TextView
+        android:id="@+id/tv_round"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:textColor="#AAAAAA"
+        android:textSize="13sp" />
+
+</LinearLayout>
