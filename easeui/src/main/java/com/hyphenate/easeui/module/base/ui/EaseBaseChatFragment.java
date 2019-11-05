@@ -110,6 +110,18 @@ public abstract class EaseBaseChatFragment extends EaseBaseFragment {
     }
 
     /**
+     * 发送视频消息
+     *
+     * @param videoPath   视频本地路径
+     * @param thumbPath   视频预览图路径
+     * @param videoLength 视频时间长度
+     */
+    protected void sendVideoMessage(String videoPath, String thumbPath, int videoLength) {
+        EMMessage message = EMMessage.createVideoSendMessage(videoPath, thumbPath, videoLength, getToUsername());
+        sendMessage(message);
+    }
+
+    /**
      * 发送图片消息
      *
      * @param imagePath 图片路径
