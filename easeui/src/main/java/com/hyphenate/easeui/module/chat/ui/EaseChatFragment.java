@@ -379,7 +379,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
                 return;
             }
 
-            if (messages.size() > 0) {
+            if (messages != null && messages.size() > 0) {
                 list_message.refreshSeekTo(messages.size() - 1);
 
                 if (messages.size() != mPageSize) {
