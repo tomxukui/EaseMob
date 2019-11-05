@@ -26,6 +26,7 @@ import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatTextPre
 import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatVideoPresenter;
 import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatVoicePresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EaseMessageListAdapter extends BaseAdapter {
@@ -54,7 +55,7 @@ public class EaseMessageListAdapter extends BaseAdapter {
     private ListView listView;
 
     private EMConversation mConversation;
-    private EMMessage[] mMessages;
+    private List<EMMessage> mMessages;
 
     private EaseMessageListItemStyle mListItemStyle;
     private EaseCustomChatRowProvider mCustomRowProvider;
@@ -63,6 +64,7 @@ public class EaseMessageListAdapter extends BaseAdapter {
     public EaseMessageListAdapter(String username, EMConversation.EMConversationType conversationType, ListView listView) {
         this.listView = listView;
         mConversation = EMClient.getInstance().chatManager().getConversation(username, conversationType, true);
+        mMessages = new ArrayList<>();
     }
 
     private final Handler mHandler = new Handler(Looper.getMainLooper()) {
@@ -77,8 +79,8 @@ public class EaseMessageListAdapter extends BaseAdapter {
                 break;
 
                 case HANDLER_MESSAGE_SELECT_LAST: {
-                    if (mMessages != null && mMessages.length > 0) {
-                        listView.setSelection(mMessages.length - 1);
+                    if (getCount() > 0) {
+                        listView.setSelection(getCount() - 1);
                     }
                 }
                 break;
@@ -95,8 +97,13 @@ public class EaseMessageListAdapter extends BaseAdapter {
         }
 
         private void refreshList() {
+            mMessages.clear();
+
             List<EMMessage> messages = mConversation.getAllMessages();
-            mMessages = messages.toArray(new EMMessage[messages.size()]);
+            if (messages != null) {
+                mMessages.addAll(messages);
+            }
+
             mConversation.markAllMessagesAsRead();
             notifyDataSetChanged();
         }
@@ -192,7 +199,7 @@ public class EaseMessageListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return mMessages == null ? 0 : mMessages.length;
+        return mMessages == null ? 0 : mMessages.size();
     }
 
     @Override
@@ -253,8 +260,8 @@ public class EaseMessageListAdapter extends BaseAdapter {
 
     @Override
     public EMMessage getItem(int position) {
-        if (mMessages != null && position >= 0 && position < mMessages.length) {
-            return mMessages[position];
+        if (mMessages != null && position >= 0 && position < mMessages.size()) {
+            return mMessages.get(position);
         }
 
         return null;
