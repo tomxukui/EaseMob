@@ -4,9 +4,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.ListPopupWindow;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.easeui.app.R;
 import com.easeui.app.module.patient.adapter.PatientInquiryMenuListAdapter;
@@ -25,12 +28,19 @@ import java.util.List;
 
 public class PatientInquiryFragment extends EaseInquiryFragment {
 
+    //聊天状态
+    private LinearLayout linear_status;
+    private TextView tv_statusName;
+    private TextView tv_round;
+
     //底部菜单
     private EaseGridMenu mFooterMenu;
 
     //标题栏菜单
     private ListPopupWindow mToolbarMenu;
     private PatientInquiryMenuListAdapter mMenuListAdapter;
+
+    private LayoutInflater mInflater;
 
     public static PatientInquiryFragment newInstance(EaseUser fromUser, EaseUser toUser) {
         PatientInquiryFragment fragment = new PatientInquiryFragment();
@@ -44,6 +54,8 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        mInflater = LayoutInflater.from(getContext());
+
         List<PatientInquiryToolbarMenuItem> menuItems = new ArrayList<>();
         menuItems.add(new PatientInquiryToolbarMenuItem(R.mipmap.ic_menu_doctor, "医生介绍", (itemModel, position) -> {
             EaseToastUtil.show("医生介绍");
@@ -83,6 +95,15 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         super.initView(view, savedInstanceState);
+        //添加聊天状态
+        frame_main_custom.removeAllViews();
+        View statusView = mInflater.inflate(R.layout.widget_patient_chat_status, frame_main_custom, false);
+        linear_status = statusView.findViewById(R.id.linear_status);
+        tv_statusName = statusView.findViewById(R.id.tv_statusName);
+        tv_round = statusView.findViewById(R.id.tv_round);
+        frame_main_custom.addView(statusView);
+
+        //添加底部菜单
         frame_footer_custom.removeAllViews();
         mFooterMenu = new EaseGridMenu(getContext());
         mFooterMenu.setVisibility(View.GONE);

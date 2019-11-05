@@ -40,39 +40,6 @@
             android:layout_gravity="center"
             android:visibility="invisible" />
 
-        <!--状态-->
-        <LinearLayout
-            android:id="@+id/linear_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/ease_chat_status_bg"
-            android:gravity="center_vertical"
-            android:minHeight="42dp"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/ease_chat_status_padding_left"
-            android:paddingTop="@dimen/ease_chat_status_padding_top"
-            android:paddingRight="@dimen/ease_chat_status_padding_right"
-            android:paddingBottom="@dimen/ease_chat_status_padding_bottom">
-
-            <!--状态名称-->
-            <TextView
-                android:id="@+id/tv_statusName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/ease_chat_status_name"
-                android:textSize="13sp" />
-
-            <!--回合-->
-            <TextView
-                android:id="@+id/tv_round"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:textColor="@color/ease_chat_status_round"
-                android:textSize="13sp" />
-
-        </LinearLayout>
-
     </FrameLayout>
 
     <!--底部-->

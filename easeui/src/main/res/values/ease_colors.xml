@@ -27,11 +27,6 @@
     <!--问诊页面-->
     <color name="ease_inquiry_bg">#F5F5F5</color>
 
-    <!--聊天状态-->
-    <color name="ease_chat_status_bg">#D0F1F8</color>
-    <color name="ease_chat_status_name">#00B8C1</color>
-    <color name="ease_chat_status_round">#AAAAAA</color>
-    
     <!--聊天输入框-->
     <color name="ease_chat_input_control_layout_bg">#FCFCFC</color>
     <color name="ease_chat_input_panel_layout_bg">#FCFCFC</color>
