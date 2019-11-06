@@ -175,9 +175,10 @@ public class EaseMessageListAdapter extends BaseAdapter {
     }
 
     protected EaseChatRowPresenter createChatRowPresenter(EMMessage message, int position) {
-        EaseChatRowPresenter presenter;
+        EaseChatRowPresenter presenter = null;
 
-        switch (getItemViewType(position)) {
+        int type = getItemViewType(position);
+        switch (type) {
 
             case MESSAGE_TYPE_SENT_TXT:
             case MESSAGE_TYPE_RECV_TXT: {//文字
@@ -228,7 +229,15 @@ public class EaseMessageListAdapter extends BaseAdapter {
             break;
 
             default: {//自定义
-                presenter = mCustomRowProvider.getCustomChatRow(message, position, this);
+                if (mCustomRowProvider != null) {
+                    int customTypeCount = mCustomRowProvider.getCustomTypeCount();
+
+                    if (customTypeCount > 0) {
+                        int customType = type - customTypeCount;
+
+                        presenter = mCustomRowProvider.getCustomChatRow(customType, message, position);
+                    }
+                }
             }
             break;
 
