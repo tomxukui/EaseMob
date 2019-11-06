@@ -358,11 +358,19 @@ public class EaseChatFragment extends EaseBaseChatFragment {
     }
 
     /**
+     * 获取会话中的缓存消息
+     */
+    protected List<EMMessage> getConversationAllMessages() {
+        return mConversation.getAllMessages();
+    }
+
+    /**
      * 加载本地第一次消息列表
      */
     protected void loadFirstLocalMessages() {
-        List<EMMessage> messages = mConversation.getAllMessages();
+        List<EMMessage> messages = getConversationAllMessages();
         int count = (messages == null ? 0 : messages.size());
+
         if (count < mConversation.getAllMsgCount() && count < mPageSize) {
             String msgId = null;
             if (messages != null && messages.size() > 0) {
@@ -380,7 +388,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
             List<EMMessage> messages;
 
             try {
-                messages = mConversation.loadMoreMsgFromDB(mConversation.getAllMessages().size() == 0 ? "" : mConversation.getAllMessages().get(0).getMsgId(), mPageSize);
+                messages = mConversation.loadMoreMsgFromDB(getConversationAllMessages().size() == 0 ? "" : getConversationAllMessages().get(0).getMsgId(), mPageSize);
 
             } catch (Exception e) {
                 list_message.setRefreshing(false);
@@ -476,7 +484,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
         mConversation.markAllMessagesAsRead();
 
         if (list_message != null) {
-            list_message.setNewData(mConversation.getAllMessages());
+            list_message.setNewData(getConversationAllMessages());
         }
     }
 
