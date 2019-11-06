@@ -8,6 +8,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMVoiceMessageBody;
 import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.utils.EaseContextCompatUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRow;
 import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowVoice;
@@ -56,7 +57,7 @@ public class EaseChatVoicePresenter extends EaseChatFilePresenter {
             }
 
         } else {
-            final String st = getContext().getResources().getString(R.string.Is_download_voice_click_later);
+            final String st = EaseContextCompatUtil.getString(R.string.Is_download_voice_click_later);
 
             if (message.status() == EMMessage.Status.SUCCESS) {
                 if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {

@@ -77,8 +77,12 @@ public class EaseChatImagePresenter extends EaseChatFilePresenter {
             }
         }
 
-        Intent intent = EaseShowBigImageActivity.buildIntent(getContext(), message.getMsgId(), imgBody.getLocalUrl(), null);
-        getContext().startActivity(intent);
+        Context context = getContext();
+
+        if (context != null) {
+            Intent intent = EaseShowBigImageActivity.buildIntent(context, message.getMsgId(), imgBody.getLocalUrl(), null);
+            context.startActivity(intent);
+        }
     }
 
 }

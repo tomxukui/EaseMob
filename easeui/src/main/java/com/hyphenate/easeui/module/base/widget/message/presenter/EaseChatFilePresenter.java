@@ -31,12 +31,18 @@ public class EaseChatFilePresenter extends EaseChatRowPresenter {
         EMNormalFileMessageBody fileMessageBody = (EMNormalFileMessageBody) message.getBody();
         File file = new File(fileMessageBody.getLocalUrl());
 
-        if (file.exists()) {
-            EaseCompat.openFile(file, (Activity) getContext());
+        Context context = getContext();
 
-        } else {
-            Intent intent = EaseShowFileActivity.buildIntent(getContext(), message);
-            getContext().startActivity(intent);
+        if (context != null) {
+            if (file.exists()) {
+                if (context instanceof Activity) {
+                    EaseCompat.openFile(file, (Activity) context);
+                }
+
+            } else {
+                Intent intent = EaseShowFileActivity.buildIntent(context, message);
+                context.startActivity(intent);
+            }
         }
 
         if (message.direct() == EMMessage.Direct.RECEIVE && !message.isAcked() && message.getChatType() == EMMessage.ChatType.Chat) {

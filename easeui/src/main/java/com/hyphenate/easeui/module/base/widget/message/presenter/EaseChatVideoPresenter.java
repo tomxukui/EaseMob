@@ -37,19 +37,23 @@ public class EaseChatVideoPresenter extends EaseChatFilePresenter {
             }
         }
 
-        Intent intent = new Intent(getContext(), EaseShowVideoActivity.class);
-        intent.putExtra("msg", message);
+        Context context = getContext();
 
-        if (message != null && message.direct() == EMMessage.Direct.RECEIVE && !message.isAcked() && message.getChatType() == EMMessage.ChatType.Chat) {
-            try {
-                EMClient.getInstance().chatManager().ackMessageRead(message.getFrom(), message.getMsgId());
+        if (context != null) {
+            Intent intent = new Intent(context, EaseShowVideoActivity.class);
+            intent.putExtra("msg", message);
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (message != null && message.direct() == EMMessage.Direct.RECEIVE && !message.isAcked() && message.getChatType() == EMMessage.ChatType.Chat) {
+                try {
+                    EMClient.getInstance().chatManager().ackMessageRead(message.getFrom(), message.getMsgId());
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
 
-        getContext().startActivity(intent);
+            context.startActivity(intent);
+        }
     }
 
 }
