@@ -1,6 +1,7 @@
 package com.hyphenate.easeui.module.base.widget.message.row;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -17,8 +18,8 @@ public class EaseChatRowCloseInquiry extends EaseChatRow {
     }
 
     @Override
-    protected void onInflateView() {
-        mInflater.inflate(R.layout.ease_row_close_inquiry, this);
+    protected void onInflateView(LayoutInflater inflater) {
+        inflater.inflate(R.layout.ease_row_close_inquiry, this);
     }
 
     @Override

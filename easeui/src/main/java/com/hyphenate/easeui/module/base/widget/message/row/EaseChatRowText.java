@@ -2,6 +2,7 @@ package com.hyphenate.easeui.module.base.widget.message.row;
 
 import android.content.Context;
 import android.text.Spannable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
@@ -24,8 +25,8 @@ public class EaseChatRowText extends EaseChatRow {
     }
 
     @Override
-    protected void onInflateView() {
-        mInflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_message : R.layout.ease_row_sent_message, this);
+    protected void onInflateView(LayoutInflater inflater) {
+        inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_message : R.layout.ease_row_sent_message, this);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.hyphenate.easeui.module.base.widget.message.row;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
@@ -13,7 +14,7 @@ import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.bean.EaseEmojicon;
 
 /**
- * big emoji icons
+ * 大表情
  */
 public class EaseChatRowBigExpression extends EaseChatRowText {
 
@@ -24,8 +25,8 @@ public class EaseChatRowBigExpression extends EaseChatRowText {
     }
 
     @Override
-    protected void onInflateView() {
-        mInflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_bigexpression : R.layout.ease_row_sent_bigexpression, this);
+    protected void onInflateView(LayoutInflater inflater) {
+        inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_bigexpression : R.layout.ease_row_sent_bigexpression, this);
     }
 
     @Override

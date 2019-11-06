@@ -51,15 +51,13 @@ public abstract class EaseChatRow extends LinearLayout {
     protected int mPosition;
     protected BaseAdapter mAdapter;
 
-    protected LayoutInflater mInflater;
-
     public EaseChatRow(Context context, EMMessage message, int position, BaseAdapter adapter) {
         super(context);
-        mInflater = LayoutInflater.from(context);
         mMessage = message;
         mPosition = position;
         mAdapter = adapter;
 
+        onInflateView(LayoutInflater.from(context));
         initView();
     }
 
@@ -76,7 +74,6 @@ public abstract class EaseChatRow extends LinearLayout {
     }
 
     private void initView() {
-        onInflateView();
         tv_timestamp = findViewById(R.id.tv_timestamp);
         iv_avatar = findViewById(R.id.iv_avatar);
         group_bubble = findViewById(R.id.group_bubble);
@@ -257,7 +254,7 @@ public abstract class EaseChatRow extends LinearLayout {
         }
     }
 
-    protected abstract void onInflateView();
+    protected abstract void onInflateView(LayoutInflater inflater);
 
     /**
      * find view by id
@@ -265,7 +262,7 @@ public abstract class EaseChatRow extends LinearLayout {
     protected abstract void onFindViewById();
 
     /**
-     * refresh view when message status change
+     * 当消息改变时刷新控件
      */
     protected abstract void onViewUpdate(EMMessage msg);
 

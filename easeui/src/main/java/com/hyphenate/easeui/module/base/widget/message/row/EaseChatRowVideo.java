@@ -1,6 +1,7 @@
 package com.hyphenate.easeui.module.base.widget.message.row;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -32,8 +33,8 @@ public class EaseChatRowVideo extends EaseChatRowFile {
     }
 
     @Override
-    protected void onInflateView() {
-        mInflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_video : R.layout.ease_row_sent_video, this);
+    protected void onInflateView(LayoutInflater inflater) {
+        inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_video : R.layout.ease_row_sent_video, this);
     }
 
     @Override
