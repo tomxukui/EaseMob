@@ -22,8 +22,8 @@ import java.io.File;
 public class EaseChatFilePresenter extends EaseChatRowPresenter {
 
     @Override
-    protected EaseChatRow onCreateChatRow(Context cxt, EMMessage message, int position, BaseAdapter adapter) {
-        return new EaseChatRowFile(cxt, message, position, adapter);
+    protected EaseChatRow onCreateChatRow(Context context, EMMessage message, int position, BaseAdapter adapter) {
+        return new EaseChatRowFile(context, message, position, adapter);
     }
 
     @Override

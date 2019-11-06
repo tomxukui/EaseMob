@@ -19,8 +19,8 @@ import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowImage;
 public class EaseChatImagePresenter extends EaseChatFilePresenter {
 
     @Override
-    protected EaseChatRow onCreateChatRow(Context cxt, EMMessage message, int position, BaseAdapter adapter) {
-        return new EaseChatRowImage(cxt, message, position, adapter);
+    protected EaseChatRow onCreateChatRow(Context context, EMMessage message, int position, BaseAdapter adapter) {
+        return new EaseChatRowImage(context, message, position, adapter);
     }
 
     @Override

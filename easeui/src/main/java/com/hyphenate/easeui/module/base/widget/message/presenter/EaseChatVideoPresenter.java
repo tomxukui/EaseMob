@@ -18,8 +18,8 @@ import com.hyphenate.easeui.module.base.widget.message.row.EaseChatRowVideo;
 public class EaseChatVideoPresenter extends EaseChatFilePresenter {
 
     @Override
-    protected EaseChatRow onCreateChatRow(Context cxt, EMMessage message, int position, BaseAdapter adapter) {
-        return new EaseChatRowVideo(cxt, message, position, adapter);
+    protected EaseChatRow onCreateChatRow(Context context, EMMessage message, int position, BaseAdapter adapter) {
+        return new EaseChatRowVideo(context, message, position, adapter);
     }
 
     @Override

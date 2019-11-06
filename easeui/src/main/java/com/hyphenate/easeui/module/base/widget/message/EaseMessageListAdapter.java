@@ -25,6 +25,8 @@ import java.util.List;
 
 public class EaseMessageListAdapter extends BaseAdapter {
 
+    private static final int MESSAGE_SELF_TYPE_COUNT = 16;
+
     private static final int MESSAGE_TYPE_SENT_TXT = 0;//发送的文字
     private static final int MESSAGE_TYPE_RECV_TXT = 1;//接收的文字
     private static final int MESSAGE_TYPE_SENT_IMAGE = 2;//发送的图片
@@ -64,10 +66,14 @@ public class EaseMessageListAdapter extends BaseAdapter {
 
     @Override
     public int getViewTypeCount() {
-        int count = 16;
+        int count = MESSAGE_SELF_TYPE_COUNT;
 
-        if (mCustomRowProvider != null && mCustomRowProvider.getCustomChatRowTypeCount() > 0) {
-            count += mCustomRowProvider.getCustomChatRowTypeCount();
+        if (mCustomRowProvider != null) {
+            int customTypeCount = mCustomRowProvider.getCustomTypeCount();
+
+            if (customTypeCount > 0) {
+                count += customTypeCount;
+            }
         }
 
         return count;
@@ -78,10 +84,16 @@ public class EaseMessageListAdapter extends BaseAdapter {
         EMMessage message = getItem(position);
 
         if (message != null) {
-            if (mCustomRowProvider != null && mCustomRowProvider.getCustomChatRowType(message) > 0) {
-                return mCustomRowProvider.getCustomChatRowType(message) + 16;
+            //设置自定义
+            if (mCustomRowProvider != null) {
+                int customType = mCustomRowProvider.getCustomType(message);
+
+                if (customType >= 0) {
+                    return MESSAGE_SELF_TYPE_COUNT + customType;
+                }
             }
 
+            //设置原定义
             if (message.getType() == EMMessage.Type.TXT) {
                 if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, false)) {//结束问诊
                     return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_FINISH_INQUIRY : MESSAGE_TYPE_SENT_FINISH_INQUIRY;
@@ -163,56 +175,63 @@ public class EaseMessageListAdapter extends BaseAdapter {
     }
 
     protected EaseChatRowPresenter createChatRowPresenter(EMMessage message, int position) {
-        EaseChatRowPresenter presenter = null;
+        EaseChatRowPresenter presenter;
 
-        if (mCustomRowProvider != null) {
-            presenter = mCustomRowProvider.getCustomChatRow(message, position, this);
-        }
+        switch (getItemViewType(position)) {
 
-        if (presenter == null) {
-            switch (message.getType()) {
-
-                case TXT: {
-                    if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, false)) {//结束问诊
-                        presenter = new EaseChatCloseInquiryPresenter();
-
-                    } else if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)) {//表情
-                        presenter = new EaseChatBigExpressionPresenter();
-
-                    } else {//文字
-                        presenter = new EaseChatTextPresenter();
-                    }
-                }
-                break;
-
-                case LOCATION: {//定位
-                    presenter = new EaseChatLocationPresenter();
-                }
-                break;
-
-                case FILE: {//文件
-                    presenter = new EaseChatFilePresenter();
-                }
-                break;
-
-                case IMAGE: {//图片
-                    presenter = new EaseChatImagePresenter();
-                }
-                break;
-
-                case VOICE: {//语音
-                    presenter = new EaseChatVoicePresenter();
-                }
-                break;
-
-                case VIDEO: {//视频
-                    presenter = new EaseChatVideoPresenter();
-                }
-                break;
-
-                default:
-                    break;
+            case MESSAGE_TYPE_SENT_TXT:
+            case MESSAGE_TYPE_RECV_TXT: {//文字
+                presenter = new EaseChatTextPresenter();
             }
+            break;
+
+            case MESSAGE_TYPE_SENT_IMAGE:
+            case MESSAGE_TYPE_RECV_IMAGE: {//图片
+                presenter = new EaseChatImagePresenter();
+            }
+            break;
+
+            case MESSAGE_TYPE_SENT_LOCATION:
+            case MESSAGE_TYPE_RECV_LOCATION: {//定位
+                presenter = new EaseChatLocationPresenter();
+            }
+            break;
+
+            case MESSAGE_TYPE_SENT_VOICE:
+            case MESSAGE_TYPE_RECV_VOICE: {//语音
+                presenter = new EaseChatVoicePresenter();
+            }
+            break;
+
+            case MESSAGE_TYPE_SENT_VIDEO:
+            case MESSAGE_TYPE_RECV_VIDEO: {//视频
+                presenter = new EaseChatVideoPresenter();
+            }
+            break;
+
+            case MESSAGE_TYPE_SENT_FILE:
+            case MESSAGE_TYPE_RECV_FILE: {//文件
+                presenter = new EaseChatFilePresenter();
+            }
+            break;
+
+            case MESSAGE_TYPE_SENT_EXPRESSION:
+            case MESSAGE_TYPE_RECV_EXPRESSION: {//表情
+                presenter = new EaseChatBigExpressionPresenter();
+            }
+            break;
+
+            case MESSAGE_TYPE_SENT_FINISH_INQUIRY:
+            case MESSAGE_TYPE_RECV_FINISH_INQUIRY: {//问诊结束
+                presenter = new EaseChatCloseInquiryPresenter();
+            }
+            break;
+
+            default: {//自定义
+                presenter = mCustomRowProvider.getCustomChatRow(message, position, this);
+            }
+            break;
+
         }
 
         return presenter;

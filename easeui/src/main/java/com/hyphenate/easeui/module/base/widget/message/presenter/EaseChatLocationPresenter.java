@@ -16,8 +16,8 @@ import com.hyphenate.exceptions.HyphenateException;
 public class EaseChatLocationPresenter extends EaseChatRowPresenter {
 
     @Override
-    protected EaseChatRow onCreateChatRow(Context cxt, EMMessage message, int position, BaseAdapter adapter) {
-        return new EaseChatRowLocation(cxt, message, position, adapter);
+    protected EaseChatRow onCreateChatRow(Context context, EMMessage message, int position, BaseAdapter adapter) {
+        return new EaseChatRowLocation(context, message, position, adapter);
     }
 
     @Override

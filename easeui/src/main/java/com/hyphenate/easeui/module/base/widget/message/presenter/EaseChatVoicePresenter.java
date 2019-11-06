@@ -24,9 +24,9 @@ public class EaseChatVoicePresenter extends EaseChatFilePresenter {
     private EaseChatRowVoicePlayer voicePlayer;
 
     @Override
-    protected EaseChatRow onCreateChatRow(Context cxt, EMMessage message, int position, BaseAdapter adapter) {
-        voicePlayer = EaseChatRowVoicePlayer.getInstance(cxt);
-        return new EaseChatRowVoice(cxt, message, position, adapter);
+    protected EaseChatRow onCreateChatRow(Context context, EMMessage message, int position, BaseAdapter adapter) {
+        voicePlayer = EaseChatRowVoicePlayer.getInstance(context);
+        return new EaseChatRowVoice(context, message, position, adapter);
     }
 
     @Override
