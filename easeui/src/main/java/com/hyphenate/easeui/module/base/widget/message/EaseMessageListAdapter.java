@@ -1,16 +1,10 @@
 package com.hyphenate.easeui.module.base.widget.message;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
@@ -31,10 +25,6 @@ import java.util.List;
 
 public class EaseMessageListAdapter extends BaseAdapter {
 
-    private static final int HANDLER_MESSAGE_REFRESH_LIST = 0;
-    private static final int HANDLER_MESSAGE_SELECT_LAST = 1;
-    private static final int HANDLER_MESSAGE_SEEK_TO = 2;
-
     private static final int MESSAGE_TYPE_SENT_TXT = 0;//发送的文字
     private static final int MESSAGE_TYPE_RECV_TXT = 1;//接收的文字
     private static final int MESSAGE_TYPE_SENT_IMAGE = 2;//发送的图片
@@ -52,149 +42,14 @@ public class EaseMessageListAdapter extends BaseAdapter {
     private static final int MESSAGE_TYPE_SENT_FINISH_INQUIRY = 14;//发送的问诊结束
     private static final int MESSAGE_TYPE_RECV_FINISH_INQUIRY = 15;//接收的问诊结束
 
-    private ListView listView;
-
-    private EMConversation mConversation;
     private List<EMMessage> mMessages;
 
     private EaseMessageListItemStyle mListItemStyle;
     private EaseCustomChatRowProvider mCustomRowProvider;
     private OnItemClickListener mOnItemClickListener;
 
-    public EaseMessageListAdapter(String username, EMConversation.EMConversationType conversationType, ListView listView) {
-        this.listView = listView;
-        mConversation = EMClient.getInstance().chatManager().getConversation(username, conversationType, true);
-        mMessages = new ArrayList<>();
-    }
-
-    private final Handler mHandler = new Handler(Looper.getMainLooper()) {
-
-        @Override
-        public void handleMessage(android.os.Message message) {
-            switch (message.what) {
-
-                case HANDLER_MESSAGE_REFRESH_LIST: {
-                    refreshList();
-                }
-                break;
-
-                case HANDLER_MESSAGE_SELECT_LAST: {
-                    if (getCount() > 0) {
-                        listView.setSelection(getCount() - 1);
-                    }
-                }
-                break;
-
-                case HANDLER_MESSAGE_SEEK_TO: {
-                    int position = message.arg1;
-                    listView.setSelection(position);
-                }
-                break;
-
-                default:
-                    break;
-            }
-        }
-
-        private void refreshList() {
-            mMessages.clear();
-
-            List<EMMessage> messages = mConversation.getAllMessages();
-            if (messages != null) {
-                mMessages.addAll(messages);
-            }
-
-            mConversation.markAllMessagesAsRead();
-            notifyDataSetChanged();
-        }
-
-    };
-
-    public void refresh() {
-        if (mHandler.hasMessages(HANDLER_MESSAGE_REFRESH_LIST)) {
-            return;
-        }
-
-        Message msg = mHandler.obtainMessage(HANDLER_MESSAGE_REFRESH_LIST);
-        mHandler.sendMessage(msg);
-    }
-
-    /**
-     * refresh and select the last
-     */
-    public void refreshSelectLast() {
-        final int TIME_DELAY_REFRESH_SELECT_LAST = 100;
-
-        mHandler.removeMessages(HANDLER_MESSAGE_REFRESH_LIST);
-        mHandler.removeMessages(HANDLER_MESSAGE_SELECT_LAST);
-        mHandler.sendEmptyMessageDelayed(HANDLER_MESSAGE_REFRESH_LIST, TIME_DELAY_REFRESH_SELECT_LAST);
-        mHandler.sendEmptyMessageDelayed(HANDLER_MESSAGE_SELECT_LAST, TIME_DELAY_REFRESH_SELECT_LAST);
-    }
-
-    /**
-     * refresh and seek to the position
-     */
-    public void refreshSeekTo(int position) {
-        mHandler.sendEmptyMessage(HANDLER_MESSAGE_REFRESH_LIST);
-
-        Message message = new Message();
-        message.what = HANDLER_MESSAGE_SEEK_TO;
-        message.arg1 = position;
-        mHandler.sendMessage(message);
-    }
-
-    protected EaseChatRowPresenter createChatRowPresenter(EMMessage message, int position) {
-        if (mCustomRowProvider != null && mCustomRowProvider.getCustomChatRow(message, position, this) != null) {
-            return mCustomRowProvider.getCustomChatRow(message, position, this);
-        }
-
-        EaseChatRowPresenter presenter = null;
-
-        switch (message.getType()) {
-
-            case TXT: {
-                if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, false)) {//结束问诊
-                    presenter = new EaseChatCloseInquiryPresenter();
-
-                } else if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)) {//表情
-                    presenter = new EaseChatBigExpressionPresenter();
-
-                } else {//文字
-                    presenter = new EaseChatTextPresenter();
-                }
-            }
-            break;
-
-            case LOCATION: {//定位
-                presenter = new EaseChatLocationPresenter();
-            }
-            break;
-
-            case FILE: {//文件
-                presenter = new EaseChatFilePresenter();
-            }
-            break;
-
-            case IMAGE: {//图片
-                presenter = new EaseChatImagePresenter();
-            }
-            break;
-
-            case VOICE: {//语音
-                presenter = new EaseChatVoicePresenter();
-            }
-            break;
-
-            case VIDEO: {//视频
-                presenter = new EaseChatVideoPresenter();
-            }
-            break;
-
-            default:
-                break;
-        }
-
-        return presenter;
+    public EaseMessageListAdapter(@Nullable List<EMMessage> messages) {
+        mMessages = (messages == null ? new ArrayList<>() : messages);
     }
 
     @Override
@@ -285,6 +140,70 @@ public class EaseMessageListAdapter extends BaseAdapter {
         presenter.setup(message, position, mOnItemClickListener, mListItemStyle);
 
         return convertView;
+    }
+
+    public void setNewData(List<EMMessage> messages) {
+        mMessages.clear();
+
+        if (messages != null) {
+            mMessages.addAll(messages);
+        }
+
+        notifyDataSetChanged();
+    }
+
+    protected EaseChatRowPresenter createChatRowPresenter(EMMessage message, int position) {
+        if (mCustomRowProvider != null && mCustomRowProvider.getCustomChatRow(message, position, this) != null) {
+            return mCustomRowProvider.getCustomChatRow(message, position, this);
+        }
+
+        EaseChatRowPresenter presenter = null;
+
+        switch (message.getType()) {
+
+            case TXT: {
+                if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, false)) {//结束问诊
+                    presenter = new EaseChatCloseInquiryPresenter();
+
+                } else if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)) {//表情
+                    presenter = new EaseChatBigExpressionPresenter();
+
+                } else {//文字
+                    presenter = new EaseChatTextPresenter();
+                }
+            }
+            break;
+
+            case LOCATION: {//定位
+                presenter = new EaseChatLocationPresenter();
+            }
+            break;
+
+            case FILE: {//文件
+                presenter = new EaseChatFilePresenter();
+            }
+            break;
+
+            case IMAGE: {//图片
+                presenter = new EaseChatImagePresenter();
+            }
+            break;
+
+            case VOICE: {//语音
+                presenter = new EaseChatVoicePresenter();
+            }
+            break;
+
+            case VIDEO: {//视频
+                presenter = new EaseChatVideoPresenter();
+            }
+            break;
+
+            default:
+                break;
+        }
+
+        return presenter;
     }
 
     public void setItemStyle(EaseMessageListItemStyle itemStyle) {
