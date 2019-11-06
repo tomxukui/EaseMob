@@ -252,8 +252,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
         list_message.setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light, R.color.holo_orange_light, R.color.holo_red_light);
         list_message.setOnRefreshListener(() -> getHandler().postDelayed(() -> loadMoreLocalMessages(), 600));
 
-        refreshMessages();
-        scrollToLast();
+        refreshScrollToLast();
 
         mIsMessageInit = true;
     }
@@ -389,8 +388,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
             }
 
             if (messages != null && messages.size() > 0) {
-                refreshMessages();
-                scrollTo(messages.size() - 1);
+                refreshScrollTo(messages.size() - 1);
 
                 if (messages.size() != mPageSize) {
                     mHaveMoreData = false;
@@ -439,8 +437,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
 
         //刷新消息列表到最新那条
         if (mIsMessageInit) {
-            refreshMessages();
-            scrollToLast();
+            refreshScrollToLast();
         }
     }
 
@@ -495,10 +492,26 @@ public class EaseChatFragment extends EaseBaseChatFragment {
     /**
      * 滑动到指定位置
      */
-    public void scrollTo(int position) {
+    protected void scrollTo(int position) {
         if (list_message != null) {
             list_message.scrollTo(position);
         }
+    }
+
+    /**
+     * 刷新并滑动到指定位置
+     */
+    protected void refreshScrollToLast() {
+        refreshMessages();
+        scrollToLast();
+    }
+
+    /**
+     * 刷新并滑动到指定位置
+     */
+    protected void refreshScrollTo(int position) {
+        refreshMessages();
+        scrollTo(position);
     }
 
     /**
@@ -529,8 +542,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
                     String username = message.getFrom();
 
                     if (username.equals(mToUser.getUsername()) || message.getTo().equals(mToUser.getUsername()) || message.conversationId().equals(mToUser.getUsername())) {
-                        refreshMessages();
-                        scrollToLast();
+                        refreshScrollToLast();
 
                         mConversation.markMessageAsRead(message.getMsgId());
                     }
