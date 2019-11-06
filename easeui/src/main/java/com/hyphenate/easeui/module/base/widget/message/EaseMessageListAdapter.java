@@ -163,54 +163,56 @@ public class EaseMessageListAdapter extends BaseAdapter {
     }
 
     protected EaseChatRowPresenter createChatRowPresenter(EMMessage message, int position) {
-        if (mCustomRowProvider != null && mCustomRowProvider.getCustomChatRow(message, position, this) != null) {
-            return mCustomRowProvider.getCustomChatRow(message, position, this);
-        }
-
         EaseChatRowPresenter presenter = null;
 
-        switch (message.getType()) {
+        if (mCustomRowProvider != null) {
+            presenter = mCustomRowProvider.getCustomChatRow(message, position, this);
+        }
 
-            case TXT: {
-                if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, false)) {//结束问诊
-                    presenter = new EaseChatCloseInquiryPresenter();
+        if (presenter == null) {
+            switch (message.getType()) {
 
-                } else if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)) {//表情
-                    presenter = new EaseChatBigExpressionPresenter();
+                case TXT: {
+                    if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_FINISH_CONVERSATION, false)) {//结束问诊
+                        presenter = new EaseChatCloseInquiryPresenter();
 
-                } else {//文字
-                    presenter = new EaseChatTextPresenter();
+                    } else if (message.getBooleanAttribute(EaseConstant.MESSAGE_ATTR_IS_BIG_EXPRESSION, false)) {//表情
+                        presenter = new EaseChatBigExpressionPresenter();
+
+                    } else {//文字
+                        presenter = new EaseChatTextPresenter();
+                    }
                 }
-            }
-            break;
-
-            case LOCATION: {//定位
-                presenter = new EaseChatLocationPresenter();
-            }
-            break;
-
-            case FILE: {//文件
-                presenter = new EaseChatFilePresenter();
-            }
-            break;
-
-            case IMAGE: {//图片
-                presenter = new EaseChatImagePresenter();
-            }
-            break;
-
-            case VOICE: {//语音
-                presenter = new EaseChatVoicePresenter();
-            }
-            break;
-
-            case VIDEO: {//视频
-                presenter = new EaseChatVideoPresenter();
-            }
-            break;
-
-            default:
                 break;
+
+                case LOCATION: {//定位
+                    presenter = new EaseChatLocationPresenter();
+                }
+                break;
+
+                case FILE: {//文件
+                    presenter = new EaseChatFilePresenter();
+                }
+                break;
+
+                case IMAGE: {//图片
+                    presenter = new EaseChatImagePresenter();
+                }
+                break;
+
+                case VOICE: {//语音
+                    presenter = new EaseChatVoicePresenter();
+                }
+                break;
+
+                case VIDEO: {//视频
+                    presenter = new EaseChatVideoPresenter();
+                }
+                break;
+
+                default:
+                    break;
+            }
         }
 
         return presenter;
