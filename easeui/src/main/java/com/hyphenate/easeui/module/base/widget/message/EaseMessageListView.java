@@ -35,7 +35,7 @@ public class EaseMessageListView extends FrameLayout {
     private final Handler mHandler = new Handler(Looper.getMainLooper()) {
 
         @Override
-        public void handleMessage(android.os.Message message) {
+        public void handleMessage(Message message) {
             switch (message.what) {
 
                 case HANDLER_MESSAGE_REFRESH_LIST: {
