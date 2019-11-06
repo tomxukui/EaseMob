@@ -142,9 +142,19 @@ public class EaseMessageListAdapter extends BaseAdapter {
         return convertView;
     }
 
+    /**
+     * 设置新数据
+     */
     public void setNewData(List<EMMessage> messages) {
         mMessages.clear();
 
+        addData(messages);
+    }
+
+    /**
+     * 添加数据
+     */
+    public void addData(List<EMMessage> messages) {
         if (messages != null) {
             mMessages.addAll(messages);
         }
