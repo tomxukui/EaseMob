@@ -1,6 +1,5 @@
 package com.hyphenate.easeui.module.base.widget.message.presenter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.BaseAdapter;
@@ -35,9 +34,7 @@ public class EaseChatFilePresenter extends EaseChatRowPresenter {
 
         if (context != null) {
             if (file.exists()) {
-                if (context instanceof Activity) {
-                    EaseCompat.openFile(file, (Activity) context);
-                }
+                EaseCompat.openFile(file, context);
 
             } else {
                 Intent intent = EaseShowFileActivity.buildIntent(context, message);

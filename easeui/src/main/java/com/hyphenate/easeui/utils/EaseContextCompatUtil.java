@@ -24,4 +24,8 @@ public class EaseContextCompatUtil {
         return EaseUI.getInstance().getContext().getResources().getString(resId);
     }
 
+    public static String getPackageName() {
+        return EaseUI.getInstance().getContext().getPackageName();
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.hyphenate.easeui.model;
 
-import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.view.WindowManager;
 
+import com.hyphenate.easeui.utils.EaseContextCompatUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 import com.hyphenate.util.FileUtils;
 
@@ -23,18 +23,18 @@ public class EaseCompat {
     /**
      * 打开文件
      */
-    public static void openFile(File f, Activity context) {
-        String type = FileUtils.getMIMEType(f);
-        Uri uri = getUriForFile(context, f);
+    public static void openFile(File file, Context context) {
+        String type = FileUtils.getMIMEType(file);
+        Uri uri = getUriForFile(context, file);
         openFile(uri, type, context);
     }
 
-    public static void openFile(Uri uri, String type, Activity context) {
+    public static void openFile(Uri uri, String type, Context context) {
         try {
             Intent intent = new Intent();
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            intent.setAction(android.content.Intent.ACTION_VIEW);
+            intent.setAction(Intent.ACTION_VIEW);
             intent.setDataAndType(uri, type);
             context.startActivity(intent);
 
@@ -46,7 +46,7 @@ public class EaseCompat {
 
     public static Uri getUriForFile(Context context, File file) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return FileProvider.getUriForFile(context, context.getPackageName() + ".fileProvider", file);
+            return FileProvider.getUriForFile(context, EaseContextCompatUtil.getPackageName() + ".fileProvider", file);
 
         } else {
             return Uri.fromFile(file);
