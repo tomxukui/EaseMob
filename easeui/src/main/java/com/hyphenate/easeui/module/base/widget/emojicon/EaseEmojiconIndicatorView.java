@@ -50,7 +50,7 @@ public class EaseEmojiconIndicatorView extends LinearLayout{
     }
     
     public void init(int count){
-        dotViews = new ArrayList<ImageView>();
+        dotViews = new ArrayList<>();
         for(int i = 0 ; i < count ; i++){
             RelativeLayout rl = new RelativeLayout(context);
             LayoutParams params = new LayoutParams(dotHeight,dotHeight);

@@ -16,12 +16,12 @@ import com.hyphenate.util.DensityUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EaseEmojiconScrollTabBar extends RelativeLayout{
+public class EaseEmojiconScrollTabBar extends RelativeLayout {
 
     private Context context;
     private HorizontalScrollView scrollView;
     private LinearLayout tabContainer;
-    
+
     private List<ImageView> tabList = new ArrayList<ImageView>();
     private EaseScrollTabBarItemClickListener itemClickListener;
 
@@ -37,50 +37,48 @@ public class EaseEmojiconScrollTabBar extends RelativeLayout{
         super(context, attrs);
         init(context, attrs);
     }
-    
-    private void init(Context context, AttributeSet attrs){
+
+    private void init(Context context, AttributeSet attrs) {
         this.context = context;
         LayoutInflater.from(context).inflate(R.layout.ease_widget_emojicon_tab_bar, this);
-        
-        scrollView = (HorizontalScrollView) findViewById(R.id.scroll_view);
-        tabContainer = (LinearLayout) findViewById(R.id.tab_container);
+
+        scrollView = findViewById(R.id.scroll_view);
+        tabContainer = findViewById(R.id.tab_container);
     }
-    
+
     /**
      * add tab
+     *
      * @param icon
      */
-    public void addTab(int icon){
+    public void addTab(int icon) {
         View tabView = View.inflate(context, R.layout.ease_scroll_tab_item, null);
-        ImageView imageView = (ImageView) tabView.findViewById(R.id.iv_icon);
+        ImageView imageView = tabView.findViewById(R.id.iv_icon);
         imageView.setImageResource(icon);
         int tabWidth = 60;
         LinearLayout.LayoutParams imgParams = new LinearLayout.LayoutParams(DensityUtil.dip2px(context, tabWidth), LayoutParams.MATCH_PARENT);
         imageView.setLayoutParams(imgParams);
         tabContainer.addView(tabView);
         tabList.add(imageView);
-        final int position = tabList.size() -1;
-        imageView.setOnClickListener(new OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                if(itemClickListener != null){
-                    itemClickListener.onItemClick(position);
-                }
+        final int position = tabList.size() - 1;
+        imageView.setOnClickListener(v -> {
+            if (itemClickListener != null) {
+                itemClickListener.onItemClick(position);
             }
         });
     }
-    
+
     /**
      * remove tab
+     *
      * @param position
      */
-    public void removeTab(int position){
+    public void removeTab(int position) {
         tabContainer.removeViewAt(position);
         tabList.remove(position);
     }
-    
-    public void selectedTo(int position){
+
+    public void selectedTo(int position) {
         scrollTo(position);
         for (int i = 0; i < tabList.size(); i++) {
             if (position == i) {
@@ -90,42 +88,39 @@ public class EaseEmojiconScrollTabBar extends RelativeLayout{
             }
         }
     }
-    
-    private void scrollTo(final int position){
+
+    private void scrollTo(final int position) {
         int childCount = tabContainer.getChildCount();
-        if(position < childCount){
-            scrollView.post(new Runnable() {
-                @Override
-                public void run() {
-                    int mScrollX = tabContainer.getScrollX();
-                    int childX = (int)ViewCompat.getX(tabContainer.getChildAt(position));
+        if (position < childCount) {
+            scrollView.post(() -> {
+                int mScrollX = tabContainer.getScrollX();
+                int childX = (int) ViewCompat.getX(tabContainer.getChildAt(position));
 
-                    if(childX < mScrollX){
-                        scrollView.scrollTo(childX,0);
-                        return;
-                    }
+                if (childX < mScrollX) {
+                    scrollView.scrollTo(childX, 0);
+                    return;
+                }
 
-                    int childWidth = (int)tabContainer.getChildAt(position).getWidth();
-                    int hsvWidth = scrollView.getWidth();
-                    int childRight = childX + childWidth;
-                    int scrollRight = mScrollX + hsvWidth;
+                int childWidth = (int) tabContainer.getChildAt(position).getWidth();
+                int hsvWidth = scrollView.getWidth();
+                int childRight = childX + childWidth;
+                int scrollRight = mScrollX + hsvWidth;
 
-                    if(childRight > scrollRight){
-                        scrollView.scrollTo(childRight - scrollRight,0);
-                        return;
-                    }
+                if (childRight > scrollRight) {
+                    scrollView.scrollTo(childRight - scrollRight, 0);
+                    return;
                 }
             });
         }
     }
-    
-    
-    public void setTabBarItemClickListener(EaseScrollTabBarItemClickListener itemClickListener){
+
+
+    public void setTabBarItemClickListener(EaseScrollTabBarItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
-    
-    
-    public interface EaseScrollTabBarItemClickListener{
+
+
+    public interface EaseScrollTabBarItemClickListener {
         void onItemClick(int position);
     }
 

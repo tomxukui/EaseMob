@@ -13,6 +13,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.model.EaseCompat;
 import com.hyphenate.easeui.module.base.ui.EaseBaseActivity;
+import com.hyphenate.easeui.utils.EaseContextCompatUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 
 import java.io.File;
@@ -67,9 +68,9 @@ public class EaseShowFileActivity extends EaseBaseActivity {
                         file.delete();
                     }
 
-                    String str4 = getResources().getString(R.string.Failed_to_download_file);
+                    String str4 = EaseContextCompatUtil.getString(R.string.Failed_to_download_file);
                     if (code == EMError.FILE_NOT_FOUND) {
-                        str4 = getResources().getString(R.string.File_expired);
+                        str4 = EaseContextCompatUtil.getString(R.string.File_expired);
                     }
 
                     EaseToastUtil.show(str4 + message);
