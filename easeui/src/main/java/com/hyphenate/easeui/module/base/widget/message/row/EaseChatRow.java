@@ -260,14 +260,8 @@ public abstract class EaseChatRow extends LinearLayout {
 
     protected abstract void onFindViewById(View view);
 
-    /**
-     * 当消息改变时刷新控件
-     */
     protected abstract void onViewUpdate(EMMessage msg);
 
-    /**
-     * setup view
-     */
     protected abstract void onSetUpView();
 
     public interface EaseChatRowActionCallback {
