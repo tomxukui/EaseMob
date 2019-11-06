@@ -362,13 +362,13 @@ public class EaseChatFragment extends EaseBaseChatFragment {
      */
     protected void loadFirstLocalMessages() {
         List<EMMessage> messages = mConversation.getAllMessages();
-        int msgCount = (messages == null ? 0 : messages.size());
-        if (msgCount < mConversation.getAllMsgCount() && msgCount < mPageSize) {
+        int count = (messages == null ? 0 : messages.size());
+        if (count < mConversation.getAllMsgCount() && count < mPageSize) {
             String msgId = null;
             if (messages != null && messages.size() > 0) {
                 msgId = messages.get(0).getMsgId();
             }
-            mConversation.loadMoreMsgFromDB(msgId, mPageSize - msgCount);
+            mConversation.loadMoreMsgFromDB(msgId, mPageSize - count);
         }
     }
 
