@@ -14,11 +14,15 @@ import android.widget.TextView;
 import com.easeui.app.R;
 import com.easeui.app.module.patient.adapter.PatientInquiryMenuListAdapter;
 import com.easeui.app.module.patient.model.PatientInquiryToolbarMenuItem;
+import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.base.widget.gridmenu.EaseGridMenu;
 import com.hyphenate.easeui.module.base.widget.gridmenu.EaseGridMenuItem;
 import com.hyphenate.easeui.module.base.widget.input.EaseMenuItem;
+import com.hyphenate.easeui.module.base.widget.message.presenter.EaseChatRowPresenter;
+import com.hyphenate.easeui.module.base.widget.message.row.EaseCustomChatRowProvider;
 import com.hyphenate.easeui.module.chat.provider.EaseChatInputMenuProvider;
+import com.hyphenate.easeui.module.chat.provider.EaseChatMessageProvider;
 import com.hyphenate.easeui.module.inquiry.provider.EaseInquiryInputMenuProvider;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
 import com.hyphenate.easeui.utils.EaseContextCompatUtil;
@@ -170,6 +174,78 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
         if (mToolbarMenu != null && mToolbarMenu.isShowing()) {
             mToolbarMenu.dismiss();
         }
+    }
+
+    @Override
+    protected EaseChatMessageProvider onSetMessageRow() {
+        return new EaseChatMessageProvider() {
+
+            @Override
+            public EaseCustomChatRowProvider getCustomChatRowProvider() {
+                return new EaseCustomChatRowProvider() {
+
+                    private static final int TYPE_BLUE = 0;
+                    private static final int TYPE_RED = 1;
+                    private static final int TYPE_YELLOW = 2;
+                    private static final int TYPE_BLACK = 3;
+
+                    @Override
+                    public int getCustomTypeCount() {
+                        return 4;
+                    }
+
+                    @Override
+                    public int getCustomType(EMMessage message, int position) {
+                        if (message.getType() == EMMessage.Type.TXT) {
+                            if (position % 2 == 0) {
+                                return message.direct() == EMMessage.Direct.RECEIVE ? TYPE_BLUE : TYPE_RED;
+
+                            } else {
+                                return message.direct() == EMMessage.Direct.RECEIVE ? TYPE_YELLOW : TYPE_BLACK;
+                            }
+                        }
+
+                        return -1;
+                    }
+
+                    @Override
+                    public EaseChatRowPresenter getCustomChatRow(int customType, EMMessage message, int position) {
+                        EaseChatRowPresenter presenter = null;
+
+                        switch (customType) {
+
+                            case TYPE_BLUE: {
+                                presenter = new EaseChatTestTextPresenter(Color.BLUE);
+                            }
+                            break;
+
+                            case TYPE_RED: {
+                                presenter = new EaseChatTestTextPresenter(Color.RED);
+                            }
+                            break;
+
+                            case TYPE_YELLOW: {
+                                presenter = new EaseChatTestTextPresenter(Color.YELLOW);
+                            }
+                            break;
+
+                            case TYPE_BLACK: {
+                                presenter = new EaseChatTestTextPresenter(Color.BLACK);
+                            }
+                            break;
+
+                            default:
+                                break;
+
+                        }
+
+                        return presenter;
+                    }
+
+                };
+            }
+
+        };
     }
 
     @Override

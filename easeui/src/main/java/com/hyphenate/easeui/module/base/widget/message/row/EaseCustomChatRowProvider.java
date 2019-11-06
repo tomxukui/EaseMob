@@ -20,7 +20,7 @@ public interface EaseCustomChatRowProvider {
      * <p>
      * ps:返回值必须从0开始有序递增
      */
-    int getCustomType(EMMessage message);
+    int getCustomType(EMMessage message, int position);
 
     /**
      * 根据消息返回自定义消息行

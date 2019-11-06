@@ -86,7 +86,7 @@ public class EaseMessageListAdapter extends BaseAdapter {
         if (message != null) {
             //设置自定义
             if (mCustomRowProvider != null) {
-                int customType = mCustomRowProvider.getCustomType(message);
+                int customType = mCustomRowProvider.getCustomType(message, position);
 
                 if (customType >= 0) {
                     return MESSAGE_SELF_TYPE_COUNT + customType;
@@ -230,11 +230,9 @@ public class EaseMessageListAdapter extends BaseAdapter {
 
             default: {//自定义
                 if (mCustomRowProvider != null) {
-                    int customTypeCount = mCustomRowProvider.getCustomTypeCount();
+                    int customType = type - MESSAGE_SELF_TYPE_COUNT;
 
-                    if (customTypeCount > 0) {
-                        int customType = type - customTypeCount;
-
+                    if (customType >= 0) {
                         presenter = mCustomRowProvider.getCustomChatRow(customType, message, position);
                     }
                 }
