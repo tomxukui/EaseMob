@@ -35,8 +35,8 @@ public abstract class EaseChatRow extends LinearLayout {
     protected TextView tv_percentage;//进度百分比
     protected ProgressBar bar_progress;//进度条
     protected ImageView iv_status;//消息状态
-    protected TextView tv_ack;//到达标识
-    protected TextView tv_delivered;//发送失败标识
+    protected TextView tv_ack;//已读标识
+    protected TextView tv_delivered;//到达标识
 
     @Nullable
     protected OnItemClickListener mOnItemClickListener;
@@ -68,10 +68,6 @@ public abstract class EaseChatRow extends LinearLayout {
         super.onDetachedFromWindow();
     }
 
-    public void updateView(EMMessage message) {
-        onViewUpdate(message);
-    }
-
     private void initView(Context context) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = onInflateView(inflater);
@@ -86,6 +82,10 @@ public abstract class EaseChatRow extends LinearLayout {
         tv_delivered = view.findViewById(R.id.tv_delivered);
 
         onFindViewById(view);
+    }
+
+    public void updateView(EMMessage message) {
+        onViewUpdate(message);
     }
 
     /**
@@ -108,6 +108,7 @@ public abstract class EaseChatRow extends LinearLayout {
     }
 
     private void setUpBaseView() {
+        //设置时间
         if (tv_timestamp != null) {
             if (mPosition == 0) {
                 tv_timestamp.setText(DateUtils.getTimestampString(new Date(mMessage.getMsgTime())));
@@ -140,6 +141,7 @@ public abstract class EaseChatRow extends LinearLayout {
             tv_username.setText(nickname);
         }
 
+        //设置到达标识
         if (EMClient.getInstance().getOptions().getRequireDeliveryAck()) {
             if (tv_delivered != null) {
                 if (mMessage.isDelivered()) {
@@ -151,6 +153,7 @@ public abstract class EaseChatRow extends LinearLayout {
             }
         }
 
+        //设置已读标识
         if (EMClient.getInstance().getOptions().getRequireAck()) {
             if (tv_ack != null) {
                 if (mMessage.isAcked()) {
