@@ -1,7 +1,6 @@
 package com.hyphenate.easeui.module.base.widget.message.row;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,15 +28,15 @@ import java.util.Date;
 
 public abstract class EaseChatRow extends LinearLayout {
 
-    protected TextView tv_timestamp;
-    protected ImageView iv_avatar;
-    protected ViewGroup group_bubble;
-    protected TextView tv_username;
-    protected TextView tv_percentage;
-    protected ProgressBar bar_progress;
-    protected ImageView iv_status;
-    protected TextView tv_ack;
-    protected TextView tv_delivered;
+    protected TextView tv_timestamp;//时间
+    protected ImageView iv_avatar;//头像
+    protected ViewGroup group_bubble;//消息内容
+    protected TextView tv_username;//用户名
+    protected TextView tv_percentage;//进度百分比
+    protected ProgressBar bar_progress;//进度条
+    protected ImageView iv_status;//消息状态
+    protected TextView tv_ack;//到达标识
+    protected TextView tv_delivered;//发送失败标识
 
     @Nullable
     protected OnItemClickListener mOnItemClickListener;
@@ -53,8 +52,6 @@ public abstract class EaseChatRow extends LinearLayout {
     protected BaseAdapter mAdapter;
 
     protected LayoutInflater mInflater;
-
-    private final Handler mHandler = new Handler();
 
     public EaseChatRow(Context context, EMMessage message, int position, BaseAdapter adapter) {
         super(context);
@@ -74,8 +71,8 @@ public abstract class EaseChatRow extends LinearLayout {
         super.onDetachedFromWindow();
     }
 
-    public void updateView(final EMMessage msg) {
-        mHandler.post(() -> onViewUpdate(msg));
+    public void updateView(EMMessage message) {
+        onViewUpdate(message);
     }
 
     private void initView() {
