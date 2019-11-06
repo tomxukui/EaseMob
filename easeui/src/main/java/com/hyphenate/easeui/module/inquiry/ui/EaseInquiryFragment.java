@@ -61,10 +61,10 @@ public class EaseInquiryFragment extends EaseChatFragment {
         //发送消息
         sendMessage(message);
 
-        //刷新消息列表
-        if (mIsMessageInit) {
-            list_message.refreshSelectLast();
-        }
+//        //刷新消息列表
+//        if (mIsMessageInit) {
+//            list_message.refreshSelectLast();
+//        }
 
         setInquiryStarted();
         setStartInquiryView();
@@ -88,10 +88,10 @@ public class EaseInquiryFragment extends EaseChatFragment {
         //发送消息
         sendMessage(message);
 
-        //刷新消息列表
-        if (mIsMessageInit) {
-            list_message.refreshSelectLast();
-        }
+//        //刷新消息列表
+//        if (mIsMessageInit) {
+//            list_message.refreshSelectLast();
+//        }
 
         //结束问诊
         setInquiryClosed();

@@ -178,7 +178,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
     public void onResume() {
         super.onResume();
         if (mIsMessageInit) {
-            list_message.refresh();
+            refreshMessages();
         }
     }
 
@@ -200,7 +200,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
      * 设置消息列表控件
      */
     protected void setMessageList() {
-        list_message.init(mToUser.getUsername(), EMConversation.EMConversationType.Chat, mMessageProvider.getMessageListItemStyle(), mMessageProvider.getCustomChatRowProvider());
+        list_message.init(mMessageProvider.getMessageListItemStyle(), mMessageProvider.getCustomChatRowProvider());
         list_message.setOnItemClickListener(new EaseMessageListView.OnItemClickListener() {
 
             @Override
@@ -249,10 +249,11 @@ public class EaseChatFragment extends EaseBaseChatFragment {
             return false;
         });
 
-        list_message.getSwipeRefreshLayout().setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light, R.color.holo_orange_light, R.color.holo_red_light);
-        list_message.getSwipeRefreshLayout().setOnRefreshListener(() -> {
-            getHandler().postDelayed(() -> loadMoreLocalMessages(), 600);
-        });
+        list_message.setColorSchemeResources(R.color.holo_blue_bright, R.color.holo_green_light, R.color.holo_orange_light, R.color.holo_red_light);
+        list_message.setOnRefreshListener(() -> getHandler().postDelayed(() -> loadMoreLocalMessages(), 600));
+
+        refreshMessages();
+        scrollToLast();
 
         mIsMessageInit = true;
     }
@@ -376,19 +377,20 @@ public class EaseChatFragment extends EaseBaseChatFragment {
      * 加载本地更多消息列表
      */
     protected void loadMoreLocalMessages() {
-        if (list_message.getListView().getFirstVisiblePosition() == 0 && mHaveMoreData) {
+        if (list_message.getFirstVisiblePosition() == 0 && mHaveMoreData) {
             List<EMMessage> messages;
 
             try {
                 messages = mConversation.loadMoreMsgFromDB(mConversation.getAllMessages().size() == 0 ? "" : mConversation.getAllMessages().get(0).getMsgId(), mPageSize);
 
             } catch (Exception e) {
-                list_message.getSwipeRefreshLayout().setRefreshing(false);
+                list_message.setRefreshing(false);
                 return;
             }
 
             if (messages != null && messages.size() > 0) {
-                list_message.refreshSeekTo(messages.size() - 1);
+                refreshMessages();
+                scrollTo(messages.size() - 1);
 
                 if (messages.size() != mPageSize) {
                     mHaveMoreData = false;
@@ -402,7 +404,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
             EaseToastUtil.show(R.string.no_more_messages);
         }
 
-        list_message.getSwipeRefreshLayout().setRefreshing(false);
+        list_message.setRefreshing(false);
     }
 
     /**
@@ -437,7 +439,8 @@ public class EaseChatFragment extends EaseBaseChatFragment {
 
         //刷新消息列表到最新那条
         if (mIsMessageInit) {
-            list_message.refreshSelectLast();
+            refreshMessages();
+            scrollToLast();
         }
     }
 
@@ -449,43 +452,62 @@ public class EaseChatFragment extends EaseBaseChatFragment {
         @Override
         public void onSuccess() {
             if (mIsMessageInit) {
-                list_message.refresh();
+                runOnUiThread(() -> refreshMessages());
             }
         }
 
         @Override
         public void onError(int code, String error) {
             if (mIsMessageInit) {
-                list_message.refresh();
+                runOnUiThread(() -> refreshMessages());
             }
         }
 
         @Override
         public void onProgress(int progress, String status) {
             if (mIsMessageInit) {
-                list_message.refresh();
+                runOnUiThread(() -> refreshMessages());
             }
         }
 
     };
 
     /**
+     * 刷新消息列表
+     */
+    protected void refreshMessages() {
+        mConversation.markAllMessagesAsRead();
+
+        if (list_message != null) {
+            list_message.setNewData(mConversation.getAllMessages());
+        }
+    }
+
+    /**
+     * 滑动到最新位置
+     */
+    protected void scrollToLast() {
+        if (list_message != null) {
+            list_message.scrollToLast();
+        }
+    }
+
+    /**
+     * 滑动到指定位置
+     */
+    public void scrollTo(int position) {
+        if (list_message != null) {
+            list_message.scrollTo(position);
+        }
+    }
+
+    /**
      * 清空所有聊天消息
      */
     protected void clearAllMessages() {
-        new AlertDialog.Builder(getContext())
-                .setMessage(R.string.Whether_to_empty_all_chats)
-                .setNegativeButton("取消", null)
-                .setPositiveButton("确定", (dialog, which) -> {
-                    if (mConversation != null) {
-                        mConversation.clearAllMessages();
-                    }
-
-                    list_message.refresh();
-                    mHaveMoreData = true;
-                })
-                .create()
-                .show();
+        if (mConversation != null) {
+            mConversation.clearAllMessages();
+        }
     }
 
     /**
@@ -507,7 +529,9 @@ public class EaseChatFragment extends EaseBaseChatFragment {
                     String username = message.getFrom();
 
                     if (username.equals(mToUser.getUsername()) || message.getTo().equals(mToUser.getUsername()) || message.conversationId().equals(mToUser.getUsername())) {
-                        list_message.refreshSelectLast();
+                        refreshMessages();
+                        scrollToLast();
+
                         mConversation.markMessageAsRead(message.getMsgId());
                     }
                 }
@@ -521,28 +545,28 @@ public class EaseChatFragment extends EaseBaseChatFragment {
         @Override
         public void onMessageRead(List<EMMessage> list) {
             if (mIsMessageInit) {
-                runOnUiThread(() -> list_message.refresh());
+                runOnUiThread(() -> refreshMessages());
             }
         }
 
         @Override
         public void onMessageDelivered(List<EMMessage> list) {
             if (mIsMessageInit) {
-                runOnUiThread(() -> list_message.refresh());
+                runOnUiThread(() -> refreshMessages());
             }
         }
 
         @Override
         public void onMessageRecalled(List<EMMessage> list) {
             if (mIsMessageInit) {
-                runOnUiThread(() -> list_message.refresh());
+                runOnUiThread(() -> refreshMessages());
             }
         }
 
         @Override
         public void onMessageChanged(EMMessage emMessage, Object o) {
             if (mIsMessageInit) {
-                runOnUiThread(() -> list_message.refresh());
+                runOnUiThread(() -> refreshMessages());
             }
         }
 

@@ -1,9 +1,7 @@
 package com.hyphenate.easeui.module.base.widget.message;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,61 +11,19 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
 import com.hyphenate.easeui.module.base.widget.message.row.EaseCustomChatRowProvider;
 
-public class EaseMessageListView extends FrameLayout {
+import java.util.List;
 
-    private static final int HANDLER_MESSAGE_REFRESH_LIST = 0;
-    private static final int HANDLER_MESSAGE_SELECT_LAST = 1;
-    private static final int HANDLER_MESSAGE_SEEK_TO = 2;
+public class EaseMessageListView extends FrameLayout {
 
     protected SwipeRefreshLayout refreshLayout;
     protected ListView listView;
 
-    protected EMConversation conversation;
     protected EaseMessageListAdapter messageAdapter;
-
-    private final Handler mHandler = new Handler(Looper.getMainLooper()) {
-
-        @Override
-        public void handleMessage(Message message) {
-            switch (message.what) {
-
-                case HANDLER_MESSAGE_REFRESH_LIST: {
-                    conversation.markAllMessagesAsRead();
-
-                    messageAdapter.setNewData(conversation.getAllMessages());
-                }
-                break;
-
-                case HANDLER_MESSAGE_SELECT_LAST: {
-                    int count = messageAdapter.getCount();
-
-                    if (count > 0) {
-                        listView.setSelection(count - 1);
-                    }
-                }
-                break;
-
-                case HANDLER_MESSAGE_SEEK_TO: {
-                    int position = message.arg1;
-
-                    listView.setSelection(position);
-                }
-                break;
-
-                default:
-                    break;
-
-            }
-        }
-
-    };
 
     public EaseMessageListView(@NonNull Context context) {
         super(context);
@@ -91,56 +47,80 @@ public class EaseMessageListView extends FrameLayout {
         listView = view.findViewById(R.id.listView);
     }
 
-    public void init(String toChatUsername, EMConversation.EMConversationType conversationType, @Nullable EaseMessageListItemStyle listItemStyle, @Nullable EaseCustomChatRowProvider customChatRowProvider) {
-        conversation = EMClient.getInstance().chatManager().getConversation(toChatUsername, conversationType, true);
-
+    public void init(@Nullable EaseMessageListItemStyle listItemStyle, @Nullable EaseCustomChatRowProvider customChatRowProvider) {
         messageAdapter = new EaseMessageListAdapter(null);
         messageAdapter.setItemStyle(listItemStyle);
         messageAdapter.setCustomChatRowProvider(customChatRowProvider);
 
         listView.setAdapter(messageAdapter);
-
-        refreshSelectLast();
     }
 
     /**
-     * 刷新
+     * 设置新数据
      */
-    public void refresh() {
-        if (mHandler.hasMessages(HANDLER_MESSAGE_REFRESH_LIST)) {
-            return;
-        }
-
+    public void setNewData(List<EMMessage> messages) {
         if (messageAdapter != null) {
-            Message msg = mHandler.obtainMessage(HANDLER_MESSAGE_REFRESH_LIST);
-            mHandler.sendMessage(msg);
+            messageAdapter.setNewData(messages);
         }
     }
 
     /**
-     * 刷新并滑动到最下面
+     * 添加数据
      */
-    public void refreshSelectLast() {
+    public void addData(List<EMMessage> messages) {
         if (messageAdapter != null) {
-            mHandler.removeMessages(HANDLER_MESSAGE_REFRESH_LIST);
-            mHandler.removeMessages(HANDLER_MESSAGE_SELECT_LAST);
-            mHandler.sendEmptyMessageDelayed(HANDLER_MESSAGE_REFRESH_LIST, 100);
-            mHandler.sendEmptyMessageDelayed(HANDLER_MESSAGE_SELECT_LAST, 100);
+            messageAdapter.addData(messages);
         }
     }
 
     /**
-     * 刷新并滑动到指定位置
+     * 滑动到最新位置
      */
-    public void refreshSeekTo(int position) {
+    public void scrollToLast() {
         if (messageAdapter != null) {
-            mHandler.sendEmptyMessage(HANDLER_MESSAGE_REFRESH_LIST);
+            int count = messageAdapter.getCount();
 
-            Message message = new Message();
-            message.what = HANDLER_MESSAGE_SEEK_TO;
-            message.arg1 = position;
-            mHandler.sendMessage(message);
+            if (count > 0) {
+                listView.setSelection(count - 1);
+            }
         }
+    }
+
+    /**
+     * 滑动到指定位置
+     */
+    public void scrollTo(int position) {
+        if (messageAdapter != null && position >= 0 && position < messageAdapter.getCount()) {
+            listView.setSelection(position);
+        }
+    }
+
+    /**
+     * 设置刷新开始和结束
+     */
+    public void setRefreshing(boolean refreshing) {
+        refreshLayout.setRefreshing(refreshing);
+    }
+
+    /**
+     * 设置刷新监听事件
+     */
+    public void setOnRefreshListener(@Nullable SwipeRefreshLayout.OnRefreshListener listener) {
+        refreshLayout.setOnRefreshListener(listener);
+    }
+
+    /**
+     * 设置刷新颜色
+     */
+    public void setColorSchemeResources(@ColorRes int... colorResIds) {
+        refreshLayout.setColorSchemeResources(colorResIds);
+    }
+
+    /**
+     * 获取显示的第一个位置
+     */
+    public int getFirstVisiblePosition() {
+        return listView.getFirstVisiblePosition();
     }
 
     /**
