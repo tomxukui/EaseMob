@@ -80,12 +80,11 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
     protected void initView(View view, Bundle savedInstanceState) {
         super.initView(view, savedInstanceState);
         //添加聊天状态
-        frame_main_custom.removeAllViews();
-        View statusView = mInflater.inflate(R.layout.widget_doctor_chat_status, frame_main_custom, false);
+        View statusView = mInflater.inflate(R.layout.widget_doctor_chat_status, linear_container, false);
         linear_status = statusView.findViewById(R.id.linear_status);
         tv_statusName = statusView.findViewById(R.id.tv_statusName);
         tv_round = statusView.findViewById(R.id.tv_round);
-        frame_main_custom.addView(statusView);
+        linear_container.addView(statusView, 1);
 
         //添加开始随访
         tv_startVisit = new TextView(getContext());
