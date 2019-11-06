@@ -31,14 +31,14 @@ public class EaseChatRowImage extends EaseChatRowFile {
     }
 
     @Override
-    protected void onInflateView(LayoutInflater inflater) {
-        inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_picture : R.layout.ease_row_sent_picture, this);
+    protected View onInflateView(LayoutInflater inflater) {
+        return inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_picture : R.layout.ease_row_sent_picture, this, false);
     }
 
     @Override
-    protected void onFindViewById() {
-        tv_percentage = findViewById(R.id.tv_percentage);
-        iv_image = findViewById(R.id.iv_image);
+    protected void onFindViewById(View view) {
+        tv_percentage = view.findViewById(R.id.tv_percentage);
+        iv_image = view.findViewById(R.id.iv_image);
     }
 
     @Override

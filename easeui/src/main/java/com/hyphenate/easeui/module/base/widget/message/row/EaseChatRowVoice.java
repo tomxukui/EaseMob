@@ -27,15 +27,15 @@ public class EaseChatRowVoice extends EaseChatRowFile {
     }
 
     @Override
-    protected void onInflateView(LayoutInflater inflater) {
-        inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_voice : R.layout.ease_row_sent_voice, this);
+    protected View onInflateView(LayoutInflater inflater) {
+        return inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_voice : R.layout.ease_row_sent_voice, this, false);
     }
 
     @Override
-    protected void onFindViewById() {
-        voiceImageView = findViewById(R.id.iv_voice);
-        voiceLengthView = findViewById(R.id.tv_length);
-        readStatusView = findViewById(R.id.iv_unread_voice);
+    protected void onFindViewById(View view) {
+        voiceImageView = view.findViewById(R.id.iv_voice);
+        voiceLengthView = view.findViewById(R.id.tv_length);
+        readStatusView = view.findViewById(R.id.iv_unread_voice);
     }
 
     @Override

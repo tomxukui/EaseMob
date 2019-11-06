@@ -26,16 +26,16 @@ public class EaseChatRowFile extends EaseChatRow {
     }
 
     @Override
-    protected void onInflateView(LayoutInflater inflater) {
-        inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_file : R.layout.ease_row_sent_file, this);
+    protected View onInflateView(LayoutInflater inflater) {
+        return inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_file : R.layout.ease_row_sent_file, this, false);
     }
 
     @Override
-    protected void onFindViewById() {
-        fileNameView = findViewById(R.id.tv_file_name);
-        fileSizeView = findViewById(R.id.tv_file_size);
-        fileStateView = findViewById(R.id.tv_file_state);
-        tv_percentage = findViewById(R.id.tv_percentage);
+    protected void onFindViewById(View view) {
+        fileNameView = view.findViewById(R.id.tv_file_name);
+        fileSizeView = view.findViewById(R.id.tv_file_size);
+        fileStateView = view.findViewById(R.id.tv_file_state);
+        tv_percentage = view.findViewById(R.id.tv_percentage);
     }
 
     @Override

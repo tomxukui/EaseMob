@@ -2,6 +2,7 @@ package com.hyphenate.easeui.module.base.widget.message.row;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
@@ -25,14 +26,14 @@ public class EaseChatRowBigExpression extends EaseChatRowText {
     }
 
     @Override
-    protected void onInflateView(LayoutInflater inflater) {
-        inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_bigexpression : R.layout.ease_row_sent_bigexpression, this);
+    protected View onInflateView(LayoutInflater inflater) {
+        return inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_bigexpression : R.layout.ease_row_sent_bigexpression, this, false);
     }
 
     @Override
-    protected void onFindViewById() {
-        tv_percentage = findViewById(R.id.tv_percentage);
-        iv_image = findViewById(R.id.iv_image);
+    protected void onFindViewById(View view) {
+        tv_percentage = view.findViewById(R.id.tv_percentage);
+        iv_image = view.findViewById(R.id.iv_image);
     }
 
     @Override

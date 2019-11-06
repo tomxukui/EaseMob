@@ -2,6 +2,7 @@ package com.hyphenate.easeui.module.base.widget.message.row;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -18,13 +19,13 @@ public class EaseChatRowCloseInquiry extends EaseChatRow {
     }
 
     @Override
-    protected void onInflateView(LayoutInflater inflater) {
-        inflater.inflate(R.layout.ease_row_close_inquiry, this);
+    protected View onInflateView(LayoutInflater inflater) {
+        return inflater.inflate(R.layout.ease_row_close_inquiry, this, false);
     }
 
     @Override
-    protected void onFindViewById() {
-        tv_content = findViewById(R.id.tv_content);
+    protected void onFindViewById(View view) {
+        tv_content = view.findViewById(R.id.tv_content);
     }
 
     @Override

@@ -57,8 +57,7 @@ public abstract class EaseChatRow extends LinearLayout {
         mPosition = position;
         mAdapter = adapter;
 
-        onInflateView(LayoutInflater.from(context));
-        initView();
+        initView(context);
     }
 
     @Override
@@ -73,17 +72,20 @@ public abstract class EaseChatRow extends LinearLayout {
         onViewUpdate(message);
     }
 
-    private void initView() {
-        tv_timestamp = findViewById(R.id.tv_timestamp);
-        iv_avatar = findViewById(R.id.iv_avatar);
-        group_bubble = findViewById(R.id.group_bubble);
-        tv_username = findViewById(R.id.tv_username);
-        bar_progress = findViewById(R.id.bar_progress);
-        iv_status = findViewById(R.id.iv_status);
-        tv_ack = findViewById(R.id.tv_ack);
-        tv_delivered = findViewById(R.id.tv_delivered);
+    private void initView(Context context) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View view = onInflateView(inflater);
 
-        onFindViewById();
+        tv_timestamp = view.findViewById(R.id.tv_timestamp);
+        iv_avatar = view.findViewById(R.id.iv_avatar);
+        group_bubble = view.findViewById(R.id.group_bubble);
+        tv_username = view.findViewById(R.id.tv_username);
+        bar_progress = view.findViewById(R.id.bar_progress);
+        iv_status = view.findViewById(R.id.iv_status);
+        tv_ack = view.findViewById(R.id.tv_ack);
+        tv_delivered = view.findViewById(R.id.tv_delivered);
+
+        onFindViewById(view);
     }
 
     /**
@@ -254,12 +256,9 @@ public abstract class EaseChatRow extends LinearLayout {
         }
     }
 
-    protected abstract void onInflateView(LayoutInflater inflater);
+    protected abstract View onInflateView(LayoutInflater inflater);
 
-    /**
-     * find view by id
-     */
-    protected abstract void onFindViewById();
+    protected abstract void onFindViewById(View view);
 
     /**
      * 当消息改变时刷新控件

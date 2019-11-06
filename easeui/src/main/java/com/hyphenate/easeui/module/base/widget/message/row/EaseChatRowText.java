@@ -25,13 +25,13 @@ public class EaseChatRowText extends EaseChatRow {
     }
 
     @Override
-    protected void onInflateView(LayoutInflater inflater) {
-        inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_message : R.layout.ease_row_sent_message, this);
+    protected View onInflateView(LayoutInflater inflater) {
+       return inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_message : R.layout.ease_row_sent_message, this);
     }
 
     @Override
-    protected void onFindViewById() {
-        tv_bubble_text = findViewById(R.id.tv_bubble_text);
+    protected void onFindViewById(View view) {
+        tv_bubble_text = view.findViewById(R.id.tv_bubble_text);
     }
 
     @Override
