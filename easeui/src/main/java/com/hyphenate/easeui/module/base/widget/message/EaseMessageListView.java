@@ -173,15 +173,6 @@ public class EaseMessageListView extends FrameLayout {
         }
     }
 
-    /**
-     * 设置自定义子项的提供者
-     */
-    public void setCustomChatRowProvider(EaseCustomChatRowProvider rowProvider) {
-        if (messageAdapter != null) {
-            messageAdapter.setCustomChatRowProvider(rowProvider);
-        }
-    }
-
     public interface OnItemClickListener {
 
         /**
