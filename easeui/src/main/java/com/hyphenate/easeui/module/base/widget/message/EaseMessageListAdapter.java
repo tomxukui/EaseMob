@@ -50,10 +50,6 @@ public class EaseMessageListAdapter extends BaseAdapter {
     private EaseCustomChatRowProvider mCustomRowProvider;
     private OnItemClickListener mOnItemClickListener;
 
-    public EaseMessageListAdapter(@Nullable List<EMMessage> messages) {
-        mMessages = (messages == null ? new ArrayList<>() : messages);
-    }
-
     @Override
     public int getCount() {
         return mMessages == null ? 0 : mMessages.size();
@@ -158,9 +154,9 @@ public class EaseMessageListAdapter extends BaseAdapter {
      * 设置新数据
      */
     public void setNewData(List<EMMessage> messages) {
-        mMessages.clear();
+        mMessages = messages;
 
-        addData(messages);
+        notifyDataSetChanged();
     }
 
     /**
@@ -168,6 +164,10 @@ public class EaseMessageListAdapter extends BaseAdapter {
      */
     public void addData(List<EMMessage> messages) {
         if (messages != null) {
+            if (mMessages == null) {
+                mMessages = new ArrayList<>();
+            }
+
             mMessages.addAll(messages);
         }
 

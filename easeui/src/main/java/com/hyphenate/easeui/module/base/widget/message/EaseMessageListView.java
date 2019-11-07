@@ -48,7 +48,7 @@ public class EaseMessageListView extends FrameLayout {
     }
 
     public void init(@Nullable EaseMessageListItemStyle listItemStyle, @Nullable EaseCustomChatRowProvider customChatRowProvider) {
-        messageAdapter = new EaseMessageListAdapter(null);
+        messageAdapter = new EaseMessageListAdapter();
         messageAdapter.setItemStyle(listItemStyle);
         messageAdapter.setCustomChatRowProvider(customChatRowProvider);
 
