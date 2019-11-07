@@ -206,7 +206,6 @@ public class EaseInquiryFragment extends EaseChatFragment {
 //
 //    };
 
-
     @Override
     protected List<EMMessage> getConversationAllMessages() {
         return mMessageCache.getMessages();
