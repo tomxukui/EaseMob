@@ -1,13 +1,15 @@
 package com.hyphenate.easeui.module.base.model;
 
+import android.support.annotation.Nullable;
+
 import java.io.Serializable;
 
 public class EaseDuration implements Serializable {
 
     private long startTimeStamp;
-    private long endTimeStamp;
+    private Long endTimeStamp;
 
-    public EaseDuration(long startTimeStamp, long endTimeStamp) {
+    public EaseDuration(long startTimeStamp, @Nullable Long endTimeStamp) {
         this.startTimeStamp = startTimeStamp;
         this.endTimeStamp = endTimeStamp;
     }
@@ -24,7 +26,7 @@ public class EaseDuration implements Serializable {
     }
 
     public long getEndTimeStamp() {
-        return endTimeStamp;
+        return endTimeStamp == null ? System.currentTimeMillis() : endTimeStamp;
     }
 
     public void setEndTimeStamp(long endTimeStamp) {

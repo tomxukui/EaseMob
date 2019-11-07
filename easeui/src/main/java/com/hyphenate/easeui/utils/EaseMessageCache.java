@@ -1,11 +1,8 @@
 package com.hyphenate.easeui.utils;
 
-import android.util.Log;
-
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.module.base.model.EaseDuration;
 
 import java.util.ArrayList;
@@ -70,15 +67,6 @@ public class EaseMessageCache {
                 mDurationIndex++;
             }
         }
-
-        //test
-        for (int i = 0; i < messages.size(); i++) {
-            EMMessage message = messages.get(i);
-            EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
-
-            Log.e("ddd", String.format("%d: msgId:%s, msgTime:%d, content:%s", i, message.getMsgId(), message.getMsgTime(), txtBody.getMessage()));
-        }
-        //end
 
         return messages;
     }

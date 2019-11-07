@@ -42,7 +42,10 @@ public class EaseInquiryFragment extends EaseChatFragment {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         List<EaseDuration> durations = new ArrayList<>();
-        durations.add(new EaseDuration(1573086088000l, 1573107688000l));
+        durations.add(new EaseDuration(1573086088000l, null));
+        durations.add(new EaseDuration(1572999688000l, 1573042888000l));
+        durations.add(new EaseDuration(1572913288000l, 1572956488000l));
+        durations.add(new EaseDuration(1572826888000l, 1572870088000l));
         mMessageCache = new EaseMessageCache(durations, 10);
     }
 
