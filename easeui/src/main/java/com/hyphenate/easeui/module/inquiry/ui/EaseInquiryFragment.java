@@ -6,10 +6,16 @@ import android.view.View;
 
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.module.base.model.EaseDuration;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.chat.ui.EaseChatFragment;
 import com.hyphenate.easeui.utils.EaseContextCompatUtil;
+import com.hyphenate.easeui.utils.EaseMessageCache;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
+import com.hyphenate.easeui.utils.EaseToastUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 问诊页面-单聊
@@ -20,6 +26,7 @@ public class EaseInquiryFragment extends EaseChatFragment {
 //    private static final String CMD_START_INQUIRY = "cmd_start_conversation";//开始问诊
 //    private static final String CMD_CLOSE_INQUIRY = "cmd_close_conversation";//结束问诊
 
+    protected EaseMessageCache mMessageCache;
     protected boolean mIsClosed;//问诊是否已关闭
 
     public static EaseInquiryFragment newInstance(EaseUser fromUser, EaseUser toUser) {
@@ -29,6 +36,14 @@ public class EaseInquiryFragment extends EaseChatFragment {
         bundle.putSerializable(EXTRA_TO_USER, toUser);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
+        List<EaseDuration> durations = new ArrayList<>();
+        durations.add(new EaseDuration(1573086088000l, 1573107688000l));
+        mMessageCache = new EaseMessageCache(durations, 10);
     }
 
     /**
@@ -187,5 +202,52 @@ public class EaseInquiryFragment extends EaseChatFragment {
 //        }
 //
 //    };
+
+
+    @Override
+    protected List<EMMessage> getConversationAllMessages() {
+        return mMessageCache.getMessages();
+    }
+
+    @Override
+    protected void loadFirstLocalMessages() {
+        List<EMMessage> messages = getConversationAllMessages();
+        int count = (messages == null ? 0 : messages.size());
+
+        if (count < mConversation.getAllMsgCount() && count < mPageSize) {
+            mMessageCache.fetchMessages(mConversation);
+        }
+    }
+
+    @Override
+    protected void loadMoreLocalMessages() {
+        if (list_message.getFirstVisiblePosition() == 0 && mHaveMoreData) {
+            List<EMMessage> messages;
+
+            try {
+                messages = mMessageCache.fetchMessages(mConversation);
+
+            } catch (Exception e) {
+                list_message.setRefreshing(false);
+                return;
+            }
+
+            if (messages != null && messages.size() > 0) {
+                refreshScrollTo(messages.size() - 1);
+
+                if (messages.size() != mPageSize) {
+                    mHaveMoreData = false;
+                }
+
+            } else {
+                mHaveMoreData = false;
+            }
+
+        } else {
+            EaseToastUtil.show(R.string.no_more_messages);
+        }
+
+        list_message.setRefreshing(false);
+    }
 
 }
