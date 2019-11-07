@@ -116,4 +116,7 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <!--结束问诊样式-->
+    <style name="ease_message_close_inquiry_style" parent="@style/ease_message_date_style"/>
+
 </resources>

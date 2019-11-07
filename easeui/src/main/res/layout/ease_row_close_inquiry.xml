@@ -5,21 +5,11 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@id/tv_timestamp"
-        style="@style/ease_message_date_style"
+        style="@style/ease_message_close_inquiry_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/ease_message_time_margin_top" />
-
-    <TextView
-        android:id="@+id/tv_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:textColor="#919090"
-        android:textSize="15sp" />
+        android:layout_marginTop="@dimen/ease_message_close_inquiry_margin_top"
+        android:text="问诊已结束" />
 
 </LinearLayout>

@@ -20,5 +20,6 @@
     <dimen name="ease_message_username_margin_bottom">5dp</dimen>
     <dimen name="ease_message_bubble_margin_left">10dp</dimen>
     <dimen name="ease_message_status_margin_right">5dp</dimen>
+    <dimen name="ease_message_close_inquiry_margin_top">13dp</dimen>
 
 </resources>
