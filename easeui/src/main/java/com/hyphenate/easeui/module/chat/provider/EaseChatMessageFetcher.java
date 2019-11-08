@@ -35,4 +35,9 @@ public interface EaseChatMessageFetcher {
      */
     void scrollTo(EaseMessageListView listView, int position);
 
+    /**
+     * 设置全部消息已读
+     */
+    void markAllMessagesAsRead(EMConversation conversation);
+
 }

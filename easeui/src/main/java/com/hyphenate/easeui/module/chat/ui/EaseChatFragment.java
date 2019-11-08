@@ -199,7 +199,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
      */
     protected void initConversation() {
         mConversation = EMClient.getInstance().chatManager().getConversation(mToUser.getUsername(), EMConversation.EMConversationType.Chat, true);
-        mConversation.markAllMessagesAsRead();
+        mMessageFetcher.markAllMessagesAsRead(mConversation);
     }
 
     /**
@@ -381,13 +381,6 @@ public class EaseChatFragment extends EaseBaseChatFragment {
             }
 
         });
-    }
-
-    /**
-     * 获取会话中的缓存消息
-     */
-    protected List<EMMessage> getConversationAllMessages() {
-        return mConversation.getAllMessages();
     }
 
     /**

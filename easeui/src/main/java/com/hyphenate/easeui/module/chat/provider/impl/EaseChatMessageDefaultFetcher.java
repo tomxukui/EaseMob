@@ -85,4 +85,9 @@ public class EaseChatMessageDefaultFetcher implements EaseChatMessageFetcher {
         listView.scrollTo(position);
     }
 
+    @Override
+    public void markAllMessagesAsRead(EMConversation conversation) {
+        conversation.markAllMessagesAsRead();
+    }
+
 }
