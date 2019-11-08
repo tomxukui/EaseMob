@@ -13,12 +13,9 @@ import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.utils.EaseAndroidLifecycleUtil;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
 import com.hyphenate.easeui.utils.EaseImageUtil;
 import com.hyphenate.easeui.utils.EaseFileUtil;
-
-import java.io.File;
 
 public class EaseChatRowImage extends EaseChatRowFile {
 
@@ -46,9 +43,7 @@ public class EaseChatRowImage extends EaseChatRowFile {
         imgBody = (EMImageMessageBody) mMessage.getBody();
 
         if (mMessage.direct() == EMMessage.Direct.SEND) {//已发送的消息
-            String filePath = imgBody.getLocalUrl();
-            String thumbPath = EaseImageUtil.getThumbnailImagePath(filePath);
-            showImageView(thumbPath, filePath);
+            showImageView(imgBody.getRemoteUrl());
         }
     }
 
@@ -60,33 +55,29 @@ public class EaseChatRowImage extends EaseChatRowFile {
 
             } else {
                 if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING || imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING || imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
-                    bar_progress.setVisibility(View.INVISIBLE);
-                    tv_percentage.setVisibility(View.INVISIBLE);
-                    iv_image.setImageResource(R.drawable.ease_default_image);
+                    bar_progress.setVisibility(View.GONE);
+                    tv_percentage.setVisibility(View.GONE);
+
+//                    iv_image.setImageResource(R.drawable.ease_default_image);
 
                 } else {
                     bar_progress.setVisibility(View.GONE);
                     tv_percentage.setVisibility(View.GONE);
-                    iv_image.setImageResource(R.drawable.ease_default_image);
 
-                    String thumbPath = imgBody.thumbnailLocalPath();
-                    if (!new File(thumbPath).exists()) {
-                        thumbPath = EaseImageUtil.getThumbnailImagePath(imgBody.getLocalUrl());
-                    }
-                    showImageView(thumbPath, imgBody.getLocalUrl());
+//                    showImageView();
                 }
+
+                showImageView(imgBody.getRemoteUrl());
             }
 
         } else {//已接收的消息
             if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING || imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING) {
-                if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
-                    iv_image.setImageResource(R.drawable.ease_default_image);
-
-                } else {
-                    bar_progress.setVisibility(View.INVISIBLE);
-                    tv_percentage.setVisibility(View.INVISIBLE);
-                    iv_image.setImageResource(R.drawable.ease_default_image);
+                if (!EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
+                    bar_progress.setVisibility(View.GONE);
+                    tv_percentage.setVisibility(View.GONE);
                 }
+
+//                iv_image.setImageResource(R.drawable.ease_default_image);
 
             } else if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
                 if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
@@ -94,34 +85,56 @@ public class EaseChatRowImage extends EaseChatRowFile {
                     tv_percentage.setVisibility(View.VISIBLE);
 
                 } else {
-                    bar_progress.setVisibility(View.INVISIBLE);
-                    tv_percentage.setVisibility(View.INVISIBLE);
+                    bar_progress.setVisibility(View.GONE);
+                    tv_percentage.setVisibility(View.GONE);
                 }
+
+//                iv_image.setImageResource(R.drawable.ease_default_image);
 
             } else {
                 bar_progress.setVisibility(View.GONE);
                 tv_percentage.setVisibility(View.GONE);
-                iv_image.setImageResource(R.drawable.ease_default_image);
 
-                String thumbPath = imgBody.thumbnailLocalPath();
-                if (!new File(thumbPath).exists()) {
-                    thumbPath = EaseImageUtil.getThumbnailImagePath(imgBody.getLocalUrl());
-                }
-
-                showImageView(thumbPath, imgBody.getLocalUrl());
+//                showImageView();
             }
+
+            showImageView(imgBody.getRemoteUrl());
         }
     }
 
     /**
      * 显示图片
      */
-    protected void showImageView(String thumbernailPath, String localFullSizePath) {
-        if (EaseAndroidLifecycleUtil.canLoadImage(this)) {
-            String imgPath = (EaseFileUtil.isFile(localFullSizePath) ? localFullSizePath : thumbernailPath);
+    protected void showImageView() {
+        String imgPath = imgBody.getLocalUrl();
 
-            Glide.with(this)
+        if (!EaseFileUtil.isFile(imgPath)) {
+            imgPath = imgBody.thumbnailLocalPath();
+        }
+        if (!EaseFileUtil.isFile(imgPath)) {
+            imgPath = EaseImageUtil.getThumbnailImagePath(imgPath);
+        }
+
+        Context context = getContext();
+
+        if (context != null) {
+            Glide.with(context)
                     .load(imgPath)
+                    .apply(new RequestOptions().error(R.drawable.ease_default_image).override(EaseDensityUtil.dp2px(146)))
+                    .into(iv_image);
+        }
+    }
+
+    /**
+     * 显示图片
+     */
+    protected void showImageView(String imgUrl) {
+        Context context = getContext();
+
+        if (context != null) {
+            Glide.with(context)
+                    .load(imgUrl)
+                    .thumbnail(0.6f)
                     .apply(new RequestOptions().placeholder(R.drawable.ease_default_image).error(R.drawable.ease_default_image).override(EaseDensityUtil.dp2px(146)))
                     .into(iv_image);
         }
