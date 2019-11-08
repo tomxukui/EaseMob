@@ -27,8 +27,10 @@ import com.hyphenate.easeui.module.base.widget.message.EaseMessageListView;
 import com.hyphenate.easeui.module.chat.provider.EaseChatInputMenuEvent;
 import com.hyphenate.easeui.module.chat.provider.EaseChatInputMenuStyle;
 import com.hyphenate.easeui.module.chat.provider.EaseChatMessageEvent;
+import com.hyphenate.easeui.module.chat.provider.EaseChatMessageFetcher;
 import com.hyphenate.easeui.module.chat.provider.EaseChatMessageStyle;
 import com.hyphenate.easeui.module.chat.provider.impl.EaseChatInputMenuDefaultStyle;
+import com.hyphenate.easeui.module.chat.provider.impl.EaseChatMessageDefaultFetcher;
 import com.hyphenate.easeui.module.chat.provider.impl.EaseChatMessageDefaultStyle;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
@@ -57,7 +59,6 @@ public class EaseChatFragment extends EaseBaseChatFragment {
 
     protected EMConversation mConversation;//会话
 
-    protected int mPageSize = 20;//消息分页一页最多数量
     protected boolean mHaveMoreData = true;//是否有更多消息
     protected boolean mIsMessageInit;//消息是否已加载
 
@@ -65,14 +66,15 @@ public class EaseChatFragment extends EaseBaseChatFragment {
     protected EaseUser mToUser;
 
     //输入菜单
-    private EaseChatInputMenuStyle mInputMenuStyle;
+    protected EaseChatInputMenuStyle mInputMenuStyle;
     @Nullable
-    private EaseChatInputMenuEvent mInputMenuEvent;
+    protected EaseChatInputMenuEvent mInputMenuEvent;
 
     //消息
-    private EaseChatMessageStyle mMessageStyle;
+    protected EaseChatMessageStyle mMessageStyle;
     @Nullable
-    private EaseChatMessageEvent mMessageEvent;
+    protected EaseChatMessageEvent mMessageEvent;
+    protected EaseChatMessageFetcher mMessageFetcher;
 
     public static EaseChatFragment newInstance(EaseUser fromUser, EaseUser toUser) {
         EaseChatFragment fragment = new EaseChatFragment();
@@ -108,6 +110,9 @@ public class EaseChatFragment extends EaseBaseChatFragment {
 
         //设置消息事件
         mMessageEvent = getMessageEvent();
+
+        //设置消息拉取器
+        mMessageFetcher = getMessageFetcher();
     }
 
     @Override
@@ -397,12 +402,12 @@ public class EaseChatFragment extends EaseBaseChatFragment {
         List<EMMessage> messages = getConversationAllMessages();
         int count = (messages == null ? 0 : messages.size());
 
-        if (count < mConversation.getAllMsgCount() && count < mPageSize) {
+        if (count < mConversation.getAllMsgCount() && count < mMessageFetcher.getPageSize()) {
             String msgId = null;
             if (messages != null && messages.size() > 0) {
                 msgId = messages.get(0).getMsgId();
             }
-            mConversation.loadMoreMsgFromDB(msgId, mPageSize - count);
+            mConversation.loadMoreMsgFromDB(msgId, mMessageFetcher.getPageSize() - count);
         }
     }
 
@@ -414,7 +419,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
             List<EMMessage> messages;
 
             try {
-                messages = mConversation.loadMoreMsgFromDB(getConversationAllMessages().size() == 0 ? "" : getConversationAllMessages().get(0).getMsgId(), mPageSize);
+                messages = mConversation.loadMoreMsgFromDB(getConversationAllMessages().size() == 0 ? "" : getConversationAllMessages().get(0).getMsgId(), mMessageFetcher.getPageSize());
 
             } catch (Exception e) {
                 list_message.setRefreshing(false);
@@ -424,7 +429,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
             if (messages != null && messages.size() > 0) {
                 refreshScrollTo(messages.size() - 1);
 
-                if (messages.size() != mPageSize) {
+                if (messages.size() != mMessageFetcher.getPageSize()) {
                     mHaveMoreData = false;
                 }
 
@@ -652,6 +657,13 @@ public class EaseChatFragment extends EaseBaseChatFragment {
      */
     protected EaseChatMessageEvent getMessageEvent() {
         return null;
+    }
+
+    /**
+     * 获取聊天消息拉取器
+     */
+    protected EaseChatMessageFetcher getMessageFetcher() {
+        return new EaseChatMessageDefaultFetcher();
     }
 
 }

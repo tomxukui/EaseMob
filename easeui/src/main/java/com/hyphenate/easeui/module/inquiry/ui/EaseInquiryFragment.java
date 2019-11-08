@@ -48,7 +48,7 @@ public class EaseInquiryFragment extends EaseChatFragment {
         durations.add(new EaseDuration(1572999688000l, 1573042888000l));
         durations.add(new EaseDuration(1572913288000l, 1572956488000l));
         durations.add(new EaseDuration(1572826888000l, 1572870088000l));
-        mMessageCache = new EaseMessageCache(durations, mPageSize);
+        mMessageCache = new EaseMessageCache(durations, mMessageFetcher.getPageSize());
     }
 
     /**
@@ -218,7 +218,7 @@ public class EaseInquiryFragment extends EaseChatFragment {
         List<EMMessage> messages = getConversationAllMessages();
         int count = (messages == null ? 0 : messages.size());
 
-        if (count < mConversation.getAllMsgCount() && count < mPageSize) {
+        if (count < mConversation.getAllMsgCount() && count < mMessageFetcher.getPageSize()) {
             mMessageCache.fetchBeforeMessages(mConversation);
         }
     }
@@ -239,7 +239,7 @@ public class EaseInquiryFragment extends EaseChatFragment {
             if (messages != null && messages.size() > 0) {
                 refreshScrollTo(messages.size() - 1);
 
-                if (messages.size() != mPageSize) {
+                if (messages.size() != mMessageFetcher.getPageSize()) {
                     mHaveMoreData = false;
                 }
 

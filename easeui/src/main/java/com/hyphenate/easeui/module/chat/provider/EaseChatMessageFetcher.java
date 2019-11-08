@@ -1,4 +1,4 @@
-package com.hyphenate.easeui.module.chat.fetcher;
+package com.hyphenate.easeui.module.chat.provider;
 
 public interface EaseChatMessageFetcher {
 
