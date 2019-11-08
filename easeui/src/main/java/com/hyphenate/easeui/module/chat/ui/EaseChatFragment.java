@@ -481,8 +481,6 @@ public class EaseChatFragment extends EaseBaseChatFragment {
      * 刷新消息列表
      */
     protected void refreshMessages() {
-        mConversation.markAllMessagesAsRead();
-
         if (list_message != null) {
             list_message.setNewData(getConversationAllMessages());
         }
