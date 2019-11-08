@@ -16,7 +16,7 @@ public class EaseChatRowCloseInquiry extends EaseChatRow {
 
     @Override
     protected View onInflateView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.ease_row_close_inquiry, this, false);
+        return inflater.inflate(R.layout.ease_row_close_inquiry, this);
     }
 
     @Override

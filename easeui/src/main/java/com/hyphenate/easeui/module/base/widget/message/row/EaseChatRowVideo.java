@@ -34,7 +34,7 @@ public class EaseChatRowVideo extends EaseChatRowFile {
 
     @Override
     protected View onInflateView(LayoutInflater inflater) {
-        return inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_video : R.layout.ease_row_sent_video, this, false);
+        return inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_video : R.layout.ease_row_sent_video, this);
     }
 
     @Override

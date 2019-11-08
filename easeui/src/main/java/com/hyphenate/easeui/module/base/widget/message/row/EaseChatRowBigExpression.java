@@ -27,7 +27,7 @@ public class EaseChatRowBigExpression extends EaseChatRowText {
 
     @Override
     protected View onInflateView(LayoutInflater inflater) {
-        return inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_bigexpression : R.layout.ease_row_sent_bigexpression, this, false);
+        return inflater.inflate(mMessage.direct() == EMMessage.Direct.RECEIVE ? R.layout.ease_row_received_bigexpression : R.layout.ease_row_sent_bigexpression, this);
     }
 
     @Override
