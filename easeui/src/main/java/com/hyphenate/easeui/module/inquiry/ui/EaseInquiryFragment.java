@@ -46,7 +46,7 @@ public class EaseInquiryFragment extends EaseChatFragment {
         durations.add(new EaseDuration(1572999688000l, 1573042888000l));
         durations.add(new EaseDuration(1572913288000l, 1572956488000l));
         durations.add(new EaseDuration(1572826888000l, 1572870088000l));
-        mMessageCache = new EaseMessageCache(durations, 10);
+        mMessageCache = new EaseMessageCache(durations, mPageSize);
     }
 
     /**
