@@ -51,7 +51,9 @@ public class EaseMessageCache {
             long endTimeStamp = duration.getEndTimeStamp();
 
             if (mMessages.size() > 0) {
-                endTimeStamp = Math.min(endTimeStamp, mMessages.get(0).getMsgTime());
+                long msgTime = mMessages.get(0).getMsgTime();
+
+                endTimeStamp = Math.min(endTimeStamp, msgTime);
             }
 
             List<EMMessage> tempMessages = conversation.searchMsgFromDB(startTimeStamp, endTimeStamp, pageSize);
@@ -78,10 +80,10 @@ public class EaseMessageCache {
             long len = t1.getStartTimeStamp() - t2.getStartTimeStamp();
 
             if (len > 0) {
-                return 1;
+                return -1;
 
             } else if (len < 0) {
-                return -1;
+                return 1;
 
             } else {
                 return 0;
