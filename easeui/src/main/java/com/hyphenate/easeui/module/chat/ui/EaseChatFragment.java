@@ -1,6 +1,7 @@
 package com.hyphenate.easeui.module.chat.ui;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.text.TextUtils;
@@ -23,8 +24,10 @@ import com.hyphenate.easeui.module.base.widget.input.EaseInputMenu;
 import com.hyphenate.easeui.module.base.widget.input.EaseMenuItem;
 import com.hyphenate.easeui.module.base.widget.input.OnInputMenuListener;
 import com.hyphenate.easeui.module.base.widget.message.EaseMessageListView;
-import com.hyphenate.easeui.module.chat.provider.EaseChatInputMenuProvider;
+import com.hyphenate.easeui.module.chat.provider.EaseChatInputMenuEvent;
+import com.hyphenate.easeui.module.chat.provider.EaseChatInputMenuStyle;
 import com.hyphenate.easeui.module.chat.provider.EaseChatMessageProvider;
+import com.hyphenate.easeui.module.chat.provider.impl.EaseChatInputMenuDefaultStyle;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 import com.yanzhenjie.permission.Permission;
@@ -59,8 +62,11 @@ public class EaseChatFragment extends EaseBaseChatFragment {
     protected EaseUser mFromUser;
     protected EaseUser mToUser;
 
+    private EaseChatInputMenuStyle mInputMenuStyle;
+    @Nullable
+    private EaseChatInputMenuEvent mInputMenuEvent;
+
     private EaseChatMessageProvider mMessageProvider;
-    private EaseChatInputMenuProvider mInputMenuProvider;
 
     public static EaseChatFragment newInstance(EaseUser fromUser, EaseUser toUser) {
         EaseChatFragment fragment = new EaseChatFragment();
@@ -90,20 +96,12 @@ public class EaseChatFragment extends EaseBaseChatFragment {
             mMessageProvider = new EaseChatMessageProvider();
         }
 
-        mInputMenuProvider = onSetInputMenu();
-        if (mInputMenuProvider == null) {
-            mInputMenuProvider = new EaseChatInputMenuProvider() {
 
-                @Override
-                public List<EaseMenuItem> onSetMoreMenuItems() {
-                    List<EaseMenuItem> menuItems = new ArrayList<>();
-                    menuItems.add(createAlbumMenuItem());
-                    menuItems.add(createCameraMenuItem());
-                    return menuItems;
-                }
+        //设置输入菜单样式
+        mInputMenuStyle = getInputMenuStyle();
 
-            };
-        }
+        //设置输入菜单事件
+        mInputMenuEvent = getInputMenuEvent();
     }
 
     @Override
@@ -265,19 +263,29 @@ public class EaseChatFragment extends EaseBaseChatFragment {
         addFaceMenu(menu_input, 3);
 
         //添加更多菜单
-        addMoreMenu(menu_input, 4, mInputMenuProvider.onSetMoreMenuItems());
+        List<EaseMenuItem> menuItems = mInputMenuStyle.getMoreMenuItems();
+        if (menuItems == null) {
+            menuItems = new ArrayList<>();
+        }
+        if (mInputMenuStyle.pickCameraPhotoEnable()) {
+            menuItems.add(0, createCameraMenuItem());
+        }
+        if (mInputMenuStyle.pickAlbumPhotoEnable()) {
+            menuItems.add(0, createAlbumMenuItem());
+        }
+        addMoreMenu(menu_input, 4, menuItems);
 
         //设置是否开启语音菜单
-        menu_input.getControl().setVoiceVisibility(mInputMenuProvider.voiceEnable());
+        menu_input.getControl().setVoiceVisibility(mInputMenuStyle.voiceEnable());
 
         //设置是否开启表情菜单
-        getFaceButton().setVisibility(mInputMenuProvider.faceEnable() ? View.VISIBLE : View.GONE);
+        getFaceButton().setVisibility(mInputMenuStyle.faceEnable() ? View.VISIBLE : View.GONE);
 
         //设置是否开启更多菜单
-        getMoreButton().setVisibility(mInputMenuProvider.moreEnable() ? View.VISIBLE : View.GONE);
+        getMoreButton().setVisibility(mInputMenuStyle.moreEnable() ? View.VISIBLE : View.GONE);
 
         //扩展自定义菜单
-        mInputMenuProvider.onExtendInputMenu(menu_input);
+        mInputMenuStyle.onExtendInputMenu(menu_input);
 
         //监听输入菜单
         menu_input.setOnInputMenuListener(new OnInputMenuListener() {
@@ -288,7 +296,9 @@ public class EaseChatFragment extends EaseBaseChatFragment {
                     getMoreButton().setVisibility(TextUtils.isEmpty(s.toString()) ? View.VISIBLE : View.GONE);
                 }
 
-                mInputMenuProvider.onTyping(s, start, before, count);
+                if (mInputMenuEvent != null) {
+                    mInputMenuEvent.onTyping(s, start, before, count);
+                }
             }
 
             @Override
@@ -331,7 +341,9 @@ public class EaseChatFragment extends EaseBaseChatFragment {
                     getMoreButton().setSelected(false);
                 }
 
-                mInputMenuProvider.onEditTextClicked();
+                if (mInputMenuEvent != null) {
+                    mInputMenuEvent.onEditTextClicked();
+                }
             }
 
             @Override
@@ -351,7 +363,9 @@ public class EaseChatFragment extends EaseBaseChatFragment {
                     }
                 }
 
-                mInputMenuProvider.onToggleVoice(show);
+                if (mInputMenuEvent != null) {
+                    mInputMenuEvent.onToggleVoice(show);
+                }
             }
 
         });
@@ -608,9 +622,16 @@ public class EaseChatFragment extends EaseBaseChatFragment {
     }
 
     /**
-     * 设置输入菜单
+     * 获取聊天输入菜单样式
      */
-    protected EaseChatInputMenuProvider onSetInputMenu() {
+    protected EaseChatInputMenuStyle getInputMenuStyle() {
+        return new EaseChatInputMenuDefaultStyle();
+    }
+
+    /**
+     * 获取聊天输入菜单事件
+     */
+    protected EaseChatInputMenuEvent getInputMenuEvent() {
         return null;
     }
 

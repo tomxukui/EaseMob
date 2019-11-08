@@ -8,7 +8,9 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.module.base.model.EaseDuration;
 import com.hyphenate.easeui.module.base.model.EaseUser;
+import com.hyphenate.easeui.module.chat.provider.EaseChatInputMenuStyle;
 import com.hyphenate.easeui.module.chat.ui.EaseChatFragment;
+import com.hyphenate.easeui.module.inquiry.provider.EaseChatInputMenuInquiryStyle;
 import com.hyphenate.easeui.utils.EaseContextCompatUtil;
 import com.hyphenate.easeui.utils.EaseMessageCache;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
@@ -255,6 +257,12 @@ public class EaseInquiryFragment extends EaseChatFragment {
     @Override
     protected void loadLastestMessages() {
         mMessageCache.fetchAfterMessages(mConversation);
+    }
+
+
+    @Override
+    protected EaseChatInputMenuStyle getInputMenuStyle() {
+        return new EaseChatInputMenuInquiryStyle();
     }
 
 }

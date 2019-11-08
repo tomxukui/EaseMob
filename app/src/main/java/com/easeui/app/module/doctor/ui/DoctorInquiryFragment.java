@@ -21,7 +21,9 @@ import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.base.widget.input.EaseInputControlButton;
 import com.hyphenate.easeui.module.base.widget.input.EaseInputMenu;
 import com.hyphenate.easeui.module.base.widget.input.EaseMenuItem;
-import com.hyphenate.easeui.module.inquiry.provider.EaseInquiryInputMenuProvider;
+import com.hyphenate.easeui.module.chat.provider.EaseChatInputMenuEvent;
+import com.hyphenate.easeui.module.chat.provider.EaseChatInputMenuStyle;
+import com.hyphenate.easeui.module.inquiry.provider.EaseChatInputMenuInquiryStyle;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
@@ -37,6 +39,8 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
     private LinearLayout linear_status;
     private TextView tv_statusName;
     private TextView tv_round;
+
+    private EaseInputControlButton btn_quotation;
 
     private TextView tv_startVisit;
 
@@ -163,15 +167,51 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
     }
 
     @Override
-    protected EaseInquiryInputMenuProvider onSetInputMenu() {
-        return new EaseInquiryInputMenuProvider() {
+    protected EaseChatInputMenuStyle getInputMenuStyle() {
+        return new EaseChatInputMenuInquiryStyle() {
 
-            EaseInputControlButton quotationsButton = null;
+            @Override
+            public List<EaseMenuItem> getMoreMenuItems() {
+                List<EaseMenuItem> menuItems = new ArrayList<>();
+                menuItems.add(new EaseMenuItem(R.mipmap.ic_write_case, "写病例", v -> EaseToastUtil.show("写病例")));
+                return menuItems;
+            }
+
+            @Override
+            public void onExtendInputMenu(EaseInputMenu inputMenu) {
+                View quotationsPanel = new View(getContext());
+                quotationsPanel.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, EaseDensityUtil.dp2px(200)));
+                quotationsPanel.setBackgroundColor(Color.BLUE);
+
+                btn_quotation = new EaseInputControlButton(getContext());
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(EaseDensityUtil.dp2px(10), 0, 0, 0);
+                btn_quotation.setLayoutParams(layoutParams);
+                btn_quotation.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                btn_quotation.setTextColor(Color.WHITE);
+                btn_quotation.setText("常用语");
+                btn_quotation.setPadding(EaseDensityUtil.dp2px(9), EaseDensityUtil.dp2px(5), EaseDensityUtil.dp2px(9), EaseDensityUtil.dp2px(5));
+                btn_quotation.setGravity(Gravity.CENTER);
+                btn_quotation.setMinWidth(EaseDensityUtil.dp2px(42));
+                btn_quotation.setMinHeight(EaseDensityUtil.dp2px(20));
+                btn_quotation.setBackgroundResource(R.drawable.btn_quotations);
+                btn_quotation.setInputEnable(false);
+                btn_quotation.setPanel(quotationsPanel);
+
+                inputMenu.addView(btn_quotation, quotationsPanel, 0, layoutParams);
+            }
+
+        };
+    }
+
+    @Override
+    protected EaseChatInputMenuEvent getInputMenuEvent() {
+        return new EaseChatInputMenuEvent() {
 
             @Override
             public void onToggleVoice(boolean show) {
-                if (quotationsButton != null) {
-                    quotationsButton.setSelected(false);
+                if (btn_quotation != null) {
+                    btn_quotation.setSelected(false);
                 }
             }
 
@@ -181,42 +221,9 @@ public class DoctorInquiryFragment extends EaseInquiryFragment {
 
             @Override
             public void onEditTextClicked() {
-                if (quotationsButton != null) {
-                    quotationsButton.setSelected(false);
+                if (btn_quotation != null) {
+                    btn_quotation.setSelected(false);
                 }
-            }
-
-            @Override
-            public void onExtendInputMenu(EaseInputMenu inputMenu) {
-                View quotationsPanel = new View(getContext());
-                quotationsPanel.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, EaseDensityUtil.dp2px(200)));
-                quotationsPanel.setBackgroundColor(Color.BLUE);
-
-                quotationsButton = new EaseInputControlButton(getContext());
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMargins(EaseDensityUtil.dp2px(10), 0, 0, 0);
-                quotationsButton.setLayoutParams(layoutParams);
-                quotationsButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                quotationsButton.setTextColor(Color.WHITE);
-                quotationsButton.setText("常用语");
-                quotationsButton.setPadding(EaseDensityUtil.dp2px(9), EaseDensityUtil.dp2px(5), EaseDensityUtil.dp2px(9), EaseDensityUtil.dp2px(5));
-                quotationsButton.setGravity(Gravity.CENTER);
-                quotationsButton.setMinWidth(EaseDensityUtil.dp2px(42));
-                quotationsButton.setMinHeight(EaseDensityUtil.dp2px(20));
-                quotationsButton.setBackgroundResource(R.drawable.btn_quotations);
-                quotationsButton.setInputEnable(false);
-                quotationsButton.setPanel(quotationsPanel);
-
-                inputMenu.addView(quotationsButton, quotationsPanel, 0, layoutParams);
-            }
-
-            @Override
-            public List<EaseMenuItem> onSetMoreMenuItems() {
-                List<EaseMenuItem> menuItems = new ArrayList<>();
-                menuItems.add(createAlbumMenuItem());
-                menuItems.add(createCameraMenuItem());
-                menuItems.add(new EaseMenuItem(R.mipmap.ic_write_case, "写病例", v -> EaseToastUtil.show("写病例")));
-                return menuItems;
             }
 
         };

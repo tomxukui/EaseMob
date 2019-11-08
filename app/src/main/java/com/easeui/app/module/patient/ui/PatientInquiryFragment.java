@@ -17,9 +17,6 @@ import com.easeui.app.module.patient.model.PatientInquiryToolbarMenuItem;
 import com.hyphenate.easeui.module.base.model.EaseUser;
 import com.hyphenate.easeui.module.base.widget.gridmenu.EaseGridMenu;
 import com.hyphenate.easeui.module.base.widget.gridmenu.EaseGridMenuItem;
-import com.hyphenate.easeui.module.base.widget.input.EaseMenuItem;
-import com.hyphenate.easeui.module.chat.provider.EaseChatInputMenuProvider;
-import com.hyphenate.easeui.module.inquiry.provider.EaseInquiryInputMenuProvider;
 import com.hyphenate.easeui.module.inquiry.ui.EaseInquiryFragment;
 import com.hyphenate.easeui.utils.EaseContextCompatUtil;
 import com.hyphenate.easeui.utils.EaseDensityUtil;
@@ -169,21 +166,6 @@ public class PatientInquiryFragment extends EaseInquiryFragment {
         if (mToolbarMenu != null && mToolbarMenu.isShowing()) {
             mToolbarMenu.dismiss();
         }
-    }
-
-    @Override
-    protected EaseChatInputMenuProvider onSetInputMenu() {
-        return new EaseInquiryInputMenuProvider() {
-
-            @Override
-            public List<EaseMenuItem> onSetMoreMenuItems() {
-                List<EaseMenuItem> menuItems = new ArrayList<>();
-                menuItems.add(createAlbumMenuItem());
-                menuItems.add(createCameraMenuItem());
-                return menuItems;
-            }
-
-        };
     }
 
 }
