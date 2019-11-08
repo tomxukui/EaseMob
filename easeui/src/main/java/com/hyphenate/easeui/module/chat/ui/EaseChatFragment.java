@@ -52,7 +52,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
 
     protected EMConversation mConversation;//会话
 
-    protected int mPageSize = 10;//消息分页一页最多数量
+    protected int mPageSize = 20;//消息分页一页最多数量
     protected boolean mHaveMoreData = true;//是否有更多消息
     protected boolean mIsMessageInit;//消息是否已加载
 
