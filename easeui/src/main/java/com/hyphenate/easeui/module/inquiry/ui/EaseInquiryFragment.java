@@ -208,60 +208,60 @@ public class EaseInquiryFragment extends EaseChatFragment {
 //
 //    };
 
-    @Override
-    protected List<EMMessage> getConversationAllMessages() {
-        return mMessageCache.getMessages();
-    }
-
-    @Override
-    protected void loadLocalMessages() {
-        List<EMMessage> messages = getConversationAllMessages();
-        int count = (messages == null ? 0 : messages.size());
-
-        if (count < mConversation.getAllMsgCount() && count < mMessageFetcher.getPageSize()) {
-            mMessageCache.fetchBeforeMessages(mConversation);
-        }
-    }
-
-    @Override
-    protected void loadMoreLocalMessages() {
-        if (list_message.getFirstVisiblePosition() == 0 && mHaveMoreData) {
-            List<EMMessage> messages;
-
-            try {
-                messages = mMessageCache.fetchBeforeMessages(mConversation);
-
-            } catch (Exception e) {
-                list_message.setRefreshing(false);
-                return;
-            }
-
-            if (messages != null && messages.size() > 0) {
-                refreshScrollTo(messages.size() - 1);
-
-                if (messages.size() != mMessageFetcher.getPageSize()) {
-                    mHaveMoreData = false;
-                }
-
-            } else {
-                mHaveMoreData = false;
-            }
-
-        } else {
-            EaseToastUtil.show(R.string.no_more_messages);
-        }
-
-        list_message.setRefreshing(false);
-    }
-
-    @Override
-    protected void loadLastestMessages() {
-        mMessageCache.fetchAfterMessages(mConversation);
-    }
-
-    @Override
-    protected EaseChatInputMenuStyle getInputMenuStyle() {
-        return new EaseChatInputMenuInquiryStyle();
-    }
+//    @Override
+//    protected List<EMMessage> getConversationAllMessages() {
+//        return mMessageCache.getMessages();
+//    }
+//
+//    @Override
+//    protected void loadLocalMessages() {
+//        List<EMMessage> messages = getConversationAllMessages();
+//        int count = (messages == null ? 0 : messages.size());
+//
+//        if (count < mConversation.getAllMsgCount() && count < mMessageFetcher.getPageSize()) {
+//            mMessageCache.fetchBeforeMessages(mConversation);
+//        }
+//    }
+//
+//    @Override
+//    protected void loadMoreLocalMessages() {
+//        if (list_message.getFirstVisiblePosition() == 0 && mHaveMoreData) {
+//            List<EMMessage> messages;
+//
+//            try {
+//                messages = mMessageCache.fetchBeforeMessages(mConversation);
+//
+//            } catch (Exception e) {
+//                list_message.setRefreshing(false);
+//                return;
+//            }
+//
+//            if (messages != null && messages.size() > 0) {
+//                refreshScrollTo(messages.size() - 1);
+//
+//                if (messages.size() != mMessageFetcher.getPageSize()) {
+//                    mHaveMoreData = false;
+//                }
+//
+//            } else {
+//                mHaveMoreData = false;
+//            }
+//
+//        } else {
+//            EaseToastUtil.show(R.string.no_more_messages);
+//        }
+//
+//        list_message.setRefreshing(false);
+//    }
+//
+//    @Override
+//    protected void loadLastestMessages() {
+//        mMessageCache.fetchAfterMessages(mConversation);
+//    }
+//
+//    @Override
+//    protected EaseChatInputMenuStyle getInputMenuStyle() {
+//        return new EaseChatInputMenuInquiryStyle();
+//    }
 
 }
