@@ -26,8 +26,10 @@ import com.hyphenate.easeui.module.base.widget.input.OnInputMenuListener;
 import com.hyphenate.easeui.module.base.widget.message.EaseMessageListView;
 import com.hyphenate.easeui.module.chat.provider.EaseChatInputMenuEvent;
 import com.hyphenate.easeui.module.chat.provider.EaseChatInputMenuStyle;
-import com.hyphenate.easeui.module.chat.provider.EaseChatMessageProvider;
+import com.hyphenate.easeui.module.chat.provider.EaseChatMessageEvent;
+import com.hyphenate.easeui.module.chat.provider.EaseChatMessageStyle;
 import com.hyphenate.easeui.module.chat.provider.impl.EaseChatInputMenuDefaultStyle;
+import com.hyphenate.easeui.module.chat.provider.impl.EaseChatMessageDefaultStyle;
 import com.hyphenate.easeui.utils.EaseMessageUtil;
 import com.hyphenate.easeui.utils.EaseToastUtil;
 import com.yanzhenjie.permission.Permission;
@@ -62,11 +64,15 @@ public class EaseChatFragment extends EaseBaseChatFragment {
     protected EaseUser mFromUser;
     protected EaseUser mToUser;
 
+    //输入菜单
     private EaseChatInputMenuStyle mInputMenuStyle;
     @Nullable
     private EaseChatInputMenuEvent mInputMenuEvent;
 
-    private EaseChatMessageProvider mMessageProvider;
+    //消息
+    private EaseChatMessageStyle mMessageStyle;
+    @Nullable
+    private EaseChatMessageEvent mMessageEvent;
 
     public static EaseChatFragment newInstance(EaseUser fromUser, EaseUser toUser) {
         EaseChatFragment fragment = new EaseChatFragment();
@@ -91,17 +97,17 @@ public class EaseChatFragment extends EaseBaseChatFragment {
             mToUser = (EaseUser) bundle.getSerializable(EXTRA_TO_USER);
         }
 
-        mMessageProvider = onSetMessageRow();
-        if (mMessageProvider == null) {
-            mMessageProvider = new EaseChatMessageProvider();
-        }
-
-
         //设置输入菜单样式
         mInputMenuStyle = getInputMenuStyle();
 
         //设置输入菜单事件
         mInputMenuEvent = getInputMenuEvent();
+
+        //设置消息样式
+        mMessageStyle = getMessageStyle();
+
+        //设置消息事件
+        mMessageEvent = getMessageEvent();
     }
 
     @Override
@@ -198,12 +204,14 @@ public class EaseChatFragment extends EaseBaseChatFragment {
      * 设置消息列表控件
      */
     protected void setMessageList() {
-        list_message.init(mMessageProvider.getMessageListItemStyle(), mMessageProvider.getCustomChatRowProvider());
+        list_message.init(mMessageStyle.getMessageListItemStyle(), mMessageStyle.getCustomChatRowProvider());
         list_message.setOnItemClickListener(new EaseMessageListView.OnItemClickListener() {
 
             @Override
             public void onUserAvatarClick(String username) {
-                mMessageProvider.onAvatarClick(username);
+                if (mMessageEvent != null) {
+                    mMessageEvent.onAvatarClick(username);
+                }
             }
 
             @Override
@@ -223,17 +231,21 @@ public class EaseChatFragment extends EaseBaseChatFragment {
 
             @Override
             public void onUserAvatarLongClick(String username) {
-                mMessageProvider.onAvatarLongClick(username);
+                if (mMessageEvent != null) {
+                    mMessageEvent.onAvatarLongClick(username);
+                }
             }
 
             @Override
             public void onBubbleLongClick(EMMessage message) {
-                mMessageProvider.onMessageBubbleLongClick(message);
+                if (mMessageEvent != null) {
+                    mMessageEvent.onMessageBubbleLongClick(message);
+                }
             }
 
             @Override
             public boolean onBubbleClick(EMMessage message) {
-                return mMessageProvider.onMessageBubbleClick(message);
+                return mMessageEvent == null ? false : mMessageEvent.onMessageBubbleClick(message);
             }
 
             @Override
@@ -449,7 +461,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
         EaseMessageUtil.setUserMessage(message, mFromUser, mToUser);
 
         //设置消息的自定义设置
-        mMessageProvider.onSendMessageWithAttributes(message);
+        mMessageStyle.onSendMessageWithAttributes(message);
 
         //设置消息的回调
         message.setMessageStatusCallback(mMessageStatusCallback);
@@ -615,13 +627,6 @@ public class EaseChatFragment extends EaseBaseChatFragment {
     };
 
     /**
-     * 设置消息
-     */
-    protected EaseChatMessageProvider onSetMessageRow() {
-        return null;
-    }
-
-    /**
      * 获取聊天输入菜单样式
      */
     protected EaseChatInputMenuStyle getInputMenuStyle() {
@@ -632,6 +637,20 @@ public class EaseChatFragment extends EaseBaseChatFragment {
      * 获取聊天输入菜单事件
      */
     protected EaseChatInputMenuEvent getInputMenuEvent() {
+        return null;
+    }
+
+    /**
+     * 获取聊天消息样式
+     */
+    protected EaseChatMessageStyle getMessageStyle() {
+        return new EaseChatMessageDefaultStyle();
+    }
+
+    /**
+     * 获取聊天消息事件
+     */
+    protected EaseChatMessageEvent getMessageEvent() {
         return null;
     }
 

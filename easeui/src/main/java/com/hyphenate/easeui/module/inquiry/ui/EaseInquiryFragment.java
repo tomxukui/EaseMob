@@ -259,7 +259,6 @@ public class EaseInquiryFragment extends EaseChatFragment {
         mMessageCache.fetchAfterMessages(mConversation);
     }
 
-
     @Override
     protected EaseChatInputMenuStyle getInputMenuStyle() {
         return new EaseChatInputMenuInquiryStyle();
