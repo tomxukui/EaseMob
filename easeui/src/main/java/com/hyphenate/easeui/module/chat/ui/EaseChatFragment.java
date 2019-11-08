@@ -158,9 +158,6 @@ public class EaseChatFragment extends EaseBaseChatFragment {
         //初始化会话
         initConversation();
 
-        //加载本地第一次消息列表
-        loadFirstLocalMessages();
-
         //设置消息列表控件
         setMessageList();
 
@@ -194,6 +191,9 @@ public class EaseChatFragment extends EaseBaseChatFragment {
     protected void initConversation() {
         mConversation = EMClient.getInstance().chatManager().getConversation(mToUser.getUsername(), EMConversation.EMConversationType.Chat, true);
         mConversation.markAllMessagesAsRead();
+
+        //加载本地第一次消息列表
+        loadLocalMessages();
     }
 
     /**
@@ -367,7 +367,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
     /**
      * 加载本地第一次消息列表
      */
-    protected void loadFirstLocalMessages() {
+    protected void loadLocalMessages() {
         List<EMMessage> messages = getConversationAllMessages();
         int count = (messages == null ? 0 : messages.size());
 
@@ -457,7 +457,10 @@ public class EaseChatFragment extends EaseBaseChatFragment {
         @Override
         public void onSuccess() {
             if (mIsMessageInit) {
-                runOnUiThread(() -> refreshMessages());
+                runOnUiThread(() -> {
+                    loadLastestMessages();
+                    refreshMessages();
+                });
             }
         }
 
@@ -505,6 +508,12 @@ public class EaseChatFragment extends EaseBaseChatFragment {
     }
 
     /**
+     * 加载本地最新消息
+     */
+    protected void loadLastestMessages() {
+    }
+
+    /**
      * 刷新并滑动到指定位置
      */
     protected void refreshScrollToLast() {
@@ -548,6 +557,7 @@ public class EaseChatFragment extends EaseBaseChatFragment {
                     String username = message.getFrom();
 
                     if (username.equals(mToUser.getUsername()) || message.getTo().equals(mToUser.getUsername()) || message.conversationId().equals(mToUser.getUsername())) {
+                        loadLastestMessages();
                         refreshScrollToLast();
 
                         mConversation.markMessageAsRead(message.getMsgId());

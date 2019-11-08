@@ -37,7 +37,10 @@ public class EaseMessageCache {
         return mMessages;
     }
 
-    public List<EMMessage> fetchMessages(EMConversation conversation) {
+    /**
+     * 获取更早之前的消息列表
+     */
+    public List<EMMessage> fetchBeforeMessages(EMConversation conversation) {
         if (conversation == null || mDurations.isEmpty()) {
             return null;
         }
@@ -68,6 +71,25 @@ public class EaseMessageCache {
             if (pageSize > 0) {
                 mDurationIndex++;
             }
+        }
+
+        return messages;
+    }
+
+    /**
+     * 获取之后最新的消息列表
+     */
+    public List<EMMessage> fetchAfterMessages(EMConversation conversation) {
+        if (conversation == null || mMessages.isEmpty()) {
+            return null;
+        }
+
+        long startTimeStamp = mMessages.get(mMessages.size() - 1).getMsgTime();
+        long endTimeStamp = System.currentTimeMillis();
+
+        List<EMMessage> messages = conversation.searchMsgFromDB(startTimeStamp, endTimeStamp, Integer.MAX_VALUE);
+        if (messages != null) {
+            mMessages.addAll(messages);
         }
 
         return messages;

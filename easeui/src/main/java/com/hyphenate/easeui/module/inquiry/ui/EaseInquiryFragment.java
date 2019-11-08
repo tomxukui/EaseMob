@@ -212,12 +212,12 @@ public class EaseInquiryFragment extends EaseChatFragment {
     }
 
     @Override
-    protected void loadFirstLocalMessages() {
+    protected void loadLocalMessages() {
         List<EMMessage> messages = getConversationAllMessages();
         int count = (messages == null ? 0 : messages.size());
 
         if (count < mConversation.getAllMsgCount() && count < mPageSize) {
-            mMessageCache.fetchMessages(mConversation);
+            mMessageCache.fetchBeforeMessages(mConversation);
         }
     }
 
@@ -227,7 +227,7 @@ public class EaseInquiryFragment extends EaseChatFragment {
             List<EMMessage> messages;
 
             try {
-                messages = mMessageCache.fetchMessages(mConversation);
+                messages = mMessageCache.fetchBeforeMessages(mConversation);
 
             } catch (Exception e) {
                 list_message.setRefreshing(false);
@@ -250,6 +250,11 @@ public class EaseInquiryFragment extends EaseChatFragment {
         }
 
         list_message.setRefreshing(false);
+    }
+
+    @Override
+    protected void loadLastestMessages() {
+        mMessageCache.fetchAfterMessages(mConversation);
     }
 
 }
