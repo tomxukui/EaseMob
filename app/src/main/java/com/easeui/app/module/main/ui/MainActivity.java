@@ -65,23 +65,23 @@ public class MainActivity extends AppCompatActivity {
         btn_tom.setOnClickListener(v -> {
             et_username.setText("tom");
             et_nickname.setText("汤姆");
-            et_avatar.setText("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571199911001&di=46867437d9fc793deb524b946911bb69&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F8ebb64306b64f8d614bb59cc042ca46c571c99fcbac2-wliIxx_fw658");
+            et_avatar.setText("http://5b0988e595225.cdn.sohucs.com/q_70,c_zoom,w_640/images/20180806/9425645d47cd4f8e9c11fc6a9959340a.jpeg");
             et_pwd.setText("123456");
 
             et_toUsername.setText("jack");
             et_toNickname.setText("杰克");
-            et_toAvatar.setText("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571794650&di=0e71fe6b3c283fcd59144de1b3207d74&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F016e7157b17fd30000018c1b234887.png");
+            et_toAvatar.setText("http://b-ssl.duitang.com/uploads/item/201511/13/20151113110434_kyReJ.jpeg");
         });
 
         btn_jack.setOnClickListener(v -> {
             et_username.setText("jack");
             et_nickname.setText("杰克");
-            et_avatar.setText("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571794650&di=0e71fe6b3c283fcd59144de1b3207d74&imgtype=jpg&er=1&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F016e7157b17fd30000018c1b234887.png");
+            et_avatar.setText("http://b-ssl.duitang.com/uploads/item/201511/13/20151113110434_kyReJ.jpeg");
             et_pwd.setText("123456");
 
             et_toUsername.setText("tom");
             et_toNickname.setText("汤姆");
-            et_toAvatar.setText("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571199911001&di=46867437d9fc793deb524b946911bb69&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F8ebb64306b64f8d614bb59cc042ca46c571c99fcbac2-wliIxx_fw658");
+            et_toAvatar.setText("http://5b0988e595225.cdn.sohucs.com/q_70,c_zoom,w_640/images/20180806/9425645d47cd4f8e9c11fc6a9959340a.jpeg");
         });
 
         btn_login.setOnClickListener(v -> {
